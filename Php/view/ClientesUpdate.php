@@ -1,19 +1,34 @@
 <?php
 
 // Conexion a la Bd
-require '../MvcClientesDatabase.php';
+require '../Database_conf.php';
 mysql_select_db($db_name,$connection) or die("Error de conexion a la base de datos");
 
 	$info = $_POST["data"];
 
 	$data = json_decode(stripslashes($info));
 
-	$Cliente = $data->Cliente;
-	$Sexo = $data->Sexo;
-	$Edad = $data->Edad;
-	$id = $data->idcliente;
+	$nom_cliente = $data->nom_cliente;
+	$direccion = $data->direccion;
+	$NIT = $data->NIT;
+        $NRC = $data->NRC;
+        $id_departamento=$data->id_departamento;
+        $giro=$data->giro;
+        $gran_contribuyente=$data->gran_contribuyente;
+        $activo=$data->activo;
+	$id = $data->idmaestroClientes;
 	
-	 $SqlUpdate ="UPDATE `Clientes` SET `Cliente`='$Cliente',`Sexo`='$Sexo',`Edad`='$Edad' WHERE idcliente=$id;";
+	 $SqlUpdate ="UPDATE `maestroClientes` 
+                          SET
+                            `nom_cliente`='$nom_cliente',
+                            `direccion`='$direccion',
+                            `NIT`='$NIT',
+                            `NRC`='$NRC',
+                            `id_departamento`= $id_departamento,
+                            `giro`='$giro',
+                            `gran_contribuyente`= $gran_contribuyente,
+                            `activo`= $activo
+			 WHERE idmaestroClientes=$id;";
 			
 	$rs = mysql_query($SqlUpdate);
 

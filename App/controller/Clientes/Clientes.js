@@ -16,7 +16,7 @@ Ext.define('MvcClientes.controller.Clientes.Clientes',{
 		var me = this;
 		me.control({
 		    'gridClientes dataview': { //Usando Ext.Component.Query,aca hacemos referencia a la vista del Grid
-                itemdblclick: this.Editar,
+                            itemdblclick: this.Editar
 			},
 		    'gridClientes button[action=actAgregar]'://Usando Ext.Component.Query
 			   {
@@ -65,7 +65,7 @@ Ext.define('MvcClientes.controller.Clientes.Clientes',{
             record = form.getRecord(),
             values = form.getValues();
 
-	if (values.idcliente > 0){ //Si Hay algun Valor, entra en Modo de Actualizacion
+	if (values.idmaestroClientes > 0){ //Si Hay algun Valor, entra en Modo de Actualizacion
 			record.set(values);
 		} else{ //De Lo contrario, si la accion fue para agregar, se inserta un registro
 			record = Ext.create('MvcClientes.model.Clientes.Clientes');
@@ -82,7 +82,7 @@ Ext.define('MvcClientes.controller.Clientes.Clientes',{
 	    //Para referirnos a un componente aca se utilizaran los Getters:
 		var grid = this.getGridClientes();//Get+ Alias gridClientes (alias:'widget.gridClientes')
 		record = grid.getSelectionModel().getSelection(); 
-		Cliente=grid.getSelectionModel().getSelection()[0].data.Cliente;
+		Cliente=grid.getSelectionModel().getSelection()[0].data.nom_cliente;
 		//En esta parte automaticamente el Controller crea las Funciones Getters
 		store = this.getClientesClientesStore();//Nota 1: Get+Carpeta.Clientes Store+La palabra Store
 	    Ext.MessageBox.show({
@@ -92,10 +92,10 @@ Ext.define('MvcClientes.controller.Clientes.Clientes',{
 		   icon : Ext.Msg.WARNING,
            fn : function(btn)
 							{
-								if (btn == 'yes')
-								{			
+                                            if (btn == 'yes')
+                                            {			
 		                           store.remove(record);
-		                  		}
+                                            }
 								
 							}	
         });

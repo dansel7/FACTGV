@@ -20,7 +20,7 @@
                 
 	</head>	
         <?php
- if(!isset($_SESSION["user"])){
+ if(isset($_SESSION["user"])){
      //SE VERIFICA SI NO SE HA INICIADO SESION, PARA MOSTRAR CUADRO DE LOGIN
             ?>
 <script>
@@ -32,7 +32,7 @@ Ext.onReady(function() {
 
     var win;
 //ACA APARECE LA PANTALLA DE LOGIN
-    function showContactForm() {
+    function ShowLogin() {
         if (!win) {
             var form = Ext.widget('form', {
                 layout: {
@@ -119,7 +119,7 @@ Ext.onReady(function() {
         win.show();
     }
     
-    showContactForm();
+    ShowLogin();
 
 });
  

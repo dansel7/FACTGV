@@ -12,10 +12,15 @@ Ext.define('MvcClientes.view.Clientes.GrdClientes',{
 		var me = this;
 		Ext.applyIf(me, {
 			columns : [//Definimos las Columnas del Grid y las Columnas de la Tabla
-				   {header:"Id",dataIndex:"idcliente",width:50,hidden:true},
-				   {header:"Cliente",dataIndex:"Cliente",flex:1},
-				   {header:"Sexo",dataIndex:"Sexo",flex:1},
-				   {header:"Edad",dataIndex:"Edad",flex:1}
+				   {header:"Id",dataIndex:"idmaestroClientes",width:50,hidden:true},
+				   {header:"Nombre",dataIndex:"nom_cliente",flex:1},
+				   {header:"Direccion",dataIndex:"direccion",flex:1},
+				   {header:"NIT",dataIndex:"NIT",flex:1},
+                                   {header:"NRC",dataIndex:"NRC",flex:1},
+                                   {header:"Departamento",dataIndex:"id_departamento",flex:1},
+                                   {header:"Giro",dataIndex:"giro",flex:1},
+                                   {header:"Gran Contribuyente",dataIndex:"gran_contribuyente",flex:1},
+                                   {header:"Activo",dataIndex:"activo",flex:1}
 				   
 			],
 			dockedItems: [
@@ -58,7 +63,7 @@ Ext.define('MvcClientes.view.Clientes.GrdClientes',{
 		me.store.load({//Cargamos el Store, al crear la ventana
 			params:{
 				start:0,
-				limit: 100 //Muestra hasta 100 Registros Maximo
+				limit: 15 //Muestra hasta 100 Registros Maximo
 			}
 		});
 					
