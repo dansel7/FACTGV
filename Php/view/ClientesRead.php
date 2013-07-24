@@ -5,7 +5,7 @@
 
 		$arr = array();
 		// Llamamos a la Tabla y sus datos 
-		$sql = "select * from maestroClientes";
+		$sql = "select * from maestroClientes mc inner join departamento d on mc.id_departamento=d.id_departamento";
     	$result = mysql_query($sql,$connection) or die('La consulta fall&oacute;: '.mysql_error());		
 		//Formamos el Array de Datos, si ejecutamos este archivo PHP veremos el array formado
 		while($obj = mysql_fetch_object($result)) {

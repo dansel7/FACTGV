@@ -25,8 +25,8 @@ mysql_select_db($db_name,$connection) or die("Error de conexion a la base de dat
                             `NRC`='$NRC',
                             `id_departamento`=$id_departamento,
                             `giro`='$giro',
-                            `gran_contribuyente`=$gran_contribuyente,
-                            `activo`=$activo";
+                            `gran_contribuyente`='$gran_contribuyente',
+                            `activo`='$activo'";
 			
 			
 			$rs = mysql_query($SqlInsert);

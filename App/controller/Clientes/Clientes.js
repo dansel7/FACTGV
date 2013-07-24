@@ -54,7 +54,6 @@ Ext.define('MvcClientes.controller.Clientes.Clientes',{
 		     var EditForm=FormAddEditarClientes.down('form');	
 		     var record=records[0];
 		     EditForm.loadRecord(record);
-		
 		}
          	 
 	},

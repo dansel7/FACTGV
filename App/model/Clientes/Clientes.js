@@ -7,9 +7,10 @@ Ext.define('MvcClientes.model.Clientes.Clientes', {
 				{ name: 'NIT', type: 'string'},
                                 { name: 'NRC', type: 'string'},
                                 { name: 'id_departamento', type: 'int'},
+                                { name: 'departamento', type: 'string'},
                                 { name: 'giro', type: 'string'},
-                                { name: 'gran_contribuyente', type: 'int'},
-                                { name: 'activo', type: 'int'}
+                                { name: 'gran_contribuyente', type: 'string'},
+                                { name: 'activo', type: 'string'}
            ]
 });
 

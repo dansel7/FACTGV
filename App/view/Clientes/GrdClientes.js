@@ -17,7 +17,8 @@ Ext.define('MvcClientes.view.Clientes.GrdClientes',{
 				   {header:"Direccion",dataIndex:"direccion",flex:1},
 				   {header:"NIT",dataIndex:"NIT",flex:1},
                                    {header:"NRC",dataIndex:"NRC",flex:1},
-                                   {header:"Departamento",dataIndex:"id_departamento",flex:1},
+                                   {header:"Id",dataIndex:"id_departamento",width:50,hidden:true},
+                                   {header:"Departamento",dataIndex:"departamento",flex:1},
                                    {header:"Giro",dataIndex:"giro",flex:1},
                                    {header:"Gran Contribuyente",dataIndex:"gran_contribuyente",flex:1},
                                    {header:"Activo",dataIndex:"activo",flex:1}

@@ -14,11 +14,11 @@ mysql_select_db($db_name,$connection) or die("Error de conexion a la base de dat
         $NRC = $data->NRC;
         $id_departamento=$data->id_departamento;
         $giro=$data->giro;
-        $gran_contribuyente=$data->gran_contribuyente;
+        $gran_contribuyente=$data->gran_contribuyente;       
         $activo=$data->activo;
 	$id = $data->idmaestroClientes;
 	
-	 $SqlUpdate ="UPDATE `maestroClientes` 
+	$SqlUpdate ="UPDATE `maestroClientes` 
                           SET
                             `nom_cliente`='$nom_cliente',
                             `direccion`='$direccion',
@@ -26,8 +26,8 @@ mysql_select_db($db_name,$connection) or die("Error de conexion a la base de dat
                             `NRC`='$NRC',
                             `id_departamento`= $id_departamento,
                             `giro`='$giro',
-                            `gran_contribuyente`= $gran_contribuyente,
-                            `activo`= $activo
+                            `gran_contribuyente`= '$gran_contribuyente',
+                            `activo`= '$activo'
 			 WHERE idmaestroClientes=$id;";
 			
 	$rs = mysql_query($SqlUpdate);

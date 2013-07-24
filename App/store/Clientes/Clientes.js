@@ -10,7 +10,6 @@
 				 create  : "Php/view/ClientesCreate.php",
 				 update  : "Php/view/ClientesUpdate.php",
 				 destroy : "Php/view/ClientesDestroy.php"
-				
 			},
 			/*actionMethods:{
 			    read:'POST'
