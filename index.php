@@ -1,3 +1,7 @@
+<?php
+session_start();
+error_reporting(0);
+?>
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 
@@ -6,7 +10,7 @@
 	<head>
 		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 		<title>Aplicacion Para Facturacion de Clientes </title>
-		<link rel="stylesheet" type="text/css" href="/ext-4.0.7/resources/css/ext-all-access.css" />
+		<link rel="stylesheet" type="text/css" href="/ext-4.0.7/resources/css/ext-all.css" />
 		<!-- Iconos del Sistema -->  
 		 <link rel="stylesheet" type="text/css" href="resources/css/mvcclientes.css" />
 		
@@ -19,8 +23,9 @@
 		<script type="text/javascript" src="App/App.js"></script>
                 
 	</head>	
-        <?php
- if(isset($_SESSION["user"])){
+<?php
+
+ if(!isset($_SESSION["benutzer"])){
      //SE VERIFICA SI NO SE HA INICIADO SESION, PARA MOSTRAR CUADRO DE LOGIN
             ?>
 <script>
@@ -93,10 +98,22 @@ Ext.onReady(function() {
                     handler: function() {
                         if (this.up('form').getForm().isValid()) {
                             // In a real application, this would submit the form to the configured url
-                            this.up('form').getForm().submit();
+                            var Campos=this.up('form').getForm().getFieldValues();
+                            //SE ENVIA EL FORM A VALIDAR
+                            form.submit({
+                            url: 'Php/store/Login/LogIn.php',
+                            waitMsg: 'Iniciando Sesion...',
+                            success: function(fp, o) {
+                            win.hide();
+                            }
+                            ,failure: function(fp,o){
+                            Ext.Msg.alert('Error', 'Usuario/Contrase&ntilde;a Incorrecta');
                             this.up('form').getForm().reset();
-                            this.up('window').hide();
-                            Ext.MessageBox.alert('Mensaje', 'Datos correctos');
+                               }
+                            });
+                            
+                            
+                            
                             
                         }
                     }
@@ -124,11 +141,6 @@ Ext.onReady(function() {
 });
  
   </script>
-
-      <?php
-}else{ //SI HAY UNO ABIERTO SE MUESTRA EL CONTENIDO 
- ?>
-
 
 <?php
 }	
