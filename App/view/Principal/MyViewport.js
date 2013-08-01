@@ -17,6 +17,7 @@ Ext.define('MvcClientes.view.Principal.MyViewport',{
                 bodyStyle: 'background:#15428B',
                 shadow: 'frame',
                 shadowOffset: 10
+                
             },
             {
                 id:'PnlEste',
