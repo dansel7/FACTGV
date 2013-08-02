@@ -35,7 +35,85 @@ error_reporting(0);
 
 Ext.onReady(function() {
 
-    var win;
+     var win;
+     var winList;
+     var list_empresas = new Ext.data.Store({
+            fields: ['id_empresa', 'nombre'],
+            proxy: {
+                type: 'ajax',
+                url : 'Php/store/list_empresa.php?user_lvl=<?php echo $_SESSION["nivel"]; ?>',
+                reader: {
+                    type: 'json'
+                }
+            },
+            autoLoad: true
+        });
+        
+//ACA APARECE LA PANTALLA DE listado empresa
+    function ShowListEmpresa() {
+        if (!winList) {
+            var form = Ext.widget('form', {
+                layout: {
+                    type: 'vbox',
+                    align: 'stretch'
+                },
+                border: false,
+                bodyPadding: 10,
+
+                fieldDefaults: {
+                    labelAlign: 'top',
+                    labelWidth: 100,
+                    labelStyle: 'font-weight:bold'
+                },
+                
+                items: [ 
+                 {xtype : "combobox", fieldLabel: "Departamento",queryMode: 'local', store: list_empresas,displayField: 'departamento',valueField: 'id_departamento',name:"id_departamento", width: 300},
+                    ],
+
+                buttons: [{
+                    text: 'Seleccione la Empresa a facturar',
+                    handler: function() {
+                        if (this.up('form').getForm().isValid()) {
+                            // In a real application, this would submit the form to the configured url
+                            var Campos=this.up('form').getForm().getFieldValues();
+                            //SE ENVIA EL FORM A VALIDAR
+                            form.submit({
+                            url: 'Php/store/Login/LogIn.php',
+                            waitMsg: 'Iniciando Sesion...',
+                            success: function(fp, o) {
+                            winList.hide();
+                            }
+                            ,failure: function(fp,o){
+                            Ext.Msg.alert('Error', 'Usuario/Contrase&ntilde;a Incorrecta');
+                            this.up('form').getForm().reset();
+                               }
+                            });
+                            
+                            
+                            
+                            
+                        }
+                    }
+                }]
+            });
+            
+           
+            winList = Ext.widget('window', {
+                title: 'Login',
+                closable: false,
+                width: 250,
+                height: 225,
+                minHeight: 225,
+                layout: 'fit',
+                resizable: false,
+                modal: true,
+                items: form
+            });
+        }
+        winList.show();
+    }
+    
+    
 //ACA APARECE LA PANTALLA DE LOGIN
     function ShowLogin() {
         if (!win) {
@@ -105,6 +183,7 @@ Ext.onReady(function() {
                             waitMsg: 'Iniciando Sesion...',
                             success: function(fp, o) {
                             win.hide();
+                            ShowListEmpresa();
                             }
                             ,failure: function(fp,o){
                             Ext.Msg.alert('Error', 'Usuario/Contrase&ntilde;a Incorrecta');
@@ -144,7 +223,106 @@ Ext.onReady(function() {
 
 <?php
 }	
-?>	
+
+        
+ if(isset($_SESSION["benutzer"]) && !isset($_SESSION["empresa"])){
+     //SE VERIFICA SI NO SE HA INICIADO SESION, PARA MOSTRAR CUADRO DE LOGIN
+            ?>
+<script>
+  Ext.require([
+    'Ext.form.*'
+]);
+
+Ext.onReady(function() {
+
+    var win;
+    
+     var list_empresas = new Ext.data.Store({
+            fields: ['id_empresa', 'nombre'],
+            proxy: {
+                type: 'ajax',
+                url : 'Php/store/list_empresa.php?user_lvl=<?php echo $_SESSION["nivel"]; ?>',
+                reader: {
+                    type: 'json'
+                }
+            },
+            autoLoad: true
+        });
+        
+//ACA APARECE LA PANTALLA DE listado empresa
+    function ShowListEmpresa() {
+        if (!win) {
+            var form = Ext.widget('form', {
+                layout: {
+                    type: 'vbox',
+                    align: 'stretch'
+                },
+                border: false,
+                bodyPadding: 10,
+
+                fieldDefaults: {
+                    labelAlign: 'top',
+                    labelWidth: 100,
+                    labelStyle: 'font-weight:bold'
+                },
+                
+                items: [ 
+                 {xtype : "combobox", fieldLabel: "Departamento",queryMode: 'local', store: list_empresas,displayField: 'departamento',valueField: 'id_departamento',name:"id_departamento", width: 300},
+                    ],
+
+                buttons: [{
+                    text: 'Seleccionar',
+                    handler: function() {
+                        if (this.up('form').getForm().isValid()) {
+                            // In a real application, this would submit the form to the configured url
+                            var Campos=this.up('form').getForm().getFieldValues();
+                            //SE ENVIA EL FORM A VALIDAR
+                            form.submit({
+                            url: 'Php/store/Login/LogIn.php',
+                            waitMsg: 'Iniciando Sesion...',
+                            success: function(fp, o) {
+                            win.hide();
+                            }
+                            ,failure: function(fp,o){
+                            Ext.Msg.alert('Error', 'Usuario/Contrase&ntilde;a Incorrecta');
+                            this.up('form').getForm().reset();
+                               }
+                            });
+                            
+                            
+                            
+                            
+                        }
+                    }
+                }]
+            });
+            
+           
+            win = Ext.widget('window', {
+                title: 'Login',
+                closable: false,
+                width: 250,
+                height: 225,
+                minHeight: 225,
+                layout: 'fit',
+                resizable: false,
+                modal: true,
+                items: form
+            });
+        }
+        win.show();
+    }
+    
+    ShowListEmpresa();
+
+});
+ 
+  </script>
+
+<?php
+}	
+?>
+        
         
         
 </html>
