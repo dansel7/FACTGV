@@ -29,6 +29,7 @@ error_reporting(0);
      //SE VERIFICA SI NO SE HA INICIADO SESION, PARA MOSTRAR CUADRO DE LOGIN
             ?>
 <script>
+/////////////////////////////PANTALLA DE SELECCION DE EMPRESA/////////////////////////////    
   Ext.require([
     'Ext.form.*'
 ]);
@@ -49,7 +50,7 @@ Ext.onReady(function() {
             autoLoad: true
         });
         
-//ACA APARECE LA PANTALLA DE listado empresa
+/////////////////////////////LISTADO EMPRESA/////////////////////////////
     function ShowListEmpresa() {
         if (!winList) {
             var form = Ext.widget('form', {
@@ -67,29 +68,32 @@ Ext.onReady(function() {
                 },
                 
                 items: [ 
-                 {xtype : "combobox", fieldLabel: "Departamento",queryMode: 'local', store: list_empresas,displayField: 'departamento',valueField: 'id_departamento',name:"id_departamento", width: 300},
+                 {   xtype : "combobox",id:"cmbxListEmpresa",defaultValue: 0,
+                     fieldLabel: "Seleccione Empresa",queryMode: 'local', 
+                     store: list_empresas,displayField: 'nombre',
+                     valueField: 'id_empresa',name:"id_empresa",
+                     width: 300
+                  },
                     ],
 
                 buttons: [{
                     text: 'Seleccione la Empresa a facturar',
                     handler: function() {
                         if (this.up('form').getForm().isValid()) {
-                            // In a real application, this would submit the form to the configured url
+                            
                             var Campos=this.up('form').getForm().getFieldValues();
                             //SE ENVIA EL FORM A VALIDAR
                             form.submit({
-                            url: 'Php/store/Login/LogIn.php',
+                            url: 'Php/controller/SelectEmpresa/SelectEmpresa.php',
                             waitMsg: 'Iniciando Sesion...',
                             success: function(fp, o) {
                             winList.hide();
                             }
                             ,failure: function(fp,o){
-                            Ext.Msg.alert('Error', 'Usuario/Contrase&ntilde;a Incorrecta');
-                            this.up('form').getForm().reset();
+                            Ext.Msg.alert('Error', 'Seleccione una opcion Valida, Intente de nuevo');
+                            
                                }
-                            });
-                            
-                            
+                            });          
                             
                             
                         }
@@ -97,13 +101,15 @@ Ext.onReady(function() {
                 }]
             });
             
+          
+              
            
             winList = Ext.widget('window', {
                 title: 'Login',
                 closable: false,
                 width: 250,
-                height: 225,
-                minHeight: 225,
+                height: 125,
+                minHeight: 125,
                 layout: 'fit',
                 resizable: false,
                 modal: true,
@@ -112,11 +118,14 @@ Ext.onReady(function() {
         }
         winList.show();
     }
+///////////////////////////////////////////////////////////////////////////////////////
     
     
-//ACA APARECE LA PANTALLA DE LOGIN
+///////////////////////////////ACA APARECE LA PANTALLA DE LOGIN/////////////////////////////
     function ShowLogin() {
         if (!win) {
+            
+            
             var form = Ext.widget('form', {
                 layout: {
                     type: 'vbox',
@@ -124,13 +133,11 @@ Ext.onReady(function() {
                 },
                 border: false,
                 bodyPadding: 10,
-
                 fieldDefaults: {
                     labelAlign: 'top',
                     labelWidth: 100,
                     labelStyle: 'font-weight:bold'
                 },
-                
                 items: [{
                         
                     xtype: 'fieldcontainer',
@@ -172,14 +179,15 @@ Ext.onReady(function() {
                 }],
 
                 buttons: [{
+                    name: 'btnSubmit',
                     text: 'Iniciar Sesion',
                     handler: function() {
                         if (this.up('form').getForm().isValid()) {
-                            // In a real application, this would submit the form to the configured url
+                            
                             var Campos=this.up('form').getForm().getFieldValues();
                             //SE ENVIA EL FORM A VALIDAR
                             form.submit({
-                            url: 'Php/store/Login/LogIn.php',
+                            url: 'Php/controller/Login/LogIn.php',
                             waitMsg: 'Iniciando Sesion...',
                             success: function(fp, o) {
                             win.hide();
@@ -189,15 +197,11 @@ Ext.onReady(function() {
                             Ext.Msg.alert('Error', 'Usuario/Contrase&ntilde;a Incorrecta');
                             this.up('form').getForm().reset();
                                }
-                            });
-                            
-                            
-                            
-                            
+                            });                         
                         }
                     }
                 }]
-            });
+          });
             
            
             win = Ext.widget('window', {
@@ -218,6 +222,7 @@ Ext.onReady(function() {
     ShowLogin();
 
 });
+///////////////////////////////////////////////////////////////////////////////////////
  
   </script>
 
@@ -225,18 +230,18 @@ Ext.onReady(function() {
 }	
 
         
- if(isset($_SESSION["benutzer"]) && !isset($_SESSION["empresa"])){
+ if(isset($_SESSION["benutzer"]) && !isset($_SESSION["idEmpresa"])){
      //SE VERIFICA SI NO SE HA INICIADO SESION, PARA MOSTRAR CUADRO DE LOGIN
             ?>
 <script>
+///////////////////////////////////////////////////////////////////////////////////////
   Ext.require([
     'Ext.form.*'
 ]);
 
 Ext.onReady(function() {
 
-    var win;
-    
+     var winList;
      var list_empresas = new Ext.data.Store({
             fields: ['id_empresa', 'nombre'],
             proxy: {
@@ -249,9 +254,9 @@ Ext.onReady(function() {
             autoLoad: true
         });
         
-//ACA APARECE LA PANTALLA DE listado empresa
+///////////////////////////////ACA APARECE LA PANTALLA DE listado empresa/////////////////////////////
     function ShowListEmpresa() {
-        if (!win) {
+        if (!winList) {
             var form = Ext.widget('form', {
                 layout: {
                     type: 'vbox',
@@ -267,25 +272,25 @@ Ext.onReady(function() {
                 },
                 
                 items: [ 
-                 {xtype : "combobox", fieldLabel: "Departamento",queryMode: 'local', store: list_empresas,displayField: 'departamento',valueField: 'id_departamento',name:"id_departamento", width: 300},
+                 {xtype : "combobox", fieldLabel: "Seleccione Empresa",queryMode: 'local', store: list_empresas,displayField: 'nombre',valueField: 'id_empresa',name:"id_empresa", width: 300},
                     ],
 
                 buttons: [{
-                    text: 'Seleccionar',
+                    text: 'Seleccione la Empresa a facturar',
                     handler: function() {
                         if (this.up('form').getForm().isValid()) {
-                            // In a real application, this would submit the form to the configured url
+                            
                             var Campos=this.up('form').getForm().getFieldValues();
                             //SE ENVIA EL FORM A VALIDAR
                             form.submit({
-                            url: 'Php/store/Login/LogIn.php',
+                            url: 'Php/controller/SelectEmpresa/SelectEmpresa.php',
                             waitMsg: 'Iniciando Sesion...',
                             success: function(fp, o) {
-                            win.hide();
+                            winList.hide();
                             }
                             ,failure: function(fp,o){
-                            Ext.Msg.alert('Error', 'Usuario/Contrase&ntilde;a Incorrecta');
-                            this.up('form').getForm().reset();
+                            Ext.Msg.alert('Error', 'Seleccione una opcion Valida, Intente de nuevo');
+                            
                                }
                             });
                             
@@ -298,25 +303,26 @@ Ext.onReady(function() {
             });
             
            
-            win = Ext.widget('window', {
+            winList = Ext.widget('window', {
                 title: 'Login',
                 closable: false,
                 width: 250,
-                height: 225,
-                minHeight: 225,
+                height: 125,
+                minHeight: 125,
                 layout: 'fit',
                 resizable: false,
                 modal: true,
                 items: form
             });
         }
-        win.show();
+        winList.show();
     }
     
     ShowListEmpresa();
 
 });
  
+ ///////////////////////////////////////////////////////////////////////////////////////
   </script>
 
 <?php
