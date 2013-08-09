@@ -88,15 +88,16 @@ Ext.onReady(function() {
                             waitMsg: 'Iniciando Sesion...',
                             success: function(fp, o) {
                             winList.hide();
+                            //Ext.get('PnlNorte').load({url: 'Php/view/PanelSesion.php'});
+                            //Ext.getCmp('PnlNorte').add({url: 'Php/view/PanelSesion.php'});
                             }
                             ,failure: function(fp,o){
                             Ext.Msg.alert('Error', 'Seleccione una opcion Valida, Intente de nuevo');
-                            
-                               }
+                            }
                             });          
                             
-                            
                         }
+                        
                     }
                 }]
             });
@@ -240,7 +241,6 @@ Ext.onReady(function() {
 ]);
 
 Ext.onReady(function() {
-
      var winList;
      var list_empresas = new Ext.data.Store({
             fields: ['id_empresa', 'nombre'],

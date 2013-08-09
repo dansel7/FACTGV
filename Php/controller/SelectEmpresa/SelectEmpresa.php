@@ -9,7 +9,7 @@ if(isset($_POST["id_empresa"])){
        mysql_select_db($db_name,$connection) or die("Error de conexion a la base de datos");
        
        $sql = "select nombre
-           from empresa where id_empresa={$_POST["id_empresa"]} limit 1";
+           from empresa where id_empresa='{$_POST["id_empresa"]}' limit 1";
            
        $Qryres = mysql_query($sql,$connection) or die('La consulta fall&oacute;: '.mysql_error());
        $resultado=  mysql_fetch_row($Qryres);

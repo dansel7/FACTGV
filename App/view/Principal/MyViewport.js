@@ -9,24 +9,23 @@ Ext.define('MvcClientes.view.Principal.MyViewport',{
             {
                 id:'PnlNorte',
 		xtype: 'panel',
-                title: 'Sistema de Facturacion - Grupo Villatoro',
+                title: 'Sistema de Facturacion - Grupo Aduanero Villatoro',
                 region: 'north',
                 margins: '2,1,0,0',
                 style: 'background:#15428B;font-size: 25px; text-align: left',
                 activeItem: 0,
-                bodyStyle: 'background:#15428B',
+                bodyStyle: 'background: #cbddf3;',
                 shadow: 'frame',
-                shadowOffset: 10
-                
+                shadowOffset: 10,
+                autoLoad: 'Php/view/PanelSesion.php'
             },
             {
                 id:'PnlEste',
      		xtype: 'panel',
                 title: 'Menu Principal',
-				split: true,
+		split: true,
                 region: 'west',
                 width: 192,
-                split: true,
                 collapsible: true,
                 margins: '3,3,0,0',
                 layout: 'accordion',
@@ -228,7 +227,7 @@ Ext.define('MvcClientes.view.Principal.MyViewport',{
                 height: 21,
                 margins: '0',
                 activeItem: 0,
-                html: '<p>Propiedad de Grupo Villatoro - Derechos Reservados 2013</p>',
+                html: '<p>Propiedad de Grupo Aduanero Villatoro - Derechos Reservados 2013</p>',
                 style: 'font-size: 9px; text-align: left;',
                 split: true
             },
