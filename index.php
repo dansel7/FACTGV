@@ -42,7 +42,7 @@ Ext.onReady(function() {
             fields: ['id_empresa', 'nombre'],
             proxy: {
                 type: 'ajax',
-                url : 'Php/store/list_empresa.php?user_lvl=<?php echo $_SESSION["nivel"]; ?>',
+                url : 'Php/store/list_empresa.php',
                 reader: {
                     type: 'json'
                 }
@@ -88,8 +88,20 @@ Ext.onReady(function() {
                             waitMsg: 'Iniciando Sesion...',
                             success: function(fp, o) {
                             winList.hide();
-                            //Ext.get('PnlNorte').load({url: 'Php/view/PanelSesion.php'});
-                            //Ext.getCmp('PnlNorte').add({url: 'Php/view/PanelSesion.php'});
+                            
+                           ///----Actualiza el contenido de la sesion----///
+                            Ext.Ajax.request({
+                              url: 'Php/view/PanelSesion.php',
+                              success: function(response) {
+                                outHTML = response.responseText;
+                                Ext.getCmp('PnlNorte').update(outHTML);                      
+                              },
+                              failure: function(response) {
+                               Ext.getCmp('PnlNorte').update("Grupo Aduanero Villatoro - Error Solicite Asistencia de IT")
+                              }
+                            });
+                            //------------------FIN------------------//
+                            
                             }
                             ,failure: function(fp,o){
                             Ext.Msg.alert('Error', 'Seleccione una opcion Valida, Intente de nuevo');
@@ -246,7 +258,7 @@ Ext.onReady(function() {
             fields: ['id_empresa', 'nombre'],
             proxy: {
                 type: 'ajax',
-                url : 'Php/store/list_empresa.php?user_lvl=<?php echo $_SESSION["nivel"]; ?>',
+                url : 'Php/store/list_empresa.php',
                 reader: {
                     type: 'json'
                 }
@@ -287,6 +299,21 @@ Ext.onReady(function() {
                             waitMsg: 'Iniciando Sesion...',
                             success: function(fp, o) {
                             winList.hide();
+                            
+                            ///----Actualiza el contenido de la sesion----///
+                            Ext.Ajax.request({
+                              url: 'Php/view/PanelSesion.php',
+                              success: function(response) {
+                                outHTML = response.responseText;
+                                Ext.getCmp('PnlNorte').update(outHTML);                      
+                              },
+                              failure: function(response) {
+                               Ext.getCmp('PnlNorte').update("Grupo Aduanero Villatoro - Error Solicite Asistencia de IT")
+                              }
+                            });
+                            //------------------FIN------------------//
+                            
+                            
                             }
                             ,failure: function(fp,o){
                             Ext.Msg.alert('Error', 'Seleccione una opcion Valida, Intente de nuevo');
