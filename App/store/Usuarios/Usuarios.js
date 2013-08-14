@@ -1,22 +1,22 @@
-		Ext.define('MvcClientes.store.Clientes.Clientes', {
+		Ext.define('MvcClientes.store.Usuarios.Usuarios', {
 		extend: 'Ext.data.Store',
-                model: 'MvcClientes.model.Clientes.Clientes',//Llamamos el Modelo Antes Creado
+                model: 'MvcClientes.model.Usuarios.Usuarios',//Llamamos el Modelo Antes Creado
 		autoSync: true,//Sincronizacion con el Servidor
 		autoSave: true,	//<--- hace las peticiones al servidor autom�ticamente
 		proxy: {
             type: 'ajax',
             api: { //Declaramos la API y Comienzan en estas lineas las operaciones CRUD
-				 read    : "Php/view/Clientes/ClientesRead.php",
-				 create  : "Php/view/Clientes/ClientesCreate.php",
-				 update  : "Php/view/Clientes/ClientesUpdate.php",
-				 destroy : "Php/view/Clientes/ClientesDestroy.php"
+				 read    : "Php/view/Usuarios/UsuariosRead.php",
+				 create  : "Php/view/Usuarios/UsuariosCreate.php",
+				 update  : "Php/view/Usuarios/UsuariosUpdate.php",
+				 destroy : "Php/view/Usuarios/UsuariosDestroy.php"
 			},
 			/*actionMethods:{
 			    read:'POST'
 			},*/
             reader: {
                 type: 'json',
-				idProperty: 'idmaestroClientes',
+				idProperty: 'idmaestroUsuarios',
 				successProperty	: function()
 				   {
                       // Alguna Funcion o mensaje que quieras agregar cuando la operacion es exitosa

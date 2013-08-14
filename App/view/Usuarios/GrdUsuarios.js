@@ -1,7 +1,7 @@
-Ext.define('MvcClientes.view.Clientes.GrdClientes',{
+Ext.define('MvcClientes.view.Usuarios.GrdUsuarios',{
 	extend: 'Ext.grid.Panel',
-	alias:'widget.gridClientes',
-	store: 'Clientes.Clientes',
+	alias:'widget.gridUsuarios',
+	store: 'Usuarios.Usuarios',
 	border: false,
 	listeners: {
             'selectionchange': function(view, records) {
@@ -12,7 +12,7 @@ Ext.define('MvcClientes.view.Clientes.GrdClientes',{
 		var me = this;
 		Ext.applyIf(me, {
 			columns : [//Definimos las Columnas del Grid y las Columnas de la Tabla
-				   {header:"Id",dataIndex:"idmaestroClientes",width:50,hidden:true},
+				   {header:"Id",dataIndex:"idmaestroUsuarios",width:50,hidden:true},
 				   {header:"Nombre",dataIndex:"nom_cliente",flex:1},
 				   {header:"Direccion",dataIndex:"direccion",flex:1},
 				   {header:"NIT",dataIndex:"NIT",flex:1},
@@ -105,7 +105,7 @@ Ext.define('MvcClientes.view.Clientes.GrdClientes',{
 					width: 60,
 					align: 'center',
 					margin:'0 0 3 3',
-					itemId:'ActColumGrdListaClientes',
+					itemId:'ActColumGrdListaUsuarios',
                     items: [
                         {
 						    icon   : 'resources/imagenes/add.png',

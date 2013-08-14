@@ -1,15 +1,14 @@
 <?php
-
 // Conexion a la Bd
-require '../Database_conf.php';
+require '../../Database_conf.php';
 mysql_select_db($db_name,$connection) or die("Error de conexion a la base de datos");
 
 	$info = $_POST["data"];
 
-	$data = json_decode(stripslashes($info));
+	$data = json_decode($info);
 
 	$nom_cliente = $data->nom_cliente;
-	$direccion = $data->direccion;
+	$direccion = $data->direccion; 
 	$NIT = $data->NIT;
         $NRC = $data->NRC;
         $id_departamento=$data->id_departamento;

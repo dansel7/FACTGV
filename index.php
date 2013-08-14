@@ -118,7 +118,7 @@ Ext.onReady(function() {
               
            
             winList = Ext.widget('window', {
-                title: 'Login',
+                title: 'Facturacion',
                 closable: false,
                 width: 250,
                 height: 125,
@@ -331,7 +331,7 @@ Ext.onReady(function() {
             
            
             winList = Ext.widget('window', {
-                title: 'Login',
+                title: 'Facturacion',
                 closable: false,
                 width: 250,
                 height: 125,

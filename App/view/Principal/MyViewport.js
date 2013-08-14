@@ -44,12 +44,16 @@ Ext.define('MvcClientes.view.Principal.MyViewport',{
                         listeners:{//Listeners apuntando a cada node
                             itemclick:function(view, record, item, index, e)
                                         {
-                 //DEPENDIENDO QUE OPCION QUERES SE DEBE DE DEFINIR EL INDICE DE LA OPCION
+                 //DEPENDIENDO QUE OPCION SE QUIERE SE DEBE DE DEFINIR EL INDICE DE LA OPCION
                                         
                                         if (index==1)
                                            {
                                               addTabListadoClientes();
                                            }
+                                       if (index==3)
+                                       {
+                                          addTabListadoUsuarios();
+                                       }
 
                                         }
                                  },
@@ -78,7 +82,7 @@ Ext.define('MvcClientes.view.Principal.MyViewport',{
                                     text: 'Usuarios',
                                     children: [
                                         {
-                                        text: 'Tree Node',
+                                        text: 'Listado',
                                         leaf: true
                                         }
                                     ]
@@ -101,7 +105,7 @@ Ext.define('MvcClientes.view.Principal.MyViewport',{
                     },
                     {
                         xtype: 'treepanel',
-                        title: 'Movimientos',
+                        title: 'Facturaciones',
                         height: 212,
 						iconCls:'movimientos',
                         forceLayout: true,
@@ -227,7 +231,7 @@ Ext.define('MvcClientes.view.Principal.MyViewport',{
                 height: 21,
                 margins: '0',
                 activeItem: 0,
-                html: '<p>Propiedad de Grupo Aduanero Villatoro - Derechos Reservados 2013</p>',
+                html: '<p>Propiedad de Grupo Villatoro - Derechos Reservados 2013</p>',
                 style: 'font-size: 9px; text-align: left;',
                 split: true
             },
@@ -238,10 +242,23 @@ Ext.define('MvcClientes.view.Principal.MyViewport',{
 	
  ////Funciones ////////////////////////////////	
         				 
-	    function addTabListadoClientes(){ 
+	 function addTabListadoClientes(){ 
       	 var tab=this.TabPanelMain.getComponent('TabListadoClientes');
 		   if(!tab){ //si no existe lo creamos
 				tab = Ext.create('MvcClientes.view.Clientes.PanelClientes', {});
+				this.TabPanelMain.add(tab); //Se agrega el Panel Cliente al TabMain 
+				this.TabPanelMain.doLayout(); //Redibujado del Panel 
+				this.TabPanelMain.setActiveTab(tab); //Activamos el Tab
+               			
+             } 
+			    this.TabPanelMain.setActiveTab(tab); //Se activa el Tab Clickeado 
+				     		 
+	    }
+            
+             function addTabListadoUsuarios(){ 
+      	 var tab=this.TabPanelMain.getComponent('TabListadoUsuarios');
+		   if(!tab){ //si no existe lo creamos
+				tab = Ext.create('MvcClientes.view.Usuarios.PanelUsuarios', {});
 				this.TabPanelMain.add(tab); //Se agrega el Panel Cliente al TabMain 
 				this.TabPanelMain.doLayout(); //Redibujado del Panel 
 				this.TabPanelMain.setActiveTab(tab); //Activamos el Tab
