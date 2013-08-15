@@ -13,5 +13,10 @@ Ext.application({
 		      var MyViewPrincipal = Ext.create("MvcClientes.view.Principal.MyViewport")
 		     } 
 });  
-	
+
+
+                function func(valor){
+                alert(valor);
+                }   
+
 	

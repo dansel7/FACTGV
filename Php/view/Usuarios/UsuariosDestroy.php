@@ -1,6 +1,6 @@
 <?php
 	// Conexion a la Bd
-    require '../Database_conf.php';
+    require '../../Database_conf.php';
 	mysql_select_db($db_name,$connection) or die("Error de conexion a la base de datos");
 
 	$info = $_POST["data"];

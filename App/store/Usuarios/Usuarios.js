@@ -16,7 +16,7 @@
 			},*/
             reader: {
                 type: 'json',
-				idProperty: 'idmaestroUsuarios',
+				idProperty: 'idbenutzer',
 				successProperty	: function()
 				   {
                       // Alguna Funcion o mensaje que quieras agregar cuando la operacion es exitosa

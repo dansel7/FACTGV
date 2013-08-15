@@ -12,16 +12,14 @@ Ext.define('MvcClientes.view.Usuarios.GrdUsuarios',{
 		var me = this;
 		Ext.applyIf(me, {
 			columns : [//Definimos las Columnas del Grid y las Columnas de la Tabla
-				   {header:"Id",dataIndex:"idmaestroUsuarios",width:50,hidden:true},
-				   {header:"Nombre",dataIndex:"nom_cliente",flex:1},
-				   {header:"Direccion",dataIndex:"direccion",flex:1},
-				   {header:"NIT",dataIndex:"NIT",flex:1},
-                                   {header:"NRC",dataIndex:"NRC",flex:1},
-                                   {header:"Id",dataIndex:"id_departamento",width:50,hidden:true},
-                                   {header:"Departamento",dataIndex:"departamento",flex:1},
-                                   {header:"Giro",dataIndex:"giro",flex:1},
-                                   {header:"Gran Contribuyente",dataIndex:"gran_contribuyente",flex:1},
-                                   {header:"Activo",dataIndex:"activo",flex:1}
+				   {header:"Id",dataIndex:"idbenutzer",width:50,hidden:true},
+                                   {header:"Usuario",dataIndex:"benutzer",flex:1},
+				   {header:"Nombre",dataIndex:"Nombre",flex:1},
+				   {header:"Apellido",dataIndex:"Apellido",flex:1},
+                                   {header:"password",dataIndex:"kennwort",flex:1,hidden:true},
+                                   {header:"Perfil",dataIndex:"perfil",flex:1},
+                                   {header:"Id",dataIndex:"id_perfil",width:50,hidden:true},
+                                 
 				   
 			],
 			dockedItems: [

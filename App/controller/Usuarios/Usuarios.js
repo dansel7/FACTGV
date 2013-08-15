@@ -29,7 +29,7 @@ Ext.define('MvcClientes.controller.Usuarios.Usuarios',{
 		   'FormAddEdicionUsuarios button[action=actGuardar]'://Usando Ext.Component.Query
 			   {
 				 
-				 click:this.ActualizarCliente
+				 click:this.ActualizarUsuario
 			   },
 		    'gridUsuarios button[action=actBorrar]'://Usando Ext.Component.Query
 			   {
@@ -58,7 +58,7 @@ Ext.define('MvcClientes.controller.Usuarios.Usuarios',{
          	 
 	},
 	
-	ActualizarCliente: function(button) {
+	ActualizarUsuario: function(button) {
         var win    = button.up('window'),
             form   = win.down('form'),
             record = form.getRecord(),
@@ -81,13 +81,13 @@ Ext.define('MvcClientes.controller.Usuarios.Usuarios',{
 	    //Para referirnos a un componente aca se utilizaran los Getters:
 		var grid = this.getGridUsuarios();//Get+ Alias gridUsuarios (alias:'widget.gridUsuarios')
 		record = grid.getSelectionModel().getSelection(); 
-		Cliente=grid.getSelectionModel().getSelection()[0].data.nom_cliente;
+		Usuario=grid.getSelectionModel().getSelection()[0].data.nombre + " " + grid.getSelectionModel().getSelection()[0].data.apellido;
 		//En esta parte automaticamente el Controller crea las Funciones Getters
 		store = this.getUsuariosUsuariosStore();//Nota 1: Get+Carpeta.Usuarios Store+La palabra Store
 	    Ext.MessageBox.show({
            title : 'Eliminar Registro',
     	   buttons : Ext.MessageBox.YESNO,
-		   msg : 'Desea Eliminar'+' '+Cliente+'?',
+		   msg : 'Desea Eliminar'+' '+Usuario+'?',
 		   icon : Ext.Msg.WARNING,
            fn : function(btn)
 							{

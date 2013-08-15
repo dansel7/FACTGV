@@ -1,11 +1,11 @@
 <?php
 
-   require '../Database_conf.php';
+   require '../../Database_conf.php';
    mysql_select_db($db_name,$connection) or die("Error de conexion a la base de datos");
 
 		$arr = array();
 		// Llamamos a la Tabla y sus datos 
-		$sql = "select * from maestroClientes mc inner join departamento d on mc.id_departamento=d.id_departamento";
+		$sql = "select * from benutzer b inner join perfil p on b.id_perfil=p.id_perfil";
     	$result = mysql_query($sql,$connection) or die('La consulta fall&oacute;: '.mysql_error());		
 		//Formamos el Array de Datos, si ejecutamos este archivo PHP veremos el array formado
 		while($obj = mysql_fetch_object($result)) {

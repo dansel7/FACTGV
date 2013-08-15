@@ -46,7 +46,7 @@ Ext.define('MvcClientes.view.Clientes.CapturaEdicionClientes', {
                             {xtype : "textfield", name : "NIT", fieldLabel : "NIT", width: 250},
                             {xtype : "textfield", name : "NRC", fieldLabel : "NRC", width: 250},
                             {xtype : "combobox", fieldLabel: "Departamento",queryMode: 'local', store: list_deptos,displayField: 'departamento',valueField: 'id_departamento',name:"id_departamento", width: 300},
-                            {xtype : "textfield", name : "departamento", fieldLabel : "Giro", width: 350,hidden: true},
+                            {xtype : "textfield", name : "departamento", fieldLabel : "departamento", width: 350,hidden: true},
                             {xtype : "textfield", name : "giro", fieldLabel : "Giro", width: 350},
                             {xtype : "checkbox", name : "gran_contribuyente", fieldLabel : "Gran Contribuyente",  inputValue: 'Si',uncheckedValue :'No'},
                             {xtype : "checkbox", name : "activo", fieldLabel : "Activo",  inputValue: 'Si',uncheckedValue :'No'}
