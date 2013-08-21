@@ -9,16 +9,19 @@ error_reporting(0);
 
 	<head>
 		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-		<title>Aplicacion Para Facturacion de Clientes </title>
+		<title>Facturacion de Clientes </title>
 		<link rel="stylesheet" type="text/css" href="/ext-4.0.7/resources/css/ext-all.css" />
 		<!-- Iconos del Sistema -->  
 		 <link rel="stylesheet" type="text/css" href="resources/css/mvcclientes.css" />
+                 <link rel="stylesheet" type="text/css" href="ux/css/ItemSelector.css" />
+                 
 		
 		<!-- En Esta Linea, para cuando se esta desarrollando se pone:ext-all-dev.js, en produccion ext-all.js--> 
 		<script type="text/javascript" src="/ext-4.0.7/ext-all-dev.js"></script>
 		<script type="text/javascript" src="/ext-4.0.7/bootstrap.js"></script>
 		<script type="text/javascript" src="/ext-4.0.7/ext-all-debug.js"></script>
 		<script type="text/javascript" src="/ext-4.0.7/locale/ext-lang-es.js"></script>
+                
 		<!-- Archivos Js--> 
 		<script type="text/javascript" src="App/App.js"></script>
                 
@@ -355,7 +358,5 @@ Ext.onReady(function() {
 <?php
 }	
 ?>
-        
-        
         
 </html>

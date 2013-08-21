@@ -8,6 +8,7 @@ Ext.define('MvcClientes.model.Usuarios.Usuarios', {
                                 { name: 'kennwort', type: 'string'},
                                 { name: 'perfil',   type: 'string'},
                                 { name: 'id_perfil',type: 'int'},
+                               
                                 
            ]
 });

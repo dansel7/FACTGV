@@ -19,8 +19,7 @@ Ext.define('MvcClientes.view.Usuarios.GrdUsuarios',{
                                    {header:"password",dataIndex:"kennwort",flex:1,hidden:true},
                                    {header:"Perfil",dataIndex:"perfil",flex:1},
                                    {header:"Id",dataIndex:"id_perfil",width:50,hidden:true},
-                                 
-				   
+                                   		   
 			],
 			dockedItems: [
 					{
