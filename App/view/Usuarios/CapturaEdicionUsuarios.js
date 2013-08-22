@@ -7,7 +7,7 @@ Ext.require([
 Ext.define('MvcClientes.view.Usuarios.CapturaEdicionUsuarios', {
     extend: 'Ext.window.Window',
 	alias:'widget.FormAddEdicionUsuarios',
-    height: 400,
+    height: 450,
     width: 400,
     layout: {
         type: 'fit'
@@ -31,18 +31,38 @@ Ext.define('MvcClientes.view.Usuarios.CapturaEdicionUsuarios', {
             },
             autoLoad: true
         });
+
+
+
+        //LISTADO DE EMPRESAS QUE ESTAN DISPONIBLES
+            
+          var ds = Ext.create('Ext.data.Store', {
+                    fields: ['id_empresa', 'nombre'],
+                    proxy: {
+                        type: 'ajax',
+                        url : 'Php/store/list_user_emp.php?opx=u1em1'
+                    },
+                    autoLoad: true
+                });
+                
+             
+         //////////////////////////////////////////////
         
-  
-      var ds = Ext.create('Ext.data.ArrayStore', {
-        data: [[123,'One Hundred Twenty Three'],
-            ['1', 'One'], ['2', 'Two'], ['3', 'Three'], ['4', 'Four'], ['5', 'Five'],
-            ['6', 'Six'], ['7', 'Seven'], ['8', 'Eight'], ['9', 'Nine']],
-        fields: ['value','text'],
-        sortInfo: {
-            field: 'value',
-            direction: 'ASC'
-        }
-    });
+       //LISTADO DE EMPRESAS QUE YA ESTAN SELECCIONADAS
+   var ds2="";
+      /*  Ext.Ajax.request({
+          url: 'Php/store/list_user_emp.php?opx=em2u2',
+          success: function(response) {
+            outHTML = response.responseText;
+            ds2=outHTML;                      
+          },
+          failure: function(response) {
+           ds2="";
+          }
+        }); */
+        ////////////////////////////////////////////////
+ ds2=["1"];
+ 
 
 
 var me = this;
@@ -67,17 +87,20 @@ Ext.applyIf(me, {
                     {
 				xtype: 'itemselector',
 	                        name: 'itemselector',
-	                        id: 'itemselector-field',
-	                        width: 350,
-                                fieldLabel: 'ItemSelector',
-	                        imagePath: '../ux/images/',
+	                        width: 375,
+                                fieldLabel: 'Empresa',
 	                        store: ds,
-	                        displayField: 'text',
-	                        valueField: 'value',
-	                        value: ['3', '4', '6'],
+                                buttons: ['add', 'remove'],
+                                buttonsText: {
+                                    add: "Agregar",
+                                    remove: "Remover"
+                                },
+	                        displayField: 'nombre',
+	                        valueField: 'id_empresa',
+	                        value: ['1'],
 	                        allowBlank: false,
 	                        msgTarget: 'side'
-			}
+		    }
                     //{xtype: 'itemselector', name: 'empresas',anchor: '10%',
                    // fieldLabel: 'Seleccion',store: ds,displayField: 'text',valueField: 'value',
                     //value: ['3', '4', '6'], allowBlank: false, msgTarget: 'side'}
@@ -103,8 +126,7 @@ Ext.applyIf(me, {
                  }]
               }]
           }); 
-  
-		  me.callParent(arguments);
+     	  me.callParent(arguments);
                  
       }					
 });	
