@@ -1,13 +1,13 @@
-Ext.define('MvcClientes.controller.Usuarios.Usuarios',{
+Ext.define('MvcClientes.controller.Empresa.Empresa',{
 	extend		: 'Ext.app.Controller',
-	stores		: ['Usuarios.Usuarios'],//Nota1: Carpeta + Archivo Usuarios.js,ver en la funcion de eliminar el get
-	models		: ['Usuarios.Usuarios'],//Nota2: Carpeta + Archivo Usuarios.js,ver en la funcion de eliminar el get
-	views		: ['Usuarios.GrdUsuarios','Usuarios.CapturaEdicionUsuarios'],
+	stores		: ['Empresa.Empresa'],//Nota1: Carpeta + Archivo Empresa.js,ver en la funcion de eliminar el get
+	models		: ['Empresa.Empresa'],//Nota2: Carpeta + Archivo Empresa.js,ver en la funcion de eliminar el get
+	views		: ['Empresa.GrdEmpresa','Empresa.CapturaEdicionEmpresa'],
 	refs:[ //Esta linea se usa cuando se hace referencia a una Vista dentro de un grid en un Controller
 	 
 	  {
-	    ref:'gridUsuarios',
-		selector:'gridUsuarios'//<<--Vista dentro de un Grid
+	    ref:'gridEmpresa',
+		selector:'gridEmpresa'//<<--Vista dentro de un Grid
 	  }
 	
 	],
@@ -15,23 +15,23 @@ Ext.define('MvcClientes.controller.Usuarios.Usuarios',{
 	init	: function() {
 		var me = this;
 		me.control({
-		    'gridUsuarios dataview': { //Usando Ext.Component.Query,aca hacemos referencia a la vista del Grid
+		    'gridEmpresa dataview': { //Usando Ext.Component.Query,aca hacemos referencia a la vista del Grid
                             itemdblclick: this.Editar
 			},
-		    'gridUsuarios button[action=actAgregar]'://Usando Ext.Component.Query
+		    'gridEmpresa button[action=actAgregar]'://Usando Ext.Component.Query
 			   {
 				 click:this.Agregar
 			   },
-			'gridUsuarios button[action=actEditar]'://Usando Ext.Component.Query
+			'gridEmpresa button[action=actEditar]'://Usando Ext.Component.Query
 			   {
 				 click:this.Editar
 			   },
-		   'FormAddEdicionUsuarios button[action=actGuardar]'://Usando Ext.Component.Query
+		   'FormAddEdicionEmpresa button[action=actGuardar]'://Usando Ext.Component.Query
 			   {
 				 
 				 click:this.ActualizarUsuario
 			   },
-		    'gridUsuarios button[action=actBorrar]'://Usando Ext.Component.Query
+		    'gridEmpresa button[action=actBorrar]'://Usando Ext.Component.Query
 			   {
 				 click:this.Eliminar
 			   }
@@ -44,14 +44,14 @@ Ext.define('MvcClientes.controller.Usuarios.Usuarios',{
 	//Inician Funciones
 		
 	Agregar: function(){
-	    var FormAddEditarUsuarios= Ext.widget('FormAddEdicionUsuarios');
+	    var FormAddEditarEmpresa= Ext.widget('FormAddEdicionEmpresa');
 	},
 	
 	Editar: function(grid, record){
-	    records = this.getGridUsuarios().getSelectionModel().getSelection();
+	    records = this.getGridEmpresa().getSelectionModel().getSelection();
 	    if(records.length > 0){
-		     var FormAddEditarUsuarios= Ext.widget('FormAddEdicionUsuarios');
-		     var EditForm=FormAddEditarUsuarios.down('form');	
+		     var FormAddEditarEmpresa= Ext.widget('FormAddEdicionEmpresa');
+		     var EditForm=FormAddEditarEmpresa.down('form');	
 		     var record=records[0];
 		     EditForm.loadRecord(record);
 		}
@@ -64,13 +64,13 @@ Ext.define('MvcClientes.controller.Usuarios.Usuarios',{
             record = form.getRecord(),
             values = form.getValues();
             //IMPORTANTE COLOCAR EL NOMBRE DEL ID CORRECTO DEL REGISTRO
-	if (values.idbenutzer > 0){ //Si Hay algun Valor, entra en Modo de Actualizacion
+	if (values.id_empresa > 0){ //Si Hay algun Valor, entra en Modo de Actualizacion
 			record.set(values);
 		} else{ //De Lo contrario, si la accion fue para agregar, se inserta un registro
-			record = Ext.create('MvcClientes.model.Usuarios.Usuarios');
+			record = Ext.create('MvcClientes.model.Empresa.Empresa');
 			record.set(values);
 			record.setId(0);
-			this.getUsuariosUsuariosStore().add(record);
+			this.getEmpresaEmpresaStore().add(record);
 		}
         win.close();
        
@@ -79,15 +79,15 @@ Ext.define('MvcClientes.controller.Usuarios.Usuarios',{
 	Eliminar: function()
 	{
 	    //Para referirnos a un componente aca se utilizaran los Getters:
-		var grid = this.getGridUsuarios();//Get+ Alias gridUsuarios (alias:'widget.gridUsuarios')
+		var grid = this.getGridEmpresa();//Get+ Alias gridEmpresa (alias:'widget.gridEmpresa')
 		record = grid.getSelectionModel().getSelection(); 
-		Usuario=grid.getSelectionModel().getSelection()[0].data.Nombre + " " + grid.getSelectionModel().getSelection()[0].data.Apellido;
+		Empresa=grid.getSelectionModel().getSelection()[0].data.Nombre;
 		//En esta parte automaticamente el Controller crea las Funciones Getters
-		store = this.getUsuariosUsuariosStore();//Nota 1: Get+Carpeta.Usuarios Store+La palabra Store
+		store = this.getEmpresaEmpresaStore();//Nota 1: Get+Carpeta.Empresa Store+La palabra Store
 	    Ext.MessageBox.show({
            title : 'Eliminar Registro',
     	   buttons : Ext.MessageBox.YESNO,
-		   msg : 'Desea Eliminar'+' '+Usuario+'?',
+		   msg : 'Desea Eliminar'+' '+ Empresa +'?',
 		   icon : Ext.Msg.WARNING,
            fn : function(btn)
 							{

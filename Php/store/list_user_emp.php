@@ -12,10 +12,11 @@ if(isset($_GET["opx"])){
                 $sql = "select * from empresa";
                 $result = mysql_query($sql,$connection) or die('La consulta fall&oacute;: '.mysql_error());		
 		//Formamos el Array de Datos, si ejecutamos este archivo PHP veremos el array formado
-		while($obj = mysql_fetch_object($result)) {
+                while($obj = mysql_fetch_object($result)) {
 			$arr[] = $obj;
 		}
-                        echo json_encode($arr);
+                  echo '{ metaData: { "root": "data"}';	
+                  echo ',"success":true, "data":' . json_encode($arr) . '}';
 
                 } else if($_GET["opx"]=='em2u2'){ 
                     

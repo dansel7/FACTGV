@@ -24,7 +24,7 @@ Ext.define('MvcClientes.view.Principal.MyViewport',{
      		xtype: 'panel',
                 title: 'Menu Principal',
 		split: true,
-                region: 'west',
+                region: 'east',
                 width: 192,
                 collapsible: true,
                 margins: '3,3,0,0',
@@ -46,13 +46,17 @@ Ext.define('MvcClientes.view.Principal.MyViewport',{
                                         {
                  //DEPENDIENDO QUE OPCION SE QUIERE SE DEBE DE DEFINIR EL INDICE DE LA OPCION
                                         
-                                        if (index==1)
+                                        if (index==0)
                                            {
                                               addTabListadoClientes();
                                            }
-                                       if (index==3)
+                                       if (index==1)
                                        {
                                           addTabListadoUsuarios();
+                                       }
+                                       if (index==2)
+                                       {
+                                          addTabListadoEmpresa();
                                        }
 
                                         }
@@ -69,33 +73,23 @@ Ext.define('MvcClientes.view.Principal.MyViewport',{
                             children: [
                                 {
                                     text: 'Clientes',
-                                    children: [
-                                        {
-
-                                        text: 'Listado',
-                                        leaf: true
-
-                                        }
-                                    ]
+                                    leaf: true,
+                                    iconCls:'icon-cliente'
+                                    
                                 },
                                 {
                                     text: 'Usuarios',
-                                    children: [
-                                        {
-                                        text: 'Listado',
-                                        leaf: true
-                                        }
-                                    ]
+                                  
+                                        leaf: true,
+                                    iconCls:'icon-users'
+                                        
+                                    
                                 },
                                 {
                                     text: 'Empresas',
-                                    children: [
-                                        {
-                                        id:'Listado',
-                                        text: 'Listado',
-                                        leaf: true
-                                        }
-                                    ]
+                            
+                                        leaf: true,
+                                    iconCls:'icon-empresa'
                                 }
                             ]	
                         },
@@ -107,7 +101,7 @@ Ext.define('MvcClientes.view.Principal.MyViewport',{
                         xtype: 'treepanel',
                         title: 'Facturaciones',
                         height: 212,
-						iconCls:'movimientos',
+			iconCls:'movimientos',
                         forceLayout: true,
                         collapsed: true,
                         collapsible: true,
@@ -255,6 +249,7 @@ Ext.define('MvcClientes.view.Principal.MyViewport',{
 				     		 
 	    }
             
+            //////////////
              function addTabListadoUsuarios(){ 
       	 var tab=this.TabPanelMain.getComponent('TabListadoUsuarios');
 		   if(!tab){ //si no existe lo creamos
@@ -267,7 +262,19 @@ Ext.define('MvcClientes.view.Principal.MyViewport',{
 			    this.TabPanelMain.setActiveTab(tab); //Se activa el Tab Clickeado 
 				     		 
 	    }
-		
+	   ///////////////////
+             function addTabListadoEmpresa(){ 
+      	 var tab=this.TabPanelMain.getComponent('TabListadoEmpresa');
+		   if(!tab){ //si no existe lo creamos
+				tab = Ext.create('MvcClientes.view.Empresa.PanelEmpresa', {});
+				this.TabPanelMain.add(tab); //Se agrega el Panel Cliente al TabMain 
+				this.TabPanelMain.doLayout(); //Redibujado del Panel 
+				this.TabPanelMain.setActiveTab(tab); //Activamos el Tab
+               			
+             } 
+			    this.TabPanelMain.setActiveTab(tab); //Se activa el Tab Clickeado 
+				     		 
+	    }
 		
 	
 		

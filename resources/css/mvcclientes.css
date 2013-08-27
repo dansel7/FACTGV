@@ -44,4 +44,12 @@
 		   background: url(../imagenes/tabs.gif)  0px no-repeat !important;
 		   
 		   }				   
-   
+        .icon-empresa {
+        background: url(../imagenes/empresa.png)  0px no-repeat !important;
+        }
+        .icon-cliente {
+        background: url(../imagenes/clientes.png)  0px no-repeat !important;
+        }
+        .icon-users {
+        background: url(../imagenes/users.png)  0px no-repeat !important;
+        }

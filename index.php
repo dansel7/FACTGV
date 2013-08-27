@@ -14,7 +14,6 @@ error_reporting(0);
 		<!-- Iconos del Sistema -->  
 		 <link rel="stylesheet" type="text/css" href="resources/css/mvcclientes.css" />
                  <link rel="stylesheet" type="text/css" href="ux/css/ItemSelector.css" />
-                 
 		
 		<!-- En Esta Linea, para cuando se esta desarrollando se pone:ext-all-dev.js, en produccion ext-all.js--> 
 		<script type="text/javascript" src="/ext-4.0.7/ext-all-dev.js"></script>

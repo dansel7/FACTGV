@@ -8,7 +8,7 @@ Ext.Loader.setConfig({
 		
 Ext.application({  
         name        : "MvcClientes", //<-MvcClientes es el Nombre del Name Space Principal 
-		controllers	: ['Clientes.Clientes','Usuarios.Usuarios'],//<--Controladores de la aplicacion
+		controllers	: ['Clientes.Clientes','Usuarios.Usuarios','Empresa.Empresa'],//<--Controladores de la aplicacion
 		launch      : function(){  
 		      var MyViewPrincipal = Ext.create("MvcClientes.view.Principal.MyViewport")
 		     } 

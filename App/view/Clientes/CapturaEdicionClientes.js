@@ -39,7 +39,7 @@ Ext.define('MvcClientes.view.Clientes.CapturaEdicionClientes', {
                             type: 'auto'
                         },
                         items: 
-                        [ 
+                        [   {xtype: 'displayfield',name: 'displayfield1',id:'empDetails',value: ''},
                             {xtype : "textfield", name : "idmaestroClientes", fieldLabel : "Id",hidden: true},
                             {xtype : "textfield", name : "nom_cliente", fieldLabel : "Nombre", width: 350},
                             {xtype : "textfield", name : "direccion", fieldLabel : "Direccion", width: 350},

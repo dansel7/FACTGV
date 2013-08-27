@@ -9,7 +9,7 @@ if(isset($_POST["benutzer"]) && isset($_POST["kennwort"])){
    
    $sql = "select count(*),concat(IFNULL(b.nombre,''),' ',IFNULL(b.apellido,'')) nom, b.id_perfil, p.perfil
        from benutzer b inner join perfil  p on b.id_perfil=p.id_perfil
-       where b.benutzer='{$_POST["benutzer"]}' and b.kennwort='{$_POST["kennwort"]}' limit 1";
+       where b.benutzer='{$_POST["benutzer"]}' and b.kennwort=AES_ENCRYPT('{$_POST["kennwort"]}','*6v!114t0rO') limit 1";
        
    $Qryres = mysql_query($sql,$connection) or die('La consulta fall&oacute;: '.mysql_error());
    $resultado=  mysql_fetch_row($Qryres);

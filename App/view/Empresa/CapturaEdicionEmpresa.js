@@ -4,17 +4,17 @@ Ext.require([
     'Ext.ux.form.ItemSelector'
 ]);
 
-Ext.define('MvcClientes.view.Usuarios.CapturaEdicionUsuarios', {
+Ext.define('MvcClientes.view.Empresa.CapturaEdicionEmpresa', {
     extend: 'Ext.window.Window',
-	alias:'widget.FormAddEdicionUsuarios',
-    height: 450,
+	alias:'widget.FormAddEdicionEmpresa',
+    height: 125,
     width: 400,
     layout: {
         type: 'fit'
     },
 	autoShow: true,
     closable: false,
-    title: 'Captura/Edicion Usuarios',
+    title: 'Captura/Edicion Empresa',
     modal: false,
 	
     initComponent: function() {
@@ -83,32 +83,10 @@ Ext.applyIf(me, {
                 },
                 items: 
                 [   {xtype: 'displayfield',name: 'displayfield1',id:'empDetails',value: ''},
-                    {xtype : "textfield", name : "idbenutzer", fieldLabel : "Id",hidden: true},
-                    {xtype : "textfield", name : "Nombre", fieldLabel : "Nombre", width: 350},
-                    {xtype : "textfield", name : "Apellido", fieldLabel : "Apellido", width: 350},
-                    {xtype : "textfield", name : "benutzer", fieldLabel : "Usuario", width: 250},
-                    {xtype : "textfield", name : "kennwort", fieldLabel : "Contrase&ntilde;a", width: 250,inputType: 'password'},
-                    {xtype : "combobox", fieldLabel: "Perfil",queryMode: 'local', store: list_perfil, displayField: 'perfil',valueField: 'id_perfil',name:"id_perfil", width: 300},
-                    {xtype : "textfield", name : "perfil", fieldLabel : "perfil", width: 350,hidden: true},                  
-                    {
-				xtype: 'itemselector',
-	                        name: 'userEmp',
-                                id: 'userEmp',
-	                        width: 375, 
-                                fieldLabel: 'Empresa',
-	                        store: ds,
-                                buttons: ['add', 'remove'],
-                                buttonsText: {
-                                    add: "Agregar",
-                                    remove: "Remover"
-                                },
-	                        displayField: 'nombre',
-	                        valueField: 'id_empresa',
-	                        value: ds2,
-	                        allowBlank: false,
-	                        msgTarget: 'side',
-                                scope: this
-		    }
+                    {xtype: 'displayfield',name: 'displayfield1',id:'empDetails',value: ''},
+                    {xtype : "textfield", name : "id_empresa", fieldLabel : "ID",hidden: true},
+                    {xtype : "textfield", name : "nombre", fieldLabel : "Nombre de Empresa", width: 350},
+                    
                     //{xtype: 'itemselector', name: 'empresas',anchor: '10%',
                    // fieldLabel: 'Seleccion',store: ds,displayField: 'text',valueField: 'value',
                     //value: ['3', '4', '6'], allowBlank: false, msgTarget: 'side'}

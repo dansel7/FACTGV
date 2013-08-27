@@ -1,7 +1,7 @@
-Ext.define('MvcClientes.view.Usuarios.GrdUsuarios',{
+Ext.define('MvcClientes.view.Empresa.GrdEmpresa',{
 	extend: 'Ext.grid.Panel',
-	alias:'widget.gridUsuarios',
-	store: 'Usuarios.Usuarios',
+	alias:'widget.gridEmpresa',
+	store: 'Empresa.Empresa',
 	border: false,
 	listeners: {
             'selectionchange': function(view, records) {
@@ -12,13 +12,8 @@ Ext.define('MvcClientes.view.Usuarios.GrdUsuarios',{
 		var me = this;
 		Ext.applyIf(me, {
 			columns : [//Definimos las Columnas del Grid y las Columnas de la Tabla
-				   {header:"Id",dataIndex:"idbenutzer",width:50,hidden:true},
-                                   {header:"Usuario",dataIndex:"benutzer",flex:1},
-				   {header:"Nombre",dataIndex:"Nombre",flex:1},
-				   {header:"Apellido",dataIndex:"Apellido",flex:1},
-                                   {header:"password",dataIndex:"kennwort",flex:1,hidden:true},
-                                   {header:"Perfil",dataIndex:"perfil",flex:1},
-                                   {header:"Id",dataIndex:"id_perfil",width:50,hidden:true},   
+				   {header:"ID",dataIndex:"id_empresa",width:50},
+                                   {header:"Nombre de la Empresa", dataIndex:"nombre",flex:1} 
 			],
 			dockedItems: [
 					{
@@ -101,7 +96,7 @@ Ext.define('MvcClientes.view.Usuarios.GrdUsuarios',{
 					width: 60,
 					align: 'center',
 					margin:'0 0 3 3',
-					itemId:'ActColumGrdListaUsuarios',
+					itemId:'ActColumGrdListaEmpresa',
                     items: [
                         {
 						    icon   : 'resources/imagenes/add.png',
