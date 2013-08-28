@@ -8,20 +8,13 @@ mysql_select_db($db_name,$connection) or die("Error de conexion a la base de dat
 
 	$data = json_decode($info);
 
-	$Nombre = $data->Nombre;
-	$Apellido = $data->Apellido;
-	$benutzer = $data->benutzer;
-        $kennwort = $data->kennwort;
-        $id_perfil =$data->id_perfil;
-	$id = $data->idbenutzer;
+	$Nombre = $data->nombre;
+	$id = $data->id_empresa;
 	
-	$SqlUpdate ="UPDATE benutzer
+	$SqlUpdate ="UPDATE empresa
                              SET
-                            `Nombre`='$Nombre',
-                            `Apellido`='$Apellido',
-                            `benutzer`='$benutzer',
-                            `id_perfil`=$id_perfil
-			 WHERE idbenutzer=$id";
+                            `nombre`='$Nombre'
+			 WHERE id_empresa=$id";
         
 	$rs = mysql_query($SqlUpdate);
 

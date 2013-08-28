@@ -5,9 +5,9 @@
 
 	$info = $_POST["data"];
 	$data = json_decode(stripslashes($info));
-	$id = $data->idbenutzer;
+	$id = $data->id_empresa;
 
-	$SqlDelete = sprintf("DELETE FROM benutzer WHERE `idbenutzer`=%d LIMIT 1;",
+	$SqlDelete = sprintf("DELETE FROM empresa WHERE `id_empresa`=%d LIMIT 1;",
 		mysql_real_escape_string($id));
 
 	$rs  = mysql_query($SqlDelete);

@@ -8,20 +8,12 @@ mysql_select_db($db_name,$connection) or die("Error de conexion a la base de dat
 
 	$data = json_decode($info);
 
-	$Nombre = $data->Nombre;
-	$Apellido = $data->Apellido;
-	$benutzer = $data->benutzer;
-        $kennwort = $data->kennwort;
-        $id_perfil =$data->id_perfil;
+	$Nombre = $data->nombre;
 
 	
-                 $SqlInsert ="INSERT INTO benutzer
+                 $SqlInsert ="INSERT INTO empresa
                              SET
-                            `Nombre`='$Nombre',
-                            `Apellido`='$Apellido',
-                            `benutzer`='$benutzer',
-                            `kennwort`= AES_ENCRYPT('$kennwort','*6v!114t0rO'),
-                            `id_perfil`=$id_perfil";
+                            `nombre`='$Nombre'";
 			
 			$rs = mysql_query($SqlInsert);
 
@@ -30,12 +22,8 @@ mysql_select_db($db_name,$connection) or die("Error de conexion a la base de dat
 					"msg"		=> mysql_errno() == 0 ? "Datos Agregados Correctamente":mysql_error(),
 					"data"		=> array(
                                             array(
-                                                "idbenutzer" => mysql_insert_id(),// <--- importantisimo regresar el ID asignado al record, para que funcione correctamente el metodo update y delete
-                                                "Nombre"=>$Nombre,
-                                                "Apellido"=>$Apellido,
-                                                "benutzer"=>$benutzer,
-                                                "kennwort"=>$kennwort,
-                                                "id_perfil"=>$id_perfil
+                                                "id_empresa" => mysql_insert_id(),// <--- importantisimo regresar el ID asignado al record, para que funcione correctamente el metodo update y delete
+                                                "nombre"=>$Nombre,
                                             )
 					)
 				));

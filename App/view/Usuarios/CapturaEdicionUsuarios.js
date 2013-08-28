@@ -34,39 +34,9 @@ Ext.define('MvcClientes.view.Usuarios.CapturaEdicionUsuarios', {
 
 
 
-        //LISTADO DE EMPRESAS QUE ESTAN DISPONIBLES
-       
-          /*      var ds = Ext.create('Ext.data.ArrayStore', {
-                    root:"data",
-                    fields: ['id_empresa', 'nombre'],
-                    proxy: {
-                        type: 'ajax',
-                        url : 'Php/store/list_user_emp.php?opx=u1em1'
-                    },
-                    autoLoad: true
-                });  */
-
-        
-         //////////////////////////////////////////////
-        var ds = Ext.create('Ext.data.Store', {
-                    fields: ['id_empresa', 'nombre'],
-                    //SE DEJA ASI EL CATALOGO DE EMPRESAS, CON EL FIN QUE 
-                    //POSTERIORMENTE SE PUEDA CARGAR DESDE UN STORE EXTERNO
-                    //EL INCONVENIENTE ES QUE AL HACERLO DESDE UN STORE NO CARGA.
-                    data:  [{"id_empresa":"1","nombre":"Villatoro Asociados S.A de C.V"},{"id_empresa":"2","nombre":"eFacilitadora Aduanera S.A de C.V"},{"id_empresa":"3","nombre":"SEALES S.A de C.V"},{"id_empresa":"4","nombre":"Hector Gustavo Villatoro"}],
-                    autoLoad: true
-                }); 
-                
+ var ds = Ext.create('MvcClientes.Store.dsListEmpresa');
 
        //LISTADO DE EMPRESAS QUE YA ESTAN SELECCIONADAS
-   var ds2="";
-        Ext.Ajax.request({
-          url: 'Php/store/list_user_emp.php?opx=em2u2',
-          success: function(response) {
-            outHTML = response.responseText;
-            ds2=outHTML;                      
-          }
-        }); 
         ////////////////////////////////////////////////
  
 
@@ -104,18 +74,11 @@ Ext.applyIf(me, {
                                 },
 	                        displayField: 'nombre',
 	                        valueField: 'id_empresa',
-	                        value: ds2,
 	                        allowBlank: false,
 	                        msgTarget: 'side',
                                 scope: this
 		    }
-                    //{xtype: 'itemselector', name: 'empresas',anchor: '10%',
-                   // fieldLabel: 'Seleccion',store: ds,displayField: 'text',valueField: 'value',
-                    //value: ['3', '4', '6'], allowBlank: false, msgTarget: 'side'}
-                    //
-                    //La idea de esto es que los checkbox se van a activar enviado por ajax el valor del id de la empresa 
-                    //y lo iran guardando pero para eso se necesita enviar el id de usuario tambien
-                ],
+             ],
             dockedItems : [{
                             xtype: 'toolbar',
                             dock: 'bottom',
@@ -132,10 +95,49 @@ Ext.applyIf(me, {
                                     handler: this.close
                             }]
                  }]
-              }]
+              }],
+          listeners: {
+            beforerender: {
+            fn: me.onFormBeforeRender,
+            scope: me
+            }
+           }
           }); 
           
      	  me.callParent(arguments);
                  
-      }					
+      }	, //SE CONFIGURA UN LISTENER PARA INSTANCIAR EL STORE Y LUEGO CARGARLO EN EL ITEMSELECTOR
+      onFormBeforeRender: function(abstractcomponent, options) {
+          
+          var ds = Ext.create('MvcClientes.Store.dsListEmpresa');
+          var ds2= Ext.create('MvcClientes.Store.dsListEmpresa2');
+
+//NO CARGA LOS SELECCIONADOS 
+            ds.load(function(){
+                Ext.getCmp("userEmp").bindStore(ds);
+                Ext.getCmp("userEmp").setValue(ds2);
+            });
+            }					
 });	
+
+//STORE DE LISTADO DE EMPRESAS QUE ESTAN DISPONIBLES
+Ext.define('MvcClientes.Store.dsListEmpresa', {
+    extend: 'Ext.data.Store', 
+    root:"data",
+    fields: ['id_empresa', 'nombre'],
+    proxy: {
+        type: 'ajax',
+        url : 'Php/store/list_user_emp.php?opx=u1em1'
+    },
+    autoLoad: false
+});  
+
+Ext.define('MvcClientes.Store.dsListEmpresa2', {
+    extend: 'Ext.data.ArrayStore', 
+    fields: ['id_empresa'],
+    proxy: {
+        type: 'ajax',
+        url : 'Php/store/list_user_emp.php?opx=em2u2'
+    },
+    autoLoad: true
+});  

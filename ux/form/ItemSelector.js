@@ -88,7 +88,7 @@ Ext.define('Ext.ux.form.ItemSelector', {
                 hideLabel: true
             },
             fromConfig = Ext.apply({
-                listTitle: 'Available',
+                listTitle: 'Disponibles',
                 store: Ext.create('Ext.data.Store', {model: me.store.model}), //blank store to begin
                 listeners: {
                     boundList: {
@@ -98,7 +98,7 @@ Ext.define('Ext.ux.form.ItemSelector', {
                 }
             }, me.multiselects[0], commonConfig),
             toConfig = Ext.apply({
-                listTitle: 'Selected',
+                listTitle: 'Seleccionado',
                 store: Ext.create('Ext.data.Store', {model: me.store.model}), //blank store to begin
                 listeners: {
                     boundList: {
@@ -292,8 +292,7 @@ Ext.define('Ext.ux.form.ItemSelector', {
 
     setRawValue: function(value) {
         var me = this,
-            Array = Ext.Array,
-            toStore, fromStore, models;
+            Array = Ext.Array,toStore, fromStore, models;
 
         value = Array.from(value);
         me.rawValue = value;

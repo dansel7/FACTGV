@@ -81,7 +81,7 @@ Ext.define('MvcClientes.controller.Empresa.Empresa',{
 	    //Para referirnos a un componente aca se utilizaran los Getters:
 		var grid = this.getGridEmpresa();//Get+ Alias gridEmpresa (alias:'widget.gridEmpresa')
 		record = grid.getSelectionModel().getSelection(); 
-		Empresa=grid.getSelectionModel().getSelection()[0].data.Nombre;
+		Empresa=grid.getSelectionModel().getSelection()[0].data.nombre;
 		//En esta parte automaticamente el Controller crea las Funciones Getters
 		store = this.getEmpresaEmpresaStore();//Nota 1: Get+Carpeta.Empresa Store+La palabra Store
 	    Ext.MessageBox.show({

@@ -22,12 +22,19 @@ if(isset($_GET["opx"])){
                     
                     $sql = "select id_empresa from empresa";
                     $result = mysql_query($sql,$connection) or die('La consulta fall&oacute;: '.mysql_error());		
-                   
+
+//                    while($obj = mysql_fetch_object($result)) {
+//			$arr[] = $obj;
+//                    }
+                    
                    while($obj = mysql_fetch_array($result)) {
                            $arr[] = $obj[0];
                    }
                    
+                    //echo json_encode($arr);
+                    
                    echo implode(",", $arr); 
+             
                 
                 } else { echo "";}
                 

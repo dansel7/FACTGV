@@ -7,7 +7,7 @@ Ext.require([
 Ext.define('MvcClientes.view.Empresa.CapturaEdicionEmpresa', {
     extend: 'Ext.window.Window',
 	alias:'widget.FormAddEdicionEmpresa',
-    height: 125,
+    height: 400,
     width: 400,
     layout: {
         type: 'fit'
@@ -18,59 +18,7 @@ Ext.define('MvcClientes.view.Empresa.CapturaEdicionEmpresa', {
     modal: false,
 	
     initComponent: function() {
-        
-        //STORE DE LOS DEPARTAMENTOS
-         var list_perfil = new Ext.data.Store({
-            fields: ['id_perfil', 'perfil'],
-            proxy: {
-                type: 'ajax',
-                url : 'Php/store/list_perfil.php',
-                reader: {
-                    type: 'json'
-                }
-            },
-            autoLoad: true
-        });
-
-
-
-        //LISTADO DE EMPRESAS QUE ESTAN DISPONIBLES
-       
-          /*      var ds = Ext.create('Ext.data.ArrayStore', {
-                    root:"data",
-                    fields: ['id_empresa', 'nombre'],
-                    proxy: {
-                        type: 'ajax',
-                        url : 'Php/store/list_user_emp.php?opx=u1em1'
-                    },
-                    autoLoad: true
-                });  */
-
-        
-         //////////////////////////////////////////////
-        var ds = Ext.create('Ext.data.Store', {
-                    fields: ['id_empresa', 'nombre'],
-                    //SE DEJA ASI EL CATALOGO DE EMPRESAS, CON EL FIN QUE 
-                    //POSTERIORMENTE SE PUEDA CARGAR DESDE UN STORE EXTERNO
-                    //EL INCONVENIENTE ES QUE AL HACERLO DESDE UN STORE NO CARGA.
-                    data:  [{"id_empresa":"1","nombre":"Villatoro Asociados S.A de C.V"},{"id_empresa":"2","nombre":"eFacilitadora Aduanera S.A de C.V"},{"id_empresa":"3","nombre":"SEALES S.A de C.V"},{"id_empresa":"4","nombre":"Hector Gustavo Villatoro"}],
-                    autoLoad: true
-                }); 
-                
-
-       //LISTADO DE EMPRESAS QUE YA ESTAN SELECCIONADAS
-   var ds2="";
-        Ext.Ajax.request({
-          url: 'Php/store/list_user_emp.php?opx=em2u2',
-          success: function(response) {
-            outHTML = response.responseText;
-            ds2=outHTML;                      
-          }
-        }); 
-        ////////////////////////////////////////////////
- 
-
-
+        var ds = Ext.create('MvcClientes.Store.dsListTipoFactura');
 var me = this;
 Ext.applyIf(me, {
     items: [
@@ -86,13 +34,9 @@ Ext.applyIf(me, {
                     {xtype: 'displayfield',name: 'displayfield1',id:'empDetails',value: ''},
                     {xtype : "textfield", name : "id_empresa", fieldLabel : "ID",hidden: true},
                     {xtype : "textfield", name : "nombre", fieldLabel : "Nombre de Empresa", width: 350},
-                    
-                    //{xtype: 'itemselector', name: 'empresas',anchor: '10%',
-                   // fieldLabel: 'Seleccion',store: ds,displayField: 'text',valueField: 'value',
-                    //value: ['3', '4', '6'], allowBlank: false, msgTarget: 'side'}
-                    //
-                    //La idea de esto es que los checkbox se van a activar enviado por ajax el valor del id de la empresa 
-                    //y lo iran guardando pero para eso se necesita enviar el id de usuario tambien
+                    {xtype: 'itemselector', id:"ISempresas",store:ds, name: 'empresas',width:350 ,anchor: '30%',
+                    fieldLabel: 'Seleccion',displayField: 'nombre',valueField: 'id_empresa',
+                    value: ['1'], allowBlank: false, msgTarget: 'side'}
                 ],
             dockedItems : [{
                             xtype: 'toolbar',
@@ -110,10 +54,41 @@ Ext.applyIf(me, {
                                     handler: this.close
                             }]
                  }]
-              }]
+              }
+          ],
+          listeners: {
+            beforerender: {
+            fn: me.onFormBeforeRender,
+            scope: me
+            }
+           }
           }); 
           
      	  me.callParent(arguments);
+          
+          
+         
                  
-      }					
+      }, //SE CONFIGURA UN LISTENER PARA INSTANCIAR EL STORE Y LUEGO CARGARLO EN EL ITEMSELECTOR
+      onFormBeforeRender: function(abstractcomponent, options) {
+          
+          var ds = Ext.create('MvcClientes.Store.dsListEmpresa');
+
+            ds.load(function(){
+                Ext.getCmp("ISempresas").bindStore(ds);
+               
+            });
+            }					
 });	
+
+//STORE DE LISTADO DE TIPOS DE FACTURA QUE ESTAN DISPONIBLES
+Ext.define('MvcClientes.Store.dsListTipoFactura', {
+    extend: 'Ext.data.Store', 
+    root:"data",
+    fields: ['id_empresa', 'nombre'],
+    proxy: {
+        type: 'ajax',
+        url : 'Php/store/list_user_emp.php?opx=u1em1'
+    },
+    autoLoad: false
+});  
