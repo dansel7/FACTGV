@@ -7,9 +7,9 @@ if(isset($_GET["opx"])){
 
 		$arr = array();
 		// Llamamos a la Tabla y sus datos 
-                if($_GET["opx"]=='u1em1') {
+                if($_GET["opx"]=='tp1f1') {
                     
-                $sql = "select * from empresa";
+                $sql = "select * from tipo_facturacion";
                 $result = mysql_query($sql,$connection) or die('La consulta fall&oacute;: '.mysql_error());		
 		//Formamos el Array de Datos, si ejecutamos este archivo PHP veremos el array formado
                 while($obj = mysql_fetch_object($result)) {
@@ -18,16 +18,17 @@ if(isset($_GET["opx"])){
                   echo '{ metaData: { "root": "data"}';	
                   echo ',"success":true, "data":' . json_encode($arr) . '}';
 
-                } else if($_GET["opx"]=='em2u2'){ 
+                } else if($_GET["opx"]=='f2tp2'){ 
                     
-                    $sql = "select id_empresa from empresa";
+                    $sql = "select id_tipo_facturacion from tipo_facturacion where id_tipo_facturacion =".$_GET["id"];
                     $result = mysql_query($sql,$connection) or die('La consulta fall&oacute;: '.mysql_error());		
 
                     while($obj = mysql_fetch_object($result)) {
 			$arr[] = $obj;
                     }
-                   
+                    
                     echo json_encode($arr);
+             
                 
                 } else { echo "";}
                 
@@ -37,4 +38,3 @@ if(isset($_GET["opx"])){
  mysql_close($connection);
 }
 ?>
-   

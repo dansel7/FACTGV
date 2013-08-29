@@ -111,13 +111,27 @@ Ext.applyIf(me, {
           
           var ds = Ext.create('MvcClientes.Store.dsListEmpresa');
           var ds2= Ext.create('MvcClientes.Store.dsListEmpresa2');
+           
+            
+var jds2=""; //VARIABLE PARA ALMACENAR LA CADENA DEL STRING DEL STORE
+var c=1; //CONTADOR PARA DETERMINAR EL PRINCIPIO DEL ARREGLO
 
-//NO CARGA LOS SELECCIONADOS 
-            ds.load(function(){
+//AMBOS STORE SE CARGAN DESDE PAGINAS PHP QUE DEVUELVEN UNA CADENA EN FORMATO JSON
+
+            //PRIMERO SE CARGA EL STORE PRINCIPAL
+            ds.load(function(){   
                 Ext.getCmp("userEmp").bindStore(ds);
-                Ext.getCmp("userEmp").setValue(ds2);
+            });  
+            //LUEGO SE CARGAN LOS VALORES SELECCIONADOS A PARTIR DEL STORE ANTERIOR
+            ds2.load(function(){
+              ds2.each(function(item){
+                  if(c!=1) { jds2+=","; }
+                jds2+=item.get("id_empresa");   
+                c++;
+              });
+                 Ext.getCmp("userEmp").setValue(jds2.split(","));
             });
-            }					
+      }					
 });	
 
 //STORE DE LISTADO DE EMPRESAS QUE ESTAN DISPONIBLES
@@ -132,8 +146,9 @@ Ext.define('MvcClientes.Store.dsListEmpresa', {
     autoLoad: false
 });  
 
+//STORE DE LISTADO DE EMPRESAS QUE ESTAN SELECCIONADOS
 Ext.define('MvcClientes.Store.dsListEmpresa2', {
-    extend: 'Ext.data.ArrayStore', 
+    extend: 'Ext.data.Store', 
     fields: ['id_empresa'],
     proxy: {
         type: 'ajax',

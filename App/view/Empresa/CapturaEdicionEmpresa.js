@@ -18,6 +18,7 @@ Ext.define('MvcClientes.view.Empresa.CapturaEdicionEmpresa', {
     modal: false,
 	
     initComponent: function() {
+        //SE CREA ANTES PARA QUE NO CARGUE NULL
         var ds = Ext.create('MvcClientes.Store.dsListTipoFactura');
 var me = this;
 Ext.applyIf(me, {
@@ -32,11 +33,17 @@ Ext.applyIf(me, {
                 items: 
                 [   {xtype: 'displayfield',name: 'displayfield1',id:'empDetails',value: ''},
                     {xtype: 'displayfield',name: 'displayfield1',id:'empDetails',value: ''},
-                    {xtype : "textfield", name : "id_empresa", fieldLabel : "ID",hidden: true},
+                    {xtype : "textfield",id:"id_empresa", name : "id_empresa", fieldLabel : "ID",hidden: true},
                     {xtype : "textfield", name : "nombre", fieldLabel : "Nombre de Empresa", width: 350},
-                    {xtype: 'itemselector', id:"ISempresas",store:ds, name: 'empresas',width:350 ,anchor: '30%',
-                    fieldLabel: 'Seleccion',displayField: 'nombre',valueField: 'id_empresa',
-                    value: ['1'], allowBlank: false, msgTarget: 'side'}
+                    {xtype: 'itemselector', id:"ISTipoFactura",store:ds, name: 'tipo_factura',
+                     width:350 ,anchor: '30%',
+                     fieldLabel: 'Seleccion',displayField: 'tipo',valueField: 'id_tipo_facturacion',
+                     buttons: ['add', 'remove'],
+                     buttonsText: {
+                        add: "Agregar",
+                        remove: "Remover"
+                     },
+                     allowBlank: false, msgTarget: 'side'}
                 ],
             dockedItems : [{
                             xtype: 'toolbar',
@@ -72,23 +79,55 @@ Ext.applyIf(me, {
       }, //SE CONFIGURA UN LISTENER PARA INSTANCIAR EL STORE Y LUEGO CARGARLO EN EL ITEMSELECTOR
       onFormBeforeRender: function(abstractcomponent, options) {
           
-          var ds = Ext.create('MvcClientes.Store.dsListEmpresa');
+          var ds = Ext.create('MvcClientes.Store.dsListTipoFactura');
+          var ds2 = Ext.create('MvcClientes.Store.dsListTipoFactura2');
+          
+var jds2=""; //VARIABLE PARA ALMACENAR LA CADENA DEL STRING DEL STORE
+var c=1; //CONTADOR PARA DETERMINAR EL PRINCIPIO DEL ARREGLO
 
-            ds.load(function(){
-                Ext.getCmp("ISempresas").bindStore(ds);
+//AMBOS STORE SE CARGAN DESDE PAGINAS PHP QUE DEVUELVEN UNA CADENA EN FORMATO JSON
+
+            //PRIMERO SE CARGA EL STORE PRINCIPAL
+            ds.load(function(){   
+                
+                Ext.getCmp("ISTipoFactura").bindStore(ds);
+                
+            });  
+            //LUEGO SE CARGAN LOS VALORES SELECCIONADOS A PARTIR DEL STORE ANTERIOR
+            ds2.load(function(){
+              ds2.each(function(item){
+                  if(c!=1) { jds2+=","; }
+                jds2+=item.get("id_tipo_facturacion");   
+                c++;
+              });
                
+               Ext.getCmp("ISTipoFactura").setValue(jds2.split(","));
             });
-            }					
+     }		
+     
+     
 });	
 
 //STORE DE LISTADO DE TIPOS DE FACTURA QUE ESTAN DISPONIBLES
 Ext.define('MvcClientes.Store.dsListTipoFactura', {
     extend: 'Ext.data.Store', 
     root:"data",
-    fields: ['id_empresa', 'nombre'],
+    fields: ['id_tipo_facturacion', 'tipo'],
     proxy: {
         type: 'ajax',
-        url : 'Php/store/list_user_emp.php?opx=u1em1'
+        url : 'Php/store/list_tipo_factura.php?opx=tp1f1'
     },
     autoLoad: false
+});  
+
+//STORE DE LISTADO DE TIPOS DE FACTURA QUE ESTAN SELECCIONADOS
+Ext.define('MvcClientes.Store.dsListTipoFactura2', {
+    extend: 'Ext.data.Store', 
+    fields: ['id_tipo_facturacion'],
+    proxy: {
+        type: 'ajax',
+        //HAY QUE VER COMO SE PASA EL ID DE LA EMPRESA AL STORE PARA QUE MUESTRE LOS SELECCIONADOS
+        url : 'Php/store/list_tipo_factura.php?opx=f2tp2&id=' //+ this.Ext.getCmp("id_empresa").getValue()
+    },
+    autoLoad: true
 });  
