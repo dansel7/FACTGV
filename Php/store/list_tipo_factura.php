@@ -20,7 +20,7 @@ if(isset($_GET["opx"])){
 
                 } else if($_GET["opx"]=='f2tp2'){ 
                     
-                    $sql = "select id_tipo_facturacion from tipo_facturacion where id_tipo_facturacion =".$_GET["id"];
+                    $sql = "select id_tipo_facturacion from empresa_tipo_facturacion where id_empresa=".$_GET["id"];
                     $result = mysql_query($sql,$connection) or die('La consulta fall&oacute;: '.mysql_error());		
 
                     while($obj = mysql_fetch_object($result)) {

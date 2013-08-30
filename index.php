@@ -54,6 +54,7 @@ Ext.onReady(function() {
         
 /////////////////////////////LISTADO EMPRESA/////////////////////////////
     function ShowListEmpresa() {
+        list_empresas.load();//RECARGAMOS EL STORE
         if (!winList) {
             var form = Ext.widget('form', {
                 layout: {
@@ -168,6 +169,7 @@ Ext.onReady(function() {
                     items: [{
                           width:200,       
                         name: 'benutzer',
+                        id:'benutzer',
                         fieldLabel: 'Usuario',
                         allowBlank: false
   
@@ -270,6 +272,7 @@ Ext.onReady(function() {
         
 ///////////////////////////////ACA APARECE LA PANTALLA DE listado empresa/////////////////////////////
     function ShowListEmpresa() {
+        list_empresas.load();//RECARGAMOS EL STORE
         if (!winList) {
             var form = Ext.widget('form', {
                 layout: {

@@ -18,6 +18,34 @@ Ext.define('MvcClientes.view.Empresa.CapturaEdicionEmpresa', {
     modal: false,
 	
     initComponent: function() {
+        
+        
+//STORE DE LISTADO DE TIPOS DE FACTURA QUE ESTAN DISPONIBLES
+Ext.define('MvcClientes.Store.dsListTipoFactura', {
+    extend: 'Ext.data.Store', 
+    root:"data",
+    fields: ['id_tipo_facturacion', 'tipo'],
+    proxy: {
+        type: 'ajax',
+        url : 'Php/store/list_tipo_factura.php?opx=tp1f1'
+    },
+    autoLoad: false
+});  
+
+//STORE DE LISTADO DE TIPOS DE FACTURA QUE ESTAN SELECCIONADOS
+Ext.define('MvcClientes.Store.dsListTipoFactura2', {
+    extend: 'Ext.data.Store', 
+    fields: ['id_tipo_facturacion'],
+    proxy: {
+        type: 'ajax',
+        url : 'Php/store/list_tipo_factura.php?opx=f2tp2&id=' + records[0].data.id_empresa
+    },
+    autoLoad: false
+});  
+        
+        
+        
+        
         //SE CREA ANTES PARA QUE NO CARGUE NULL
         var ds = Ext.create('MvcClientes.Store.dsListTipoFactura');
 var me = this;
@@ -35,15 +63,51 @@ Ext.applyIf(me, {
                     {xtype: 'displayfield',name: 'displayfield1',id:'empDetails',value: ''},
                     {xtype : "textfield",id:"id_empresa", name : "id_empresa", fieldLabel : "ID",hidden: true},
                     {xtype : "textfield", name : "nombre", fieldLabel : "Nombre de Empresa", width: 350},
-                    {xtype: 'itemselector', id:"ISTipoFactura",store:ds, name: 'tipo_factura',
+                    {xtype: 'itemselector', id:"ISTipoFactura",
+                     store:ds, name: 'tipo_factura',
                      width:350 ,anchor: '30%',
-                     fieldLabel: 'Seleccion',displayField: 'tipo',valueField: 'id_tipo_facturacion',
+                     fieldLabel: 'Seleccion',displayField: 'tipo',
+                     valueField: 'id_tipo_facturacion',
                      buttons: ['add', 'remove'],
-                     buttonsText: {
-                        add: "Agregar",
-                        remove: "Remover"
-                     },
-                     allowBlank: false, msgTarget: 'side'}
+                     buttonsText: {add: "Agregar",remove: "Remover"},
+                     allowBlank: false, msgTarget: 'side',
+                        onAddBtnClick: function() {
+                        //SOBRECARGA FUNCION ORIGINAL//
+                        var me = this,
+                        fromList = me.fromField.boundList,
+                        selected = this.getSelections(fromList);
+                        fromList.getStore().remove(selected);
+                        this.toField.boundList.getStore().add(selected);
+                        ////////////////////////////////////////////////
+
+                        //////INICIO FUNCION AGREGAR//////////
+                        Ext.Ajax.request({
+                        url: 'Php/view/Empresa/Empresa_TipoFact/Op_Emp_TpF.php?opx=addEmpTpF&idEmp=' + Ext.getCmp("id_empresa").getValue() + '&idTpFact=' + selected[0].data.id_tipo_facturacion,
+                        success: function(response) {           
+                        }
+                        });
+
+                        //////////////////////////////////////
+                        },
+                        onRemoveBtnClick: function() {
+                            //SOBRECARGA FUNCION ORIGINAL//                               }
+                        var me = this,
+                        toList = me.toField.boundList,
+                        selected = this.getSelections(toList);
+                        toList.getStore().remove(selected);
+                        this.fromField.boundList.getStore().add(selected);
+                        ////////////////////////////////////////////////
+
+                        //////INICIO FUNCION REMOVER/////
+                        Ext.Ajax.request({
+                        url: 'Php/view/Empresa/Empresa_TipoFact/Op_Emp_TpF.php?opx=rmvEmpTpF&idEmp=' + Ext.getCmp("id_empresa").getValue()  + '&idTpFact=' + selected[0].data.id_tipo_facturacion,
+                        success: function(response) {           
+                        }
+                        });
+                        //////////////////////////////////////
+                        }
+                     
+                    }
                 ],
             dockedItems : [{
                             xtype: 'toolbar',
@@ -91,7 +155,17 @@ var c=1; //CONTADOR PARA DETERMINAR EL PRINCIPIO DEL ARREGLO
             ds.load(function(){   
                 
                 Ext.getCmp("ISTipoFactura").bindStore(ds);
-                
+            //LUEGO SE CARGAN LOS VALORES SELECCIONADOS A PARTIR DEL STORE ANTERIOR
+                ds2.load(function(){
+                  ds2.each(function(item){
+                      if(c!=1) { jds2+=","; }
+                    jds2+=item.get("id_tipo_facturacion");   
+                    c++;
+                  });
+
+                   Ext.getCmp("ISTipoFactura").setValue(jds2.split(","));
+                });
+            
             });  
             //LUEGO SE CARGAN LOS VALORES SELECCIONADOS A PARTIR DEL STORE ANTERIOR
             ds2.load(function(){
@@ -107,27 +181,3 @@ var c=1; //CONTADOR PARA DETERMINAR EL PRINCIPIO DEL ARREGLO
      
      
 });	
-
-//STORE DE LISTADO DE TIPOS DE FACTURA QUE ESTAN DISPONIBLES
-Ext.define('MvcClientes.Store.dsListTipoFactura', {
-    extend: 'Ext.data.Store', 
-    root:"data",
-    fields: ['id_tipo_facturacion', 'tipo'],
-    proxy: {
-        type: 'ajax',
-        url : 'Php/store/list_tipo_factura.php?opx=tp1f1'
-    },
-    autoLoad: false
-});  
-
-//STORE DE LISTADO DE TIPOS DE FACTURA QUE ESTAN SELECCIONADOS
-Ext.define('MvcClientes.Store.dsListTipoFactura2', {
-    extend: 'Ext.data.Store', 
-    fields: ['id_tipo_facturacion'],
-    proxy: {
-        type: 'ajax',
-        //HAY QUE VER COMO SE PASA EL ID DE LA EMPRESA AL STORE PARA QUE MUESTRE LOS SELECCIONADOS
-        url : 'Php/store/list_tipo_factura.php?opx=f2tp2&id=' //+ this.Ext.getCmp("id_empresa").getValue()
-    },
-    autoLoad: true
-});  

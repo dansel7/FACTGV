@@ -20,7 +20,7 @@ if(isset($_GET["opx"])){
 
                 } else if($_GET["opx"]=='em2u2'){ 
                     
-                    $sql = "select id_empresa from empresa";
+                    $sql = "select id_empresa from empresa_perfil where id_benutzer =".$_GET["id"];
                     $result = mysql_query($sql,$connection) or die('La consulta fall&oacute;: '.mysql_error());		
 
                     while($obj = mysql_fetch_object($result)) {
