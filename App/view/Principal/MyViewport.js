@@ -31,6 +31,58 @@ Ext.define('MvcClientes.view.Principal.MyViewport',{
                 layout: 'accordion',
 			activeItem: 1,
                 items: [
+                    {
+                        xtype: 'treepanel',
+                        title: 'Facturaciones',
+                        height: 212,
+			iconCls:'movimientos',
+                        forceLayout: true,
+                        collapsed: true,
+                        collapsible: true,
+                        rootVisible: false,
+                        border: false,
+                        autoWidth: true,
+                        listeners:{//Listeners apuntando a cada node
+                            itemclick:function(view, record, item, index, e)
+                                        {
+                 //DEPENDIENDO QUE OPCION SE QUIERE SE DEBE DE DEFINIR EL INDICE DE LA OPCION
+                                        
+                                        if (index==0)
+                                           {
+                                              addTabListadoFacturas();
+                                           }
+                            }
+                        }  , 
+                        root: {
+                            text: '',
+                            isTarget: false,
+                            expanded: true,
+                            checked: false,
+                            allowDrag: false,
+                            allowDrop: false,
+                            editable: false,
+                            qtip: 1,
+                            children: [
+                                {
+                                    text: 'Facturacion',
+                                    leaf: true,
+                                    iconCls:'icon-cliente'
+                                    
+                                },
+                                {
+                                    text: 'Usuarios',
+                                  
+                                        leaf: true,
+                                    iconCls:'icon-users'
+                                        
+                                    
+                                }
+                            ]
+                        },
+                        loader: {
+
+                        }
+                    },
                     {   xtype: 'treepanel',
                         title: 'Mantenimientos',
                         height: 212,
@@ -92,64 +144,6 @@ Ext.define('MvcClientes.view.Principal.MyViewport',{
                                     iconCls:'icon-empresa'
                                 }
                             ]	
-                        },
-                        loader: {
-
-                        }
-                    },
-                    {
-                        xtype: 'treepanel',
-                        title: 'Facturaciones',
-                        height: 212,
-			iconCls:'movimientos',
-                        forceLayout: true,
-                        collapsed: true,
-                        collapsible: true,
-                        rootVisible: false,
-                        border: false,
-                        autoWidth: true,
-                        root: {
-                            text: '',
-                            isTarget: false,
-                            expanded: true,
-                            checked: false,
-                            allowDrag: false,
-                            allowDrop: false,
-                            editable: false,
-                            qtip: 1,
-                            children: [
-                                {
-                                    text: 'Regiones',
-                                    children: [
-                                        {
-                                            text: 'Estados',
-                                            leaf: true
-                                        },
-                                        {
-                                            text: 'Municipios',
-                                            leaf: true
-                                        }
-                                    ]
-                                },
-                                {
-                                    text: 'Usuarios',
-                                    children: [
-                                        {
-                                            text: 'Tree Node',
-                                            leaf: true
-                                        }
-                                    ]
-                                },
-                                {
-                                    text: 'Solicitantes',
-                                    children: [
-                                        {
-                                            text: 'Tree Node',
-                                            leaf: true
-                                        }
-                                    ]
-                                }
-                            ]
                         },
                         loader: {
 
@@ -276,7 +270,18 @@ Ext.define('MvcClientes.view.Principal.MyViewport',{
 				     		 
 	    }
 		
-	
+	function addTabListadoFacturas(){ 
+      	 var tab=this.TabPanelMain.getComponent('TabListadoFacturacion');
+		   if(!tab){ //si no existe lo creamos
+				tab = Ext.create('MvcClientes.view.Facturacion.PanelFacturacion', {});
+				this.TabPanelMain.add(tab); //Se agrega el Panel Cliente al TabMain 
+				this.TabPanelMain.doLayout(); //Redibujado del Panel 
+				this.TabPanelMain.setActiveTab(tab); //Activamos el Tab
+               			
+             } 
+			    this.TabPanelMain.setActiveTab(tab); //Se activa el Tab Clickeado 
+				     		 
+	    }
 		
     }
 		
