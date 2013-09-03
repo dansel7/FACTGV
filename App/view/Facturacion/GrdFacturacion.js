@@ -1,4 +1,4 @@
-Ext.define('MvcFacturacion.view.Facturacion.GrdFacturacion',{
+Ext.define('MvcClientes.view.Facturacion.GrdFacturacion',{
 	extend: 'Ext.grid.Panel',
 	alias:'widget.gridFacturacion',
 	store: 'Facturacion.Facturacion',
@@ -12,16 +12,20 @@ Ext.define('MvcFacturacion.view.Facturacion.GrdFacturacion',{
 		var me = this;
 		Ext.applyIf(me, {
 			columns : [//Definimos las Columnas del Grid y las Columnas de la Tabla
-				   {header:"Id",dataIndex:"idFacturacion",width:50,hidden:true},
-				   {header:"Nombre",dataIndex:"nom_cliente",flex:1},
-				   {header:"Direccion",dataIndex:"direccion",flex:1},
-				   {header:"NIT",dataIndex:"NIT",flex:1},
-                                   {header:"NRC",dataIndex:"NRC",flex:1},
-                                   {header:"Id",dataIndex:"id_departamento",width:50,hidden:true},
-                                   {header:"Departamento",dataIndex:"departamento",flex:1},
-                                   {header:"Giro",dataIndex:"giro",flex:1},
-                                   {header:"Gran Contribuyente",dataIndex:"gran_contribuyente",flex:1},
-                                   {header:"Activo",dataIndex:"activo",flex:1}
+			   
+                            { dataIndex : "idFacturacion", header : "Id",hidden: true},
+                            { dataIndex : "numero_factura", header : "No. Factura", flex:1},
+                            { header: "Cliente",dataIndex:"idmaestroClientes", flex:1},
+                            { dataIndex : "comprobante", header : "No. Comprobante", flex:1,hidden: true},
+                            { dataIndex : "fecha_facturacion", header : "Fecha Facturacion", flex:1},
+                            { dataIndex : "venta_acta_de", header : "Venta A Cuenta De", flex:1,hidden: true},
+                            { dataIndex : "iva", header : "IVA", flex:1,hidden: true},
+                            { dataIndex : "iva_retenido", header : "IVA Retenido", flex:1,hidden: true},
+                            { dataIndex : "venta_total", header : "Venta Total", flex:1},
+                            { dataIndex : "fecha_quedan", header : "Fecha Quedan", flex:1,hidden: true},
+                            { dataIndex : "comprobante_quedan", header : "Comprobante Quedan", flex:1,hidden: true},
+                            { dataIndex : "fecha_programada_pago", header : "Fecha Programada Pago", flex:1},
+                            
 				   
 			],
 			dockedItems: [

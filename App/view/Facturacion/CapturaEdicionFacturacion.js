@@ -2,8 +2,8 @@
 ////////////Pueden usar tambien este dise�o de Formulario///////////////////
 
 
-Ext.define('MvcFacturacion.view.Facturacion.CapturaEdicionFacturacion', {
-    extend: 'Ext.window.Window',
+Ext.define('MvcClientes.view.Facturacion.CapturaEdicionFacturacion', {
+    extend: 'Ext.form.Panel',
 	alias:'widget.FormAddEdicionFacturacion',
     height: 400,
     width: 400,
@@ -12,16 +12,16 @@ Ext.define('MvcFacturacion.view.Facturacion.CapturaEdicionFacturacion', {
     },
 	autoShow: true,
     closable: false,
-    title: 'Captura/Edicion Facturacion',
+    title: 'Formulario de Facturacion',
     modal: false,
 	
     initComponent: function() {
         //STORE DE LOS DEPARTAMENTOS
-         var list_deptos = new Ext.data.Store({
-            fields: ['id_departamento', 'departamento'],
+         var ListMaestroClientes = new Ext.data.Store({
+            fields: ['idmaestroClientes', 'nom_cliente'],
             proxy: {
                 type: 'ajax',
-                url : 'Php/store/list_deptos.php',
+                url : 'Php/store/list_Mclientes.php',
                 reader: {
                     type: 'json'
                 }
@@ -41,15 +41,18 @@ Ext.define('MvcFacturacion.view.Facturacion.CapturaEdicionFacturacion', {
                         items: 
                         [   {xtype: 'displayfield',name: 'displayfield1',id:'empDetails',value: ''},
                             {xtype : "textfield", name : "idFacturacion", fieldLabel : "Id",hidden: true},
-                            {xtype : "textfield", name : "nom_cliente", fieldLabel : "Nombre", width: 350},
-                            {xtype : "textfield", name : "direccion", fieldLabel : "Direccion", width: 350},
-                            {xtype : "textfield", name : "NIT", fieldLabel : "NIT", width: 250},
-                            {xtype : "textfield", name : "NRC", fieldLabel : "NRC", width: 250},
-                            {xtype : "combobox", fieldLabel: "Departamento",queryMode: 'local', store: list_deptos,displayField: 'departamento',valueField: 'id_departamento',name:"id_departamento", width: 300},
-                            {xtype : "textfield", name : "departamento", fieldLabel : "departamento", width: 350,hidden: true},
-                            {xtype : "textfield", name : "giro", fieldLabel : "Giro", width: 350},
-                            {xtype : "checkbox", name : "gran_contribuyente", fieldLabel : "Gran Contribuyente",  inputValue: 'Si',uncheckedValue :'No'},
-                            {xtype : "checkbox", name : "activo", fieldLabel : "Activo",  inputValue: 'Si',uncheckedValue :'No'}
+                            {xtype : "textfield", name : "numero_factura", fieldLabel : "No. Factura", width: 350},
+                            {xtype : "combobox", fieldLabel: "Cliente",queryMode: 'local', store: ListMaestroClientes,displayField: 'nom_cliente',valueField: 'idmaestroClientes',name:"idmaestroClientes", width: 300},
+                            {xtype : "textfield", name : "comprobante", fieldLabel : "No. Comprobante", width: 350},
+                            {xtype : "textfield", name : "fecha_facturacion", fieldLabel : "Fecha Facturacion", width: 350},
+                            {xtype : "textfield", name : "venta_acta_de", fieldLabel : "Venta A Cuenta De", width: 350},
+                            {xtype : "textfield", name : "iva", fieldLabel : "IVA", width: 350},
+                            {xtype : "textfield", name : "iva_retenido", fieldLabel : "Iva Retenido", width: 350},
+                            {xtype : "textfield", name : "venta_total", fieldLabel : "Venta Total", width: 350},
+                            {xtype : "textfield", name : "fecha_quedan", fieldLabel : "Fecha Quedan", width: 350},
+                            {xtype : "textfield", name : "comprobante_quedan", fieldLabel : "Comprobante Quedan", width: 350},
+                            {xtype : "textfield", name : "fecha_programada_pago", fieldLabel : "Fecha Programada de Pago", width: 350},
+                            
                         ],
             dockedItems : [{
                             xtype: 'toolbar',
