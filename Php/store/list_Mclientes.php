@@ -9,8 +9,8 @@
    mysql_select_db($db_name,$connection) or die("Error de conexion a la base de datos");
 
 		$arr = array();
-		// Llamamos a la Tabla y sus datos 
-		$sql = "select idmaestroClientes, nom_cliente from maestroclientes ";
+		// Llamamos a la Tabla maestro clientes y filtramos solo los que esten activos
+		$sql = "select idmaestroClientes, nom_cliente from maestroclientes where activo='Si'";
     	$result = mysql_query($sql,$connection) or die('La consulta fall&oacute;: '.mysql_error());		
 		//Formamos el Array de Datos, si ejecutamos este archivo PHP veremos el array formado
 		while($obj = mysql_fetch_object($result)) {

@@ -66,11 +66,11 @@ Ext.define('MvcClientes.view.Principal.MyViewport',{
                                 {
                                     text: 'Facturacion',
                                     leaf: true,
-                                    iconCls:'icon-cliente'
+                                    iconCls:'icon-facturacion'
                                     
                                 },
                                 {
-                                    text: 'Usuarios',
+                                    text: 'Opcion',
                                   
                                         leaf: true,
                                     iconCls:'icon-users'

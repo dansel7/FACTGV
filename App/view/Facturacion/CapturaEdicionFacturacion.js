@@ -29,30 +29,123 @@ Ext.define('MvcClientes.view.Facturacion.CapturaEdicionFacturacion', {
             autoLoad: true
         });
 
+Ext.create('Ext.data.Store', {
+    storeId:'simpsonsStore',
+    fields:['concepto', 'valor_concepto', 'valor_nosujeta','valor_exenta','valor_gravada'],
+    data: [
+        {"concepto":"Concepto de Prueba1", "valor_concepto":"213", "valor_nosujeta":"232"},
+        {"concepto":"Concepto de Prueba2", "valor_concepto":"12", "valor_nosujeta":"23"},
+        {"concepto":"Concepto de Prueba3", "valor_concepto":"23", "valor_nosujeta":"23"},
+        {"concepto":"Concepto de Prueba4", "valor_concepto":"23", "valor_nosujeta":"455"}
+    ]
+});
+
         var me = this;
         Ext.applyIf(me, {
             items: [
                     {
                         xtype: 'form',
-                        height: 50,
+                        height: 100,
                         layout: {
                             type: 'auto'
-                        },
+                        },bodyPadding: 10,
                         items: 
-                        [   {xtype: 'displayfield',name: 'displayfield1',id:'empDetails',value: ''},
-                            {xtype : "textfield", name : "idFacturacion", fieldLabel : "Id",hidden: true},
-                            {xtype : "textfield", name : "numero_factura", fieldLabel : "No. Factura", width: 350},
-                            {xtype : "combobox", fieldLabel: "Cliente",queryMode: 'local', store: ListMaestroClientes,displayField: 'nom_cliente',valueField: 'idmaestroClientes',name:"idmaestroClientes", width: 300},
-                            {xtype : "textfield", name : "comprobante", fieldLabel : "No. Comprobante", width: 350},
-                            {xtype : "textfield", name : "fecha_facturacion", fieldLabel : "Fecha Facturacion", width: 350},
-                            {xtype : "textfield", name : "venta_acta_de", fieldLabel : "Venta A Cuenta De", width: 350},
-                            {xtype : "textfield", name : "iva", fieldLabel : "IVA", width: 350},
-                            {xtype : "textfield", name : "iva_retenido", fieldLabel : "Iva Retenido", width: 350},
-                            {xtype : "textfield", name : "venta_total", fieldLabel : "Venta Total", width: 350},
-                            {xtype : "textfield", name : "fecha_quedan", fieldLabel : "Fecha Quedan", width: 350},
-                            {xtype : "textfield", name : "comprobante_quedan", fieldLabel : "Comprobante Quedan", width: 350},
-                            {xtype : "textfield", name : "fecha_programada_pago", fieldLabel : "Fecha Programada de Pago", width: 350},
+                        [   
+                            //DATOS GENERALES
+                            {xtype: 'fieldset',title: 'Datos Generales', width:900,
+                            layout: {
+                                    columns: 3,
+                                    type: 'table'
+                            },  
+                            items:[
+                            {xtype : "textfield", name : "numero_factura", fieldLabel : "No. Factura", flex: 1},
+                            {xtype : "combobox", fieldLabel: " Cliente",queryMode: 'local', store: ListMaestroClientes,displayField: 'nom_cliente',valueField: 'idmaestroClientes',name:"idmaestroClientes", flex: 1, margin: '0 10 0 0',width:350},
+                            {xtype : "textfield", name : "comprobante", fieldLabel : " No. Comprobante", flex: 1, margin: '0 10 0 0'},
+                            {xtype : "datefield", name : "fecha_facturacion", fieldLabel : " Fecha Facturacion", flex: 1, margin: '0 10 0 0'},
+                            {xtype : "textfield", name : "venta_acta_de", fieldLabel : " Venta A Cuenta De", flex: 1, margin: '0 10 0 0'},
+                            {xtype : "textfield", name : "idFacturacion", fieldLabel : "Id",hidden: true, margin: '0 10 0 0'}
+                            ]},
                             
+                            //GRID DE FACTURACION
+                            {xtype : 'grid',name:'gridDetalle',id:'gridDetalle', 
+                            title: 'Detalle Facturacion',
+                            store: Ext.data.StoreManager.lookup('simpsonsStore'),
+                            columns: [
+                                {header: 'Concepto',  dataIndex: 'concepto',flex:1, editor: {
+                                        xtype: 'textfield',
+                                    allowBlank: false
+                                }},
+                                {header: 'Valor Concepto', dataIndex: 'valor_concepto', editor: {
+                                        xtype: 'textfield',
+                                    allowBlank: false
+                                }},
+                                {header: 'Venta No sujeta', dataIndex: 'valor_nosujeta', editor: {
+                                        xtype: 'textfield',
+                                    allowBlank: true
+                                }},
+                                {header: 'Valor Exenta', dataIndex: 'valor_exenta', editor: {
+                                        xtype: 'textfield',
+                                    allowBlank: true
+                                }},
+                                {header: 'Venta Gravada', dataIndex: 'valor_gravada', editor: {
+                                        xtype: 'textfield',
+                                    allowBlank: true
+                                }}
+                            ],
+                            height: 250,
+                            width:900,
+				    tbar: [{
+			            text: 'Adicionar Producto',
+			            iconCls: 'add',
+			            id: 'addRecord',
+			            handler : function() {
+                                        var r = {
+                                            concepto: '',
+                                            valor_concepto: '',
+                                            valor_nosujeta: '0.0',
+                                            valor_exenta: '0.0',
+                                            valor_gravada: '0.0'
+                                        };
+                                
+                                    Ext.getCmp("gridDetalle").store.insert(0,r);
+			            }
+                                    
+			        }, {
+			            itemId: 'removeRecord',
+			            id: 'removeRecord',
+			            text: 'Quitar Producto',
+			            iconCls: 'delete',
+			            handler: function() {
+			            Ext.getCmp("gridDetalle").store.remove(Ext.getCmp("gridDetalle").getSelectionModel().getSelection());
+			                loadCountries();
+
+
+			             
+			            }
+			        }],
+                                plugins: [
+                                    Ext.create('Ext.grid.plugin.RowEditing', {
+                                        id:'rowedit',
+                                        clickToEdit : 1
+                                    })
+                                ]
+                            },
+                            
+                            
+                            //DATOS FINALES
+                            {xtype: 'fieldset',title: 'Datos ',width:900,
+                            layout: {
+                                    columns: 3,
+                                    type: 'table'
+                            },                            
+                            items:[
+                            {xtype : "textfield", name : "iva", fieldLabel : "IVA", flex: 1},
+                            {xtype : "textfield", name : "iva_retenido", fieldLabel : " Iva Retenido", flex: 1, margin: '0 10 0 0'},
+                            {xtype : "textfield", name : "venta_total", fieldLabel : " Venta Total", flex: 1, margin: '0 10 0 0'},
+                            {xtype : "datefield", name : "fecha_quedan", fieldLabel : " Fecha Quedan", flex: 1, margin: '0 10 0 0'},
+                            {xtype : "textfield", name : "comprobante_quedan", fieldLabel : " Comprobante Quedan", flex: 1, margin: '0 10 0 0'},
+                            {xtype : "datefield", name : "fecha_programada_pago", fieldLabel : " Fecha Programada de Pago", flex: 1, margin: '0 10 0 0'},
+                            ]}
                         ],
             dockedItems : [{
                             xtype: 'toolbar',
