@@ -32,20 +32,25 @@ Ext.define('MvcClientes.Store.dsListTipoFactura', {
     autoLoad: false
 });  
 
+
+//Verificar que se envian datos para editar
+var idemp;
+if(typeof(records) != "undefined"){
+ idemp=records[0].data.id_empresa;   
+}else{idemp='';}
+
 //STORE DE LISTADO DE TIPOS DE FACTURA QUE ESTAN SELECCIONADOS
 Ext.define('MvcClientes.Store.dsListTipoFactura2', {
     extend: 'Ext.data.Store', 
     fields: ['id_tipo_facturacion'],
     proxy: {
         type: 'ajax',
-        url : 'Php/store/list_tipo_factura.php?opx=f2tp2&id=' + records[0].data.id_empresa
+        url : 'Php/store/list_tipo_factura.php?opx=f2tp2&id=' + idemp
     },
     autoLoad: false
 });  
         
-        
-        
-        
+          
         //SE CREA ANTES PARA QUE NO CARGUE NULL
         var ds = Ext.create('MvcClientes.Store.dsListTipoFactura');
 var me = this;

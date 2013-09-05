@@ -44,7 +44,9 @@ Ext.define('MvcClientes.controller.Empresa.Empresa',{
 	//Inician Funciones
 		
 	Agregar: function(){
-	    var FormAddEditarEmpresa= Ext.widget('FormAddEdicionEmpresa');
+      
+            var FormAddEditarEmpresa= Ext.widget('FormAddEdicionEmpresa');
+      
 	},
 	
 	Editar: function(grid, record){

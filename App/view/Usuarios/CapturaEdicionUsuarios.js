@@ -31,13 +31,20 @@ Ext.define('MvcClientes.Store.dsListEmpresa', {
     autoLoad: false
 });  
 
+
+//Verificar que se envian datos para editar
+var iduser;
+if(typeof(records) != "undefined"){
+ iduser=records[0].data.idbenutzer;   
+}else{iduser='';}
+
 //STORE DE LISTADO DE EMPRESAS QUE ESTAN SELECCIONADOS
 Ext.define('MvcClientes.Store.dsListEmpresa2', {
     extend: 'Ext.data.Store', 
     fields: ['id_empresa'],
     proxy: {
         type: 'ajax',
-        url : 'Php/store/list_user_emp.php?opx=em2u2&id='+ records[0].data.idbenutzer
+        url : 'Php/store/list_user_emp.php?opx=em2u2&id='+ iduser
     },
     autoLoad: false
 });  

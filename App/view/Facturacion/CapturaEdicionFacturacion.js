@@ -16,7 +16,7 @@ Ext.define('MvcClientes.view.Facturacion.CapturaEdicionFacturacion', {
     modal: false,
 	
     initComponent: function() {
-        //STORE DE LOS DEPARTAMENTOS
+        //STORE DE LOS Clientes
          var ListMaestroClientes = new Ext.data.Store({
             fields: ['idmaestroClientes', 'nom_cliente'],
             proxy: {
@@ -28,7 +28,20 @@ Ext.define('MvcClientes.view.Facturacion.CapturaEdicionFacturacion', {
             },
             autoLoad: true
         });
-
+//STORE DE LOS TIPOS DE FACTURACION
+         var ListTpFact = new Ext.data.Store({
+            fields: ['id_tipo_facturacion', 'tipo'],
+            proxy: {
+                type: 'ajax',
+                url : 'Php/store/list_tipo_factura.php?opx=tp3f3ct',
+                reader: {
+                    type: 'json'
+                }
+            },
+            autoLoad: true
+        });
+        
+//STORE DE LOS DETALLES DE FACTURAS        
 Ext.create('Ext.data.Store', {
     storeId:'simpsonsStore',
     fields:['concepto', 'valor_concepto', 'valor_nosujeta','valor_exenta','valor_gravada'],
@@ -58,8 +71,9 @@ Ext.create('Ext.data.Store', {
                                     type: 'table'
                             },  
                             items:[
-                            {xtype : "textfield", name : "numero_factura", fieldLabel : "No. Factura", flex: 1},
-                            {xtype : "combobox", fieldLabel: " Cliente",queryMode: 'local', store: ListMaestroClientes,displayField: 'nom_cliente',valueField: 'idmaestroClientes',name:"idmaestroClientes", flex: 1, margin: '0 10 0 0',width:350},
+                            {xtype : "combobox", id:"tipo_factura", fieldLabel: "Tipo Factura",queryMode: 'local', store: ListTpFact,displayField: 'tipo',valueField: 'id_tipo_facturacion',name:"id_tipo_facturacion", flex: 1, margin: '0 10 0 0',flex:1,allowBlank : false},    
+                            {xtype : "textfield", name : "numero_factura", fieldLabel : "No. Factura", flex: 1,allowBlank : false},
+                            {xtype : "combobox", fieldLabel: " Cliente",queryMode: 'local', store: ListMaestroClientes,displayField: 'nom_cliente',valueField: 'idmaestroClientes',name:"idmaestroClientes", flex: 1, margin: '0 10 0 0',width:340 ,allowBlank : false},
                             {xtype : "textfield", name : "comprobante", fieldLabel : " No. Comprobante", flex: 1, margin: '0 10 0 0'},
                             {xtype : "datefield", name : "fecha_facturacion", fieldLabel : " Fecha Facturacion", flex: 1, margin: '0 10 0 0'},
                             {xtype : "textfield", name : "venta_acta_de", fieldLabel : " Venta A Cuenta De", flex: 1, margin: '0 10 0 0'},
@@ -67,7 +81,7 @@ Ext.create('Ext.data.Store', {
                             ]},
                             
                             //GRID DE FACTURACION
-                            {xtype : 'grid',name:'gridDetalle',id:'gridDetalle', 
+                            {xtype : 'grid',name:'gridDetalle',id:'gridDetalle', allowBlank : false,
                             title: 'Detalle Facturacion',
                             store: Ext.data.StoreManager.lookup('simpsonsStore'),
                             columns: [
@@ -95,7 +109,7 @@ Ext.create('Ext.data.Store', {
                             height: 250,
                             width:900,
 				    tbar: [{
-			            text: 'Adicionar Producto',
+			            text: 'Adicionar Venta',
 			            iconCls: 'add',
 			            id: 'addRecord',
 			            handler : function() {
@@ -113,7 +127,7 @@ Ext.create('Ext.data.Store', {
 			        }, {
 			            itemId: 'removeRecord',
 			            id: 'removeRecord',
-			            text: 'Quitar Producto',
+			            text: 'Quitar Venta',
 			            iconCls: 'delete',
 			            handler: function() {
 			            Ext.getCmp("gridDetalle").store.remove(Ext.getCmp("gridDetalle").getSelectionModel().getSelection());
@@ -155,7 +169,8 @@ Ext.create('Ext.data.Store', {
                             items: ['->', {
                                     itemId: 'BtnClienteAceptar',
                                     text: 'Guardar',
-                                    action: 'actGuardar'
+                                    action: 'actGuardar', handler: function() {
+                        this.up('form').getForm().isValid(); }
                             },{
                                     itemId: 'BtnClienteCancelar',
                                     text: 'Cancelar',
