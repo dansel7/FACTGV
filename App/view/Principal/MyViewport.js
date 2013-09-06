@@ -98,10 +98,10 @@ Ext.define('MvcClientes.view.Principal.MyViewport',{
                                         {
                  //DEPENDIENDO QUE OPCION SE QUIERE SE DEBE DE DEFINIR EL INDICE DE LA OPCION
                                         
-                                        if (index==0)
-                                           {
-                                              addTabListadoClientes();
-                                           }
+                                       if (index==0)
+                                       {
+                                          addTabListadoClientes();
+                                       }
                                        if (index==1)
                                        {
                                           addTabListadoUsuarios();
@@ -278,7 +278,7 @@ Ext.define('MvcClientes.view.Principal.MyViewport',{
 				this.TabPanelMain.doLayout(); //Redibujado del Panel 
 				this.TabPanelMain.setActiveTab(tab); //Activamos el Tab
                			
-             } 
+                   } 
 			    this.TabPanelMain.setActiveTab(tab); //Se activa el Tab Clickeado 
 				     		 
 	    }

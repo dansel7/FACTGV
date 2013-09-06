@@ -1,5 +1,6 @@
 <?php
-
+  session_start();
+  error_reporting(0);
 // Conexion a la Bd
 require '../../Database_conf.php';
 mysql_select_db($db_name,$connection) or die("Error de conexion a la base de datos");
@@ -8,12 +9,37 @@ mysql_select_db($db_name,$connection) or die("Error de conexion a la base de dat
 
 	$data = json_decode($info);
 
-	$Nombre = $data->nombre;
-
+        
+				$numero_factura=  $data->numero_factura;
+                                $idmaestroClientes=$data->idmaestroClientes;
+				$comprobante=  $data->comprobante;
+                                $fecha_facturacion= $data->fecha_facturacion;
+                                $venta_acta_de= $data->venta_acta_de;
+                                $iva=  $data->iva;
+                                $iva_retenido=  $data->iva_retenido;
+                                $venta_total=  $data->venta_total;
+                                $fecha_quedan= $data->fecha_quedan;
+                                $comprobante_quedan= $data->comprobante_quedan;
+				$fecha_programada_pago= $data->fecha_programada_pago;
+                                $id_empresa=$_SESSION["idEmpresa"];
+                                $id_tipo_facturacion=$data->id_tipo_facturacion;
 	
-                 $SqlInsert ="INSERT INTO empresa
+	
+                 $SqlInsert ="INSERT INTO facturacion
                              SET
-                            `nombre`='$Nombre'";
+                             `numero_factura`='$numero_factura',
+                               `idmaestroClientes`=$idmaestroClientes,
+				`comprobante`='$comprobante',
+                                `fecha_facturacion`='$fecha_facturacion',
+                                `venta_acta_de`='$venta_acta_de',
+                                `iva`='$iva',
+                                `iva_retenido`='$iva_retenido',
+                                `venta_total`='$venta_total',
+                                `fecha_quedan`='$fecha_quedan',
+                                `comprobante_quedan`='$comprobante_quedan',
+				`fecha_programada_pago`='$fecha_programada_pago',
+                                `id_empresa`=$id_empresa,
+                                `id_tipo_facturacion`=$id_tipo_facturacion";
 			
 			$rs = mysql_query($SqlInsert);
 

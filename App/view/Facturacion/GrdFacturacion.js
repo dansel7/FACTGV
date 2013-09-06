@@ -1,5 +1,9 @@
+Ext.require([
+    'Ext.ux.LiveSearchGridPanel'
+]);
+
 Ext.define('MvcClientes.view.Facturacion.GrdFacturacion',{
-	extend: 'Ext.grid.Panel',
+	extend: 'Ext.ux.LiveSearchGridPanel',
 	alias:'widget.gridFacturacion',
 	store: 'Facturacion.Facturacion',
 	border: false,
@@ -22,7 +26,7 @@ Ext.define('MvcClientes.view.Facturacion.GrdFacturacion',{
                             { dataIndex : "iva", header : "IVA", flex:1,hidden: true},
                             { dataIndex : "iva_retenido", header : "IVA Retenido", flex:1,hidden: true},
                             { dataIndex : "venta_total", header : "Venta Total", flex:1},
-                            { dataIndex : "fecha_quedan", header : "Fecha Quedan", flex:1,hidden: true},
+                            { dataIndex : "fecha_quedan", header : "Fecha Quedan", flex:1},
                             { dataIndex : "comprobante_quedan", header : "Comprobante Quedan", flex:1,hidden: true},
                             { dataIndex : "fecha_programada_pago", header : "Fecha Programada Pago", flex:1},
                             

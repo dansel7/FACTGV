@@ -5,7 +5,7 @@
 Ext.define('MvcClientes.view.Facturacion.CapturaEdicionFacturacion', {
     extend: 'Ext.form.Panel',
 	alias:'widget.FormAddEdicionFacturacion',
-    height: 400,
+    height: 500,
     width: 400,
     layout: {
         type: 'fit'
@@ -58,7 +58,7 @@ Ext.create('Ext.data.Store', {
             items: [
                     {
                         xtype: 'form',
-                        height: 100,
+                        height: 500,
                         layout: {
                             type: 'auto'
                         },bodyPadding: 10,
@@ -169,8 +169,7 @@ Ext.create('Ext.data.Store', {
                             items: ['->', {
                                     itemId: 'BtnClienteAceptar',
                                     text: 'Guardar',
-                                    action: 'actGuardar', handler: function() {
-                        this.up('form').getForm().isValid(); }
+                                    action: 'actGuardar'
                             },{
                                     itemId: 'BtnClienteCancelar',
                                     text: 'Cancelar',

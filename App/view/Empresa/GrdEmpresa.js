@@ -1,5 +1,9 @@
+Ext.require([
+    'Ext.ux.LiveSearchGridPanel'
+]);
+
 Ext.define('MvcClientes.view.Empresa.GrdEmpresa',{
-	extend: 'Ext.grid.Panel',
+	extend: 'Ext.ux.LiveSearchGridPanel',
 	alias:'widget.gridEmpresa',
 	store: 'Empresa.Empresa',
 	border: false,
