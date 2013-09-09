@@ -17,11 +17,11 @@ Ext.define('MvcClientes.view.Facturacion.GrdFacturacion',{
 		Ext.applyIf(me, {
 			columns : [//Definimos las Columnas del Grid y las Columnas de la Tabla
 			   
-                            { dataIndex : "idFacturacion", header : "Id",hidden: true},
+                            { dataIndex : "idfacturacion", header : "Id",hidden: true},
                             { dataIndex : "numero_factura", header : "No. Factura", flex:1},
                             { header: "Cliente",dataIndex:"idmaestroClientes", flex:1},
                             { dataIndex : "comprobante", header : "No. Comprobante", flex:1,hidden: true},
-                            { dataIndex : "fecha_facturacion", header : "Fecha Facturacion", flex:1},
+                            { dataIndex : "fecha_facturacion", header : "Fecha Facturacion", flex:1,renderer:Ext.util.Format.dateRenderer('d/m/Y') },
                             { dataIndex : "venta_acta_de", header : "Venta A Cuenta De", flex:1,hidden: true},
                             { dataIndex : "iva", header : "IVA", flex:1,hidden: true},
                             { dataIndex : "iva_retenido", header : "IVA Retenido", flex:1,hidden: true},

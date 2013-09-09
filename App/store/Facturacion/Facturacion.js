@@ -16,7 +16,7 @@
 			},*/
             reader: {
                 type: 'json',
-				idProperty: 'idFacturacion',
+				idProperty: 'idfacturacion',
 				successProperty	: function()
 				   {
                       // Alguna Funcion o mensaje que quieras agregar cuando la operacion es exitosa
