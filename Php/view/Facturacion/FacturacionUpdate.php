@@ -29,7 +29,7 @@ mysql_select_db($db_name,$connection) or die("Error de conexion a la base de dat
                             `numero_factura`='$numero_factura',
                             `idmaestroClientes`=$idmaestroClientes,
                             `comprobante`='$comprobante',
-                            `fecha_facturacion`='$fecha_facturacion',
+                            `fecha_facturacion`= '$fecha_facturacion',
                             `venta_acta_de`='$venta_acta_de',
                             `iva`='$iva',
                             `iva_retenido`='$iva_retenido',

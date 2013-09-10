@@ -61,7 +61,7 @@ Ext.create('Ext.data.Store', {
                         height: 500,
                         layout: {
                             type: 'auto'
-                        },bodyPadding: 10,
+                        },bodyPadding: 25,
                         items: 
                         [   
                             //DATOS GENERALES
@@ -146,8 +146,8 @@ Ext.create('Ext.data.Store', {
                             },
                             
                             
-                            //DATOS FINALES
-                            {xtype: 'fieldset',title: 'Datos ',width:900,
+                            //TOTALES 
+                            {xtype: 'fieldset',title: 'Totales',width:900,
                             layout: {
                                     columns: 3,
                                     type: 'table'
@@ -156,6 +156,13 @@ Ext.create('Ext.data.Store', {
                             {xtype : "textfield", name : "iva", fieldLabel : "IVA", flex: 1},
                             {xtype : "textfield", name : "iva_retenido", fieldLabel : " Iva Retenido", flex: 1, margin: '0 10 0 0'},
                             {xtype : "textfield", name : "venta_total", fieldLabel : " Venta Total", flex: 1, margin: '0 10 0 0'},
+                            ]},
+                            {xtype: 'fieldset',title: 'Datos de Quedan y Pago',width:900,
+                            layout: {
+                                    columns: 3,
+                                    type: 'table'
+                            }, //DATOS DE QUEDAN Y PAGOS                          
+                            items:[
                             {xtype : "datefield",format: 'd/m/Y', name : "fecha_quedan", fieldLabel : " Fecha Quedan", flex: 1, margin: '0 10 0 0'},
                             {xtype : "textfield", name : "comprobante_quedan", fieldLabel : " Comprobante Quedan", flex: 1, margin: '0 10 0 0'},
                             {xtype : "datefield",format: 'd/m/Y', name : "fecha_programada_pago", fieldLabel : " Fecha Programada de Pago", flex: 1, margin: '0 10 0 0'},
@@ -164,6 +171,7 @@ Ext.create('Ext.data.Store', {
             dockedItems : [{
                             xtype: 'toolbar',
                             dock: 'bottom',
+                            height: 30,
                             id:'buttons',
                             ui: 'footer',
                             items: ['->', {
