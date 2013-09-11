@@ -9,7 +9,7 @@ Ext.define('MvcClientes.view.Facturacion.CapturaEdicionFacturacion', {
     width: 400,
     layout: {
         type: 'fit'
-    },
+    },itemId:"EdicionFacturacion",
 	autoShow: true,
     closable: false,
     title: 'Formulario de Facturacion',
@@ -41,17 +41,38 @@ Ext.define('MvcClientes.view.Facturacion.CapturaEdicionFacturacion', {
             autoLoad: true
         });
         
-//STORE DE LOS DETALLES DE FACTURAS        
-Ext.create('Ext.data.Store', {
-    storeId:'simpsonsStore',
-    fields:['concepto', 'valor_concepto', 'valor_nosujeta','valor_exenta','valor_gravada'],
-    data: [
-        {"concepto":"Concepto de Prueba1", "valor_concepto":"213", "valor_nosujeta":"232"},
-        {"concepto":"Concepto de Prueba2", "valor_concepto":"12", "valor_nosujeta":"23"},
-        {"concepto":"Concepto de Prueba3", "valor_concepto":"23", "valor_nosujeta":"23"},
-        {"concepto":"Concepto de Prueba4", "valor_concepto":"23", "valor_nosujeta":"455"}
-    ]
-});
+//STORE DE LOS DETALLES DE FACTURAS    
+//Verificar que se envian datos para editar
+var idfactura;
+if(typeof(records) != "undefined"){
+ idfactura=records[0].data.idfacturacion;   
+}else{idfactura='';}
+
+ var factura_detalle = new Ext.data.Store({
+            fields: ['idDetalle', 'concepto','valor_concepto','venta_nosujeta','valor_exenta','valor_gravada'],
+            proxy: {
+                type: 'ajax',
+                url : 'Php/store/factura_detalle.php?id='+ idfactura,
+                reader: {
+                    type: 'json'
+                }
+            },
+            autoLoad: true
+        });
+
+
+ //FUNCION PARA MOSTRAR LOS TOTALES
+           function totales_facturacion(){
+               
+            var sum=0;
+            Ext.getCmp("gridDetalle").getStore().each(function(record){
+                sum+=record.data.valor_concepto;
+              });
+              Ext.getCmp("iva").setValue(sum*0.13);
+              Ext.getCmp("venta_total").setValue(sum);
+            
+            }
+            
 
         var me = this;
         Ext.applyIf(me, {
@@ -80,30 +101,40 @@ Ext.create('Ext.data.Store', {
                             {xtype : "textfield", name : "idfacturacion", fieldLabel : "Id",hidden: true, margin: '0 10 0 0'}
                             ]},
                             
+                            
                             //GRID DE FACTURACION
                             {xtype : 'grid',name:'gridDetalle',id:'gridDetalle', allowBlank : false,
                             title: 'Detalle Facturacion',
-                            store: Ext.data.StoreManager.lookup('simpsonsStore'),
+                            store: factura_detalle,
                             columns: [
+                                {header: 'idDetalle',  dataIndex: 'idDetalle', hidden: true, editor: {
+                                        xtype: 'textfield'
+                                }},
                                 {header: 'Concepto',  dataIndex: 'concepto',flex:1, editor: {
                                         xtype: 'textfield',
                                     allowBlank: false
                                 }},
-                                {header: 'Valor Concepto', dataIndex: 'valor_concepto', editor: {
-                                        xtype: 'textfield',
-                                    allowBlank: false
-                                }},
+                                {header: 'Valor Concepto', dataIndex: 'valor_concepto',	
+                                    editor: {
+                                        xtype: 'numberfield',allowDecimals: true, 
+                                        decimalPrecision: 2 ,  hideTrigger: true,
+                                        allowBlank: false, decimalSeparator: "." 
+                                        }
+                                },
                                 {header: 'Venta No sujeta', dataIndex: 'valor_nosujeta', editor: {
-                                        xtype: 'textfield',
-                                    allowBlank: true
+                                        xtype: 'numberfield',allowDecimals: true, 
+                                        decimalPrecision: 2 ,  hideTrigger: true,
+                                        allowBlank: true,decimalSeparator: "." 
                                 }},
                                 {header: 'Valor Exenta', dataIndex: 'valor_exenta', editor: {
-                                        xtype: 'textfield',
-                                    allowBlank: true
+                                        xtype: 'numberfield',allowDecimals: true, 
+                                        decimalPrecision: 2 ,  hideTrigger: true,
+                                        allowBlank: true,decimalSeparator: "." 
                                 }},
                                 {header: 'Venta Gravada', dataIndex: 'valor_gravada', editor: {
-                                        xtype: 'textfield',
-                                    allowBlank: true
+                                        xtype: 'numberfield',allowDecimals: true, 
+                                        decimalPrecision: 2 ,  hideTrigger: true,
+                                        allowBlank: true,decimalSeparator: "." 
                                 }}
                             ],
                             height: 250,
@@ -140,10 +171,15 @@ Ext.create('Ext.data.Store', {
                                 plugins: [
                                     Ext.create('Ext.grid.plugin.RowEditing', {
                                         id:'rowedit',
-                                        clickToEdit : 1
-                                    })
+                                        clickToEdit : 1,
+                                        listeners: {
+                                    'afteredit': function(e) {
+                                    totales_facturacion();
+                                    }}
+                                    }),
+                                    
                                 ]
-                            },
+                            },/////FIN GRID////////
                             
                             
                             //TOTALES 
@@ -153,9 +189,9 @@ Ext.create('Ext.data.Store', {
                                     type: 'table'
                             },                            
                             items:[
-                            {xtype : "textfield", name : "iva", fieldLabel : "IVA", flex: 1},
-                            {xtype : "textfield", name : "iva_retenido", fieldLabel : " Iva Retenido", flex: 1, margin: '0 10 0 0'},
-                            {xtype : "textfield", name : "venta_total", fieldLabel : " Venta Total", flex: 1, margin: '0 10 0 0'},
+                            {xtype : "numberfield", id : "iva", name : "iva", fieldLabel : "IVA", flex: 1,margin: '0 10 0 0',readOnly:true, allowDecimals: true,decimalPrecision: 2 ,  hideTrigger: true,allowBlank: true,decimalSeparator: "." },
+                            {xtype : "textfield", id : "iva_retenido",name : "iva_retenido", fieldLabel : " Iva Retenido", flex: 1, margin: '0 10 0 0'},
+                            {xtype : "textfield", id : "venta_total", name : "venta_total",fieldLabel : " Venta Total",readOnly:true, flex: 1, margin: '0 10 0 0'},
                             ]},
                             {xtype: 'fieldset',title: 'Datos de Quedan y Pago',width:900,
                             layout: {
@@ -188,6 +224,7 @@ Ext.create('Ext.data.Store', {
               }]
           }); 
 		  me.callParent(arguments);
+                  
       }					
 });	
-									
+
