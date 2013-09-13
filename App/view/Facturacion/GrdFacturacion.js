@@ -40,7 +40,7 @@ Ext.define('MvcClientes.view.Facturacion.GrdFacturacion',{
 					items: [
 						{
 						itemId: 'Add',
-						text: 'Agregar',
+						text: 'Nueva Factura',
 						iconCls: 'add',
 						action:'actAgregar'//Accion manejado por el Controlador
 						},'-',{
