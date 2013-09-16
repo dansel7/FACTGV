@@ -20,7 +20,7 @@ Ext.define('MvcClientes.view.Facturacion.GrdFacturacion',{
                             { dataIndex : "idfacturacion", header : "Id",hidden: true},
                             { dataIndex : "numero_factura", header : "No. Factura", flex:1},
                             { dataIndex : "idmaestroClientes",header: "IdCliente", flex:1,hidden: true},
-                            { dataIndex : "nom_cliente",header: "Cliente", flex:1},
+                            { dataIndex : "nom_cliente",header: "Cliente", flex:2},
                             { dataIndex : "comprobante", header : "No. Comprobante", flex:1,hidden: true},
                             { dataIndex : "fecha_facturacion", header : "Fecha Facturacion", flex:1,renderer:Ext.util.Format.dateRenderer('d/m/Y') },
                             { dataIndex : "venta_acta_de", header : "Venta A Cuenta De", flex:1,hidden: true},

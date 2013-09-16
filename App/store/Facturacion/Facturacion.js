@@ -39,7 +39,6 @@
      					{
 							//Ext.Msg.alert('Title','Read');
 					}
-			 
 					else 
 					    if (request.action == 'update')
 						{
@@ -49,6 +48,7 @@
                                         else 
 					    if (request.action == 'create')
 						{
+                                                    
 							Ext.Msg.alert('Mensaje','Registro Ingresado Exitosamente');
                                                         
 					    }

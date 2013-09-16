@@ -92,9 +92,9 @@ if(typeof(records) != "undefined"){
                                     type: 'table'
                             },  
                             items:[
-                            {xtype : "combobox", id:"tipo_factura", fieldLabel: "Tipo Factura",queryMode: 'local', store: ListTpFact,displayField: 'tipo',valueField: 'id_tipo_facturacion',name:"id_tipo_facturacion", flex: 1, margin: '0 10 0 0',flex:1,allowBlank : false},    
+                            {xtype : "combobox", id:"tipo_factura", queryMode: 'local',fieldLabel: "Tipo Factura",queryMode: 'local', store: ListTpFact,displayField: 'tipo',valueField: 'id_tipo_facturacion',name:"id_tipo_facturacion", flex: 1, margin: '0 10 0 0',flex:1,allowBlank : false},    
                             {xtype : "textfield", name : "numero_factura", fieldLabel : "No. Factura", flex: 1,allowBlank : false},
-                            {xtype : "combobox", fieldLabel: " Cliente",queryMode: 'local', store: ListMaestroClientes,displayField: 'nom_cliente',valueField: 'idmaestroClientes',name:"idmaestroClientes", flex: 1, margin: '0 10 0 0',width:340 ,allowBlank : false},
+                            {xtype : "combobox", queryMode: 'local', fieldLabel: " Cliente",queryMode: 'local', store: ListMaestroClientes,displayField: 'nom_cliente',valueField: 'idmaestroClientes',name:"idmaestroClientes", flex: 1, margin: '0 10 0 0',width:340 ,allowBlank : false},
                             {xtype : "textfield", name : "comprobante", fieldLabel : " No. Comprobante", flex: 1, margin: '0 10 0 0'},
                             {xtype : "datefield", format: 'd/m/Y', value: new Date(), name : "fecha_facturacion", fieldLabel : " Fecha Facturacion", flex: 1, margin: '0 10 0 0'},
                             {xtype : "textfield", name : "venta_acta_de", fieldLabel : " Venta A Cuenta De", flex: 1, margin: '0 10 0 0'},
