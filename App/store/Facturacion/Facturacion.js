@@ -58,7 +58,8 @@
 							Ext.Msg.alert('Mensaje','Registro Eliminado Exitosamente');
                                                         
 					    }
-                        },
+                        }
+                        ,
 			listeners: {
 					   exception: function(proxy, response, operation){
 							Ext.MessageBox.show({

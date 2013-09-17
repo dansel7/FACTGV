@@ -23,7 +23,8 @@ mysql_select_db($db_name,$connection) or die("Error de conexion a la base de dat
         $id_empresa=$_SESSION["idEmpresa"];
         $id_tipo_facturacion=$data->id_tipo_facturacion;
 	$id = $data->idfacturacion;
-	
+
+        
 	$SqlUpdate ="UPDATE facturacion
                              SET
                             `numero_factura`='$numero_factura',

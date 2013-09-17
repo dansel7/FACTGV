@@ -108,33 +108,32 @@ if(typeof(records) != "undefined"){
                             store: factura_detalle,
                             columns: [
                                 {header: 'idDetalle',  dataIndex: 'idDetalle', hidden: true, editor: {
-                                        xtype: 'textfield'
+                                        xtype: 'textfield',name:'idDetalle'
                                 }},
                                 {header: 'Concepto',  dataIndex: 'concepto',flex:1, editor: {
-                                        xtype: 'textfield',
+                                        xtype: 'textfield',name:'concepto',
                                     allowBlank: false
                                 }},
                                 {header: 'Valor Concepto', dataIndex: 'valor_concepto',	
                                     editor: {
-                                        xtype: 'numberfield',allowDecimals: true, 
+                                        xtype: 'numberfield',allowDecimals: true, name:'valor_concepto',
                                         decimalPrecision: 2 ,  hideTrigger: true,
                                         allowBlank: false, decimalSeparator: "." 
-                                        }
-                                },
+                                }},
                                 {header: 'Venta No sujeta', dataIndex: 'valor_nosujeta', editor: {
-                                        xtype: 'numberfield',allowDecimals: true, 
+                                        xtype: 'numberfield',allowDecimals: true, name:'valor_nosujeta',
                                         decimalPrecision: 2 ,  hideTrigger: true,
-                                        allowBlank: true,decimalSeparator: "." 
+                                        allowBlank: true, decimalSeparator: "." 
                                 }},
                                 {header: 'Valor Exenta', dataIndex: 'valor_exenta', editor: {
-                                        xtype: 'numberfield',allowDecimals: true, 
+                                        xtype: 'numberfield',allowDecimals: true, name:'valor_exenta',
                                         decimalPrecision: 2 ,  hideTrigger: true,
-                                        allowBlank: true,decimalSeparator: "." 
+                                        allowBlank: true, decimalSeparator: "." 
                                 }},
                                 {header: 'Venta Gravada', dataIndex: 'valor_gravada', editor: {
-                                        xtype: 'numberfield',allowDecimals: true, 
+                                        xtype: 'numberfield',allowDecimals: true, name:'venta_agravada',
                                         decimalPrecision: 2 ,  hideTrigger: true,
-                                        allowBlank: true,decimalSeparator: "." 
+                                        allowBlank: true, decimalSeparator: "." 
                                 }}
                             ],
                             height: 250,
@@ -143,7 +142,7 @@ if(typeof(records) != "undefined"){
 			            text: 'Adicionar Venta',
 			            iconCls: 'add',
 			            id: 'addRecord',
-			            handler : function() {
+			            handler : function() {//AGREGANDO UN NUEVO DETALLE A LA FACTURACION
                                         var r = {
                                             concepto: '',
                                             valor_concepto: '',
@@ -162,10 +161,7 @@ if(typeof(records) != "undefined"){
 			            iconCls: 'delete',
 			            handler: function() {
 			            Ext.getCmp("gridDetalle").store.remove(Ext.getCmp("gridDetalle").getSelectionModel().getSelection());
-			                loadCountries();
-
-
-			             
+			               totales_facturacion();
 			            }
 			        }],
                                 plugins: [
