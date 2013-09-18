@@ -7,8 +7,8 @@ if(isset($_POST["benutzer"]) && isset($_POST["kennwort"])){
    //SE VALIDA QUE EL USUARIO Y PASSWORD SEAN LOS CORRECTOS Y DEVUELVE UN RESULTADO 1 o 0
    mysql_select_db($db_name,$connection) or die("Error de conexion a la base de datos");
    
-   $sql = "select count(*),concat(IFNULL(b.nombre,''),' ',IFNULL(b.apellido,'')) nom, b.id_perfil, p.perfil
-       from benutzer b inner join perfil  p on b.id_perfil=p.id_perfil
+   $sql = "select count(*),concat(IFNULL(b.nombre,''),' ',IFNULL(b.apellido,'')) nom, b.id_perfil, p.perfil,
+       b.idbenutzer from benutzer b inner join perfil  p on b.id_perfil=p.id_perfil
        where b.benutzer='{$_POST["benutzer"]}' and b.kennwort=AES_ENCRYPT('{$_POST["kennwort"]}','*6v!114t0rO') limit 1";
        
    $Qryres = mysql_query($sql,$connection) or die('La consulta fall&oacute;: '.mysql_error());
@@ -19,7 +19,7 @@ if($resultado[0]=="1"){
      $_SESSION["idperfil"]=$resultado[2];
      $_SESSION["perfil"]=$resultado[3];
      $_SESSION["benutzer"]=$_POST["benutzer"];
-     
+     $_SESSION["idbenutzer"]=$resultado[4];
     echo '{"success":true}';   }
    else {
     echo '{"success":false}';  

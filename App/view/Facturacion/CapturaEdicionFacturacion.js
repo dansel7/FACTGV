@@ -52,7 +52,7 @@ if(typeof(records) != "undefined"){
             fields: ['idDetalle', 'concepto','valor_concepto','venta_nosujeta','valor_exenta','valor_gravada'],
             proxy: {
                 type: 'ajax',
-                url : 'Php/store/factura_detalle.php?id='+ idfactura,
+                url : 'Php/view/FactDetalle/FactDetalleRead.php?id='+ idfactura,
                 reader: {
                     type: 'json'
                 }
@@ -120,8 +120,8 @@ if(typeof(records) != "undefined"){
                                         decimalPrecision: 2 ,  hideTrigger: true,
                                         allowBlank: false, decimalSeparator: "." 
                                 }},
-                                {header: 'Venta No sujeta', dataIndex: 'valor_nosujeta', editor: {
-                                        xtype: 'numberfield',allowDecimals: true, name:'valor_nosujeta',
+                                {header: 'Venta No sujeta', dataIndex: 'venta_nosujeta', editor: {
+                                        xtype: 'numberfield',allowDecimals: true, name:'venta_nosujeta',
                                         decimalPrecision: 2 ,  hideTrigger: true,
                                         allowBlank: true, decimalSeparator: "." 
                                 }},
@@ -146,7 +146,7 @@ if(typeof(records) != "undefined"){
                                         var r = {
                                             concepto: '',
                                             valor_concepto: '',
-                                            valor_nosujeta: '0.0',
+                                            venta_nosujeta: '0.0',
                                             valor_exenta: '0.0',
                                             valor_gravada: '0.0'
                                         };

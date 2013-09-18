@@ -25,7 +25,7 @@
                         f.id_empresa,
                         f.id_tipo_facturacion
                         FROM facturacion f inner join maestroclientes mc on f.idmaestroClientes=mc.idmaestroClientes
-                        where id_empresa=".$idempresa;
+                        where id_empresa=".$idempresa." and idbenutzer=".$_SESSION["idbenutzer"];
     	$result = mysql_query($sql,$connection) or die('La consulta fall&oacute;: '.mysql_error());		
 		//Formamos el Array de Datos, si ejecutamos este archivo PHP veremos el array formado
 		while($obj = mysql_fetch_object($result)) {

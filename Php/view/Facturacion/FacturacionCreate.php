@@ -39,7 +39,8 @@ mysql_select_db($db_name,$connection) or die("Error de conexion a la base de dat
                                 `comprobante_quedan`='$comprobante_quedan',
 				`fecha_programada_pago`='$fecha_programada_pago',
                                 `id_empresa`=$id_empresa,
-                                `id_tipo_facturacion`=$id_tipo_facturacion";
+                                `id_tipo_facturacion`=$id_tipo_facturacion,
+                                `idbenutzer`=".$_SESSION["idbenutzer"];
 			
 			$rs = mysql_query($SqlInsert);
 
