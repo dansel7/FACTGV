@@ -5,18 +5,19 @@
 require '../../Database_conf.php';
 mysql_select_db($db_name,$connection) or die("Error de conexion a la base de datos");
 
-	$info = $_POST["data"];
+	$info ='[{"concepto":"kjfskdaf","valor_concepto":23,"venta_nosujeta":10,"venta_exenta":null,"venta_gravada":null},{"concepto":"conp2","valor_concepto":45,"venta_nosujeta":0,"venta_exenta":null,"venta_gravada":null}] ';
 
 	$data = json_decode($info);
-
-                                $concepto=$data->concepto;
-                                $valor_concepto=$data->valor_concepto;
-                                $venta_nosujeta=$data->venta_nosujeta;
-                                $valor_exenta=$data->valor_exenta;
-                                $valor_gravada=$data->valor_gravada;
-				
-				
-	
+        $idFacturacion=$_GET["idf"];
+        
+        $qry="";
+        foreach($data as $fila){
+        $qry.="(".$idFacturacion .",". $fila->concepto .",". $fila->valor_concepto .",". $fila->venta_nosujeta .",".$fila->valor_exenta.",".$fila->valor_gravada.")," ;
+        }
+        
+        echo $qry;
+        
+//Solo faltaria agregarlos a la tabla y crear bien el insert
 	
          /*        $SqlInsert ="INSERT INTO facturacion
                              SET
@@ -36,10 +37,10 @@ mysql_select_db($db_name,$connection) or die("Error de conexion a la base de dat
                                 `idbenutzer`=".$_SESSION["idbenutzer"];
 			*/
 			//$rs = mysql_query($SqlInsert);
-
+                                
         echo json_encode(array(
                 "success" 	=> mysql_errno() == 0,
-                "msg"		=> mysql_errno() == 0 ? "Datos Agregados Correctamente":mysql_error(),
+                "msg"		=> mysql_errno() == 0 ? " Datos Agregados Correctamente: " : mysql_error(),
 
 
         ));
