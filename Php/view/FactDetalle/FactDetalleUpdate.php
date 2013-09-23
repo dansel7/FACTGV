@@ -8,24 +8,9 @@ mysql_select_db($db_name,$connection) or die("Error de conexion a la base de dat
 	$info = $_POST["data"];
 
 	$data = json_decode($info);
-
-	$numero_factura=  $data->numero_factura;
-        $idmaestroClientes=$data->idmaestroClientes;
-        $comprobante=  $data->comprobante;
-        $fecha_facturacion= $data->fecha_facturacion;
-        $venta_acta_de= $data->venta_acta_de;
-        $iva=  $data->iva;
-        $iva_retenido=  $data->iva_retenido;
-        $venta_total=  $data->venta_total;
-        $fecha_quedan= $data->fecha_quedan;
-        $comprobante_quedan= $data->comprobante_quedan;
-        $fecha_programada_pago= $data->fecha_programada_pago;
-        $id_empresa=$_SESSION["idEmpresa"];
-        $id_tipo_facturacion=$data->id_tipo_facturacion;
-	$id = $data->idfacturacion;
-
+//COLOCAR LOS CAMPOS
         
-	$SqlUpdate ="UPDATE facturacion
+/*	$SqlUpdate ="UPDATE facturacion
                              SET
                             `numero_factura`='$numero_factura',
                             `idmaestroClientes`=$idmaestroClientes,
@@ -41,9 +26,9 @@ mysql_select_db($db_name,$connection) or die("Error de conexion a la base de dat
                             `id_empresa`=$id_empresa,
                             `id_tipo_facturacion`=$id_tipo_facturacion
 			 WHERE idfacturacion=$id";
+        */
         
-        
-	$rs = mysql_query($SqlUpdate);
+	//$rs = mysql_query($SqlUpdate);
 
 	echo json_encode(array(
 		"success" 	=> mysql_errno() == 0,

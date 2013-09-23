@@ -42,6 +42,8 @@ writer:{
                             else 
                                 if (request.action == 'update')
                                     {
+                                       
+                                        
                                             Ext.Msg.alert('Mensaje','Registro Actualizado Exitosamente');
 
                             }	
@@ -51,41 +53,41 @@ writer:{
                                      
                    ///////---INGRESO DE DETALLE----//////
                          
-                  //ACA SE OBTIENE EL ID QUE RETORNA AL CREAR UN NUEVO REGISTRO DE FACTURACION
-                  //LUEGO SE PASARA ESTE VALOR PARA PODER RELACIONARLO CON EL DETALLE                        
-                   var idNuevaFact=Ext.decode(request.callback.arguments[2].responseText).data[0].idfacturacion;
-                   
-                   //OBTENER LOS VALORES DEL GRID Y CONVERTIRLOS A JSON PARA PASARLOS
-                   var grid = Ext.getCmp("gridDetalle").getStore().getRange();
-                   var JsonDatos = [];
-                    for (var i in grid) {
-                        JsonDatos.push({
-                            'concepto':         grid[i].get('concepto'),
-                            'valor_concepto':   grid[i].get('valor_concepto'),
-                            'venta_nosujeta':   grid[i].get('venta_nosujeta'),
-                            'venta_exenta':     grid[i].get('venta_exenta'),
-                            'venta_gravada':    grid[i].get('venta_gravada') 
-                        });
-                    }
-                    
-                   JsonDatos=Ext.encode(JsonDatos)
-                  ///---SE ENVIAN LOS DATOS DEL DETALLE PARA SER INGRESADOS----///
-                            Ext.Ajax.request({
-                              url: 'Php/view/FactDetalle/FactDetalleCreate.php?idf='+idNuevaFact,
-                              jsonData: JsonDatos ,
-                              method: "POST",
-                               success: function(response) {
-                              var outHTML = response.responseText;
-                                
-                              },
-                              failure: function(response) {
-                              
-                              }
+                      //ACA SE OBTIENE EL ID QUE RETORNA AL CREAR UN NUEVO REGISTRO DE FACTURACION
+                      //LUEGO SE PASARA ESTE VALOR PARA PODER RELACIONARLO CON EL DETALLE                        
+                       var idNuevaFact=Ext.decode(request.callback.arguments[2].responseText).data[0].idfacturacion;
+
+                       //OBTENER LOS VALORES DEL GRID Y CONVERTIRLOS A JSON PARA PASARLOS
+                       var grid = Ext.getCmp("gridDetalle").getStore().getRange();
+                       var JsonDatos = [];
+                        for (var i in grid) {
+                            JsonDatos.push({
+                                'concepto':         grid[i].get('concepto'),
+                                'valor_concepto':   grid[i].get('valor_concepto'),
+                                'venta_nosujeta':   grid[i].get('venta_nosujeta'),
+                                'venta_exenta':     grid[i].get('venta_exenta'),
+                                'venta_gravada':    grid[i].get('venta_gravada') 
                             });
-                  /////------------------FIN------------------/////
-                  
-                  //SE CIERRA EL FORM DE FACTURACION
-                            Ext.getCmp("gridDetalle").up('form').up('panel').close()
+                        }
+
+                       JsonDatos=Ext.encode(JsonDatos)
+                      ///---SE ENVIAN LOS DATOS DEL DETALLE PARA SER INGRESADOS----///
+                                Ext.Ajax.request({
+                                  url: 'Php/view/FactDetalle/FactDetalleCreate.php?idf='+idNuevaFact,
+                                  params: {data:JsonDatos},
+                                  method: "POST",
+                                   success: function(response) {
+                                  var outHTML = response.responseText;
+
+                                  },
+                                  failure: function(response) {
+
+                                  }
+                                });
+                      /////------------------FIN------------------/////
+
+                      //SE CIERRA EL FORM DE FACTURACION
+                                Ext.getCmp("gridDetalle").up('form').up('panel').close()
                             
                   ///////--- FIN -- INGRESO DE DETALLE----////// 
                                     
