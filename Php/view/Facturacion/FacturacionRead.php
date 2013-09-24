@@ -23,7 +23,8 @@
                         f.comprobante_quedan,
                         if(DATE_FORMAT(f.fecha_programada_pago, '%d/%m/%Y') = '00/00/0000', null,DATE_FORMAT(f.fecha_quedan, '%d/%m/%Y'))  fecha_programada_pago,
                         f.id_empresa,
-                        f.id_tipo_facturacion
+                        f.id_tipo_facturacion,
+                        f.anulado
                         FROM facturacion f inner join maestroclientes mc on f.idmaestroClientes=mc.idmaestroClientes
                         where id_empresa=".$idempresa." and idbenutzer=".$_SESSION["idbenutzer"];
     	$result = mysql_query($sql,$connection) or die('La consulta fall&oacute;: '.mysql_error());		

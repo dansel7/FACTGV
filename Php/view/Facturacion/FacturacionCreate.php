@@ -23,6 +23,7 @@ mysql_select_db($db_name,$connection) or die("Error de conexion a la base de dat
 				$fecha_programada_pago= $data->fecha_programada_pago;
                                 $id_empresa=$_SESSION["idEmpresa"];
                                 $id_tipo_facturacion=$data->id_tipo_facturacion;
+                                $anulado=$data->anulado;
 	
 	
                  $SqlInsert ="INSERT INTO facturacion
@@ -40,6 +41,7 @@ mysql_select_db($db_name,$connection) or die("Error de conexion a la base de dat
 				`fecha_programada_pago`='$fecha_programada_pago',
                                 `id_empresa`=$id_empresa,
                                 `id_tipo_facturacion`=$id_tipo_facturacion,
+                                `anulado`='$anulado',
                                 `idbenutzer`=".$_SESSION["idbenutzer"];
 			
 			$rs = mysql_query($SqlInsert);

@@ -16,9 +16,11 @@ Ext.define('MvcClientes.view.Facturacion.CapturaEdicionFacturacion', {
     modal: false,
 	
     initComponent: function() {
-        //STORE DE LOS Clientes
+        
+        
+        //STORE DE LOS CLIENTES
          var ListMaestroClientes = new Ext.data.Store({
-            fields: ['idmaestroClientes', 'nom_cliente'],
+            fields: ['idmaestroClientes', 'nom_cliente','gran_contribuyente'],
             proxy: {
                 type: 'ajax',
                 url : 'Php/store/list_Mclientes.php',
@@ -28,6 +30,8 @@ Ext.define('MvcClientes.view.Facturacion.CapturaEdicionFacturacion', {
             },
             autoLoad: true
         });
+        
+        
 //STORE DE LOS TIPOS DE FACTURACION
          var ListTpFact = new Ext.data.Store({
             fields: ['id_tipo_facturacion', 'tipo'],
@@ -49,7 +53,7 @@ if(typeof(records) != "undefined"){
 }else{idfactura='';}
 
  var factura_detalle = new Ext.data.Store({
-            fields: ['idDetalle', 'concepto','valor_concepto','venta_nosujeta','valor_exenta','valor_gravada'],
+            fields: [ {name:'idDetalle' , type: 'int'},{name:'concepto', type: 'string'},{ name:'valor_concepto',   type: 'number'},{ name:'venta_nosujeta',   type: 'number'},{ name:'valor_exenta',   type: 'number'},{ name:'valor_gravada',   type: 'number'}],
             proxy: {
                 type: 'ajax',
                 url : 'Php/view/FactDetalle/FactDetalleRead.php?id='+ idfactura,
@@ -70,7 +74,13 @@ if(typeof(records) != "undefined"){
               });
               Ext.getCmp("iva").setValue(sum*0.13);
               Ext.getCmp("venta_total").setValue(sum);
-            
+              //CALCULOS SI ES GRAN CONTRIBUYENTE
+              if(Ext.getCmp("idmaestroClientes").valueModels[0].data.gran_contribuyente=="Si"){
+                Ext.getCmp("iva_retenido").setValue(Math.round(sum*0.01*100)/100);
+              }else{
+                Ext.getCmp("iva_retenido").setValue(0);    
+              }
+                  
             }
             
 
@@ -94,7 +104,10 @@ if(typeof(records) != "undefined"){
                             items:[
                             {xtype : "combobox", id:"tipo_factura", queryMode: 'local',fieldLabel: "Tipo Factura",queryMode: 'local', store: ListTpFact,displayField: 'tipo',valueField: 'id_tipo_facturacion',name:"id_tipo_facturacion", flex: 1, margin: '0 10 0 0',flex:1,allowBlank : false},    
                             {xtype : "textfield", name : "numero_factura", fieldLabel : "No. Factura", flex: 1,allowBlank : false},
-                            {xtype : "combobox", queryMode: 'local', fieldLabel: " Cliente",queryMode: 'local', store: ListMaestroClientes,displayField: 'nom_cliente',valueField: 'idmaestroClientes',name:"idmaestroClientes", flex: 1, margin: '0 10 0 0',width:340 ,allowBlank : false},
+                            {xtype : "combobox", queryMode: 'local', fieldLabel: " Cliente",
+                                queryMode: 'local', store: ListMaestroClientes,displayField: 'nom_cliente',valueField: 'idmaestroClientes',
+                                name:"idmaestroClientes", id:"idmaestroClientes", flex: 1, margin: '0 10 0 0',width:340 ,allowBlank : false
+                            },
                             {xtype : "textfield", name : "comprobante", fieldLabel : " No. Comprobante", flex: 1, margin: '0 10 0 0'},
                             {xtype : "datefield", format: 'd/m/Y', value: new Date(), name : "fecha_facturacion", fieldLabel : " Fecha Facturacion", flex: 1, margin: '0 10 0 0'},
                             {xtype : "textfield", name : "venta_acta_de", fieldLabel : " Venta A Cuenta De", flex: 1, margin: '0 10 0 0'},
@@ -178,16 +191,17 @@ if(typeof(records) != "undefined"){
                             },/////FIN GRID////////
                             
                             
-                            //TOTALES 
+                            
                             {xtype: 'fieldset',title: 'Totales',width:900,
                             layout: {
                                     columns: 3,
                                     type: 'table'
-                            },                            
+                            },              
+                            //TOTALES 
                             items:[
                             {xtype : "numberfield", id : "iva", name : "iva", fieldLabel : "IVA", flex: 1,margin: '0 10 0 0',readOnly:true, allowDecimals: true,decimalPrecision: 2 ,  hideTrigger: true,allowBlank: true,decimalSeparator: "." },
-                            {xtype : "textfield", id : "iva_retenido",name : "iva_retenido", fieldLabel : " Iva Retenido", flex: 1, margin: '0 10 0 0'},
-                            {xtype : "textfield", id : "venta_total", name : "venta_total",fieldLabel : " Venta Total",readOnly:true, flex: 1, margin: '0 10 0 0'},
+                            {xtype : "textfield", id : "iva_retenido",name : "iva_retenido", fieldLabel : " Iva Retenido",readOnly:true, allowDecimals: true,flex: 1, margin: '0 10 0 0',decimalSeparator: "."},
+                            {xtype : "textfield", id : "venta_total", name : "venta_total",fieldLabel : " Venta Total",readOnly:true, flex: 1,allowDecimals: true,decimalPrecision: 2, margin: '0 10 0 0',decimalSeparator: "."},
                             ]},
                             {xtype: 'fieldset',title: 'Datos de Quedan y Pago',width:900,
                             layout: {
@@ -206,7 +220,7 @@ if(typeof(records) != "undefined"){
                             height: 30,
                             id:'buttons',
                             ui: 'footer',
-                            items: ['->', {
+                            items: ['->',{xtype : "checkbox", name : "anulado", fieldLabel : "Anular Factura",  inputValue: 'Si',uncheckedValue :'No'}, {
                                     itemId: 'BtnClienteAceptar',
                                     text: 'Guardar',
                                     action: 'actGuardar'

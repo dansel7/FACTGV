@@ -18,8 +18,12 @@ mysql_select_db($db_name,$connection) or die("Error de conexion a la base de dat
         $qry = preg_replace('/,$/', '', $qry);//para quitar la coma del final de la cadena
         
 //Solo faltaria agregarlos a la tabla y crear bien el insert
-	
-                $SqlInsert ="INSERT INTO detalleFacturacion
+	 $SqlDelete ="DELETE FROM detalleFacturacion where idFacturacion=$idFacturacion";
+                            
+		$delRs = mysql_query($SqlDelete);
+        
+        
+         $SqlInsert ="INSERT INTO detalleFacturacion
                             (`idFacturacion`,
                             `concepto`,
                             `valor_concepto`,

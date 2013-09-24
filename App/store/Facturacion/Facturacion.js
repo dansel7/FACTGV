@@ -44,8 +44,32 @@ writer:{
                                     {
                                        
                                         
-                                            Ext.Msg.alert('Mensaje','Registro Actualizado Exitosamente');
+                                       
+                                        //PREGUNTA MOSTRAR VISTA PREVIA
+                                        Ext.MessageBox.show({
+                                        title : 'Vista Previa',
+                                        buttons : Ext.MessageBox.YESNO,
+                                                msg : 'Mostrar Vista Previa?',
+                                                icon : Ext.Msg.WARNING,
+                                        fn : function(btn)
+                                         {
+                                             if(btn == 'yes')
+                                             {			
+                                            Ext.Msg.alert('Mensaje','Vista');
+                                             }
+                                                if(btn == 'no')
+                                             {
+                                                  Ext.getCmp("gridDetalle").up('form').up('panel').close();
+                                                 Ext.Msg.alert('Mensaje','Registro Actualizado Exitosamente');
+                                                 
+                                             }
 
+                                         }	
+                                     });
+                                     //MOSTRAR VISTA PREVIA ---- FIN
+                                     
+                                     
+                                        
                             }	
                             else 
                                 if (request.action == 'create')
@@ -86,14 +110,36 @@ writer:{
                                 });
                       /////------------------FIN------------------/////
 
-                      //SE CIERRA EL FORM DE FACTURACION
-                                Ext.getCmp("gridDetalle").up('form').up('panel').close()
+                
                             
                   ///////--- FIN -- INGRESO DE DETALLE----////// 
                                     
                                     
                                    
-                                   Ext.Msg.alert('Mensaje','Registro Ingresado Exitosamente');
+                                   
+                                   
+                                    //PREGUNTA MOSTRAR VISTA PREVIA
+                                        Ext.MessageBox.show({
+                                        title : 'Vista Previa',
+                                        buttons : Ext.MessageBox.YESNO,
+                                                msg : 'Mostrar Vista Previa?',
+                                                icon : Ext.Msg.WARNING,
+                                        fn : function(btn)
+                                         {
+                                             if(btn == 'yes')
+                                             {			
+                                            Ext.Msg.alert('Mensaje','Vista');
+                                             }
+                                             if(btn == 'no')
+                                             {			
+                                              //SE CIERRA EL FORM DE FACTURACION
+                                            Ext.getCmp("gridDetalle").up('form').up('panel').close();
+                                             
+                                            Ext.Msg.alert('Mensaje','Registro Ingresado Exitosamente');
+                                             }
+                                         }	
+                                     });
+                                     //MOSTRAR VISTA PREVIA ---- FIN
 
                                 }
                             else 
