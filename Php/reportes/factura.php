@@ -11,14 +11,14 @@ require_once('tcpdf/config/lang/eng.php');
 require_once('tcpdf/tcpdf.php');
 require_once('../Database_conf.php');
 
-$pdf = new TCPDF(PDF_PAGE_ORIENTATION, PDF_UNIT, PDF_PAGE_FORMAT, true, 'UTF-8', false); 
+$pdf = new TCPDF("vertical", "cm", "Letter", true, 'UTF-8', false); 
 
 // set document information
 $pdf->SetCreator(PDF_CREATOR);
 $pdf->SetAuthor('Daniel Diaz');
 $pdf->SetTitle('GV');
 $pdf->SetSubject('Control');
-$pdf->SetKeywords('TCPDF, PDF, factura, control, MANTENIMIENTO');
+$pdf->SetKeywords('TCPDF, PDF, factura, control, contabilidad');
 
 // set default header data
 //$pdf->SetHeaderData(PDF_HEADER_LOGO, PDF_HEADER_LOGO_WIDTH, PDF_HEADER_TITLE, PDF_HEADER_STRING);
@@ -32,7 +32,8 @@ $pdf->SetKeywords('TCPDF, PDF, factura, control, MANTENIMIENTO');
 
 //set margins
 //$pdf->SetMargins(PDF_MARGIN_LEFT, PDF_MARGIN_TOP, PDF_MARGIN_RIGHT);
-$pdf->SetMargins(10, 20, 10);
+$pdf->SetMargins(2.5, 1.905, 0.635);
+
 //$pdf->SetHeaderMargin(0);
 //$pdf->SetFooterMargin(15);
 
@@ -48,109 +49,67 @@ $pdf->setImageScale(PDF_IMAGE_SCALE_RATIO);
 // set font
 $pdf->SetFont('helvetica', '', 10);
 
-// add a page
-
 $orientacion="vertical";
-
-//ARREGLO DE MESES PARA MOSTRAR
-$meses=array("Enero","Febrero","Marzo","Abril","Mayo","Junio","Julio","Agosto","Septiembre","Octubre","Noviembre","Diciembre");
 // ---------------INICIO DEL REPORTE-----------------
-$result=mysql_query("select r.*,e.nombre from retaceo r inner join empresas e on r.nit=e.nit where r.idRetaceo='".hideunlock($_SESSION["n_declaracion"])."'",$link);
 
-while($rows_e = mysql_fetch_array($result)){ //CONSULTA PARA ENCABEZADO
-$pdf->addpage($orientacion,'legal');//AGREGA NUEVA PAGINA POR CADA MES
-
-$rsd='
-<table width="100%">
-<tr><td colspan="3" style="text-align:center"><b>REPORTE FACTURAS ORDENADAS</b><br></td></tr>
-<tr>
-	<td width="300px"><b>No. Retaceo:</b> '.$rows_e["numRegistro"].' </td>
-        <td width="200px"><b>Fecha:</b> '.substr($rows_e["fecha"],0,10).'</td>
-        <td width="200px"><b>No.Control:</b> '.$rows_e["numero"].'</td> 
-</tr>
-<tr>
-	<td><b>Empresa:</b> '.$rows_e["nombre"].'</td>
-	<td><b>NIT:</b> '.$rows_e["NIT"].'</td>
-	<td><b>A&Ntilde;O: '.  substr($rows_e["fecha"], 0,4).'</b></td>
-</tr>
-</table>	
-<br>
-<table border="0" width="100%" cellpadding="3" cellspacing="0">
-<tr>	
-		<td style="border:1px solid black;width:35px" >Item</td>
-		<td style="border:1px solid black;width:70px" >Factura</td>
-		<td style="border:1px solid black;width:70px">Partida</td>
-		<td colspan="3" style="border:1px solid black;width:375px" >Descripcion</td>
-		<td style="border:1px solid black;width:70px" >Cuantia</td>
-		<td style="border:1px solid black;width:70px">FOB</td>
-</tr>';
-}
-
-//$resultado=mysql_query("select * from factura where numeroretaceo='jor301'",$link);
-
-$resultado=mysql_query("select item.idItemFactura, factura.numero as factura, item.partidaArancelaria as partida, item.descripcion, " .
-                " item.cuantia as cuantia, (item.cuantia * item.precioUnitario) as fob  ".
-                " from factura inner join item on factura.idFactura=item.idFactura where item.idRetaceo='".hideunlock($_SESSION["n_declaracion"])."' order by factura.idFactura,factura.numero,item.idItemFactura",$link);
-$fobSubt=0;
-$fobTotal=0;
-$temp=0;
-while($row_exp = mysql_fetch_array($resultado)) //CONSULTA PARA CADA REGISTRO
-{
-//IMPRESION DE CADA REGISTRO
-//PARA HACER UNA AGRUPACION
-$fact=$row_exp[1];//PRIMERO SE GUARDA EL NUMERO DE FACTURA
-
-//La agrupacion se valida desde aca
-if($temp==0 && $fobSubt==0){}//se comprueba que es el primer valor de los registros y no imprime nada
- else if($fact!=$temp){//compara si son diferentes los numeros de facturas asi para poder agrupar
-		$varr.="<tr>
-		<td colspan=\"7\" style=\"border:1px solid black;text-align:center\"><b>Subtotal</b></td>
-		<td style=\"border:1px solid black;text-align:right\"><b>$".number_format(round($fobSubt,2),2)."</b></td>
-		</tr>";
-                $fobTotal+=$fobSubt;
-		$fobSubt=0;
-	} //hasta aca es la agrupacion, se hace antes porque para el primer registro no hay ninguna agrupacion
- 
- $varr.="<tr>
-		<td style=\"border-left:1px solid black;border-right:1px solid black\">$row_exp[0]</td>
-		<td style=\"border-left:1px solid black;border-right:1px solid black\">$row_exp[1]</td>
-		<td style=\"border-left:1px solid black;border-right:1px solid black\">$row_exp[2]</td>
-		<td colspan=\"3\" style=\"border-left:1px solid black;border-right:1px solid black\">".htmlentities($row_exp[3])."</td>
-		<td style=\"border-left:1px solid black;border-right:1px solid black;text-align:right\">".number_format(round($row_exp[4],2),2)."</td>
-		<td style=\"border-left:1px solid black;border-right:1px solid black;text-align:right\">".number_format(round($row_exp[5],2),2)."</td>
-	</tr>";
-
-$fobSubt+=$row_exp[5];	
-$temp=$row_exp[1];//Guarda un temporal que seria el numero anterior para comparar
-
-}//FIN IMPRESION CADA REGISTRO
-$varr.="<tr>
-		<td colspan=\"7\" style=\"border:1px solid black;text-align:center\"><b>Subtotal</b></td>
-		<td style=\"border:1px solid black;text-align:right\"><b>$".number_format(round($fobSubt,2),2)."</b></td>
-		</tr>";
-$fobTotal+=$fobSubt;
-		$fobSubt=0;
-// ---------------PIE DEL REPORTE-----------------
-//PIE DE TABLA
-$fin=$rsd.$varr."<tr>
-		<td colspan=\"7\" style=\"border:1px solid black;text-align:center\">TOTALES</td>
-
-		<td style=\"border:1px solid black\">$".number_format(round($fobTotal,2),2)."</td>
-	</tr>
-</table>
-<br><br>
-";
-
+	$sql = "SELECT 
+               
+                f.numero_factura,mc.nom_cliente,mc.direccion,DATE_FORMAT(f.fecha_facturacion,'%d/%m/%Y') fecha_facturacion,f.comprobante,f.venta_acta_de,mc.nit,mc.nrc,d.departamento,mc.giro,
+               
+                df.concepto,df.valor_concepto,venta_nosujeta,venta_exenta,venta_gravada,
+               
+                f.venta_total,f.iva,f.iva_retenido
+                FROM facturacion f 
+                LEFT JOIN detalleFacturacion df on f.idFacturacion=df.idFacturacion 
+                INNER JOIN maestroclientes mc on mc.idmaestroClientes=f.idmaestroClientes
+                INNER JOIN departamento d on d.id_departamento=mc.id_departamento 
+                WHERE f.idFacturacion=".$_GET["idf"];
+        
+    	$result = mysql_query($sql,$connection) or die('La consulta fall&oacute;: '.mysql_error());	
+        
+  $pdf->addpage($orientacion,'letter');      
+        while($rows_e = mysql_fetch_array($result)){ //CONSULTA PARA ENCABEZADO
+       
+        $datos_factura='<br><br><br><br><br><br><br>
+            <table width="670px">
+            <tr>
+                <td ></td>
+                <td ></td>
+                <td ></td>
+                <td></td>
+                <td></td>
+            </tr>
+            <tr>
+                <td style="text-align:center" colspan="3"><b>'.strtoupper($rows_e["nom_cliente"]).'</b></td>
+                <td  style="text-align:center" colspan="2">'. $rows_e["fecha_facturacion"] .'</td>
+            </tr>
+            <tr>
+                <td style="text-align:center" colspan="3">'.strtoupper($rows_e["direccion"]).'</td>
+                <td colspan="2">&nbsp;</td>
+            </tr>
+             <tr>
+                <td  colspan="3">&nbsp;</td>
+                <td colspan="2" style="text-align:left">'.strtoupper($rows_e["departamento"]).'</td>
+            </tr>
+             <tr>
+                <td >'. $rows_e["nit"] .'</td>
+                <td style="text-align:center">'. $rows_e["nrc"] .'</td>
+                <td style="text-align:center">'. $rows_e["comprobante"] .'</td>
+                <td style="text-align:left" colspan="2">'.strtoupper($rows_e["giro"]).'</td>
+            </tr>
+            </table>';
+        
+        }
+        $fin=$datos_factura;
 $pdf->writeHTML($fin, true, false, false, false, '');
 
 
 
 
 /////////////////////////////////////////////////////////////////////
-   
-$db->desconectar();	 
+
 //Close and output PDF document
-$pdf->Output('reporte.pdf', 'I');
+$pdf->Output('factura.pdf', 'I');
 }
 
 ?>
