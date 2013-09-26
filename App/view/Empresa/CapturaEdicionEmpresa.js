@@ -15,7 +15,7 @@ Ext.define('MvcClientes.view.Empresa.CapturaEdicionEmpresa', {
 	autoShow: true,
     closable: false,
     title: 'Captura/Edicion Empresa',
-    modal: false,
+    modal: true,
 	
     initComponent: function() {
         
@@ -35,7 +35,7 @@ Ext.define('MvcClientes.Store.dsListTipoFactura', {
 
 //Verificar que se envian datos para editar
 var idemp;
-if(typeof(records) != "undefined"){
+if(typeof(records) != "undefined" && typeof(records) != "string"){
  idemp=records[0].data.id_empresa;   
 }else{idemp='';}
 

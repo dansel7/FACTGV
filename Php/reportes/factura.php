@@ -10,7 +10,9 @@ if(!isset($_SESSION['benutzer']) || !isset($_SESSION["idEmpresa"]) ){
 require_once('tcpdf/config/lang/eng.php');
 require_once('tcpdf/tcpdf.php');
 require_once('../Database_conf.php');
-
+require_once('../funcionesFact.php');
+$Total_enLetras=new EnLetras();
+ 
 $pdf = new TCPDF("vertical", "cm", "Letter", true, 'UTF-8', false); 
 
 // set document information
@@ -56,7 +58,7 @@ $orientacion="vertical";
                
                 f.numero_factura,mc.nom_cliente,mc.direccion,DATE_FORMAT(f.fecha_facturacion,'%d/%m/%Y') fecha_facturacion,f.comprobante,f.venta_acta_de,mc.nit,mc.nrc,d.departamento,mc.giro,
                
-                df.concepto,df.valor_concepto,venta_nosujeta,venta_exenta,venta_gravada,
+                df.cantidad,df.concepto,df.valor_concepto,venta_nosujeta,venta_exenta,venta_gravada,
                
                 f.venta_total,f.iva,f.iva_retenido
                 FROM facturacion f 
@@ -68,14 +70,18 @@ $orientacion="vertical";
     	$result = mysql_query($sql,$connection) or die('La consulta fall&oacute;: '.mysql_error());	
         
   $pdf->addpage($orientacion,'letter');      
+  
+  
+  
+        $subTotal=0;
         while($rows_e = mysql_fetch_array($result)){ //CONSULTA PARA ENCABEZADO
        
         $datos_factura='<br><br><br><br><br><br><br>
-            <table width="670px">
+            <table width="680px">
             <tr>
-                <td ></td>
-                <td ></td>
-                <td ></td>
+                <td></td>
+                <td></td>
+                <td></td>
                 <td></td>
                 <td></td>
             </tr>
@@ -84,7 +90,7 @@ $orientacion="vertical";
                 <td  style="text-align:center" colspan="2">'. $rows_e["fecha_facturacion"] .'</td>
             </tr>
             <tr>
-                <td style="text-align:center" colspan="3">'.strtoupper($rows_e["direccion"]).'</td>
+                <td style="text-align:center;font-size:7pt" colspan="3">'.strtoupper($rows_e["direccion"]).'</td>
                 <td colspan="2">&nbsp;</td>
             </tr>
              <tr>
@@ -94,14 +100,73 @@ $orientacion="vertical";
              <tr>
                 <td >'. $rows_e["nit"] .'</td>
                 <td style="text-align:center">'. $rows_e["nrc"] .'</td>
-                <td style="text-align:center">'. $rows_e["comprobante"] .'</td>
+                <td style="text-align:center">&nbsp;</td>
                 <td style="text-align:left" colspan="2">'.strtoupper($rows_e["giro"]).'</td>
             </tr>
-            </table>';
+            </table><br><br><br><br><br>
+            <table><tr>
+                <td height="100px">
+                    <table>';
+        
+        $detalle_factura.='
+                    <tr>
+                        <td style="text-align:left" width="30px">
+                        '. $rows_e["cantidad"] .'
+                        </td>  
+                        <td width="370px">
+                        '. strtoupper($rows_e["concepto"])  .'
+                        </td>
+                        <td width="60px">
+                        '. $rows_e["valor_concepto"] .'
+                        </td>
+                        <td width="60px">
+                        '. $rows_e["venta_nosujeta"] .'
+                        </td>
+                        <td width="60px">
+                        '. $rows_e["venta_exenta"] .'
+                        </td>
+                        <td width="60px">
+                        '. $rows_e["venta_gravada"] .'
+                        </td>
+                    </tr>';
+        
+        $subTotal+=$rows_e["valor_concepto"];
+        
+        $pie_factura='</table>
+                    </td></tr>
+                    <tr><td height="50px">
+                        <table>
+                        <tr>
+                           <td colspan="4" width="485px">'. strtoupper($Total_enLetras->ValorEnLetras($rows_e["venta_total"],"Dolares")) .'</td>
+                           <td style="text-align:right">'. number_format($subTotal,2) .'</td>
+                         </tr>
+                         <tr>
+                           <td style="text-align:right" colspan="5">'. $rows_e["iva"] .'</td>
+                         </tr>
+                         <tr>
+                           <td style="text-align:right" colspan="5">'. number_format($subTotal + $rows_e["iva"],2) .'</td>
+                         </tr>
+                          <tr>
+                           <td style="text-align:right" colspan="5">'. $rows_e["iva_retenido"] .'</td>
+                         </tr>
+                         </table>
+                     </td>
+                     </tr>
+                     <tr><td style="text-align:right">
+                     <table>
+                        <tr>    
+                            <td  width="615px">
+                        '. $rows_e["venta_total"] .'
+                            </td>
+                         </tr>
+                         </table>
+                     </td>
+                     </tr>
+                     </table>';
         
         }
-        $fin=$datos_factura;
-$pdf->writeHTML($fin, true, false, false, false, '');
+        $factura=$datos_factura.$detalle_factura.$pie_factura;
+$pdf->writeHTML($factura, true, false, false, false, '');
 
 
 

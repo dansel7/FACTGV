@@ -13,7 +13,7 @@ Ext.define('MvcClientes.view.Clientes.CapturaEdicionClientes', {
 	autoShow: true,
     closable: false,
     title: 'Captura/Edicion Clientes',
-    modal: false,
+    modal: true,
 	
     initComponent: function() {
         //STORE DE LOS DEPARTAMENTOS

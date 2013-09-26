@@ -44,6 +44,7 @@ Ext.define('MvcClientes.controller.Usuarios.Usuarios',{
 	//Inician Funciones
 		
 	Agregar: function(){
+            records="null";
 	    var FormAddEditarUsuarios= Ext.widget('FormAddEdicionUsuarios');
 	},
 	

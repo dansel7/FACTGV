@@ -15,7 +15,7 @@ Ext.define('MvcClientes.view.Usuarios.CapturaEdicionUsuarios', {
 	autoShow: true,
     closable: false,
     title: 'Captura/Edicion Usuarios',
-    modal: false,
+    modal: true,
 	
     initComponent: function() {
         
@@ -34,7 +34,7 @@ Ext.define('MvcClientes.Store.dsListEmpresa', {
 
 //Verificar que se envian datos para editar
 var iduser;
-if(typeof(records) != "undefined"){
+if(typeof(records) != "undefined" && typeof(records) != "string"){
  iduser=records[0].data.idbenutzer;   
 }else{iduser='';}
 

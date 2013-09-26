@@ -12,7 +12,7 @@ mysql_select_db($db_name,$connection) or die("Error de conexion a la base de dat
         $qry="";
         foreach($data as $fila){
         
-        $qry.= "(".$idFacturacion .",'". $fila->concepto ."',". $fila->valor_concepto .",". (($fila->venta_nosujeta !='') ? $fila->venta_nosujeta : '0.0') .",". (($fila->valor_exenta !='') ? $fila->valor_exenta : '0.0') .",". (($fila->valor_gravada !='') ? $fila->valor_gravada : '0.0') . "),";
+        $qry.= "(".$idFacturacion .",". $fila->cantidad .",'". $fila->concepto ."',". $fila->valor_concepto .",". (($fila->venta_nosujeta !='') ? $fila->venta_nosujeta : '0.0') .",". (($fila->valor_exenta !='') ? $fila->valor_exenta : '0.0') .",". (($fila->valor_gravada !='') ? $fila->valor_gravada : '0.0') . "),";
         }
         
         $qry = preg_replace('/,$/', '', $qry);//para quitar la coma del final de la cadena
@@ -25,6 +25,7 @@ mysql_select_db($db_name,$connection) or die("Error de conexion a la base de dat
         
          $SqlInsert ="INSERT INTO detalleFacturacion
                             (`idFacturacion`,
+                            `cantidad`,
                             `concepto`,
                             `valor_concepto`,
                             `venta_nosujeta`,

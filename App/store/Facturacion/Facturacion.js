@@ -43,7 +43,7 @@ writer:{
                                 if (request.action == 'update')
                                     {
                                        
-                                        
+                                        var idFact=Ext.getCmp("idfacturacion").getValue();  
                                        
                                         //PREGUNTA MOSTRAR VISTA PREVIA
                                         Ext.MessageBox.show({
@@ -55,7 +55,7 @@ writer:{
                                          {
                                              if(btn == 'yes')
                                              {			
-                                            Ext.Msg.alert('Mensaje','Vista');
+                                            window.open("php/reportes/factura.php?idf="+idFact,"Vista Previa de Factura","status=1,toolbar=1");
                                              }
                                                 if(btn == 'no')
                                              {
@@ -86,6 +86,7 @@ writer:{
                        var JsonDatos = [];
                         for (var i in grid) {
                             JsonDatos.push({
+                                'cantidad':         grid[i].get('cantidad'),
                                 'concepto':         grid[i].get('concepto'),
                                 'valor_concepto':   grid[i].get('valor_concepto'),
                                 'venta_nosujeta':   grid[i].get('venta_nosujeta'),
@@ -128,7 +129,8 @@ writer:{
                                          {
                                              if(btn == 'yes')
                                              {			
-                                            Ext.Msg.alert('Mensaje','Vista');
+                                            window.open("php/reportes/factura.php?idf="+idNuevaFact,"Vista Previa de Factura","status=1,toolbar=1");
+                                            Ext.getCmp("gridDetalle").up('form').up('panel').close();
                                              }
                                              if(btn == 'no')
                                              {			

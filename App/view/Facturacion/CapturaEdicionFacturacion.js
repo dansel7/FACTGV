@@ -48,12 +48,12 @@ Ext.define('MvcClientes.view.Facturacion.CapturaEdicionFacturacion', {
 //STORE DE LOS DETALLES DE FACTURAS    
 //Verificar que se envian datos para editar
 var idfactura;
-if(typeof(records) != "undefined"){
+if(typeof(records) != "undefined" && typeof(records) != "string"){
  idfactura=records[0].data.idfacturacion;   
 }else{idfactura='';}
 
  var factura_detalle = new Ext.data.Store({
-            fields: [ {name:'idDetalle' , type: 'int'},{name:'concepto', type: 'string'},{ name:'valor_concepto',   type: 'number'},{ name:'venta_nosujeta',   type: 'number'},{ name:'valor_exenta',   type: 'number'},{ name:'valor_gravada',   type: 'number'}],
+            fields: [ {name:'idDetalle' , type: 'int'},{name:'cantidad' , type: 'int'},{name:'concepto', type: 'string'},{ name:'valor_concepto',   type: 'number'},{ name:'venta_nosujeta',   type: 'number'},{ name:'valor_exenta',   type: 'number'},{ name:'valor_gravada',   type: 'number'}],
             proxy: {
                 type: 'ajax',
                 url : 'Php/view/FactDetalle/FactDetalleRead.php?id='+ idfactura,
@@ -71,16 +71,18 @@ if(typeof(records) != "undefined"){
             var sum=0;
             Ext.getCmp("gridDetalle").getStore().each(function(record){
                 sum+=record.data.valor_concepto;
+                record.data.venta_gravada=record.data.cantidad*record.data.valor_concepto;
               });
               Ext.getCmp("iva").setValue(sum*0.13);
-              Ext.getCmp("venta_total").setValue(sum);
               //CALCULOS SI ES GRAN CONTRIBUYENTE
               if(Ext.getCmp("idmaestroClientes").valueModels[0].data.gran_contribuyente=="Si"){
                 Ext.getCmp("iva_retenido").setValue(Math.round(sum*0.01*100)/100);
               }else{
                 Ext.getCmp("iva_retenido").setValue(0);    
               }
-                  
+                 
+                Ext.getCmp("venta_total").setValue(sum+Ext.getCmp("iva").getValue()+Ext.getCmp("iva_retenido").getValue());   
+                 
             }
             
 
@@ -123,14 +125,18 @@ if(typeof(records) != "undefined"){
                                 {header: 'idDetalle',  dataIndex: 'idDetalle', hidden: true, editor: {
                                         xtype: 'textfield',name:'idDetalle'
                                 }},
+                                {header: 'Cant.',  dataIndex: 'cantidad', editor: {
+                                        xtype: 'numberfield',name:'cantidad',allowDecimals: false,
+                                    allowBlank: false
+                                }},
                                 {header: 'Concepto',  dataIndex: 'concepto',flex:1, editor: {
                                         xtype: 'textfield',name:'concepto',
                                     allowBlank: false
                                 }},
-                                {header: 'Valor Concepto', dataIndex: 'valor_concepto',	
+                                {header: 'Precio Unitario', dataIndex: 'valor_concepto',	
                                     editor: {
                                         xtype: 'numberfield',allowDecimals: true, name:'valor_concepto',
-                                        decimalPrecision: 2 ,  hideTrigger: true,
+                                        decimalPrecision: 2,  hideTrigger: true,
                                         allowBlank: false, decimalSeparator: "." 
                                 }},
                                 {header: 'Venta No sujeta', dataIndex: 'venta_nosujeta', editor: {
@@ -157,6 +163,7 @@ if(typeof(records) != "undefined"){
 			            id: 'addRecord',
 			            handler : function() {//AGREGANDO UN NUEVO DETALLE A LA FACTURACION
                                         var r = {
+                                            cantidad: '1',
                                             concepto: '',
                                             valor_concepto: '',
                                             venta_nosujeta: '0.0',
@@ -182,7 +189,7 @@ if(typeof(records) != "undefined"){
                                         id:'rowedit',
                                         clickToEdit : 1,
                                         listeners: {
-                                    'afteredit': function(e) {
+                                    'afteredit': function(e) {//CUANDO SE HACE UPDATE HACE LO SIGUIENTE
                                     totales_facturacion();
                                     }}
                                     }),
@@ -200,7 +207,7 @@ if(typeof(records) != "undefined"){
                             //TOTALES 
                             items:[
                             {xtype : "numberfield", id : "iva", name : "iva", fieldLabel : "IVA", flex: 1,margin: '0 10 0 0',readOnly:true, allowDecimals: true,decimalPrecision: 2 ,  hideTrigger: true,allowBlank: true,decimalSeparator: "." },
-                            {xtype : "textfield", id : "iva_retenido",name : "iva_retenido", fieldLabel : " Iva Retenido",readOnly:true, allowDecimals: true,flex: 1, margin: '0 10 0 0',decimalSeparator: "."},
+                            {xtype : "numberfield", id : "iva_retenido",name : "iva_retenido", fieldLabel : " Iva Retenido",readOnly:true, allowDecimals: true,flex: 1, margin: '0 10 0 0',decimalSeparator: "."},
                             {xtype : "textfield", id : "venta_total", name : "venta_total",fieldLabel : " Venta Total",readOnly:true, flex: 1,allowDecimals: true,decimalPrecision: 2, margin: '0 10 0 0',decimalSeparator: "."},
                             ]},
                             {xtype: 'fieldset',title: 'Datos de Quedan y Pago',width:900,
@@ -222,7 +229,7 @@ if(typeof(records) != "undefined"){
                             ui: 'footer',
                             items: ['->',{xtype : "checkbox", name : "anulado", fieldLabel : "Anular Factura",  inputValue: 'Si',uncheckedValue :'No'}, {
                                     itemId: 'BtnClienteAceptar',
-                                    text: 'Guardar',
+                                    text: 'Vista Previa',
                                     action: 'actGuardar'
                             },{
                                     itemId: 'BtnClienteCancelar',
