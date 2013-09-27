@@ -53,7 +53,7 @@ if(typeof(records) != "undefined" && typeof(records) != "string"){
 }else{idfactura='';}
 
  var factura_detalle = new Ext.data.Store({
-            fields: [ {name:'idDetalle' , type: 'int'},{name:'cantidad' , type: 'int'},{name:'concepto', type: 'string'},{ name:'valor_concepto',   type: 'number'},{ name:'venta_nosujeta',   type: 'number'},{ name:'valor_exenta',   type: 'number'},{ name:'valor_gravada',   type: 'number'}],
+            fields: [ {name:'idDetalle' , type: 'int'},{name:'cantidad' , type: 'int'},{name:'concepto', type: 'string'},{ name:'valor_concepto',   type: 'number'},{ name:'venta_nosujeta',   type: 'number'},{ name:'venta_exenta',   type: 'number'},{ name:'venta_gravada',   type: 'number'}],
             proxy: {
                 type: 'ajax',
                 url : 'Php/view/FactDetalle/FactDetalleRead.php?id='+ idfactura,
@@ -70,21 +70,25 @@ if(typeof(records) != "undefined" && typeof(records) != "string"){
                
             var sum=0;
             Ext.getCmp("gridDetalle").getStore().each(function(record){
-                sum+=record.data.valor_concepto;
-                record.data.venta_gravada=record.data.cantidad*record.data.valor_concepto;
+               //VENTA GRAVADA
+                record.set("venta_gravada",record.data.cantidad*record.data.valor_concepto);
+                //SUBTOTAL
+                sum+=record.data.venta_gravada;
+                
               });
               Ext.getCmp("iva").setValue(sum*0.13);
+              
               //CALCULOS SI ES GRAN CONTRIBUYENTE
               if(Ext.getCmp("idmaestroClientes").valueModels[0].data.gran_contribuyente=="Si"){
                 Ext.getCmp("iva_retenido").setValue(Math.round(sum*0.01*100)/100);
               }else{
                 Ext.getCmp("iva_retenido").setValue(0);    
               }
-                 
+                 //MUESTRA EL TOTAL
                 Ext.getCmp("venta_total").setValue(sum+Ext.getCmp("iva").getValue()+Ext.getCmp("iva_retenido").getValue());   
                  
             }
-            
+   /////// FIN DE FUNCION DE TOTALES         
 
         var me = this;
         Ext.applyIf(me, {
@@ -110,7 +114,6 @@ if(typeof(records) != "undefined" && typeof(records) != "string"){
                                 queryMode: 'local', store: ListMaestroClientes,displayField: 'nom_cliente',valueField: 'idmaestroClientes',
                                 name:"idmaestroClientes", id:"idmaestroClientes", flex: 1, margin: '0 10 0 0',width:340 ,allowBlank : false
                             },
-                            {xtype : "textfield", name : "comprobante", fieldLabel : " No. Comprobante", flex: 1, margin: '0 10 0 0'},
                             {xtype : "datefield", format: 'd/m/Y', value: new Date(), name : "fecha_facturacion", fieldLabel : " Fecha Facturacion", flex: 1, margin: '0 10 0 0'},
                             {xtype : "textfield", name : "venta_acta_de", fieldLabel : " Venta A Cuenta De", flex: 1, margin: '0 10 0 0'},
                             {xtype : "textfield",id : "idfacturacion", name : "idfacturacion", fieldLabel : "Id",hidden: true, margin: '0 10 0 0'}
@@ -120,6 +123,9 @@ if(typeof(records) != "undefined" && typeof(records) != "string"){
                             //GRID DE FACTURACION
                             {xtype : 'grid',name:'gridDetalle',id:'gridDetalle', allowBlank : false,
                             title: 'Detalle Facturacion',
+                            features  : [{
+                                ftype : 'summary'       
+                            }],
                             store: factura_detalle,
                             columns: [
                                 {header: 'idDetalle',  dataIndex: 'idDetalle', hidden: true, editor: {
@@ -128,12 +134,14 @@ if(typeof(records) != "undefined" && typeof(records) != "string"){
                                 {header: 'Cant.',  dataIndex: 'cantidad', editor: {
                                         xtype: 'numberfield',name:'cantidad',allowDecimals: false,
                                     allowBlank: false
-                                }},
+                                },summaryRenderer: function(value, summaryData, dataIndex) {
+                                  return 'SUB-TOTALES';
+                                    }},
                                 {header: 'Concepto',  dataIndex: 'concepto',flex:1, editor: {
                                         xtype: 'textfield',name:'concepto',
                                     allowBlank: false
                                 }},
-                                {header: 'Precio Unitario', dataIndex: 'valor_concepto',	
+                                {header: 'Precio Unitario', dataIndex: 'valor_concepto',summaryType: 'sum',	
                                     editor: {
                                         xtype: 'numberfield',allowDecimals: true, name:'valor_concepto',
                                         decimalPrecision: 2,  hideTrigger: true,
@@ -144,13 +152,13 @@ if(typeof(records) != "undefined" && typeof(records) != "string"){
                                         decimalPrecision: 2 ,  hideTrigger: true,
                                         allowBlank: true, decimalSeparator: "." 
                                 }},
-                                {header: 'Valor Exenta', dataIndex: 'valor_exenta', editor: {
-                                        xtype: 'numberfield',allowDecimals: true, name:'valor_exenta',
+                                {header: 'Valor Exenta', dataIndex: 'venta_exenta', editor: {
+                                        xtype: 'numberfield',allowDecimals: true, name:'venta_exenta',
                                         decimalPrecision: 2 ,  hideTrigger: true,
                                         allowBlank: true, decimalSeparator: "." 
                                 }},
-                                {header: 'Venta Gravada', dataIndex: 'valor_gravada', editor: {
-                                        xtype: 'numberfield',allowDecimals: true, name:'venta_agravada',
+                                {header: 'Venta Gravada', dataIndex: 'venta_gravada',summaryType: 'sum', editor: {
+                                        xtype: 'numberfield',allowDecimals: true, name:'venta_gravada',
                                         decimalPrecision: 2 ,  hideTrigger: true,
                                         allowBlank: true, decimalSeparator: "." 
                                 }}
@@ -167,8 +175,8 @@ if(typeof(records) != "undefined" && typeof(records) != "string"){
                                             concepto: '',
                                             valor_concepto: '',
                                             venta_nosujeta: '0.0',
-                                            valor_exenta: '0.0',
-                                            valor_gravada: '0.0'
+                                            venta_exenta: '0.0',
+                                            venta_gravada: '0.0'
                                         };
                                 
                                     Ext.getCmp("gridDetalle").store.insert(0,r);
@@ -179,7 +187,7 @@ if(typeof(records) != "undefined" && typeof(records) != "string"){
 			            id: 'removeRecord',
 			            text: 'Quitar Venta',
 			            iconCls: 'delete',
-			            handler: function() {
+			            handler: function() {// QUITA EL DETALLE SELECCIONADO Y ACTUALIZA
 			            Ext.getCmp("gridDetalle").store.remove(Ext.getCmp("gridDetalle").getSelectionModel().getSelection());
 			               totales_facturacion();
 			            }
@@ -191,6 +199,7 @@ if(typeof(records) != "undefined" && typeof(records) != "string"){
                                         listeners: {
                                     'afteredit': function(e) {//CUANDO SE HACE UPDATE HACE LO SIGUIENTE
                                     totales_facturacion();
+                                     e.grid.getView().refresh();
                                     }}
                                     }),
                                     
@@ -208,7 +217,7 @@ if(typeof(records) != "undefined" && typeof(records) != "string"){
                             items:[
                             {xtype : "numberfield", id : "iva", name : "iva", fieldLabel : "IVA", flex: 1,margin: '0 10 0 0',readOnly:true, allowDecimals: true,decimalPrecision: 2 ,  hideTrigger: true,allowBlank: true,decimalSeparator: "." },
                             {xtype : "numberfield", id : "iva_retenido",name : "iva_retenido", fieldLabel : " Iva Retenido",readOnly:true, allowDecimals: true,flex: 1, margin: '0 10 0 0',decimalSeparator: "."},
-                            {xtype : "textfield", id : "venta_total", name : "venta_total",fieldLabel : " Venta Total",readOnly:true, flex: 1,allowDecimals: true,decimalPrecision: 2, margin: '0 10 0 0',decimalSeparator: "."},
+                            {xtype : "numberfield", id : "venta_total", name : "venta_total",fieldLabel : " Venta Total",readOnly:true, flex: 1,allowDecimals: true,decimalPrecision: 2, margin: '0 10 0 0',decimalSeparator: "."},
                             ]},
                             {xtype: 'fieldset',title: 'Datos de Quedan y Pago',width:900,
                             layout: {

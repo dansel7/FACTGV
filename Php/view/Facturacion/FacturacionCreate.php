@@ -12,7 +12,6 @@ mysql_select_db($db_name,$connection) or die("Error de conexion a la base de dat
         
 				$numero_factura=  $data->numero_factura;
                                 $idmaestroClientes=$data->idmaestroClientes;
-				$comprobante=  $data->comprobante;
                                 $fecha_facturacion= $data->fecha_facturacion;
                                 $venta_acta_de= $data->venta_acta_de;
                                 $iva=  $data->iva;
@@ -30,7 +29,6 @@ mysql_select_db($db_name,$connection) or die("Error de conexion a la base de dat
                              SET
                              `numero_factura`='$numero_factura',
                                `idmaestroClientes`=$idmaestroClientes,
-				`comprobante`='$comprobante',
                                 `fecha_facturacion`='$fecha_facturacion',
                                 `venta_acta_de`='$venta_acta_de',
                                 `iva`='$iva',
@@ -54,7 +52,6 @@ mysql_select_db($db_name,$connection) or die("Error de conexion a la base de dat
                                                 "idfacturacion" => mysql_insert_id(),// <--- importantisimo regresar el ID asignado al record, para que funcione correctamente el metodo update y delete
                                                 "numero_factura"=> $numero_factura,
                                                 "idmaestroClientes"=>$idmaestroClientes,
-                                                "comprobante"=>$comprobante,
                                                 "fecha_facturacion"=>$fecha_facturacion,
                                                 "venta_acta_de"=>$venta_acta_de,
                                                 "iva"=>$iva,

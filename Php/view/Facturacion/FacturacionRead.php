@@ -13,7 +13,6 @@
                         f.numero_factura,
                         f.idmaestroClientes,
                         mc.nom_cliente,
-                        f.comprobante,
                         if(DATE_FORMAT(f.fecha_facturacion, '%d/%m/%Y') = '00/00/0000', null, DATE_FORMAT(f.fecha_facturacion, '%d/%m/%Y')) fecha_facturacion,
                         f.venta_acta_de,
                         f.iva,
@@ -27,6 +26,7 @@
                         f.anulado
                         FROM facturacion f inner join maestroclientes mc on f.idmaestroClientes=mc.idmaestroClientes
                         where id_empresa=".$idempresa." and idbenutzer=".$_SESSION["idbenutzer"];
+                
     	$result = mysql_query($sql,$connection) or die('La consulta fall&oacute;: '.mysql_error());		
 		//Formamos el Array de Datos, si ejecutamos este archivo PHP veremos el array formado
 		while($obj = mysql_fetch_object($result)) {

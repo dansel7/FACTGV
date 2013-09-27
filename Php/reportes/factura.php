@@ -56,7 +56,7 @@ $orientacion="vertical";
 
 	$sql = "SELECT 
                
-                f.numero_factura,mc.nom_cliente,mc.direccion,DATE_FORMAT(f.fecha_facturacion,'%d/%m/%Y') fecha_facturacion,f.comprobante,f.venta_acta_de,mc.nit,mc.nrc,d.departamento,mc.giro,
+                f.numero_factura,mc.nom_cliente,mc.direccion,DATE_FORMAT(f.fecha_facturacion,'%d/%m/%Y') fecha_facturacion,f.venta_acta_de,mc.nit,mc.nrc,d.departamento,mc.giro,
                
                 df.cantidad,df.concepto,df.valor_concepto,venta_nosujeta,venta_exenta,venta_gravada,
                
@@ -103,10 +103,15 @@ $orientacion="vertical";
                 <td style="text-align:center">&nbsp;</td>
                 <td style="text-align:left" colspan="2">'.strtoupper($rows_e["giro"]).'</td>
             </tr>
+            <tr>
+            <td style="text-align:right" colspan="4">
+            '.strtoupper($rows_e["venta_acta_de"]).'
+            </td>
+            </tr>
             </table><br><br><br><br><br>
             <table><tr>
                 <td height="100px">
-                    <table>';
+                    <table cellspacing="-3">';
         
         $detalle_factura.='
                     <tr>
@@ -130,12 +135,12 @@ $orientacion="vertical";
                         </td>
                     </tr>';
         
-        $subTotal+=$rows_e["valor_concepto"];
+        $subTotal+=$rows_e["venta_gravada"];
         
         $pie_factura='</table>
                     </td></tr>
                     <tr><td height="50px">
-                        <table>
+                        <table >
                         <tr>
                            <td colspan="4" width="485px">'. strtoupper($Total_enLetras->ValorEnLetras($rows_e["venta_total"],"Dolares")) .'</td>
                            <td style="text-align:right">'. number_format($subTotal,2) .'</td>
