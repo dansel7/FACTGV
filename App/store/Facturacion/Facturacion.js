@@ -55,7 +55,7 @@ writer:{
                                          {
                                              if(btn == 'yes')
                                              {			
-                                            window.open("php/reportes/factura.php?idf="+idFact,"Vista Previa de Factura","status=1,toolbar=1");
+                                            window.open("php/reportes/factura.php?tpf=1&idf="+hidelockjs(idFact),"Vista Previa de Factura","status=1,toolbar=1");
                                              }
                                                 if(btn == 'no')
                                              {
@@ -129,7 +129,7 @@ writer:{
                                          {
                                              if(btn == 'yes')
                                              {			
-                                            window.open("php/reportes/factura.php?idf="+idNuevaFact,"Vista Previa de Factura","status=1,toolbar=1");
+                                            window.open("php/reportes/factura.php?tpf=1&idf="+hidelockjs(idNuevaFact),"Vista Previa de Factura","status=1,toolbar=1");
                                             Ext.getCmp("gridDetalle").up('form').up('panel').close();
                                              }
                                              if(btn == 'no')
