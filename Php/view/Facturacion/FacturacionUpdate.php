@@ -13,6 +13,8 @@ mysql_select_db($db_name,$connection) or die("Error de conexion a la base de dat
         $idmaestroClientes=$data->idmaestroClientes;
         $fecha_facturacion= $data->fecha_facturacion;
         $venta_acta_de= $data->venta_acta_de;
+        $cond_operacion= $data->cond_operacion;
+        $n_comprobante_credito= $data->n_comprobante_credito;
         $iva=  $data->iva;
         $iva_retenido=  $data->iva_retenido;
         $venta_total=  $data->venta_total;
@@ -31,7 +33,9 @@ mysql_select_db($db_name,$connection) or die("Error de conexion a la base de dat
                             `numero_factura`='$numero_factura',
                             `idmaestroClientes`=$idmaestroClientes,
                             `fecha_facturacion`= '$fecha_facturacion',
-                            `venta_acta_de`='$venta_acta_de',
+                            `cond_operacion` = '$cond_operacion',  
+                            `n_comprobante_credito` = $n_comprobante_credito,
+                            `venta_acta_de`= '$venta_acta_de',
                             `iva`='$iva',
                             `iva_retenido`='$iva_retenido',
                             `venta_total`='$venta_total',

@@ -5,6 +5,8 @@ Ext.define('MvcClientes.model.Facturacion.Facturacion', {
 				{ name: 'numero_factura',   type: 'int'},
                                 { name: 'idmaestroClientes', type: 'int'},
                                 { name: 'nom_cliente', type: 'string'},
+                                { name: 'cond_operacion', type: 'string'},
+                                { name: 'n_comprobante_credito', type: 'int'},
                                 { name: 'fecha_facturacion',  type: 'date',dateFormat:'d/m/Y'},
                                 { name: 'venta_acta_de',   type: 'string'},
                                 { name: 'iva',   type: 'number'},

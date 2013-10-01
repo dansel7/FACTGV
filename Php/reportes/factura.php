@@ -11,19 +11,19 @@ if(!isset($_SESSION['benutzer']) || !isset($_SESSION["idEmpresa"]) ){
         $tipoFact=($_GET["tpf"]=="")? 0 : $_GET["tpf"];
        switch($tipoFact){ //DEPENDIENDO DEL TIPO DE FACTURA SE LLAMARA UN MODELO PARA MOSTRAR LA FACTURA
          case 1:
-             require_once 'Fact_1.php';
+             require_once 'Fact_1.php';//NOTA DE CREDITO
          break;
          case 2:
-             require_once 'Fact_2.php';
+             require_once 'Fact_2.php';//FACTURA CONSUMIDOR FINAL
          break;
          case 3:
-             require_once 'Fact_3.php';
+             require_once 'Fact_3.php';//CREDITO FISCAL
          break;
          case 4:
-             require_once 'Fact_4.php';
+             require_once 'Fact_4.php';//FACTURACION DE EXPORTACION
          break;
          case 5:
-             require_once 'Fact_5.php';
+             require_once 'Fact_5.php';//NOTA DE REMISION
          break;
      
         //ESTO SE REALIZA MANUALMENTE DEPENDIENDO DEL ID QUE TENGA EL TIPO DE FACTURA INGRESADO

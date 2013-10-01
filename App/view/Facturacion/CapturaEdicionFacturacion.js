@@ -31,6 +31,13 @@ Ext.define('MvcClientes.view.Facturacion.CapturaEdicionFacturacion', {
             autoLoad: true
         });
         
+    
+//STORE DE LOS TIPOS DE CONDICION DE OPERACION
+         var tp_cond_oper = new Ext.data.Store({
+            fields: ['cond_operacion'],
+            data: [{'cond_operacion':'Contado'},{'cond_operacion':'Credito a 30'} ,{'cond_operacion':'Credito a 60'} ,{'cond_operacion':'Credito a 90'}],
+            autoLoad: true
+        });
         
 //STORE DE LOS TIPOS DE FACTURACION
          var ListTpFact = new Ext.data.Store({
@@ -116,7 +123,13 @@ if(typeof(records) != "undefined" && typeof(records) != "string"){
                             },
                             {xtype : "datefield", format: 'd/m/Y', value: new Date(), name : "fecha_facturacion", fieldLabel : " Fecha Facturacion", flex: 1, margin: '0 10 0 0'},
                             {xtype : "textfield", name : "venta_acta_de", fieldLabel : " Venta A Cuenta De", flex: 1, margin: '0 10 0 0'},
-                            {xtype : "textfield",id : "idfacturacion", name : "idfacturacion", fieldLabel : "Id",hidden: true, margin: '0 10 0 0'}
+                            {xtype : "combobox", queryMode: 'local', fieldLabel: "Condicion de Operacion",
+                                queryMode: 'local', store: tp_cond_oper,displayField: 'cond_operacion',valueField: 'cond_operacion',
+                                name:"cond_operacion", id:"cond_operacion", flex: 1, margin: '0 10 0 0',width:340
+                            },
+                            {xtype : "textfield",id : "idfacturacion", name : "idfacturacion", fieldLabel : "Id",hidden: true, margin: '0 10 0 0'},
+                            {xtype : "textfield", name : "n_comprobante_credito", fieldLabel : "No.Comprobante Credito", flex: 1},
+                            
                             ]},
                             
                             
@@ -234,6 +247,8 @@ if(typeof(records) != "undefined" && typeof(records) != "string"){
                             xtype: 'toolbar',
                             dock: 'bottom',
                             height: 30,
+                            maxHeight: 30,
+                            maxHeight: 30,
                             id:'buttons',
                             ui: 'footer',
                             items: ['->',{xtype : "checkbox", name : "anulado", fieldLabel : "Anular Factura",  inputValue: 'Si',uncheckedValue :'No'}, {

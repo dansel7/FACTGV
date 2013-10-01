@@ -13,6 +13,8 @@ mysql_select_db($db_name,$connection) or die("Error de conexion a la base de dat
 				$numero_factura=  $data->numero_factura;
                                 $idmaestroClientes=$data->idmaestroClientes;
                                 $fecha_facturacion= $data->fecha_facturacion;
+                                $cond_operacion= $data->cond_operacion;
+                                $n_comprobante_credito= $data->n_comprobante_credito;
                                 $venta_acta_de= $data->venta_acta_de;
                                 $iva=  $data->iva;
                                 $iva_retenido=  $data->iva_retenido;
@@ -30,6 +32,8 @@ mysql_select_db($db_name,$connection) or die("Error de conexion a la base de dat
                              `numero_factura`='$numero_factura',
                                `idmaestroClientes`=$idmaestroClientes,
                                 `fecha_facturacion`='$fecha_facturacion',
+                                `cond_operacion` = '$cond_operacion',  
+                                `n_comprobante_credito` = $n_comprobante_credito,
                                 `venta_acta_de`='$venta_acta_de',
                                 `iva`='$iva',
                                 `iva_retenido`='$iva_retenido',
@@ -52,6 +56,8 @@ mysql_select_db($db_name,$connection) or die("Error de conexion a la base de dat
                                                 "idfacturacion" => mysql_insert_id(),// <--- importantisimo regresar el ID asignado al record, para que funcione correctamente el metodo update y delete
                                                 "numero_factura"=> $numero_factura,
                                                 "idmaestroClientes"=>$idmaestroClientes,
+                                                "cond_operacion" => $cond_operacion,  
+                                                "n_comprobante_credito" => $n_comprobante_credito,
                                                 "fecha_facturacion"=>$fecha_facturacion,
                                                 "venta_acta_de"=>$venta_acta_de,
                                                 "iva"=>$iva,
