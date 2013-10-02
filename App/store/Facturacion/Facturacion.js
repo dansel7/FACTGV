@@ -44,7 +44,7 @@ writer:{
                                     {
                                        
                                         var idFact=Ext.getCmp("idfacturacion").getValue();  
-                                       
+                                        var idtf=Ext.getCmp("id_tipo_factura").getValue(); 
                                         //PREGUNTA MOSTRAR VISTA PREVIA
                                         Ext.MessageBox.show({
                                         title : 'Vista Previa',
@@ -52,14 +52,19 @@ writer:{
                                                 msg : 'Mostrar Vista Previa?',
                                                 icon : Ext.Msg.WARNING,
                                         fn : function(btn)
-                                         {
+                                         {var tab;
                                              if(btn == 'yes')
                                              {			
-                                            window.open("php/reportes/factura.php?tpf=1&idf="+hidelockjs(idFact),"Vista Previa de Factura","status=1,toolbar=1");
+                                            window.open("php/reportes/factura.php?tpf="+hidelockjs(idtf)+"&idf="+hidelockjs(idFact),"Vista Previa de Factura","status=1,toolbar=1");
+                                            Ext.getCmp("gridDetalle").up('form').up('panel').close();
+                                             tab = Ext.create('MvcClientes.view.Facturacion.PanelFacturacion', {});
+                                            TabPanelMain.setActiveTab(tab);
                                              }
                                                 if(btn == 'no')
                                              {
-                                                  Ext.getCmp("gridDetalle").up('form').up('panel').close();
+                                                 Ext.getCmp("gridDetalle").up('form').up('panel').close();
+                                                   tab = Ext.create('MvcClientes.view.Facturacion.PanelFacturacion', {});
+                                                  TabPanelMain.setActiveTab(tab);
                                                  Ext.Msg.alert('Mensaje','Registro Actualizado Exitosamente');
                                                  
                                              }
@@ -68,7 +73,7 @@ writer:{
                                      });
                                      //MOSTRAR VISTA PREVIA ---- FIN
                                      
-                                     
+                                  
                                         
                             }	
                             else 
@@ -80,7 +85,7 @@ writer:{
                       //ACA SE OBTIENE EL ID QUE RETORNA AL CREAR UN NUEVO REGISTRO DE FACTURACION
                       //LUEGO SE PASARA ESTE VALOR PARA PODER RELACIONARLO CON EL DETALLE                        
                        var idNuevaFact=Ext.decode(request.callback.arguments[2].responseText).data[0].idfacturacion;
-
+                       var idtf=Ext.getCmp("id_tipo_factura").getValue(); 
                        //OBTENER LOS VALORES DEL GRID Y CONVERTIRLOS A JSON PARA PASARLOS
                        var grid = Ext.getCmp("gridDetalle").getStore().getRange();
                        var JsonDatos = [];
@@ -126,17 +131,20 @@ writer:{
                                                 msg : 'Mostrar Vista Previa?',
                                                 icon : Ext.Msg.WARNING,
                                         fn : function(btn)
-                                         {
+                                         { var tab;
                                              if(btn == 'yes')
                                              {			
-                                            window.open("php/reportes/factura.php?tpf=1&idf="+hidelockjs(idNuevaFact),"Vista Previa de Factura","status=1,toolbar=1");
+                                            window.open("php/reportes/factura.php?tpf="+hidelockjs(idtf)+"&idf="+hidelockjs(idNuevaFact),"Vista Previa de Factura","status=1,toolbar=1");
                                             Ext.getCmp("gridDetalle").up('form').up('panel').close();
+                                              tab = Ext.create('MvcClientes.view.Facturacion.PanelFacturacion', {});
+                                            TabPanelMain.setActiveTab(tab);
                                              }
                                              if(btn == 'no')
                                              {			
                                               //SE CIERRA EL FORM DE FACTURACION
                                             Ext.getCmp("gridDetalle").up('form').up('panel').close();
-                                             
+                                              tab = Ext.create('MvcClientes.view.Facturacion.PanelFacturacion', {});
+                                            TabPanelMain.setActiveTab(tab);
                                             Ext.Msg.alert('Mensaje','Registro Ingresado Exitosamente');
                                              }
                                          }	

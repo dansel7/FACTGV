@@ -34,8 +34,8 @@ Ext.define('MvcClientes.view.Facturacion.CapturaEdicionFacturacion', {
     
 //STORE DE LOS TIPOS DE CONDICION DE OPERACION
          var tp_cond_oper = new Ext.data.Store({
-            fields: ['cond_operacion'],
-            data: [{'cond_operacion':'Contado'},{'cond_operacion':'Credito a 30'} ,{'cond_operacion':'Credito a 60'} ,{'cond_operacion':'Credito a 90'}],
+            fields: ['operacion'],
+            data: [{'operacion':'Contado'},{'operacion':'Credito a 30'} ,{'operacion':'Credito a 60'} ,{'operacion':'Credito a 90'}],
             autoLoad: true
         });
         
@@ -115,7 +115,7 @@ if(typeof(records) != "undefined" && typeof(records) != "string"){
                                     type: 'table'
                             },  
                             items:[
-                            {xtype : "combobox", id:"tipo_factura", queryMode: 'local',fieldLabel: "Tipo Factura",queryMode: 'local', store: ListTpFact,displayField: 'tipo',valueField: 'id_tipo_facturacion',name:"id_tipo_facturacion", flex: 1, margin: '0 10 0 0',flex:1,allowBlank : false},    
+                            {xtype : "combobox", id:"id_tipo_factura", queryMode: 'local',fieldLabel: "Tipo Factura",queryMode: 'local', store: ListTpFact,displayField: 'tipo',valueField: 'id_tipo_facturacion',name:"id_tipo_facturacion", flex: 1, margin: '0 10 0 0',flex:1,allowBlank : false},    
                             {xtype : "textfield", name : "numero_factura", fieldLabel : "No. Factura", flex: 1,allowBlank : false},
                             {xtype : "combobox", queryMode: 'local', fieldLabel: " Cliente",
                                 queryMode: 'local', store: ListMaestroClientes,displayField: 'nom_cliente',valueField: 'idmaestroClientes',
@@ -124,7 +124,7 @@ if(typeof(records) != "undefined" && typeof(records) != "string"){
                             {xtype : "datefield", format: 'd/m/Y', value: new Date(), name : "fecha_facturacion", fieldLabel : " Fecha Facturacion", flex: 1, margin: '0 10 0 0'},
                             {xtype : "textfield", name : "venta_acta_de", fieldLabel : " Venta A Cuenta De", flex: 1, margin: '0 10 0 0'},
                             {xtype : "combobox", queryMode: 'local', fieldLabel: "Condicion de Operacion",
-                                queryMode: 'local', store: tp_cond_oper,displayField: 'cond_operacion',valueField: 'cond_operacion',
+                                queryMode: 'local', store: tp_cond_oper,displayField: 'operacion',valueField: 'operacion',
                                 name:"cond_operacion", id:"cond_operacion", flex: 1, margin: '0 10 0 0',width:340
                             },
                             {xtype : "textfield",id : "idfacturacion", name : "idfacturacion", fieldLabel : "Id",hidden: true, margin: '0 10 0 0'},
@@ -158,8 +158,10 @@ if(typeof(records) != "undefined" && typeof(records) != "string"){
                                     editor: {
                                         xtype: 'numberfield',allowDecimals: true, name:'valor_concepto',
                                         decimalPrecision: 2,  hideTrigger: true,
-                                        allowBlank: false, decimalSeparator: "." 
-                                }},
+                                        allowBlank: false, decimalSeparator: "."
+                                }, summaryRenderer: function(value, summaryData, dataIndex) {
+                                        return Math.round(value*100)/100;
+                                        } },
                                 {header: 'Venta No sujeta', dataIndex: 'venta_nosujeta', editor: {
                                         xtype: 'numberfield',allowDecimals: true, name:'venta_nosujeta',
                                         decimalPrecision: 2 ,  hideTrigger: true,
@@ -173,8 +175,10 @@ if(typeof(records) != "undefined" && typeof(records) != "string"){
                                 {header: 'Venta Gravada', dataIndex: 'venta_gravada',summaryType: 'sum', editor: {
                                         xtype: 'numberfield',allowDecimals: true, name:'venta_gravada',
                                         decimalPrecision: 2 ,  hideTrigger: true,
-                                        allowBlank: true, decimalSeparator: "." 
-                                }}
+                                        allowBlank: true, decimalSeparator: "."
+                                },   summaryRenderer: function(value, summaryData, dataIndex) {
+                                         return Math.round(value*100)/100;
+                                        }}
                             ],
                             height: 250,
                             width:900,

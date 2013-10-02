@@ -1,5 +1,5 @@
 <?php
-//NOTA DE CREDITO
+//CREDITO FISCAL
 
 
 error_reporting(0);
@@ -108,7 +108,7 @@ $orientacion="vertical";
             </tr>
             <tr>
             <td >&nbsp;</td>
-            <td colspan="3" style="text-align:center">
+            <td colspan="3" style="text-align:center" width="400px">
             '.strtoupper($rows_e["cond_operacion"]).'
             </td>
             <td style="text-align:center">
@@ -118,6 +118,7 @@ $orientacion="vertical";
             </table><br>
             <table>
                  <tr><td colspan="4" height="40px"></td></tr>';
+        
         $detalle_factura.='
                     <tr>
                         <td style="text-align:left" width="100px">
@@ -152,7 +153,7 @@ $orientacion="vertical";
                           <td width="60px"></td>
                       </tr>
                       <tr><td colspan="6" style="text-align:left">
-                        <table width="680px" cellspacing="3">
+                        <table width="670px" cellspacing="3">
                          
                         <tr>
                            <td>'. strtoupper($Total_enLetras->ValorEnLetras($rows_e["venta_total"],"Dolares")) .'</td>
@@ -163,9 +164,6 @@ $orientacion="vertical";
                          </tr>
                          <tr>
                            <td style="text-align:right" colspan="2">'. number_format($rows_e["iva_retenido"],2) .'</td>
-                         </tr>
-                         <tr>
-                           <td style="text-align:right" colspan="2"></td>
                          </tr>
                           <tr>
                            <td style="text-align:right" colspan="2" >'. number_format($tot_venta_no_sujeta,2) .'</td>
@@ -179,7 +177,7 @@ $orientacion="vertical";
                      <tr><td colspan="6" style="text-align:right">
                          <table>
                          <tr>    
-                            <td width="680px">
+                            <td width="670px">
                         '. $rows_e["venta_total"] .'
                             </td>
                          </tr>

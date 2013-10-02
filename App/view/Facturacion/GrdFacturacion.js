@@ -10,6 +10,7 @@ Ext.define('MvcClientes.view.Facturacion.GrdFacturacion',{
 	listeners: {
             'selectionchange': function(view, records) {
                 this.down('#delete').setDisabled(!records.length);//Se Habilita el Boton Delete
+                //    Ext.Msg.alert('Mensaje','selecionado');
             }
     },
 	initComponent: function() {
@@ -21,7 +22,6 @@ Ext.define('MvcClientes.view.Facturacion.GrdFacturacion',{
                             { dataIndex : "numero_factura", header : "No. Factura", flex:1},
                             { dataIndex : "idmaestroClientes",header: "IdCliente", flex:1,hidden: true},
                             { dataIndex : "nom_cliente",header: "Cliente", flex:2},
-                            { dataIndex : "comprobante", header : "No. Comprobante", flex:1,hidden: true},
                             { dataIndex : "fecha_facturacion", header : "Fecha Facturacion", flex:1,renderer:Ext.util.Format.dateRenderer('d/m/Y') },
                             { dataIndex : "venta_acta_de", header : "Venta A Cuenta De", flex:1,hidden: true},
                             { dataIndex : "iva", header : "IVA", flex:1,hidden: true},
@@ -30,7 +30,10 @@ Ext.define('MvcClientes.view.Facturacion.GrdFacturacion',{
                             { dataIndex : "fecha_quedan", header : "Fecha Quedan", flex:1,renderer:Ext.util.Format.dateRenderer('d/m/Y') },
                             { dataIndex : "comprobante_quedan", header : "Comprobante Quedan", flex:1,hidden: true},
                             { dataIndex : "fecha_programada_pago", header : "Fecha Programada Pago", flex:1,renderer:Ext.util.Format.dateRenderer('d/m/Y') },
-                            
+                            { dataIndex : "cond_operacion", header : "cond operacion", flex:1,hidden: true},
+                            { dataIndex : "n_comprobante_credito", header : "n comprobante credito", flex:1,hidden: true},
+                            { dataIndex : "id_tipo_facturacion", header : "Tipo Factura", flex:1,hidden: true},
+                            { dataIndex : "anulado", header : "Anulado", flex:1},
 				   
 			],
 			dockedItems: [
@@ -85,45 +88,3 @@ Ext.define('MvcClientes.view.Facturacion.GrdFacturacion',{
 	
 	
 });
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-/*{
-                    xtype: 'actioncolumn',
-					width: 60,
-					align: 'center',
-					margin:'0 0 3 3',
-					itemId:'ActColumGrdListaFacturacion',
-                    items: [
-                        {
-						    icon   : 'resources/imagenes/add.png',
-                            tooltip: 'Agregar',
-							width:10
-                        },
-                        {
-                            icon   : 'resources/imagenes/delete.png',
-                            tooltip: 'Borrar'
-                        }
-                    ]
-           }*/

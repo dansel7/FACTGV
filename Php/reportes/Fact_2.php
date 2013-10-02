@@ -1,6 +1,5 @@
 <?php
-//NOTA DE CREDITO
-
+////FACTURA CONSUMIDOR FINAL
 
 error_reporting(0);
 session_start();
@@ -79,7 +78,7 @@ $orientacion="vertical";
         while($rows_e = mysql_fetch_array($result)){ //CONSULTA PARA ENCABEZADO
        //style="border:solid 1px"
         $datos_factura='<br><br><br><br><br><br><br>
-            <table width="690px" cellspacing="1">
+            <table  width="690px">
             <tr>
                 <td></td>
                 <td></td>
@@ -88,33 +87,24 @@ $orientacion="vertical";
                 <td></td>
             </tr>
             <tr>
-                <td style="text-align:center" width="450px" colspan="3"><b>'.strtoupper($rows_e["nom_cliente"]).'</b></td>
-                <td  style="text-align:center" colspan="2">'. $rows_e["fecha_facturacion"] .'</td>
+                <td style="text-align:center" width="375px" colspan="3"><b>'.strtoupper($rows_e["nom_cliente"]).'</b></td>
+               <td style="text-align:center" width="100px">&nbsp;</td> 
+               <td  style="text-align:center">'. $rows_e["fecha_facturacion"] .'</td>
             </tr>
             <tr>
-                <td style="text-align:center;font-size:7pt" colspan="3">'.strtoupper($rows_e["direccion"]).'</td>
-                <td colspan="2">&nbsp;</td>
+                <td colspan="5" height="8px">&nbsp;</td>
+            </tr>
+            <tr>
+                <td style="text-align:center;font-size:8pt" colspan="3">'.strtoupper($rows_e["direccion"]).'</td>
+                <td colspan="2" height="20px">&nbsp;</td>
             </tr>
              <tr>
-                <td  colspan="3" width="465px">&nbsp;</td>
-                <td colspan="2" style="text-align:left">'.strtoupper($rows_e["departamento"]).'</td>
-            </tr>
-             <tr>
-                <td  width="30px">&nbsp;</td>
+                <td  width="55px" colspan="2">&nbsp;</td>
                 <td  width="170px">'. $rows_e["nit"] .'</td>
-                <td style="text-align:center" width="100px">'. $rows_e["nrc"] .'</td>
-                <td style="text-align:center" width="115px">&nbsp;</td>
-                <td style="text-align:left" width="200px" >'.strtoupper($rows_e["giro"]).'</td>
+                <td style="text-align:center" width="250px">&nbsp;</td>
+                <td style="text-align:left" width="200px" >'.strtoupper($rows_e["venta_acta_de"]).'</td>
             </tr>
-            <tr>
-            <td >&nbsp;</td>
-            <td colspan="3" style="text-align:center">
-            '.strtoupper($rows_e["cond_operacion"]).'
-            </td>
-            <td style="text-align:center">
-            '.strtoupper($rows_e["venta_acta_de"]).'
-            </td>
-            </tr>
+            
             </table><br>
             <table>
                  <tr><td colspan="4" height="40px"></td></tr>';
@@ -127,16 +117,16 @@ $orientacion="vertical";
                         '. strtoupper($rows_e["concepto"])  .'
                         </td>
                         <td width="60px" style="text-align:right">
-                        '. $rows_e["valor_concepto"] .'
+                        '. number_format($rows_e["valor_concepto"]*1.13,2) .'
                         </td>
                         <td width="60px" style="text-align:right">
-                        '. $rows_e["venta_nosujeta"] .'
+                        '. number_format($rows_e["venta_nosujeta"],2) .'
                         </td>
                         <td width="60px" style="text-align:right">
-                        '. $rows_e["venta_exenta"] .'
+                        '. number_format($rows_e["venta_exenta"],2) .'
                         </td>
                         <td width="60px" style="text-align:right">
-                        '. $rows_e["venta_gravada"] .'
+                        '. number_format($rows_e["venta_gravada"]*1.13,2) .'
                         </td>
                     </tr>';
         
@@ -156,22 +146,18 @@ $orientacion="vertical";
                          
                         <tr>
                            <td>'. strtoupper($Total_enLetras->ValorEnLetras($rows_e["venta_total"],"Dolares")) .'</td>
-                           <td style="text-align:right">'.$rows_e["iva"] .'</td>
                          </tr>
                          <tr>
-                           <td style="text-align:right" colspan="2" >'. number_format($subTotal,2) .'</td>
+                           <td style="text-align:right">'. number_format($rows_e["iva_retenido"],2) .'</td>
                          </tr>
-                         <tr>
-                           <td style="text-align:right" colspan="2">'. number_format($rows_e["iva_retenido"],2) .'</td>
-                         </tr>
-                         <tr>
-                           <td style="text-align:right" colspan="2"></td>
+                        <tr>
+                           <td style="text-align:right">'. number_format($subTotal+$rows_e["iva"],2) .'</td>
                          </tr>
                           <tr>
-                           <td style="text-align:right" colspan="2" >'. number_format($tot_venta_no_sujeta,2) .'</td>
+                           <td style="text-align:right" >'. number_format($tot_venta_no_sujeta,2) .'</td>
                          </tr>
                          <tr>
-                           <td style="text-align:right" colspan="2" >'. number_format($tot_venta_exentas,2) .'</td>
+                           <td style="text-align:right" >'. number_format($tot_venta_exentas,2) .'</td>
                          </tr>
                          </table>
                      </td>
