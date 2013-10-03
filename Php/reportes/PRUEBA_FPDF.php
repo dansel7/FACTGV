@@ -2,27 +2,127 @@
 //NOTA DE CREDITO
 
 
-error_reporting(0);
+//error_reporting(0);
 session_start();
 
 if(!isset($_SESSION['benutzer']) || !isset($_SESSION["idEmpresa"]) ){
 		$direccion = "Location: ../../index.php";
 		header($direccion);
 	}else{
-require_once('tcpdf/config/lang/eng.php');
-require_once('tcpdf/tcpdf.php');
+require_once('fpdf/fpdf.php');
+
+class PDF extends FPDF
+{
+var $B;
+var $I;
+var $U;
+var $HREF;
+
+function PDF($orientation='P', $unit='mm', $size='A4')
+{
+    // Llama al constructor de la clase padre
+    $this->FPDF($orientation,$unit,$size);
+    // Iniciación de variables
+    $this->B = 0;
+    $this->I = 0;
+    $this->U = 0;
+    $this->HREF = '';
+}
+
+function WriteHTML($html)
+{
+    // Intérprete de HTML
+    $html = str_replace("\n",' ',$html);
+    $a = preg_split('/<(.*)>/U',$html,-1,PREG_SPLIT_DELIM_CAPTURE);
+    foreach($a as $i=>$e)
+    {
+        if($i%2==0)
+        {
+            // Text
+            if($this->HREF)
+                $this->PutLink($this->HREF,$e);
+            else
+                $this->Write(5,$e);
+        }
+        else
+        {
+            // Etiqueta
+            if($e[0]=='/')
+                $this->CloseTag(strtoupper(substr($e,1)));
+            else
+            {
+                // Extraer atributos
+                $a2 = explode(' ',$e);
+                $tag = strtoupper(array_shift($a2));
+                $attr = array();
+                foreach($a2 as $v)
+                {
+                    if(preg_match('/([^=]*)=["\']?([^"\']*)/',$v,$a3))
+                        $attr[strtoupper($a3[1])] = $a3[2];
+                }
+                $this->OpenTag($tag,$attr);
+            }
+        }
+    }
+}
+
+function OpenTag($tag, $attr)
+{
+    // Etiqueta de apertura
+    if($tag=='B' || $tag=='I' || $tag=='U')
+        $this->SetStyle($tag,true);
+    if($tag=='A')
+        $this->HREF = $attr['HREF'];
+    if($tag=='BR')
+        $this->Ln(5);
+}
+
+function CloseTag($tag)
+{
+    // Etiqueta de cierre
+    if($tag=='B' || $tag=='I' || $tag=='U')
+        $this->SetStyle($tag,false);
+    if($tag=='A')
+        $this->HREF = '';
+}
+
+function SetStyle($tag, $enable)
+{
+    // Modificar estilo y escoger la fuente correspondiente
+    $this->$tag += ($enable ? 1 : -1);
+    $style = '';
+    foreach(array('B', 'I', 'U') as $s)
+    {
+        if($this->$s>0)
+            $style .= $s;
+    }
+    $this->SetFont('',$style);
+}
+
+function PutLink($URL, $txt)
+{
+    // Escribir un hiper-enlace
+    $this->SetTextColor(0,0,255);
+    $this->SetStyle('U',true);
+    $this->Write(5,$txt,$URL);
+    $this->SetStyle('U',false);
+    $this->SetTextColor(0);
+}
+}
+
 
 require_once('../funcionesFact.php');
+ require_once('../Database_conf.php');
 $Total_enLetras=new EnLetras();
  
-$pdf = new TCPDF("vertical", "cm", "Letter", true, 'UTF-8', false); 
+$pdf = new PDF("L", "cm", "Letter"); 
 
 // set document information
 $pdf->SetCreator(PDF_CREATOR);
 $pdf->SetAuthor('Daniel E. Diaz');
 $pdf->SetTitle('GV');
 $pdf->SetSubject('Control');
-$pdf->SetKeywords('TCPDF, PDF, factura, control, contabilidad');
+$pdf->SetKeywords('FPDF, PDF, factura, control, contabilidad');
 
 // set default header data
 //$pdf->SetHeaderData(PDF_HEADER_LOGO, PDF_HEADER_LOGO_WIDTH, PDF_HEADER_TITLE, PDF_HEADER_STRING);
@@ -44,8 +144,6 @@ $pdf->SetMargins(-0.1, 0.7, 0.635);
 //set auto page breaks
 $pdf->SetAutoPageBreak(TRUE, 5);
 
-//set image scale factor
-$pdf->setImageScale(PDF_IMAGE_SCALE_RATIO); 
 
 //set some language-dependent strings
 //$pdf->setLanguageArray($l); 
@@ -53,7 +151,6 @@ $pdf->setImageScale(PDF_IMAGE_SCALE_RATIO);
 // set font
 $pdf->SetFont('helvetica', '', 10);
 
-$orientacion="vertical";
 // ---------------INICIO DEL REPORTE-----------------
 	$sql = "SELECT 
                
@@ -66,10 +163,10 @@ $orientacion="vertical";
                 LEFT JOIN detalleFacturacion df on f.idFacturacion=df.idFacturacion 
                 INNER JOIN maestroclientes mc on mc.idmaestroClientes=f.idmaestroClientes
                 INNER JOIN departamento d on d.id_departamento=mc.id_departamento 
-                WHERE f.idFacturacion=".hideunlock($_GET["idf"]);
+                WHERE f.idFacturacion=4";
     	$result = mysql_query($sql,$connection) or die('La consulta fall&oacute;: '.mysql_error());	
         
-  $pdf->addpage($orientacion,'letter');      
+  $pdf->addpage("P",'letter');      
   
   
   
@@ -193,7 +290,43 @@ $orientacion="vertical";
         
         }
         $factura=$datos_factura.$detalle_factura.$pie_factura;
-$pdf->writeHTML($factura, true, false, false, false, '');
+        function WriteHTML($html)
+{
+    // Intérprete de HTML
+    $html = str_replace("\n",' ',$html);
+    $a = preg_split('/<(.*)>/U',$html,-1,PREG_SPLIT_DELIM_CAPTURE);
+    foreach($a as $i=>$e)
+    {
+        if($i%2==0)
+        {
+            // Text
+            if($this->HREF)
+                $this->PutLink($this->HREF,$e);
+            else
+                $this->Write(5,$e);
+        }
+        else
+        {
+            // Etiqueta
+            if($e[0]=='/')
+                $this->CloseTag(strtoupper(substr($e,1)));
+            else
+            {
+                // Extraer atributos
+                $a2 = explode(' ',$e);
+                $tag = strtoupper(array_shift($a2));
+                $attr = array();
+                foreach($a2 as $v)
+                {
+                    if(preg_match('/([^=]*)=["\']?([^"\']*)/',$v,$a3))
+                        $attr[strtoupper($a3[1])] = $a3[2];
+                }
+                $this->OpenTag($tag,$attr);
+            }
+        }
+    }
+}
+$pdf->WriteHTML($factura);
 
 
 
