@@ -23,7 +23,8 @@ $pdf->SetAuthor('Daniel E. Diaz');
 $pdf->SetTitle('GV');
 $pdf->SetSubject('Control');
 $pdf->SetKeywords('TCPDF, PDF, factura, control, contabilidad');
-
+$pdf->setPrintHeader(false);
+$pdf->SetPrintFooter(false);
 // set default header data
 //$pdf->SetHeaderData(PDF_HEADER_LOGO, PDF_HEADER_LOGO_WIDTH, PDF_HEADER_TITLE, PDF_HEADER_STRING);
 
@@ -36,7 +37,7 @@ $pdf->SetKeywords('TCPDF, PDF, factura, control, contabilidad');
 
 //set margins
 //$pdf->SetMargins(PDF_MARGIN_LEFT, PDF_MARGIN_TOP, PDF_MARGIN_RIGHT);
-$pdf->SetMargins(1, 1.905, 0.635);
+$pdf->SetMargins(-0.1, 0.9, 0.635);
 
 //$pdf->SetHeaderMargin(0);
 //$pdf->SetFooterMargin(15);
@@ -78,7 +79,7 @@ $orientacion="vertical";
         $tot_venta_exentas=0;
         while($rows_e = mysql_fetch_array($result)){ //CONSULTA PARA ENCABEZADO
        //style="border:solid 1px"
-        $datos_factura='<br><br><br><br><br><br><br>
+        $datos_factura='<br>
             <table width="690px" cellspacing="1">
             <tr>
                 <td></td>

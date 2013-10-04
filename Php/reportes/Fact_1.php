@@ -23,7 +23,8 @@ $pdf->SetAuthor('Daniel E. Diaz');
 $pdf->SetTitle('GV');
 $pdf->SetSubject('Control');
 $pdf->SetKeywords('TCPDF, PDF, factura, control, contabilidad');
-
+$pdf->setPrintHeader(false);
+$pdf->SetPrintFooter(false);
 // set default header data
 //$pdf->SetHeaderData(PDF_HEADER_LOGO, PDF_HEADER_LOGO_WIDTH, PDF_HEADER_TITLE, PDF_HEADER_STRING);
 
@@ -36,7 +37,7 @@ $pdf->SetKeywords('TCPDF, PDF, factura, control, contabilidad');
 
 //set margins
 //$pdf->SetMargins(PDF_MARGIN_LEFT, PDF_MARGIN_TOP, PDF_MARGIN_RIGHT);
-$pdf->SetMargins(-0.1, 0.7, 0.635);
+$pdf->SetMargins(-0.1, 0.9, 0.635);
 
 //$pdf->SetHeaderMargin(0);
 //$pdf->SetFooterMargin(15);
@@ -79,7 +80,7 @@ $orientacion="vertical";
         while($rows_e = mysql_fetch_array($result)){ //CONSULTA PARA ENCABEZADO
        //style="border:solid 1px"
         $datos_factura='<br>
-            <table width="690px" cellspacing="1">
+            <table width="690px" cellspacing="3">
             <tr>
                 <td></td>
                 <td></td>
@@ -89,19 +90,19 @@ $orientacion="vertical";
             </tr>
             <tr>
                 <td style="text-align:center" width="410px" colspan="3"><b>'.strtoupper($rows_e["nom_cliente"]).'</b></td>
-                <td >&nbsp;</td>    
+                <td width="110px">&nbsp;</td>    
                 <td  style="text-align:left">'. $rows_e["fecha_facturacion"] .'</td>
             </tr>
             <tr>
-                <td style="text-align:center;font-size:7pt" colspan="3">'.strtoupper($rows_e["direccion"]).'</td>
+                <td style="text-align:center;font-size:8pt" colspan="3">'.strtoupper($rows_e["direccion"]).'</td>
                 <td colspan="2">&nbsp;</td>
             </tr>
              <tr>
-                <td  colspan="3" width="495px">&nbsp;</td>
+                <td  colspan="3" width="495px" height="18px">&nbsp;</td>
                 <td colspan="2" style="text-align:left">'.strtoupper($rows_e["departamento"]).'</td>
             </tr>
              <tr>
-                <td  width="30px">&nbsp;</td>
+                <td  width="30px" height="18px">&nbsp;</td>
                 <td  width="170px">'. $rows_e["nit"] .'</td>
                 <td style="text-align:center" width="100px">'. $rows_e["nrc"] .'</td>
                 <td style="text-align:center" width="135px">&nbsp;</td>
@@ -117,7 +118,7 @@ $orientacion="vertical";
             </td>
             </tr>
             </table><br>
-            <table>
+            <table cellspacing="3">
                  <tr><td colspan="4" height="45px"></td></tr>';
         $detalle_factura.='
                     <tr>
@@ -147,7 +148,7 @@ $orientacion="vertical";
         
         
         //ESTA ES LA PARTE QUE CONTIENE EL TOTAL EN LETRAS Y SUS DESGLOSES
-        $pie_factura='<tr><td colspan="6" height="72px"></td></tr>
+        $pie_factura='<tr><td colspan="6" height="105px"></td></tr>
                       <tr><td colspan="2" width="455px"></td>
                           <td width="60px"></td>
                           <td width="60px" style="text-align:right">'. number_format($tot_venta_no_sujeta,2) .'</td>
@@ -155,7 +156,7 @@ $orientacion="vertical";
                           <td width="60px"></td>
                       </tr>
                       <tr><td colspan="6" style="text-align:left">
-                        <table width="690px" cellspacing="3">
+                        <table width="705px" cellspacing="3">
                          
                         <tr>
                            <td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;'. strtoupper($Total_enLetras->ValorEnLetras($rows_e["venta_total"],"Dolares")) .'</td>
@@ -182,7 +183,7 @@ $orientacion="vertical";
                      <tr><td colspan="6" style="text-align:right">
                          <table>
                          <tr>    
-                            <td width="688px">
+                            <td width="702px">
                         '. $rows_e["venta_total"] .'
                             </td>
                          </tr>

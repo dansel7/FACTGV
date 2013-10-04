@@ -6,6 +6,7 @@ Ext.define('MvcClientes.view.Facturacion.GrdFacturacion',{
 	extend: 'Ext.ux.LiveSearchGridPanel',
 	alias:'widget.gridFacturacion',
 	store: 'Facturacion.Facturacion',
+        id: "GRDFacturacion",
 	border: false,
 	listeners: {
             'selectionchange': function(view, records) {

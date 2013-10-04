@@ -4354,7 +4354,7 @@ class TCPDF {
 		$cur_y = $this->y;
 		$this->SetTextColorArray($this->footer_text_color);
 		//set style for cell border
-		$line_width = (0.85 / $this->k);
+		$line_width = (0 / $this->k);
 		$this->SetLineStyle(array('width' => $line_width, 'cap' => 'butt', 'join' => 'miter', 'dash' => 0, 'color' => $this->footer_line_color));
 		//print document barcode
 		$barcode = $this->getBarcode();
