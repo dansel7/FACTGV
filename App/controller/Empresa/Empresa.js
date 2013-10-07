@@ -29,7 +29,7 @@ Ext.define('MvcClientes.controller.Empresa.Empresa',{
 		   'FormAddEdicionEmpresa button[action=actGuardar]'://Usando Ext.Component.Query
 			   {
 				 
-				 click:this.ActualizarUsuario
+				 click:this.ActualizarEmpresa
 			   },
 		    'gridEmpresa button[action=actBorrar]'://Usando Ext.Component.Query
 			   {
@@ -59,7 +59,7 @@ Ext.define('MvcClientes.controller.Empresa.Empresa',{
          	 
 	},
 	
-	ActualizarUsuario: function(button) {
+	ActualizarEmpresa: function(button) {
         var win    = button.up('window'),
             form   = win.down('form'),
             record = form.getRecord(),

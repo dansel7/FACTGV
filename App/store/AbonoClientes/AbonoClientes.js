@@ -7,9 +7,7 @@
             type: 'ajax',
             api: { //Declaramos la API y Comienzan en estas lineas las operaciones CRUD
 				 read    : "Php/view/AbonoClientes/AbonoClientesRead.php",
-				 create  : "Php/view/AbonoClientes/AbonoClientesCreate.php",
-				 update  : "Php/view/AbonoClientes/AbonoClientesUpdate.php",
-				 destroy : "Php/view/AbonoClientes/AbonoClientesDestroy.php"
+				 create  : "Php/view/AbonoClientes/AbonoClientesCreate.php"
 			},
 			/*actionMethods:{
 			    read:'POST'
@@ -38,24 +36,11 @@
 					if (request.action == 'read')
      					{
 							//Ext.Msg.alert('Title','Read');
-					}
-			 
-					else 
-					    if (request.action == 'update')
-						{
-							Ext.Msg.alert('Mensaje','Registro Actualizado Exitosamente');
-                                                        
-                                        }	
+					}	
                                         else 
 					    if (request.action == 'create')
 						{
-							Ext.Msg.alert('Mensaje','Registro Ingresado Exitosamente');
-                                                        
-					    }
-                                        else 
-					    if (request.action == 'destroy')
-						{
-							Ext.Msg.alert('Mensaje','Registro Eliminado Exitosamente');
+							Ext.Msg.alert('Mensaje','Abono Registrado Exitosamente');
                                                         
 					    }
                         },

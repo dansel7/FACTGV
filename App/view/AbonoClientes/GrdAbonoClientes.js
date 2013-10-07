@@ -7,17 +7,16 @@ Ext.define('MvcClientes.view.AbonoClientes.GrdAbonoClientes',{
 	alias:'widget.gridAbonoClientes',
 	store: 'AbonoClientes.AbonoClientes',
 	border: false,
-	listeners: {
-            'selectionchange': function(view, records) {
-                this.down('#delete').setDisabled(!records.length);//Se Habilita el Boton Delete
-            }
-    },
+        id:'gridAbonoClientes',
 	initComponent: function() {
 		var me = this;
 		Ext.applyIf(me, {
 			columns : [//Definimos las Columnas del Grid y las Columnas de la Tabla
-				   {header:"ID",dataIndex:"id_AbonoClientes",width:50},
-                                   {header:"Nombre de la AbonoClientes", dataIndex:"nombre",flex:1} 
+                                   {header:"ID",dataIndex:"idfacturacion",width:50,hidden:true},
+                                   {header:"Numero Factura", dataIndex:"numero_factura",flex:1},
+                                   {header:"Clientes", dataIndex:"nom_cliente",flex:1},
+                                   {header:"Fecha Facturacion",dataIndex : "fecha_facturacion", flex:1,renderer:Ext.util.Format.dateRenderer('d/m/Y') },
+                                   {header:"Saldo Pendiente ($)", dataIndex:"saldo_pendiente",flex:1}
 			],
 			dockedItems: [
 					{
@@ -25,23 +24,12 @@ Ext.define('MvcClientes.view.AbonoClientes.GrdAbonoClientes',{
 					dock: 'top',
 					items: [
 						{
-						itemId: 'Add',
-						text: 'Agregar',
+						itemId: 'add',
+						text: 'Liquidar',
 						iconCls: 'add',
-						action:'actAgregar'//Accion manejado por el Controlador
-						},'-',{
-						itemId: 'edit',
-						text: 'Editar',
-						iconCls: 'edit',
 						scope: this,
-						action:'actEditar'
+						action:'actLiquidar'
 						//handler:this.OnEditar
-						},'-',{
-						itemId: 'delete',
-						text: 'Borrar',
-						iconCls: 'delete',
-						disabled: true,
-						action:'actBorrar' //Accion manejado por el Controlador
 						}								
 					]
 				},

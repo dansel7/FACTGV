@@ -51,6 +51,14 @@ Ext.define('MvcClientes.view.Principal.MyViewport',{
                                            {
                                               addTabListadoFacturas();
                                            }
+                                        if (index==1)
+                                           {
+                                              addTabListadoAbonoClientes();
+                                           }
+                                        if (index==2)
+                                           {
+                                              addTabListadoAbonoBancos();
+                                           }
                             }
                         }  , 
                         root: {
@@ -289,6 +297,31 @@ Ext.define('MvcClientes.view.Principal.MyViewport',{
 			    this.TabPanelMain.setActiveTab(tab); //Se activa el Tab Clickeado 
 				     		 
 	    }
+            
+       function addTabListadoAbonoClientes(){
+           var tab=this.TabPanelMain.getComponent('TabListadoAbonoClientes');
+		   if(!tab){ //si no existe lo creamos
+				tab = Ext.create('MvcClientes.view.AbonoClientes.PanelAbonoClientes', {});
+				this.TabPanelMain.add(tab); //Se agrega el Panel Cliente al TabMain 
+				this.TabPanelMain.doLayout(); //Redibujado del Panel 
+				this.TabPanelMain.setActiveTab(tab); //Activamos el Tab
+               			
+                   } 
+			    this.TabPanelMain.setActiveTab(tab); //Se activa el Tab Clickeado 
+       }
+       
+       function addTabListadoAbonoBancos(){
+           var tab=this.TabPanelMain.getComponent('TabListadoAbonoBancos');
+		   if(!tab){ //si no existe lo creamos
+				tab = Ext.create('MvcClientes.view.AbonoBancos.PanelAbonoBancos', {});
+				this.TabPanelMain.add(tab); //Se agrega el Panel Cliente al TabMain 
+				this.TabPanelMain.doLayout(); //Redibujado del Panel 
+				this.TabPanelMain.setActiveTab(tab); //Activamos el Tab
+               			
+                   } 
+			    this.TabPanelMain.setActiveTab(tab); //Se activa el Tab Clickeado 
+       } 
+        
 		
     }
 		

@@ -1,118 +1,38 @@
 ////////////Pueden usar tambien este dise�o de Formulario///////////////////
-Ext.require([
-    'Ext.ux.form.MultiSelect',
-    'Ext.ux.form.ItemSelector'
-]);
-
 Ext.define('MvcClientes.view.AbonoClientes.CapturaEdicionAbonoClientes', {
     extend: 'Ext.window.Window',
 	alias:'widget.FormAddEdicionAbonoClientes',
-    height: 400,
-    width: 400,
+    height: 200,
+    width: 300,
     layout: {
         type: 'fit'
     },
-	autoShow: true,
+    autoShow: true,
     closable: false,
-    title: 'Captura/Edicion AbonoClientes',
+    title: 'Abono a Clientes',
     modal: true,
 	
     initComponent: function() {
-        
-        
-//STORE DE LISTADO DE TIPOS DE FACTURA QUE ESTAN DISPONIBLES
-Ext.define('MvcClientes.Store.dsListTipoFactura', {
-    extend: 'Ext.data.Store', 
-    root:"data",
-    fields: ['id_tipo_facturacion', 'tipo'],
-    proxy: {
-        type: 'ajax',
-        url : 'Php/store/list_tipo_factura.php?opx=tp1f1'
-    },
-    autoLoad: false
-});  
-
-
-//Verificar que se envian datos para editar
-var idemp;
-if(typeof(records) != "undefined" && typeof(records) != "string"){
- idemp=records[0].data.id_AbonoClientes;   
-}else{idemp='';}
-
-//STORE DE LISTADO DE TIPOS DE FACTURA QUE ESTAN SELECCIONADOS
-Ext.define('MvcClientes.Store.dsListTipoFactura2', {
-    extend: 'Ext.data.Store', 
-    fields: ['id_tipo_facturacion'],
-    proxy: {
-        type: 'ajax',
-        url : 'Php/store/list_tipo_factura.php?opx=f2tp2&id=' + idemp
-    },
-    autoLoad: false
-});  
-        
-          
-        //SE CREA ANTES PARA QUE NO CARGUE NULL
-        var ds = Ext.create('MvcClientes.Store.dsListTipoFactura');
+var idfacturacion=Ext.getCmp("gridAbonoClientes").getSelectionModel().getSelection()[0].data.idfacturacion;
+var num_fact=Ext.getCmp("gridAbonoClientes").getSelectionModel().getSelection()[0].data.numero_factura;
 var me = this;
 Ext.applyIf(me, {
     items: [
             {
                 xtype: 'form',
-                height: 50,
+                height: 166,
                 name: 'form',
                 layout: {
                     type: 'auto'
                 },
                 items: 
-                [   {xtype: 'displayfield',name: 'displayfield1',id:'empDetails',value: ''},
-                    {xtype: 'displayfield',name: 'displayfield1',id:'empDetails',value: ''},
-                    {xtype : "textfield",id:"id_AbonoClientes", name : "id_AbonoClientes", fieldLabel : "ID",hidden: true},
-                    {xtype : "textfield", name : "nombre", fieldLabel : "Nombre de AbonoClientes", width: 350},
-                    {xtype: 'itemselector', id:"ISTipoFactura",
-                     store:ds, name: 'tipo_factura',
-                     width:350 ,anchor: '30%',
-                     fieldLabel: 'Seleccion',displayField: 'tipo',
-                     valueField: 'id_tipo_facturacion',
-                     buttons: ['add', 'remove'],
-                     buttonsText: {add: "Agregar",remove: "Remover"},
-                     allowBlank: false, msgTarget: 'side',
-                        onAddBtnClick: function() {
-                        //SOBRECARGA FUNCION ORIGINAL//
-                        var me = this,
-                        fromList = me.fromField.boundList,
-                        selected = this.getSelections(fromList);
-                        fromList.getStore().remove(selected);
-                        this.toField.boundList.getStore().add(selected);
-                        ////////////////////////////////////////////////
-
-                        //////INICIO FUNCION AGREGAR//////////
-                        Ext.Ajax.request({
-                        url: 'Php/view/AbonoClientes/AbonoClientes_TipoFact/Op_Emp_TpF.php?opx=addEmpTpF&idEmp=' + Ext.getCmp("id_AbonoClientes").getValue() + '&idTpFact=' + selected[0].data.id_tipo_facturacion,
-                        success: function(response) {           
-                        }
-                        });
-
-                        //////////////////////////////////////
-                        },
-                        onRemoveBtnClick: function() {
-                            //SOBRECARGA FUNCION ORIGINAL//                               }
-                        var me = this,
-                        toList = me.toField.boundList,
-                        selected = this.getSelections(toList);
-                        toList.getStore().remove(selected);
-                        this.fromField.boundList.getStore().add(selected);
-                        ////////////////////////////////////////////////
-
-                        //////INICIO FUNCION REMOVER/////
-                        Ext.Ajax.request({
-                        url: 'Php/view/AbonoClientes/AbonoClientes_TipoFact/Op_Emp_TpF.php?opx=rmvEmpTpF&idEmp=' + Ext.getCmp("id_AbonoClientes").getValue()  + '&idTpFact=' + selected[0].data.id_tipo_facturacion,
-                        success: function(response) {           
-                        }
-                        });
-                        //////////////////////////////////////
-                        }
-                     
-                    }
+                [   {xtype: 'displayfield',name: 'displayfield1',id:'empDetails1',value: 'Liquidacion de Factura #'+ num_fact},
+                    {xtype: 'displayfield',name: 'displayfield1',id:'empDetails2',value: '' },
+                    {xtype : "textfield",id:"id_abono_clientes", name : "id_abono_clientes", fieldLabel : "ID",hidden: true},
+                    {xtype : "textfield",id:"idfacturacion", name : "idfacturacion", value: idfacturacion,fieldLabel : "ID",hidden: true},
+                    {xtype : "datefield", format: 'd/m/Y', value: new Date(), name :"fecha_pago", fieldLabel : " Fecha de Pago", flex: 1,allowBlank : false},
+                    {xtype : "numberfield", name : "numero_cheque", fieldLabel : "No. Cheque", hideTrigger: true,flex: 1,allowDecimals: false,allowBlank : false},
+                    {xtype : "numberfield", id : "monto_cheque", name :"monto_cheque",fieldLabel : "Monto del Cheque",hideTrigger: true,flex: 1,allowDecimals: true,decimalPrecision: 2, margin: '0 10 0 0',decimalSeparator: ".",allowBlank : false}
                 ],
             dockedItems : [{
                             xtype: 'toolbar',
@@ -131,58 +51,13 @@ Ext.applyIf(me, {
                             }]
                  }]
               }
-          ],
-          listeners: {
-            beforerender: {
-            fn: me.onFormBeforeRender,
-            scope: me
-            }
-           }
+          ]
           }); 
           
      	  me.callParent(arguments);
-          
-          
          
                  
-      }, //SE CONFIGURA UN LISTENER PARA INSTANCIAR EL STORE Y LUEGO CARGARLO EN EL ITEMSELECTOR
-      onFormBeforeRender: function(abstractcomponent, options) {
-          
-          var ds = Ext.create('MvcClientes.Store.dsListTipoFactura');
-          var ds2 = Ext.create('MvcClientes.Store.dsListTipoFactura2');
-          
-var jds2=""; //VARIABLE PARA ALMACENAR LA CADENA DEL STRING DEL STORE
-var c=1; //CONTADOR PARA DETERMINAR EL PRINCIPIO DEL ARREGLO
-
-//AMBOS STORE SE CARGAN DESDE PAGINAS PHP QUE DEVUELVEN UNA CADENA EN FORMATO JSON
-
-            //PRIMERO SE CARGA EL STORE PRINCIPAL
-            ds.load(function(){   
-                
-                Ext.getCmp("ISTipoFactura").bindStore(ds);
-            //LUEGO SE CARGAN LOS VALORES SELECCIONADOS A PARTIR DEL STORE ANTERIOR
-                ds2.load(function(){
-                  ds2.each(function(item){
-                      if(c!=1) { jds2+=","; }
-                    jds2+=item.get("id_tipo_facturacion");   
-                    c++;
-                  });
-
-                   Ext.getCmp("ISTipoFactura").setValue(jds2.split(","));
-                });
-            
-            });  
-            //LUEGO SE CARGAN LOS VALORES SELECCIONADOS A PARTIR DEL STORE ANTERIOR
-            ds2.load(function(){
-              ds2.each(function(item){
-                  if(c!=1) { jds2+=","; }
-                jds2+=item.get("id_tipo_facturacion");   
-                c++;
-              });
-               
-               Ext.getCmp("ISTipoFactura").setValue(jds2.split(","));
-            });
-     }		
+      }
      
      
 });	

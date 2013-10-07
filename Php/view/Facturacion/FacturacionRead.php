@@ -1,6 +1,6 @@
 <?php
   session_start();
-  error_reporting(0);
+  //error_reporting(0);
    require '../../Database_conf.php';
    mysql_select_db($db_name,$connection) or die("Error de conexion a la base de datos");
 

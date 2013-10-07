@@ -3,7 +3,7 @@ Ext.define('MvcClientes.view.AbonoBancos.PanelAbonoBancos', {
     extend: 'Ext.Panel',
 	alias:'widget.panelGrdAbonoBancos',
 	closable:   true,  
-	title   :   'AbonoBancos',
+	title   :   'Abonar a Bancos',
     layout:'fit',
 	itemId:'TabListadoAbonoBancos',
 	initComponent: function() {

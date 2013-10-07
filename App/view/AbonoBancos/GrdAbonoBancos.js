@@ -16,7 +16,7 @@ Ext.define('MvcClientes.view.AbonoBancos.GrdAbonoBancos',{
 		var me = this;
 		Ext.applyIf(me, {
 			columns : [//Definimos las Columnas del Grid y las Columnas de la Tabla
-				   {header:"ID",dataIndex:"id_AbonoBancos",width:50},
+				   {header:"ID",dataIndex:"id_abono_bancos",width:50},
                                    {header:"Nombre de la AbonoBancos", dataIndex:"nombre",flex:1} 
 			],
 			dockedItems: [
