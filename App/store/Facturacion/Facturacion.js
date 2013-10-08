@@ -42,7 +42,7 @@ writer:{
                             else 
                                 if (request.action == 'update')
                                     {
-                                       
+                                       //ESTA PARTE ES CUANDO SE HA MODIFICADO UN DATO Y SE GUARDA EL REGISTRO.
                                         var idFact=Ext.getCmp("idfacturacion").getValue();  
                                         var idtf=Ext.getCmp("id_tipo_factura").getValue(); 
                                         //PREGUNTA MOSTRAR VISTA PREVIA
@@ -57,14 +57,16 @@ writer:{
                                              {			
                                             window.open("php/reportes/factura.php?tpf="+hidelockjs(idtf)+"&idf="+hidelockjs(idFact),"Vista Previa de Factura","status=1,toolbar=1");
                                             Ext.getCmp("gridDetalle").up('form').up('panel').close();
-                                             tab = Ext.create('MvcClientes.view.Facturacion.PanelFacturacion', {});
-                                            TabPanelMain.setActiveTab(tab);
+                                               if(this.TabPanelMain.getComponent('TabListadoFacturacion'))
+                                            TabPanelMain.setActiveTab(this.TabPanelMain.getComponent('TabListadoFacturacion'));
+                                        
                                              }
                                                 if(btn == 'no')
                                              {
                                                  Ext.getCmp("gridDetalle").up('form').up('panel').close();
-                                                   tab = Ext.create('MvcClientes.view.Facturacion.PanelFacturacion', {});
-                                                  TabPanelMain.setActiveTab(tab);
+                                               if(this.TabPanelMain.getComponent('TabListadoFacturacion'))
+                                               TabPanelMain.setActiveTab(this.TabPanelMain.getComponent('TabListadoFacturacion'));
+                                        
                                                  Ext.Msg.alert('Mensaje','Registro Actualizado Exitosamente');
                                                  
                                              }
@@ -136,15 +138,17 @@ writer:{
                                              {			
                                             window.open("php/reportes/factura.php?tpf="+hidelockjs(idtf)+"&idf="+hidelockjs(idNuevaFact),"Vista Previa de Factura","status=1,toolbar=1");
                                             Ext.getCmp("gridDetalle").up('form').up('panel').close();
-                                              tab = Ext.create('MvcClientes.view.Facturacion.PanelFacturacion', {});
-                                            TabPanelMain.setActiveTab(tab);
+                                              if(this.TabPanelMain.getComponent('TabListadoFacturacion'))
+                                               TabPanelMain.setActiveTab(this.TabPanelMain.getComponent('TabListadoFacturacion'));
+                                        
                                              }
                                              if(btn == 'no')
                                              {			
                                               //SE CIERRA EL FORM DE FACTURACION
                                             Ext.getCmp("gridDetalle").up('form').up('panel').close();
-                                              tab = Ext.create('MvcClientes.view.Facturacion.PanelFacturacion', {});
-                                            TabPanelMain.setActiveTab(tab);
+                                              if(this.TabPanelMain.getComponent('TabListadoFacturacion'))
+                                               TabPanelMain.setActiveTab(this.TabPanelMain.getComponent('TabListadoFacturacion'));
+                                        
                                             Ext.Msg.alert('Mensaje','Registro Ingresado Exitosamente');
                                              }
                                          }	

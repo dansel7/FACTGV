@@ -13,9 +13,9 @@ Ext.define('MvcClientes.view.AbonoClientes.GrdAbonoClientes',{
 		Ext.applyIf(me, {
 			columns : [//Definimos las Columnas del Grid y las Columnas de la Tabla
                                    {header:"ID",dataIndex:"idfacturacion",width:50,hidden:true},
-                                   {header:"Numero Factura", dataIndex:"numero_factura",flex:1},
+                                   {header:"Numero Factura", dataIndex:"numero_factura"},
                                    {header:"Clientes", dataIndex:"nom_cliente",flex:1},
-                                   {header:"Fecha Facturacion",dataIndex : "fecha_facturacion", flex:1,renderer:Ext.util.Format.dateRenderer('d/m/Y') },
+                                   {header:"Fecha Facturacion",dataIndex : "fecha_facturacion",renderer:Ext.util.Format.dateRenderer('d/m/Y') },
                                    {header:"Saldo Pendiente ($)", dataIndex:"saldo_pendiente",flex:1}
 			],
 			dockedItems: [
@@ -26,20 +26,28 @@ Ext.define('MvcClientes.view.AbonoClientes.GrdAbonoClientes',{
 						{
 						itemId: 'add',
 						text: 'Liquidar',
-						iconCls: 'add',
+						iconCls: 'edit',
 						scope: this,
 						action:'actLiquidar'
 						//handler:this.OnEditar
-						}								
+						},"-",
+                                                {
+						itemId: 'rep',
+						text: 'Prueba',
+						iconCls: 'rep',
+						scope: this,
+						action:'Prueba'
+						//handler:this.OnEditar
+						}
 					]
 				},
 				{
 					xtype: 'pagingtoolbar',//Barra Paginadora al fondo del Grid
 					dock: 'bottom',
 					displayInfo: true,
-					store:me.store
+					store: me.store
 				}
-			],
+			]
 		
 		});
         
@@ -59,45 +67,3 @@ Ext.define('MvcClientes.view.AbonoClientes.GrdAbonoClientes',{
 	
 	
 });
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-/*{
-                    xtype: 'actioncolumn',
-					width: 60,
-					align: 'center',
-					margin:'0 0 3 3',
-					itemId:'ActColumGrdListaAbonoClientes',
-                    items: [
-                        {
-						    icon   : 'resources/imagenes/add.png',
-                            tooltip: 'Agregar',
-							width:10
-                        },
-                        {
-                            icon   : 'resources/imagenes/delete.png',
-                            tooltip: 'Borrar'
-                        }
-                    ]
-           }*/

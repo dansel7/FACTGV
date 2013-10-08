@@ -13,6 +13,8 @@ Ext.define('MvcClientes.view.AbonoClientes.CapturaEdicionAbonoClientes', {
     modal: true,
 	
     initComponent: function() {
+        
+    //Se obtienen los valores del registro seleccionado idfactura y numero_factura
 var idfacturacion=Ext.getCmp("gridAbonoClientes").getSelectionModel().getSelection()[0].data.idfacturacion;
 var num_fact=Ext.getCmp("gridAbonoClientes").getSelectionModel().getSelection()[0].data.numero_factura;
 var me = this;

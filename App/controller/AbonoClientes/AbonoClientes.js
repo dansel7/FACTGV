@@ -15,21 +15,17 @@ Ext.define('MvcClientes.controller.AbonoClientes.AbonoClientes',{
 	init : function() {
 		var me = this;
 		me.control({
-		    'gridAbonoClientes dataview': { //Usando Ext.Component.Query,aca hacemos referencia a la vista del Grid
-                            itemdblclick: this.Liquidar
-			},
+                        'gridAbonoClientes dataview': { //Usando Ext.Component.Query,aca hacemos referencia a la vista del Grid
+                                 itemdblclick: this.Liquidar
+                           },
 			'gridAbonoClientes button[action=actLiquidar]'://Usando Ext.Component.Query
 			   {
 				 click:this.Liquidar
 			   },
                          'FormAddEdicionAbonoClientes button[action=actGuardar]'://Usando Ext.Component.Query
 			   {
-				 
 				 click:this.GuardarLiquidacion
 			   }
-			
-			
-			   
 				  
 		});
 	},
@@ -38,7 +34,7 @@ Ext.define('MvcClientes.controller.AbonoClientes.AbonoClientes',{
             records="null";
 	   /* records = this.getGridAbonoClientes().getSelectionModel().getSelection();
 	    if(records.length > 0){*/
-		     var FormAddEditarAbonoClientes= Ext.widget('FormAddEdicionAbonoClientes');
+	   var FormAddEditarAbonoClientes= Ext.widget('FormAddEdicionAbonoClientes');
 		    /* var EditForm=FormAddEditarAbonoClientes.down('form');	
 		     var record=records[0];
 		     EditForm.loadRecord(record);

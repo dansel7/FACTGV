@@ -14,7 +14,7 @@
 			},*/
             reader: {
                 type: 'json',
-				idProperty: 'id_abono_clientes',
+				idProperty: 'idfacturacion',
 				successProperty	: function()
 				   {
                       // Alguna Funcion o mensaje que quieras agregar cuando la operacion es exitosa
@@ -28,7 +28,7 @@
                writeAllFields: true,//decide si se manda al servidor solamente los campos modificados o todo  
 			   type: 'json',
 			   root: 'data'		 		
-			},
+		   },
            //Mensajes Extras si deseas agregarlos
 			afterRequest: function (request, success)
 			{

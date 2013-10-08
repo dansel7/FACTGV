@@ -83,7 +83,7 @@ if(typeof(records) != "undefined" && typeof(records) != "string"){
                 sum+=record.data.venta_gravada;
                 
               });
-              Ext.getCmp("iva").setValue(sum*0.13);
+              Ext.getCmp("iva").setValue(sum * 0.13);
               
               //CALCULOS SI ES GRAN CONTRIBUYENTE
               if(Ext.getCmp("idmaestroClientes").valueModels[0].data.gran_contribuyente=="Si"){
@@ -102,7 +102,7 @@ if(typeof(records) != "undefined" && typeof(records) != "string"){
             items: [
                     {
                         xtype: 'form',
-                        height: 500,
+                        height: 580,
                         layout: {
                             type: 'auto'
                         },bodyPadding: 25,
@@ -141,7 +141,8 @@ if(typeof(records) != "undefined" && typeof(records) != "string"){
                             }],
                             store: factura_detalle,
                             columns: [
-                                {header: 'idDetalle',  dataIndex: 'idDetalle', hidden: true, editor: {
+                                {header: 'idDetalle',  dataIndex: 'idDetalle', hidden: true, 
+                                    editor: {
                                         xtype: 'textfield',name:'idDetalle'
                                 }},
                                 {header: 'Cant.',  dataIndex: 'cantidad', editor: {
@@ -162,17 +163,24 @@ if(typeof(records) != "undefined" && typeof(records) != "string"){
                                 }, summaryRenderer: function(value, summaryData, dataIndex) {
                                         return Math.round(value*100)/100;
                                         } },
-                                {header: 'Venta No sujeta', dataIndex: 'venta_nosujeta', editor: {
+                                {header: 'Venta No sujeta', dataIndex: 'venta_nosujeta',summaryType: 'sum',
+                                    editor: {
                                         xtype: 'numberfield',allowDecimals: true, name:'venta_nosujeta',
                                         decimalPrecision: 2 ,  hideTrigger: true,
                                         allowBlank: true, decimalSeparator: "." 
-                                }},
-                                {header: 'Valor Exenta', dataIndex: 'venta_exenta', editor: {
+                                }, summaryRenderer: function(value, summaryData, dataIndex) {
+                                        return Math.round(value*100)/100;
+                                        } },
+                                {header: 'Valor Exenta', dataIndex: 'venta_exenta', summaryType: 'sum',
+                                    editor: {
                                         xtype: 'numberfield',allowDecimals: true, name:'venta_exenta',
                                         decimalPrecision: 2 ,  hideTrigger: true,
                                         allowBlank: true, decimalSeparator: "." 
-                                }},
-                                {header: 'Venta Gravada', dataIndex: 'venta_gravada',summaryType: 'sum', editor: {
+                                }, summaryRenderer: function(value, summaryData, dataIndex) {
+                                        return Math.round(value*100)/100;
+                                        } },
+                                {header: 'Venta Gravada', dataIndex: 'venta_gravada',summaryType: 'sum', 
+                                    editor: {
                                         xtype: 'numberfield',allowDecimals: true, name:'venta_gravada',
                                         decimalPrecision: 2 ,  hideTrigger: true,
                                         allowBlank: true, decimalSeparator: "."

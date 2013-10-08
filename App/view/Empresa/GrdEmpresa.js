@@ -51,7 +51,7 @@ Ext.define('MvcClientes.view.Empresa.GrdEmpresa',{
 					displayInfo: true,
 					store:me.store
 				}
-			],
+			]
 		
 		});
         
