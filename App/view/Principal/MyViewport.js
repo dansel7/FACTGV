@@ -4,6 +4,7 @@ Ext.define('MvcClientes.view.Principal.MyViewport',{
     width: 468,
     height: 549,
     initComponent: function() {
+        
 	var me=this;
         me.items = [
             {
@@ -98,76 +99,10 @@ Ext.define('MvcClientes.view.Principal.MyViewport',{
 
                         }
                     },
-                    {   xtype: 'treepanel',
-                        title: 'Mantenimientos',
-                        height: 212,
-			iconCls:'catalogos',
-                        forceLayout: true,
-                        collapsed: true,
-                        collapsible: true,
-                        rootVisible: false,
-                        border: false,
-                        autoWidth: true,
-                        listeners:{//Listeners apuntando a cada node
-                            itemclick:function(view, record, item, index, e)
-                                        {
-                 //DEPENDIENDO QUE OPCION SE QUIERE SE DEBE DE DEFINIR EL INDICE DE LA OPCION
-                                        
-                                       if (index==0)
-                                       {
-                                          addTabListadoClientes();
-                                       }
-                                       if (index==1)
-                                       {
-                                          addTabListadoUsuarios();
-                                       }
-                                       if (index==2)
-                                       {
-                                          addTabListadoEmpresa();
-                                       }
-
-                                        }
-                                 },
-                        root: {
-                            text: '',
-                            isTarget: false,
-                            expanded: true,
-                            checked: false,
-                            allowDrag: false,
-                            allowDrop: false,
-                            editable: false,
-                            qtip: 1,
-                            children: [
-                                {
-                                    text: 'Clientes',
-                                    leaf: true,
-                                    iconCls:'icon-cliente'
-                                    
-                                },
-                                {
-                                    text: 'Usuarios',
-                                  
-                                        leaf: true,
-                                    iconCls:'icon-users'
-                                        
-                                    
-                                },
-                                {
-                                    text: 'Empresas',
-                            
-                                        leaf: true,
-                                    iconCls:'icon-empresa'
-                                }
-                            ]	
-                        },
-                        loader: {
-
-                        }
-                    },
                     {
                         xtype: 'treepanel',
                         title: 'Reportes',
-						iconCls:'reportes',
+			iconCls:'reportes',
                         height: 212,
                         forceLayout: true,
                         collapsed: true,
@@ -221,6 +156,74 @@ Ext.define('MvcClientes.view.Principal.MyViewport',{
                         loader: {
 
                         }
+                    },
+                    {   xtype: 'treepanel',
+                        title: 'Mantenimientos',
+                        id: 'panelMantto',
+                        height: 212,
+			iconCls:'catalogos',
+                        forceLayout: true,
+                        collapsed: false,
+                        collapsible: true,
+                        rootVisible: false,
+                        border: false,
+                        autoWidth: true,
+                        hidden:true,
+                        listeners:{//Listeners apuntando a cada node
+                            itemclick:function(view, record, item, index, e)
+                                        {
+                 //DEPENDIENDO QUE OPCION SE QUIERE SE DEBE DE DEFINIR EL INDICE DE LA OPCION
+                                        
+                                       if (index==0)
+                                       {
+                                          addTabListadoClientes();
+                                       }
+                                       if (index==1)
+                                       {
+                                          addTabListadoUsuarios();
+                                       }
+                                       if (index==2)
+                                       {
+                                          addTabListadoEmpresa();
+                                       }
+
+                                        }
+                                 },
+                        root: {
+                            text: '',
+                            isTarget: false,
+                            expanded: true,
+                            checked: false,
+                            allowDrag: false,
+                            allowDrop: false,
+                            editable: false,
+                            qtip: 1,
+                            children: [
+                                {
+                                    text: 'Clientes',
+                                    leaf: true,
+                                    iconCls:'icon-cliente'
+                                    
+                                },
+                                {
+                                    text: 'Usuarios',
+                                  
+                                        leaf: true,
+                                    iconCls:'icon-users'
+                                        
+                                    
+                                },
+                                {
+                                    text: 'Empresas',
+                            
+                                        leaf: true,
+                                    iconCls:'icon-empresa'
+                                }
+                            ]	
+                        },
+                        loader: {
+                                
+                        }
                     }
                 ]
 			
@@ -241,10 +244,21 @@ Ext.define('MvcClientes.view.Principal.MyViewport',{
 			   
 		 TabPanelMain
 		];
-        me.callParent();
-	
- ////Funciones ////////////////////////////////	
-        				 
+                
+   ///----OBTIENE PERFIL DE USUARIO PARA MOSTRAR MENUS----///
+        Ext.Ajax.request({
+          url: 'Php/controller/Login/Perfil_Benutzer.php',
+          success: function(response) {
+            outHTML = response.responseText;
+            if(outHTML==1){
+           Ext.getCmp("panelMantto").show();     
+            }
+
+          }
+        })
+            //------------------FIN------------------//
+             me.callParent();	
+ ////Funci			 
 	 function addTabListadoClientes(){ 
       	 var tab=this.TabPanelMain.getComponent('TabListadoClientes');
 		   if(!tab){ //si no existe lo creamos
@@ -322,7 +336,7 @@ Ext.define('MvcClientes.view.Principal.MyViewport',{
 			    this.TabPanelMain.setActiveTab(tab); //Se activa el Tab Clickeado 
        } 
         
-		
+	
     }
 		
  });

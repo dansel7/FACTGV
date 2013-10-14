@@ -30,14 +30,6 @@ Ext.define('MvcClientes.view.AbonoClientes.GrdAbonoClientes',{
 						scope: this,
 						action:'actLiquidar'
 						//handler:this.OnEditar
-						},"-",
-                                                {
-						itemId: 'rep',
-						text: 'Prueba',
-						iconCls: 'rep',
-						scope: this,
-						action:'Prueba'
-						//handler:this.OnEditar
 						}
 					]
 				},

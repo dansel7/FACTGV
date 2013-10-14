@@ -12,11 +12,12 @@
                         f.numero_factura,                   
                         mc.nom_cliente,
                         if(DATE_FORMAT(f.fecha_facturacion, '%d/%m/%Y') = '00/00/0000', null, DATE_FORMAT(f.fecha_facturacion, '%d/%m/%Y')) fecha_facturacion,
-			(f.venta_total - ifNull(ac.monto_cheque,0)) saldo_pendiente
-                        FROM facturacion f 
+			f.venta_total-iFNull(sum(monto_cheque),0) saldo_pendiente
+                        from abono_clientes ac right join facturacion f on ac.idfacturacion=f.idfacturacion 
                         inner join maestroclientes mc on f.idmaestroClientes=mc.idmaestroClientes 
-                        left join (select sum(monto_cheque) monto_cheque,idfacturacion from abono_clientes group by idfacturacion) ac on f.idfacturacion=ac.idFacturacion
-                        WHERE id_empresa=".$idempresa." and idbenutzer=".$_SESSION["idbenutzer"]." and (f.venta_total - ifNull(ac.monto_cheque,0))>0";
+                        WHERE id_empresa=".$idempresa." and idbenutzer=".$_SESSION["idbenutzer"]."
+                        GROUP BY f.idfacturacion
+                        HAVING saldo_pendiente>0";
     	
                 $result = mysql_query($sql,$connection) or die('La consulta fall&oacute;: '.mysql_error());		
 		//Formamos el Array de Datos, si ejecutamos este archivo PHP veremos el array formado

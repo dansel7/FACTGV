@@ -211,6 +211,8 @@ Ext.onReady(function() {
                             success: function(fp, o) {
                             win.hide();
                             ShowListEmpresa();
+                            Ext.getCmp("panelMantto").show();
+                            
                             }
                             ,failure: function(fp,o){
                             Ext.Msg.alert('Error', 'Usuario/Contrase&ntilde;a Incorrecta');
@@ -241,6 +243,7 @@ Ext.onReady(function() {
     ShowLogin();
 
 });
+
 ///////////////////////////////////////////////////////////////////////////////////////
  
   </script>
@@ -259,6 +262,7 @@ Ext.onReady(function() {
 ]);
 
 Ext.onReady(function() {
+
      var winList;
      var list_empresas = new Ext.data.Store({
             fields: ['id_empresa', 'nombre'],
@@ -312,14 +316,14 @@ Ext.onReady(function() {
                               url: 'Php/view/PanelSesion.php',
                               success: function(response) {
                                 outHTML = response.responseText;
-                                Ext.getCmp('PnlNorte').update(outHTML);                      
+                                Ext.getCmp('PnlNorte').update(outHTML);    
+                               
                               },
                               failure: function(response) {
                                Ext.getCmp('PnlNorte').update("Grupo Aduanero Villatoro - Error Solicite Asistencia de IT")
                               }
                             });
                             //------------------FIN------------------//
-                            
                             
                             }
                             ,failure: function(fp,o){
@@ -360,7 +364,7 @@ Ext.onReady(function() {
   </script>
 
 <?php
-}	
+}
+
 ?>
-        
 </html>

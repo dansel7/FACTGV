@@ -16,8 +16,11 @@ Ext.define('MvcClientes.view.AbonoBancos.GrdAbonoBancos',{
 		var me = this;
 		Ext.applyIf(me, {
 			columns : [//Definimos las Columnas del Grid y las Columnas de la Tabla
-				   {header:"ID",dataIndex:"id_abono_bancos",width:50},
-                                   {header:"Nombre de la AbonoBancos", dataIndex:"nombre",flex:1} 
+				  {header:"ID",dataIndex:"idfacturacion",width:50,hidden:true},
+                                   {header:"Numero Factura", dataIndex:"numero_factura"},
+                                   {header:"Clientes", dataIndex:"nom_cliente",flex:1},
+                                   {header:"Fecha Facturacion",dataIndex : "fecha_facturacion",renderer:Ext.util.Format.dateRenderer('d/m/Y') },
+                                   {header:"Saldo Pendiente ($)", dataIndex:"saldo_pendiente",flex:1}
 			],
 			dockedItems: [
 					{
