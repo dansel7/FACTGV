@@ -211,7 +211,21 @@ Ext.onReady(function() {
                             success: function(fp, o) {
                             win.hide();
                             ShowListEmpresa();
-                            Ext.getCmp("panelMantto").show();
+                            
+                        ///----OBTIENE PERFIL DE USUARIO PARA MOSTRAR MENUS----///
+                        Ext.Ajax.request({
+                          url: 'Php/controller/Login/Perfil_Benutzer.php',
+                          success: function(response) {
+                            outHTML = response.responseText;
+                            
+                            if(outHTML==1){
+
+                           Ext.getCmp("panelMantto").show();     
+                            }
+
+                          }
+                        });
+                            //------------------FIN------------------//
                             
                             }
                             ,failure: function(fp,o){

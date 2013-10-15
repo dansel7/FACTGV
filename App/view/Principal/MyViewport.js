@@ -250,12 +250,14 @@ Ext.define('MvcClientes.view.Principal.MyViewport',{
           url: 'Php/controller/Login/Perfil_Benutzer.php',
           success: function(response) {
             outHTML = response.responseText;
+            
             if(outHTML==1){
+                
            Ext.getCmp("panelMantto").show();     
             }
 
           }
-        })
+        });
             //------------------FIN------------------//
              me.callParent();	
  ////Funci			 
