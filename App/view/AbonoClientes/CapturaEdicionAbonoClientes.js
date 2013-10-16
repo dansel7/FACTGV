@@ -21,9 +21,10 @@ Ext.define('MvcClientes.view.AbonoClientes.CapturaEdicionAbonoClientes', {
         data: [['Transferencia'],['Cheque']]
     });
         
-    //Se obtienen los valores del registro seleccionado idfactura y numero_factura
+//Se obtienen los valores del registro seleccionado idfactura y numero_factura//
 var idfacturacion=Ext.getCmp("gridAbonoClientes").getSelectionModel().getSelection()[0].data.idfacturacion;
 var num_fact=Ext.getCmp("gridAbonoClientes").getSelectionModel().getSelection()[0].data.numero_factura;
+//----------------FIN------------------/
 var me = this;
 Ext.applyIf(me, {
     items: [
@@ -37,7 +38,7 @@ Ext.applyIf(me, {
                 items: 
                 [   {xtype: 'displayfield',name: 'displayfield1',id:'empDetails1',value: 'Liquidacion de Factura #'+ num_fact},
                     {xtype: 'displayfield',name: 'displayfield1',id:'empDetails2',value: '' },
-                    {xtype : "combobox", fieldLabel: "Tipo de Liquidacion",queryMode: 'local', store: tipo, displayField: 'tipo',valueField: 'tipo',name:"tipo_pago", width: 300,allowBlank : false,
+                    {xtype : "combobox", name:"tipo_pago", fieldLabel: "Tipo de Liquidacion",queryMode: 'local', store: tipo, displayField: 'tipo',valueField: 'tipo', width: 300,allowBlank : false,
                      listeners:{
                         // public event change - when selection1 dropdown is changed
                         change: function(field, newValue, oldValue)
@@ -45,16 +46,22 @@ Ext.applyIf(me, {
                             if(newValue == "Cheque")
                             {
                                Ext.getCmp("numero_cheque").show(); 
-                                Ext.getCmp("monto_cheque").show();
-                                 Ext.getCmp("numero_remesa").hide(); 
-                                Ext.getCmp("monto_remesa").hide();
+                               Ext.getCmp("monto_cheque").show();
+                               
+                               Ext.getCmp("numero_remesa").hide();
+                               Ext.getCmp("numero_remesa").setValue("0"); 
+                               Ext.getCmp("monto_remesa").hide();
+                               Ext.getCmp("monto_remesa").setValue("0");
                             }
-                            if(newValue == "Transferencia")
+                            else if(newValue == "Transferencia")
                             {
                                Ext.getCmp("numero_remesa").show(); 
-                                Ext.getCmp("monto_remesa").show();
-                                Ext.getCmp("numero_cheque").hide(); 
-                                Ext.getCmp("monto_cheque").hide();
+                               Ext.getCmp("monto_remesa").show();
+                               
+                               Ext.getCmp("numero_cheque").hide(); 
+                               Ext.getCmp("numero_cheque").setValue("0"); 
+                               Ext.getCmp("monto_cheque").hide();
+                               Ext.getCmp("monto_cheque").setValue("0"); 
                             }
                         }}
                     },

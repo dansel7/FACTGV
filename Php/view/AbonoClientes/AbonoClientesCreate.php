@@ -13,13 +13,39 @@ mysql_select_db($db_name,$connection) or die("Error de conexion a la base de dat
 	$monto_cheque=$data->monto_cheque;
         $idFacturacion=$data->idfacturacion;
         
-                 $SqlInsert ="INSERT INTO abono_clientes
-                             SET
-                            `fecha_pago`='$fecha_pago',
-                            `numero_cheque`='$numero_cheque',
-                            `monto_cheque`=$monto_cheque,
-                            `idfacturacion`=$idFacturacion";
-			$rs = mysql_query($SqlInsert);
+        $tipo_pago=$data->tipo_pago;
+        
+        if($tipo_pago=="Cheque"){
+        $SqlInsert ="INSERT INTO abono_clientes
+                     SET
+                    `fecha_pago`='$fecha_pago',
+                    `numero_cheque`='$numero_cheque',
+                    `monto_cheque`=$monto_cheque,
+                    `idfacturacion`=$idFacturacion";  
+                    $rs = mysql_query($SqlInsert);
+                    
+        }else if($tipo_pago=="Transferencia"){
+            
+            $sql_clientes ="INSERT INTO abono_clientes
+                     SET
+                    `fecha_pago`='$fecha_pago',
+                    `numero_cheque`='$numero_cheque',
+                    `monto_cheque`=$monto_cheque,
+                    `idfacturacion`=$idFacturacion";  
+                    $rs = mysql_query($sql_clientes);
+                    $id_abono_clientes=mysql_insert_id();
+                    //FALTA TERMINAR SQL
+            $sql_bancos ="INSERT INTO abono_bancos
+                     SET
+                    `fecha_remesa`='$fecha_pago',
+                    `numero_cheque`='$numero_cheque',
+                    `monto_cheque`=$monto_cheque,
+                    `id_abono_clientes`=$id_abono_clientes";  
+                    $rs = mysql_query($sql_bancos);
+        }
+        
+        
+                
 
 				echo json_encode(array(
 					"success" 	=> mysql_errno() == 0,
