@@ -19,7 +19,20 @@ Ext.define('MvcClientes.view.AbonoClientes.CapturaEdicionAbonoClientes', {
        var tipo= new Ext.data.SimpleStore({
         fields: ['tipo'],
         data: [['Transferencia'],['Cheque']]
-    });
+       });
+       //list
+       var list_cuentas = new Ext.data.Store({
+            fields: ['id_cuenta', 'cuenta'],
+            proxy: {
+                type: 'ajax',
+                url : 'Php/store/list_cuentas.php',
+                reader: {
+                    type: 'json'
+                }
+            },
+            autoLoad: true
+        });
+
         
 //Se obtienen los valores del registro seleccionado idfactura y numero_factura//
 var idfacturacion=Ext.getCmp("gridAbonoClientes").getSelectionModel().getSelection()[0].data.idfacturacion;
@@ -46,24 +59,33 @@ Ext.applyIf(me, {
                             if(newValue == "Cheque")
                             {
                                Ext.getCmp("numero_cheque").show(); 
+                               Ext.getCmp("numero_cheque").setValue(""); 
                                Ext.getCmp("monto_cheque").show();
+                               Ext.getCmp("monto_cheque").setValue("");
                                
                                Ext.getCmp("numero_remesa").hide();
                                Ext.getCmp("numero_remesa").setValue("0"); 
                                Ext.getCmp("monto_remesa").hide();
                                Ext.getCmp("monto_remesa").setValue("0");
+                               Ext.getCmp("id_cuenta").hide();
+                               Ext.getCmp("id_cuenta").setValue("-1");
                             }
                             else if(newValue == "Transferencia")
                             {
                                Ext.getCmp("numero_remesa").show(); 
+                               Ext.getCmp("numero_remesa").setValue(""); 
                                Ext.getCmp("monto_remesa").show();
-                               
+                               Ext.getCmp("monto_remesa").setValue("");
+                               Ext.getCmp("id_cuenta").show();
+                               Ext.getCmp("id_cuenta").setValue("");
+                                                              
                                Ext.getCmp("numero_cheque").hide(); 
                                Ext.getCmp("numero_cheque").setValue("0"); 
                                Ext.getCmp("monto_cheque").hide();
                                Ext.getCmp("monto_cheque").setValue("0"); 
                             }
-                        }}
+                        }
+                     }
                     },
                     {xtype : "textfield",id:"id_abono_clientes", name : "id_abono_clientes", fieldLabel : "ID",hidden: true},
                     {xtype : "textfield",id:"idfacturacion", name : "idfacturacion", value: idfacturacion,fieldLabel : "ID",hidden: true},
@@ -75,8 +97,10 @@ Ext.applyIf(me, {
                     {xtype : "numberfield", id : "monto_cheque", name :"monto_cheque",fieldLabel : "Monto del Cheque",hideTrigger: true,flex: 1,allowDecimals: true,decimalPrecision: 2, margin: '0 10 0 0',decimalSeparator: ".",allowBlank : false,hidden: true},
                     
                     //CAMPOS MOSTRADOS SI ES TRANSFERENCIA
-                    {xtype : "numberfield",id: "numero_remesa" , name : "numero_remesa", fieldLabel : "No. Remesa", hideTrigger: true,flex: 1,allowDecimals: false,allowBlank : false,hidden: true},
-                    {xtype : "numberfield", id : "monto_remesa", name :"monto_remesa",fieldLabel : "Monto de Remesa",hideTrigger: true,flex: 1,allowDecimals: true,decimalPrecision: 2, margin: '0 10 0 0',decimalSeparator: ".",allowBlank : false,hidden: true}
+                    {xtype : "numberfield",id: "numero_remesa" , name : "numero_remesa", fieldLabel : "No. Transferencia", hideTrigger: true,flex: 1,allowDecimals: false,allowBlank : false,hidden: true},
+                    {xtype : "numberfield", id : "monto_remesa", name :"monto_remesa",fieldLabel : "Monto de Remesa",hideTrigger: true,flex: 1,allowDecimals: true,decimalPrecision: 2, margin: '0 10 0 0',decimalSeparator: ".",allowBlank : false,hidden: true},
+                    {xtype : "combobox", id : "id_cuenta",name:"id_cuenta", fieldLabel: "Cuenta",queryMode: 'local', store: list_cuentas, displayField: 'cuenta',valueField: 'id_cuenta', width: 300,allowBlank : false,hidden: true}
+                    
                     
                 ],
             dockedItems : [{
