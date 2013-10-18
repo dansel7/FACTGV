@@ -6,18 +6,20 @@
 
 		$arr = array();
                 $idempresa=isset($_SESSION["idEmpresa"])? $_SESSION["idEmpresa"]:"-1";
-		// Llamamos a la Tabla y sus datos 
-		$sql = "SELECT
-                        f.idfacturacion,
-                        f.numero_factura,                   
+
+                
+            $sql = "SELECT
+                        f.numero_factura, 
+			ac.numero_cheque,
                         mc.nom_cliente,
                         if(DATE_FORMAT(f.fecha_facturacion, '%d/%m/%Y') = '00/00/0000', null, DATE_FORMAT(f.fecha_facturacion, '%d/%m/%Y')) fecha_facturacion,
-			f.venta_total-iFNull(sum(monto_cheque),0) saldo_pendiente
-                        from abono_clientes ac right join facturacion f on ac.idfacturacion=f.idfacturacion 
-                        inner join maestroclientes mc on f.idmaestroClientes=mc.idmaestroClientes 
-                        WHERE id_empresa=".$idempresa." and idbenutzer=".$_SESSION["idbenutzer"]."
-                        GROUP BY f.idfacturacion
-                        HAVING saldo_pendiente<=0";
+			if(DATE_FORMAT(ac.fecha_pago, '%d/%m/%Y') = '00/00/0000', null, DATE_FORMAT(ac.fecha_pago, '%d/%m/%Y')) fecha_pago
+                    FROM db_facturacion.abono_clientes  ac
+                    left join  abono_bancos ab on ac.id_abono_clientes=ab.id_abono_clientes 
+                    inner join facturacion f on f.idfacturacion=ac.idfacturacion
+                    inner join maestroclientes mc on mc.idmaestroclientes=f.idmaestroclientes
+                    where isnull(ab.id_abono_clientes) and id_empresa=".$idempresa." and idbenutzer=".$_SESSION["idbenutzer"]." and numero_cheque!=0";
+                
 //REVISAR LA LOGICA PARA PODER ABONAR SI SOLO ES A TRAVES DE BANCOS SIN CHEQUES
                 
                 $result = mysql_query($sql,$connection) or die('La consulta fall&oacute;: '.mysql_error());		

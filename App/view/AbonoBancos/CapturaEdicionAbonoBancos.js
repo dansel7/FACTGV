@@ -7,112 +7,58 @@ Ext.require([
 Ext.define('MvcClientes.view.AbonoBancos.CapturaEdicionAbonoBancos', {
     extend: 'Ext.window.Window',
 	alias:'widget.FormAddEdicionAbonoBancos',
-    height: 400,
-    width: 400,
+  height: 200,
+    width: 320,
     layout: {
         type: 'fit'
     },
 	autoShow: true,
     closable: false,
-    title: 'Captura/Edicion AbonoBancos',
+    title: 'Remesa - Abono a Bancos',
     modal: true,
 	
+   	
     initComponent: function() {
         
+       //STORE
+
+       var list_cuentas = new Ext.data.Store({
+            fields: ['id_cuenta', 'cuenta'],
+            proxy: {
+                type: 'ajax',
+                url : 'Php/store/list_cuentas.php',
+                reader: {
+                    type: 'json'
+                }
+            },
+            autoLoad: true
+        });
+
         
-//STORE DE LISTADO DE TIPOS DE FACTURA QUE ESTAN DISPONIBLES
-Ext.define('MvcClientes.Store.dsListTipoFactura', {
-    extend: 'Ext.data.Store', 
-    root:"data",
-    fields: ['id_tipo_facturacion', 'tipo'],
-    proxy: {
-        type: 'ajax',
-        url : 'Php/store/list_tipo_factura.php?opx=tp1f1'
-    },
-    autoLoad: false
-});  
+//Se obtienen los valores del registro seleccionado idfactura y numero_factura//
 
+var num_cheque=Ext.getCmp("gridAbonoBancos").getSelectionModel().getSelection()[0].data.numero_cheque;
 
-//Verificar que se envian datos para editar
-var idemp;
-if(typeof(records) != "undefined" && typeof(records) != "string"){
- idemp=records[0].data.id_AbonoBancos;   
-}else{idemp='';}
-
-//STORE DE LISTADO DE TIPOS DE FACTURA QUE ESTAN SELECCIONADOS
-Ext.define('MvcClientes.Store.dsListTipoFactura2', {
-    extend: 'Ext.data.Store', 
-    fields: ['id_tipo_facturacion'],
-    proxy: {
-        type: 'ajax',
-        url : 'Php/store/list_tipo_factura.php?opx=f2tp2&id=' + idemp
-    },
-    autoLoad: false
-});  
-        
-          
-        //SE CREA ANTES PARA QUE NO CARGUE NULL
-        var ds = Ext.create('MvcClientes.Store.dsListTipoFactura');
+//----------------FIN------------------/
 var me = this;
 Ext.applyIf(me, {
     items: [
             {
                 xtype: 'form',
-                height: 50,
+                height: 196,
                 name: 'form',
                 layout: {
                     type: 'auto'
                 },
                 items: 
-                [   {xtype: 'displayfield',name: 'displayfield1',id:'empDetails',value: ''},
-                    {xtype: 'displayfield',name: 'displayfield1',id:'empDetails',value: ''},
-                    {xtype : "textfield",id:"id_AbonoBancos", name : "id_AbonoBancos", fieldLabel : "ID",hidden: true},
-                    {xtype : "textfield", name : "nombre", fieldLabel : "Nombre de AbonoBancos", width: 350},
-                    {xtype: 'itemselector', id:"ISTipoFactura",
-                     store:ds, name: 'tipo_factura',
-                     width:350 ,anchor: '30%',
-                     fieldLabel: 'Seleccion',displayField: 'tipo',
-                     valueField: 'id_tipo_facturacion',
-                     buttons: ['add', 'remove'],
-                     buttonsText: {add: "Agregar",remove: "Remover"},
-                     allowBlank: false, msgTarget: 'side',
-                        onAddBtnClick: function() {
-                        //SOBRECARGA FUNCION ORIGINAL//
-                        var me = this,
-                        fromList = me.fromField.boundList,
-                        selected = this.getSelections(fromList);
-                        fromList.getStore().remove(selected);
-                        this.toField.boundList.getStore().add(selected);
-                        ////////////////////////////////////////////////
-
-                        //////INICIO FUNCION AGREGAR//////////
-                        Ext.Ajax.request({
-                        url: 'Php/view/AbonoBancos/AbonoBancos_TipoFact/Op_Emp_TpF.php?opx=addEmpTpF&idEmp=' + Ext.getCmp("id_AbonoBancos").getValue() + '&idTpFact=' + selected[0].data.id_tipo_facturacion,
-                        success: function(response) {           
-                        }
-                        });
-
-                        //////////////////////////////////////
-                        },
-                        onRemoveBtnClick: function() {
-                            //SOBRECARGA FUNCION ORIGINAL//                               }
-                        var me = this,
-                        toList = me.toField.boundList,
-                        selected = this.getSelections(toList);
-                        toList.getStore().remove(selected);
-                        this.fromField.boundList.getStore().add(selected);
-                        ////////////////////////////////////////////////
-
-                        //////INICIO FUNCION REMOVER/////
-                        Ext.Ajax.request({
-                        url: 'Php/view/AbonoBancos/AbonoBancos_TipoFact/Op_Emp_TpF.php?opx=rmvEmpTpF&idEmp=' + Ext.getCmp("id_AbonoBancos").getValue()  + '&idTpFact=' + selected[0].data.id_tipo_facturacion,
-                        success: function(response) {           
-                        }
-                        });
-                        //////////////////////////////////////
-                        }
-                     
-                    }
+                [   {xtype: 'displayfield',name: 'displayfield1',id:'empDetails1',value: 'Abono a banco el cheque #'+ num_cheque},
+                    {xtype: 'displayfield',name: 'displayfield1',id:'empDetails2',value: '' },                   
+                    {xtype : "textfield",id:"id_abono_clientes", name : "id_abono_clientes", fieldLabel : "ID",hidden: true},
+                    {xtype : "datefield",format: 'd/m/Y', value: new Date(), name :"fecha_remesa", fieldLabel : " Fecha de Remesa", flex: 1,allowBlank : false},
+                    {xtype : "numberfield",id: "numero_remesa" , name : "numero_remesa", fieldLabel : "No. Remesa", hideTrigger: true,flex: 1,allowDecimals: false,allowBlank : false},
+                    {xtype : "combobox", id : "id_cuenta",name:"id_cuenta", fieldLabel: "Cuenta",queryMode: 'local', store: list_cuentas, displayField: 'cuenta',valueField: 'id_cuenta', width: 300,allowBlank : false}
+                    
+                    
                 ],
             dockedItems : [{
                             xtype: 'toolbar',
@@ -131,58 +77,13 @@ Ext.applyIf(me, {
                             }]
                  }]
               }
-          ],
-          listeners: {
-            beforerender: {
-            fn: me.onFormBeforeRender,
-            scope: me
-            }
-           }
+          ]
           }); 
           
      	  me.callParent(arguments);
-          
-          
          
                  
-      }, //SE CONFIGURA UN LISTENER PARA INSTANCIAR EL STORE Y LUEGO CARGARLO EN EL ITEMSELECTOR
-      onFormBeforeRender: function(abstractcomponent, options) {
-          
-          var ds = Ext.create('MvcClientes.Store.dsListTipoFactura');
-          var ds2 = Ext.create('MvcClientes.Store.dsListTipoFactura2');
-          
-var jds2=""; //VARIABLE PARA ALMACENAR LA CADENA DEL STRING DEL STORE
-var c=1; //CONTADOR PARA DETERMINAR EL PRINCIPIO DEL ARREGLO
-
-//AMBOS STORE SE CARGAN DESDE PAGINAS PHP QUE DEVUELVEN UNA CADENA EN FORMATO JSON
-
-            //PRIMERO SE CARGA EL STORE PRINCIPAL
-            ds.load(function(){   
-                
-                Ext.getCmp("ISTipoFactura").bindStore(ds);
-            //LUEGO SE CARGAN LOS VALORES SELECCIONADOS A PARTIR DEL STORE ANTERIOR
-                ds2.load(function(){
-                  ds2.each(function(item){
-                      if(c!=1) { jds2+=","; }
-                    jds2+=item.get("id_tipo_facturacion");   
-                    c++;
-                  });
-
-                   Ext.getCmp("ISTipoFactura").setValue(jds2.split(","));
-                });
-            
-            });  
-            //LUEGO SE CARGAN LOS VALORES SELECCIONADOS A PARTIR DEL STORE ANTERIOR
-            ds2.load(function(){
-              ds2.each(function(item){
-                  if(c!=1) { jds2+=","; }
-                jds2+=item.get("id_tipo_facturacion");   
-                c++;
-              });
-               
-               Ext.getCmp("ISTipoFactura").setValue(jds2.split(","));
-            });
-     }		
+      }
      
      
 });	

@@ -45,7 +45,6 @@ mysql_select_db($db_name,$connection) or die("Error de conexion a la base de dat
                      SET
                     `fecha_remesa`='$fecha_pago',
                     `numero_remesa`='$numero_remesa',
-                    `monto_remesa`=$monto_remesa,
                     `id_abono_clientes`=$id_abono_clientes,
                     `id_cuenta`=$id_cuenta";  
                     $rs = mysql_query($sql_bancos);

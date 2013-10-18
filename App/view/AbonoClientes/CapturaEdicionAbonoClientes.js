@@ -9,7 +9,7 @@ Ext.define('MvcClientes.view.AbonoClientes.CapturaEdicionAbonoClientes', {
     },
     autoShow: true,
     closable: false,
-    title: 'Abono a Clientes',
+    title: 'Liquidacion de Facturas - Abono a Clientes',
     modal: true,
 	
     initComponent: function() {

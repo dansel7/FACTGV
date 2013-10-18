@@ -7,6 +7,7 @@ Ext.define('MvcClientes.view.AbonoBancos.GrdAbonoBancos',{
 	alias:'widget.gridAbonoBancos',
 	store: 'AbonoBancos.AbonoBancos',
 	border: false,
+        id:'gridAbonoBancos',
 	listeners: {
             'selectionchange': function(view, records) {
                 this.down('#delete').setDisabled(!records.length);//Se Habilita el Boton Delete
@@ -16,11 +17,13 @@ Ext.define('MvcClientes.view.AbonoBancos.GrdAbonoBancos',{
 		var me = this;
 		Ext.applyIf(me, {
 			columns : [//Definimos las Columnas del Grid y las Columnas de la Tabla
-				  {header:"ID",dataIndex:"idfacturacion",width:50,hidden:true},
-                                   {header:"Numero Factura", dataIndex:"numero_factura"},
+                                   
+                                   {header:"ID",dataIndex:"id_abono_clientes",width:50,hidden:true},
+                                   {header:"Numero de Factura", dataIndex:"numero_factura",flex:1},
+                                   {header:"Numero de Cheque", dataIndex:"numero_cheque",flex:1},
                                    {header:"Clientes", dataIndex:"nom_cliente",flex:1},
-                                   {header:"Fecha Facturacion",dataIndex : "fecha_facturacion",renderer:Ext.util.Format.dateRenderer('d/m/Y') },
-                                   {header:"Saldo Pendiente ($)", dataIndex:"saldo_pendiente",flex:1}
+                                   {header:"Fecha Facturacion",dataIndex : "fecha_facturacion",renderer:Ext.util.Format.dateRenderer('d/m/Y') ,flex:1},
+                                   {header:"Fecha Pago",dataIndex : "fecha_pago",renderer:Ext.util.Format.dateRenderer('d/m/Y') ,flex:1}
 			],
 			dockedItems: [
 					{

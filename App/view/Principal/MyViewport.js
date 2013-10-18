@@ -86,7 +86,7 @@ Ext.define('MvcClientes.view.Principal.MyViewport',{
                                 }
                                 ,
                                 {
-                                    text: 'Abono a bancos',
+                                    text: 'Abono a Bancos',
                                   
                                         leaf: true,
                                     iconCls:'icon-users'
