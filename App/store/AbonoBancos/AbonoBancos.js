@@ -7,16 +7,14 @@
             type: 'ajax',
             api: { //Declaramos la API y Comienzan en estas lineas las operaciones CRUD
 				 read    : "Php/view/AbonoBancos/AbonoBancosRead.php",
-				 create  : "Php/view/AbonoBancos/AbonoBancosCreate.php",
-				 update  : "Php/view/AbonoBancos/AbonoBancosUpdate.php",
-				 destroy : "Php/view/AbonoBancos/AbonoBancosDestroy.php"
+				 create  : "Php/view/AbonoBancos/AbonoBancosCreate.php"
 			},
 			/*actionMethods:{
 			    read:'POST'
 			},*/
             reader: {
                 type: 'json',
-				idProperty: 'id_abono_bancos',
+				idProperty: 'id_abono_clientes',
 				successProperty	: function()
 				   {
                       // Alguna Funcion o mensaje que quieras agregar cuando la operacion es exitosa
@@ -31,31 +29,18 @@
 			   type: 'json',
 			   root: 'data'		 		
 			},
-           //Mensajes Extras si deseas agregarlos
+       //Mensajes Extras si deseas agregarlos
 			afterRequest: function (request, success)
 			{
 			 
 					if (request.action == 'read')
      					{
 							//Ext.Msg.alert('Title','Read');
-					}
-			 
-					else 
-					    if (request.action == 'update')
-						{
-							Ext.Msg.alert('Mensaje','Registro Actualizado Exitosamente');
-                                                        
-                                        }	
+					}	
                                         else 
 					    if (request.action == 'create')
 						{
-							Ext.Msg.alert('Mensaje','Registro Ingresado Exitosamente');
-                                                        
-					    }
-                                        else 
-					    if (request.action == 'destroy')
-						{
-							Ext.Msg.alert('Mensaje','Registro Eliminado Exitosamente');
+							Ext.Msg.alert('Mensaje','Abono Registrado Exitosamente');
                                                         
 					    }
                         },

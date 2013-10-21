@@ -45,7 +45,7 @@ Ext.applyIf(me, {
     items: [
             {
                 xtype: 'form',
-                height: 196,
+                height: 166,
                 name: 'form',
                 layout: {
                     type: 'auto'

@@ -8,11 +8,6 @@ Ext.define('MvcClientes.view.AbonoBancos.GrdAbonoBancos',{
 	store: 'AbonoBancos.AbonoBancos',
 	border: false,
         id:'gridAbonoBancos',
-	listeners: {
-            'selectionchange': function(view, records) {
-                this.down('#delete').setDisabled(!records.length);//Se Habilita el Boton Delete
-            }
-    },
 	initComponent: function() {
 		var me = this;
 		Ext.applyIf(me, {
@@ -31,24 +26,13 @@ Ext.define('MvcClientes.view.AbonoBancos.GrdAbonoBancos',{
 					dock: 'top',
 					items: [
 						{
-						itemId: 'Add',
-						text: 'Agregar',
+						itemId: 'add',
+						text: 'Abonar a Bancos',
 						iconCls: 'add',
-						action:'actAgregar'//Accion manejado por el Controlador
-						},'-',{
-						itemId: 'edit',
-						text: 'Editar',
-						iconCls: 'edit',
 						scope: this,
-						action:'actEditar'
+						action:'actAbonar'
 						//handler:this.OnEditar
-						},'-',{
-						itemId: 'delete',
-						text: 'Borrar',
-						iconCls: 'delete',
-						disabled: true,
-						action:'actBorrar' //Accion manejado por el Controlador
-						}								
+						}
 					]
 				},
 				{
