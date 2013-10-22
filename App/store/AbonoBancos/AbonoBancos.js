@@ -8,14 +8,14 @@
             api: { //Declaramos la API y Comienzan en estas lineas las operaciones CRUD
 				 read    : "Php/view/AbonoBancos/AbonoBancosRead.php",
 				 create  : "Php/view/AbonoBancos/AbonoBancosCreate.php"
-			},
+		 },
 			/*actionMethods:{
 			    read:'POST'
 			},*/
             reader: {
                 type: 'json',
-				idProperty: 'id_abono_clientes',
-				successProperty	: function()
+			     idProperty: 'id_abono_clientes',
+			     successProperty	: function()
 				   {
                       // Alguna Funcion o mensaje que quieras agregar cuando la operacion es exitosa
 				   },

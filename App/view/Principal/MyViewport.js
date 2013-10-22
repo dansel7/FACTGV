@@ -120,38 +120,19 @@ Ext.define('MvcClientes.view.Principal.MyViewport',{
                             editable: false,
                             qtip: 1,
                             children: [
-                                {
-                                    text: 'Regiones',
-                                    children: [
-                                        {
-                                            text: 'Estados',
-                                            leaf: true
+                                    {                                  
+                                        text: 'Activos en Bancos',
+                                        leaf: true
                                         },
                                         {
-                                            text: 'Municipios',
-                                            leaf: true
-                                        }
-                                    ]
-                                },
-                                {
-                                    text: 'Usuarios',
-                                    children: [
+                                        text: 'Cheques Pendientes',
+                                        leaf: true
+                                        },
                                         {
-                                            text: 'Tree Node',
-                                            leaf: true
+                                        text: 'Tree Node',
+                                        leaf: true
                                         }
                                     ]
-                                },
-                                {
-                                    text: 'Solicitantes',
-                                    children: [
-                                        {
-                                            text: 'Tree Node',
-                                            leaf: true
-                                        }
-                                    ]
-                                }
-                            ]
                         },
                         loader: {
 

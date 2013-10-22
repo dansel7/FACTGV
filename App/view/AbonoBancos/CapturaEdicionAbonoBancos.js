@@ -36,7 +36,7 @@ Ext.define('MvcClientes.view.AbonoBancos.CapturaEdicionAbonoBancos', {
 
         
 //Se obtienen los valores del registro seleccionado idfactura y numero_factura//
-
+var id_abono_clientes=Ext.getCmp("gridAbonoBancos").getSelectionModel().getSelection()[0].data.id_abono_clientes;
 var num_cheque=Ext.getCmp("gridAbonoBancos").getSelectionModel().getSelection()[0].data.numero_cheque;
 
 //----------------FIN------------------/
@@ -53,9 +53,9 @@ Ext.applyIf(me, {
                 items: 
                 [   {xtype: 'displayfield',name: 'displayfield1',id:'empDetails1',value: 'Abono a banco el cheque #'+ num_cheque},
                     {xtype: 'displayfield',name: 'displayfield1',id:'empDetails2',value: '' },                   
-                    {xtype : "textfield",id:"id_abono_clientes", name : "id_abono_clientes", fieldLabel : "ID",hidden: true},
-                    {xtype : "datefield",format: 'd/m/Y', value: new Date(), name :"fecha_remesa", fieldLabel : " Fecha de Remesa", flex: 1,allowBlank : false},
+                    {xtype : "textfield",id:"id_abono_clientes", name : "id_abono_clientes",value: id_abono_clientes, fieldLabel : "ID",hidden: true},
                     {xtype : "numberfield",id: "numero_remesa" , name : "numero_remesa", fieldLabel : "No. Remesa", hideTrigger: true,flex: 1,allowDecimals: false,allowBlank : false},
+                    {xtype : "datefield", format: 'd/m/Y', name :"fecha_remesa", value: new Date(), fieldLabel : "Fecha de Remesa", flex: 1,allowBlank : false},
                     {xtype : "combobox", id : "id_cuenta",name:"id_cuenta", fieldLabel: "Cuenta",queryMode: 'local', store: list_cuentas, displayField: 'cuenta',valueField: 'id_cuenta', width: 300,allowBlank : false}
                     
                     

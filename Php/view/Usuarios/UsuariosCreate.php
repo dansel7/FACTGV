@@ -39,3 +39,7 @@ mysql_select_db($db_name,$connection) or die("Error de conexion a la base de dat
                                             )
 					)
 				));
+                                
+                                              // Cerramos la conexion a la bd
+ mysql_close($connection);
+ ?>

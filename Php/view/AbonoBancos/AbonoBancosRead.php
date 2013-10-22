@@ -9,6 +9,7 @@
 
                 
             $sql = "SELECT
+                        ac.id_abono_clientes,
                         f.numero_factura, 
 			ac.numero_cheque,
                         mc.nom_cliente,

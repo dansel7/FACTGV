@@ -8,9 +8,8 @@ mysql_select_db($db_name,$connection) or die("Error de conexion a la base de dat
 
 	$data = json_decode($info);
 
-	$fecha_remesa = $data->fecha_pago;
-        $numero_remesa=$data->numero_cheque;
-	$monto_remesa=$data->monto_cheque;
+	$fecha_remesa = $data->fecha_remesa;
+        $numero_remesa=$data->numero_remesa;
         $id_cuenta=$data->id_cuenta;
         $id_abono_clientes=$data->id_abono_clientes;
         
@@ -18,10 +17,11 @@ mysql_select_db($db_name,$connection) or die("Error de conexion a la base de dat
                              SET
                             `fecha_remesa`='$fecha_remesa',
                             `numero_remesa`='$numero_remesa',
-                            `monto_remesa`=$monto_remesa,
                             `id_cuenta`=$id_cuenta,    
                             `id_abono_clientes`=$id_abono_clientes";
+                 
 			$rs = mysql_query($SqlInsert);
+                        
 
 				echo json_encode(array(
 					"success" 	=> mysql_errno() == 0,
@@ -30,3 +30,7 @@ mysql_select_db($db_name,$connection) or die("Error de conexion a la base de dat
                                            
                                         ))
 				)); 
+                                
+              // Cerramos la conexion a la bd
+ mysql_close($connection);
+ ?>
