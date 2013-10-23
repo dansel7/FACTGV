@@ -110,6 +110,25 @@ Ext.define('MvcClientes.view.Principal.MyViewport',{
                         rootVisible: false,
                         border: false,
                         autoWidth: true,
+                        listeners:{//Listeners apuntando a cada node
+                            itemclick:function(view, record, item, index, e)
+                                        {
+                 //DEPENDIENDO QUE OPCION SE QUIERE SE DEBE DE DEFINIR EL INDICE DE LA OPCION
+                                        
+                                        if (index==0)
+                                           {
+                                              window.open("http://localhost/facturaciones/php/reportes/reporte_1.php", "nuevo", "location=no, menubar=no, scrollbars=yes, statusbar=no, tittlebar=no");
+                                           }
+                                        if (index==1)
+                                           {
+                                              //addTabListadoAbonoClientes();
+                                           }
+                                        if (index==2)
+                                           {
+                                              //addTabListadoAbonoBancos();
+                                           }
+                            }
+                        } ,
                         root: {
                             text: '',
                             isTarget: false,
@@ -126,10 +145,6 @@ Ext.define('MvcClientes.view.Principal.MyViewport',{
                                         },
                                         {
                                         text: 'Cheques Pendientes',
-                                        leaf: true
-                                        },
-                                        {
-                                        text: 'Tree Node',
                                         leaf: true
                                         }
                                     ]

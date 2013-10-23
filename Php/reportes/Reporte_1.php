@@ -34,7 +34,7 @@ $pdf->SetPrintFooter(false);
 
 //set margins
 //$pdf->SetMargins(PDF_MARGIN_LEFT, PDF_MARGIN_TOP, PDF_MARGIN_RIGHT);
-$pdf->SetMargins(-0.1, 0.9, 0.635);
+$pdf->SetMargins(1, 1, 2);
 
 //$pdf->SetHeaderMargin(0);
 //$pdf->SetFooterMargin(15);
@@ -68,15 +68,36 @@ order by numero_remesa";
         
   $pdf->addpage($orientacion,'letter');      
   
+  $encabezado="<h2><img src=\"/facturaciones/resources/imagenes/gvlogo.png\" align=\"left\">&nbsp;Reporte de Abonos a Bancos<br></h2>";
   
-        while($rows_e = mysql_fetch_array($result)){
-       $datos_factura.= "<br> ".strtoupper($rows_e["fecha_remesa"]) ." ".strtoupper($rows_e["numero_remesa"])
-                   ." ".strtoupper($rows_e["numero_cheque"]) ." ".strtoupper($rows_e["monto_cheque"])
-                   ." ".strtoupper($rows_e["cuenta"]) ;
+  $cuerpo_detalle.= '<table width="700px">
+                     <tr><td width="100px" style="text-align:right"><b>NUMERO DE<br> REMESA</b></td>
+                     <td width="100px" style="text-align:center"><b>FECHA DE REMESA</b></td> 
+                     <td width="100px" style="text-align:right" ><b>NUMERO DE<br> CHEQUE</b></td>
+                     <td width="150px" style="text-align:right"><b>MONTO DE<br> CHEQUE ABONADO</b></td>
+                     <td width="250px" style="text-align:center"><b>CUENTA BANCARIA</b></td></tr>
+                     <tr><td colspan="5"></td></tr>';
+ 
+  $temp=0;
+  $subTotal=0;
+  while($rows_e = mysql_fetch_array($result)){
+       $num_rem=$rows_e["numero_remesa"];    
+       if($num_rem!=$temp){
+           $cuerpo_detalle.='<tr><td style="text-align:right" colspan="3"><b>TOTAL REMESADO</b></td><td style="text-align:right"><b>'.$subTotal.'</b></td><td></td></tr>
+                             <tr><td style="text-align:center"><b>'.$num_rem.'</b><hr></td><td colspan="4">&nbsp;<hr></td></tr>';
+                             $subTotal=0;
+       }
+           $cuerpo_detalle.= "<tr><td  style=\"text-align:right\"></td>
+                             <td style=\"text-align:center\"> ".$rows_e["fecha_remesa"] ."</td> 
+                             <td  style=\"text-align:right\">".$rows_e["numero_cheque"] ."</td>
+                             <td  style=\"text-align:right\">".$rows_e["monto_cheque"]."</td>
+                             <td  style=\"text-align:center\">".strtoupper($rows_e["cuenta"]) ."</td></tr>";
+       $subTotal+=$rows_e["monto_cheque"];
+       $temp=$rows_e["numero_remesa"];
         }
-        
-        $factura=$datos_factura.$detalle_factura.$pie_factura;
-$pdf->writeHTML($factura, true, false, false, false, '');
+        $cuerpo_detalle.= "</table>";
+        $Reporte=$encabezado.$cuerpo_detalle.$pie_factura;
+$pdf->writeHTML($Reporte, true, false, false, false, '');
 
 
 
