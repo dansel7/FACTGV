@@ -62,39 +62,52 @@ inner join abono_clientes ac on ac.id_abono_clientes=ab.id_abono_clientes
 inner join cuentas c on c.id_cuenta=ab.id_cuenta
 inner join bancos b on b.id_banco=c.id_banco
 where c.id_empresa=".$_SESSION["idEmpresa"]."
-order by numero_remesa";
+order by numero_remesa,cuenta";
         
     	$result = mysql_query($sql,$connection) or die('La consulta fall&oacute;: '.mysql_error());	
         
   $pdf->addpage($orientacion,'letter');      
   
-  $encabezado="<h2><img src=\"/facturaciones/resources/imagenes/gvlogo.png\" align=\"left\">&nbsp;Reporte de Abonos a Bancos<br></h2>";
+  $encabezado="<h2><img src=\"/facturaciones/resources/imagenes/gvlogo.png\" align=\"left\">
+      &nbsp;Reporte de Abonos a Bancos - {$_SESSION["nombreEmpresa"]}<br></h2>";
   
   $cuerpo_detalle.= '<table width="700px">
                      <tr><td width="100px" style="text-align:right"><b>NUMERO DE<br> REMESA</b></td>
                      <td width="100px" style="text-align:center"><b>FECHA DE REMESA</b></td> 
-                     <td width="100px" style="text-align:right" ><b>NUMERO DE<br> CHEQUE</b></td>
-                     <td width="150px" style="text-align:right"><b>MONTO DE<br> CHEQUE ABONADO</b></td>
+                     <td width="110px" style="text-align:right" ><b>NUMERO DE<br> CHEQUE</b></td>
+                     <td width="140px" style="text-align:right"><b>MONTO DE<br> CHEQUE ABONADO</b></td>
                      <td width="250px" style="text-align:center"><b>CUENTA BANCARIA</b></td></tr>
                      <tr><td colspan="5"></td></tr>';
  
   $temp=0;
+  $tempC=0;
   $subTotal=0;
+  $c=0;
   while($rows_e = mysql_fetch_array($result)){
        $num_rem=$rows_e["numero_remesa"];    
-       if($num_rem!=$temp){
-           $cuerpo_detalle.='<tr><td style="text-align:right" colspan="3"><b>TOTAL REMESADO</b></td><td style="text-align:right"><b>'.$subTotal.'</b></td><td></td></tr>
-                             <tr><td style="text-align:center"><b>'.$num_rem.'</b><hr></td><td colspan="4">&nbsp;<hr></td></tr>';
+       $cuenta=$rows_e["cuenta"];
+       if($num_rem!=$temp || $cuenta!=$tempC){
+            if($c!=0){
+             $cuerpo_detalle.='<tr><td style="text-align:right" colspan="3"><b>TOTAL REMESADO</b></td><td style="text-align:right"><b>'.$subTotal.'</b></td><td></td></tr>';
+            }
+             $cuerpo_detalle.='<tr><td style="text-align:center"><b>'.$num_rem.'</b><hr></td><td colspan="4">&nbsp;<hr></td></tr>';
                              $subTotal=0;
+                             $c=0;
        }
+       $cheque=($rows_e["numero_cheque"]=="0")? "TRANSFERENCIA" : $rows_e["numero_cheque"];
            $cuerpo_detalle.= "<tr><td  style=\"text-align:right\"></td>
                              <td style=\"text-align:center\"> ".$rows_e["fecha_remesa"] ."</td> 
-                             <td  style=\"text-align:right\">".$rows_e["numero_cheque"] ."</td>
+                             <td  style=\"text-align:right\">".$cheque ."</td>
                              <td  style=\"text-align:right\">".$rows_e["monto_cheque"]."</td>
                              <td  style=\"text-align:center\">".strtoupper($rows_e["cuenta"]) ."</td></tr>";
+       
+       
        $subTotal+=$rows_e["monto_cheque"];
        $temp=$rows_e["numero_remesa"];
+       $tempC=$rows_e["cuenta"];
+       $c++;
         }
+         $cuerpo_detalle.='<tr><td style="text-align:right" colspan="3"><b>TOTAL REMESADO</b></td><td style="text-align:right"><b>'.$subTotal.'</b></td><td></td></tr>';
         $cuerpo_detalle.= "</table>";
         $Reporte=$encabezado.$cuerpo_detalle.$pie_factura;
 $pdf->writeHTML($Reporte, true, false, false, false, '');

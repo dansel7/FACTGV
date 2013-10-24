@@ -182,6 +182,10 @@ Ext.define('MvcClientes.view.Principal.MyViewport',{
                                        {
                                           addTabListadoEmpresa();
                                        }
+                                       if (index==3)
+                                       {
+                                          addTabListadoCuentasBancos();
+                                       }
 
                                         }
                                  },
@@ -211,6 +215,12 @@ Ext.define('MvcClientes.view.Principal.MyViewport',{
                                 },
                                 {
                                     text: 'Empresas',
+                            
+                                        leaf: true,
+                                    iconCls:'icon-empresa'
+                                },
+                                {
+                                    text: 'Cuentas Bancarias',
                             
                                         leaf: true,
                                     iconCls:'icon-empresa'
@@ -296,6 +306,16 @@ Ext.define('MvcClientes.view.Principal.MyViewport',{
 			    this.TabPanelMain.setActiveTab(tab); //Se activa el Tab Clickeado 
 				     		 
 	    }
+              function addTabListadoCuentasBancos(){
+           var tab=this.TabPanelMain.getComponent('TabListadoCuentasBancos');
+		   if(!tab){ //si no existe lo creamos
+				tab = Ext.create('MvcClientes.view.CuentasBancos.PanelCuentasBancos', {});
+				this.TabPanelMain.add(tab); //Se agrega el Panel Cliente al TabMain 
+				this.TabPanelMain.doLayout(); //Redibujado del Panel 
+				this.TabPanelMain.setActiveTab(tab); //Activamos el Tab
+                   } 
+			    this.TabPanelMain.setActiveTab(tab); //Se activa el Tab Clickeado 
+       } 
 		
 	function addTabListadoFacturas(){ 
       	 var tab=this.TabPanelMain.getComponent('TabListadoFacturacion');
