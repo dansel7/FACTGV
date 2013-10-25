@@ -12,7 +12,7 @@ Ext.define('MvcClientes.controller.CuentasBancos.CuentasBancos',{
 	
 	],
 
-	init	: function() {
+	init : function() {
 		var me = this;
 		me.control({
 		    'gridCuentasBancos dataview': { //Usando Ext.Component.Query,aca hacemos referencia a la vista del Grid
@@ -27,8 +27,7 @@ Ext.define('MvcClientes.controller.CuentasBancos.CuentasBancos',{
 				 click:this.Editar
 			   },
 		   'FormAddEdicionCuentasBancos button[action=actGuardar]'://Usando Ext.Component.Query
-			   {
-				 
+			   { 
 				 click:this.ActualizarCuentasBancos
 			   },
 		    'gridCuentasBancos button[action=actBorrar]'://Usando Ext.Component.Query
@@ -36,9 +35,6 @@ Ext.define('MvcClientes.controller.CuentasBancos.CuentasBancos',{
 				 click:this.Eliminar
 			   }
 			
-			
-			   
-				  
 		});
 	},
 	//Inician Funciones
@@ -56,7 +52,6 @@ Ext.define('MvcClientes.controller.CuentasBancos.CuentasBancos',{
 		     var record=records[0];
 		     EditForm.loadRecord(record);
 		}
-         	 
 	},
 	
 	ActualizarCuentasBancos: function(button) {
@@ -102,20 +97,3 @@ Ext.define('MvcClientes.controller.CuentasBancos.CuentasBancos',{
         });
 	}
 });
-
- 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

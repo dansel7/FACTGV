@@ -68,6 +68,7 @@ $orientacion="vertical";
                 INNER JOIN maestroclientes mc on mc.idmaestroClientes=f.idmaestroClientes
                 INNER JOIN departamento d on d.id_departamento=mc.id_departamento 
                 WHERE f.idFacturacion=".hideunlock($_GET["idf"]);
+       
     	$result = mysql_query($sql,$connection) or die('La consulta fall&oacute;: '.mysql_error());	
         
   $pdf->addpage($orientacion,'letter');      

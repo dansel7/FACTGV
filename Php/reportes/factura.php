@@ -9,9 +9,11 @@ if(!isset($_SESSION['benutzer']) || !isset($_SESSION["idEmpresa"]) ){
 	}else{
             
     if(isset($_GET["tpf"]) && isset($_GET["idf"])){//SE VERIFICA QUE LOS PARAMETROS DE TIPO DE FACTURA Y ID FACTURA ESTEN ENVIADOS
+        
         require_once('../Database_conf.php');
         $tipoFact=(hideunlock($_GET["tpf"])=="")? 0 : hideunlock($_GET["tpf"]);
-       switch($tipoFact){ //DEPENDIENDO DEL TIPO DE FACTURA SE LLAMARA UN MODELO PARA MOSTRAR LA FACTURA
+       
+        switch($tipoFact){ //DEPENDIENDO DEL TIPO DE FACTURA SE LLAMARA UN MODELO PARA MOSTRAR LA FACTURA
          case 1:
              require_once 'Fact_1.php';//NOTA DE CREDITO
          break;

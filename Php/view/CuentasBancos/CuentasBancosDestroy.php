@@ -13,8 +13,8 @@
 	$rs  = mysql_query($SqlDelete);
 	
 	echo json_encode(array(
-		"success" 	=> mysql_errno() == 0,
-		"msg"		=> mysql_errno() == 0?"Datos Borrados Correctamente":mysql_error()
+		"success" => mysql_errno() == 0,
+		"msg"	  => mysql_errno() == 0?"Datos Borrados Correctamente": mysql_error()
 	));
         
                       // Cerramos la conexion a la bd

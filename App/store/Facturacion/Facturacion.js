@@ -59,7 +59,6 @@ writer:{
                                             Ext.getCmp("gridDetalle").up('form').up('panel').close();
                                                if(this.TabPanelMain.getComponent('TabListadoFacturacion'))
                                             TabPanelMain.setActiveTab(this.TabPanelMain.getComponent('TabListadoFacturacion'));
-                                        
                                              }
                                                 if(btn == 'no')
                                              {
@@ -136,7 +135,7 @@ writer:{
                                          { var tab;
                                              if(btn == 'yes')
                                              {			
-                                            window.open("php/reportes/factura.php?tpf="+hidelockjs(idtf)+"&idf="+hidelockjs(idNuevaFact),"Vista Previa de Factura","status=1,toolbar=1");
+                                            window.open("php/reportes/factura.php?tpf="+hidelockjs(idtf)+"&idf="+hidelockjs(''+idNuevaFact),"Vista Previa de Factura","status=1,toolbar=1");
                                             Ext.getCmp("gridDetalle").up('form').up('panel').close();
                                               if(this.TabPanelMain.getComponent('TabListadoFacturacion'))
                                                TabPanelMain.setActiveTab(this.TabPanelMain.getComponent('TabListadoFacturacion'));

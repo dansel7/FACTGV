@@ -117,7 +117,7 @@ Ext.define('MvcClientes.view.Principal.MyViewport',{
                                         
                                         if (index==0)
                                            {
-                                              window.open("http://localhost/facturaciones/php/reportes/reporte_1.php", "nuevo", "location=no, menubar=no, scrollbars=yes, statusbar=no, tittlebar=no");
+                                              window.open("/facturaciones/php/reportes/reporte_1.php", "nuevo", "location=no, menubar=no, scrollbars=yes, statusbar=no, tittlebar=no");
                                            }
                                         if (index==1)
                                            {

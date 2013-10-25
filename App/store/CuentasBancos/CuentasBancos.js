@@ -10,7 +10,7 @@
 				 create  : "Php/view/CuentasBancos/CuentasBancosCreate.php",
 				 update  : "Php/view/CuentasBancos/CuentasBancosUpdate.php",
 				 destroy : "Php/view/CuentasBancos/CuentasBancosDestroy.php"
-			},
+		 },
 			/*actionMethods:{
 			    read:'POST'
 			},*/
@@ -30,7 +30,7 @@
                writeAllFields: true,//decide si se manda al servidor solamente los campos modificados o todo  
 			   type: 'json',
 			   root: 'data'		 		
-			},
+		  },
            //Mensajes Extras si deseas agregarlos
 			afterRequest: function (request, success)
 			{
@@ -53,9 +53,14 @@
                                                         
 					    }
                                         else 
-					    if (request.action == 'destroy')
+					    if (request.action == 'destroy' )
 						{
-							Ext.Msg.alert('Mensaje','Registro Eliminado Exitosamente');
+                                                    if(Ext.decode(request.callback.arguments[2].responseText).success){
+                                                        Ext.Msg.alert('Mensaje','Registro Eliminado Exitosamente');
+                                                    }else{
+                                                        Ext.Msg.alert('Mensaje','Error al eliminar: Banco Asociado a uno o mas abonos');
+                                                    }
+							
                                                         
 					    }
                         },
