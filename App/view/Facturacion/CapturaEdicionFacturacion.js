@@ -86,13 +86,15 @@ if(typeof(records) != "undefined" && typeof(records) != "string"){
               Ext.getCmp("iva").setValue(sum * 0.13);
               
               //CALCULOS SI ES GRAN CONTRIBUYENTE
-              if(Ext.getCmp("idmaestroClientes").valueModels[0].data.gran_contribuyente=="Si"){
+              if(Ext.getCmp("idmaestroClientes").valueModels[0].data.gran_contribuyente=="Si" && sum>=100){
+		//SI EL VALOR TOTAL A FACTURAR ES MAYOR A 100 SE RETIENE EL 1%
                 Ext.getCmp("iva_retenido").setValue(Math.round(sum*0.01*100)/100);
+		
               }else{
                 Ext.getCmp("iva_retenido").setValue(0);    
               }
                  //MUESTRA EL TOTAL
-                Ext.getCmp("venta_total").setValue(sum+Ext.getCmp("iva").getValue()+Ext.getCmp("iva_retenido").getValue());   
+                Ext.getCmp("venta_total").setValue(sum+Ext.getCmp("iva").getValue()-Ext.getCmp("iva_retenido").getValue());   
                  
             }
    /////// FIN DE FUNCION DE TOTALES         
