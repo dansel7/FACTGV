@@ -52,6 +52,19 @@ Ext.define('MvcClientes.view.Facturacion.CapturaEdicionFacturacion', {
             autoLoad: true
         });
         
+  //STORE DE CATALOGO DE SERVICIOS
+         var ListCatServ = new Ext.data.Store({
+            fields: ['id_servicio', 'servicio'],
+            proxy: {
+                type: 'ajax',
+                url : 'Php/store/list_cat_serv.php',
+                reader: {
+                    type: 'json'
+                }
+            },
+            autoLoad: true
+        });      
+        
 //STORE DE LOS DETALLES DE FACTURAS    
 //Verificar que se envian datos para editar
 var idfactura;
@@ -76,11 +89,15 @@ if(typeof(records) != "undefined" && typeof(records) != "string"){
            function totales_facturacion(){
                
             var sum=0;
+            var sumExenta=0;
+            var sumNoSuj=0;
             Ext.getCmp("gridDetalle").getStore().each(function(record){
                //VENTA GRAVADA
                 record.set("venta_gravada",record.data.cantidad*record.data.valor_concepto);
                 //SUBTOTAL
                 sum+=record.data.venta_gravada;
+                sumExenta+=record.data.venta_nosujeta;
+                sumNoSuj+=record.data.venta_exenta;
                 
               });
               Ext.getCmp("iva").setValue(sum * 0.13);
@@ -94,7 +111,7 @@ if(typeof(records) != "undefined" && typeof(records) != "string"){
                 Ext.getCmp("iva_retenido").setValue(0);    
               }
                  //MUESTRA EL TOTAL
-                Ext.getCmp("venta_total").setValue(sum+Ext.getCmp("iva").getValue()-Ext.getCmp("iva_retenido").getValue());   
+                Ext.getCmp("venta_total").setValue(sumExenta+sumNoSuj+sum+Ext.getCmp("iva").getValue()-Ext.getCmp("iva_retenido").getValue());   
                  
             }
    /////// FIN DE FUNCION DE TOTALES         
@@ -117,16 +134,16 @@ if(typeof(records) != "undefined" && typeof(records) != "string"){
                                     type: 'table'
                             },  
                             items:[
-                            {xtype : "combobox", id:"id_tipo_factura", queryMode: 'local',fieldLabel: "Tipo Factura",queryMode: 'local', store: ListTpFact,displayField: 'tipo',valueField: 'id_tipo_facturacion',name:"id_tipo_facturacion", flex: 1, margin: '0 10 0 0',flex:1,allowBlank : false},    
+                            {xtype : "combobox", id:"id_tipo_factura", queryMode: 'local',fieldLabel: "Tipo Factura", store: ListTpFact,displayField: 'tipo',valueField: 'id_tipo_facturacion',name:"id_tipo_facturacion", flex: 1, margin: '0 10 0 0',flex:1,allowBlank : false},    
                             {xtype : "textfield", name : "numero_factura", fieldLabel : "No. Factura", flex: 1,allowBlank : false},
                             {xtype : "combobox", queryMode: 'local', fieldLabel: " Cliente",
-                                queryMode: 'local', store: ListMaestroClientes,displayField: 'nom_cliente',valueField: 'idmaestroClientes',
+                                store: ListMaestroClientes,displayField: 'nom_cliente',valueField: 'idmaestroClientes',
                                 name:"idmaestroClientes", id:"idmaestroClientes", flex: 1, margin: '0 10 0 0',width:340 ,allowBlank : false
                             },
                             {xtype : "datefield", format: 'd/m/Y', value: new Date(), name : "fecha_facturacion", fieldLabel : " Fecha Facturacion", flex: 1, margin: '0 10 0 0'},
                             {xtype : "textfield", name : "venta_acta_de", fieldLabel : " Venta A Cuenta De", flex: 1, margin: '0 10 0 0'},
                             {xtype : "combobox", queryMode: 'local', fieldLabel: "Condicion de Operacion",
-                                queryMode: 'local', store: tp_cond_oper,displayField: 'operacion',valueField: 'operacion',
+                                store: tp_cond_oper,displayField: 'operacion',valueField: 'operacion',
                                 name:"cond_operacion", id:"cond_operacion", flex: 1, margin: '0 10 0 0',width:340
                             },
                             {xtype : "textfield",id : "idfacturacion", name : "idfacturacion", fieldLabel : "Id",hidden: true, margin: '0 10 0 0'},
@@ -153,7 +170,12 @@ if(typeof(records) != "undefined" && typeof(records) != "string"){
                                 },summaryRenderer: function(value, summaryData, dataIndex) {
                                   return 'SUB-TOTALES';
                                     }},
-                                {header: 'Concepto',  dataIndex: 'concepto',flex:1, editor: {
+                                {header: 'Concepto',  dataIndex: 'id_servicio', editor: {
+                                    xtype : "combobox", id:"id_servicio",name:"id_servicio", 
+                                queryMode: 'local', store: ListCatServ,
+                                displayField: 'servicio',valueField: 'id_servicio',allowBlank : false
+                                }},
+                                {header: 'Concepto',  dataIndex: 'concepto', editor: {
                                         xtype: 'textfield',name:'concepto',
                                     allowBlank: false
                                 }},
