@@ -8,8 +8,11 @@ Ext.Loader.setConfig({
 		
 Ext.application({  
         name        : "MvcClientes", //<-MvcClientes es el Nombre del Name Space Principal 
-            //<-HAY QUE REGISTRAR EL NOMBRE DEL CONTROLLER
-		controllers	: ['Clientes.Clientes','Usuarios.Usuarios','Empresa.Empresa','Facturacion.Facturacion','AbonoClientes.AbonoClientes','AbonoBancos.AbonoBancos','CuentasBancos.CuentasBancos'],//<--Controladores de la aplicacion
+            //<-HAY QUE REGISTRAR EL NOMBRE DEL CONTROLLER SINO NO CARGARA NADA
+	   controllers	: ['Clientes.Clientes','Usuarios.Usuarios','Empresa.Empresa',
+                          'Facturacion.Facturacion','AbonoClientes.AbonoClientes',
+                          'AbonoBancos.AbonoBancos','CuentasBancos.CuentasBancos',
+                          'CatServicios.CatServicios'],//<--Controladores de la aplicacion
 		launch      : function(){  
 		      var MyViewPrincipal = Ext.create("MvcClientes.view.Principal.MyViewport")
 		     } 

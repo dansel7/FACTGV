@@ -53,18 +53,8 @@ Ext.define('MvcClientes.view.Facturacion.CapturaEdicionFacturacion', {
         });
         
   //STORE DE CATALOGO DE SERVICIOS
-         var ListCatServ = new Ext.data.Store({
-            fields: ['id_servicio', 'servicio'],
-            proxy: {
-                type: 'ajax',
-                url : 'Php/store/list_cat_serv.php',
-                reader: {
-                    type: 'json'
-                }
-            },
-            autoLoad: true
-        });      
-        
+         var ListCatServ = Ext.create('MvcClientes.store.CatServicios.CatServicios');
+        ListCatServ.load();
 //STORE DE LOS DETALLES DE FACTURAS    
 //Verificar que se envian datos para editar
 var idfactura;
@@ -73,7 +63,7 @@ if(typeof(records) != "undefined" && typeof(records) != "string"){
 }else{idfactura='';}
 
  var factura_detalle = new Ext.data.Store({
-            fields: [ {name:'idDetalle' , type: 'int'},{name:'cantidad' , type: 'int'},{name:'concepto', type: 'string'},{ name:'valor_concepto',   type: 'number'},{ name:'venta_nosujeta',   type: 'number'},{ name:'venta_exenta',   type: 'number'},{ name:'venta_gravada',   type: 'number'}],
+            fields: [ {name:'idDetalle' , type: 'int'},{name:'cantidad' , type: 'int'},{name:'id_servicio' , type: 'int'},{name:'concepto', type: 'string'},{ name:'valor_concepto',   type: 'number'},{ name:'venta_nosujeta',   type: 'number'},{ name:'venta_exenta',   type: 'number'},{ name:'venta_gravada',   type: 'number'}],
             proxy: {
                 type: 'ajax',
                 url : 'Php/view/FactDetalle/FactDetalleRead.php?id='+ idfactura,
@@ -170,12 +160,19 @@ if(typeof(records) != "undefined" && typeof(records) != "string"){
                                 },summaryRenderer: function(value, summaryData, dataIndex) {
                                   return 'SUB-TOTALES';
                                     }},
-                                {header: 'Concepto',  dataIndex: 'id_servicio', editor: {
+                                {header: 'Servicio',  dataIndex: 'id_servicio',flex:1, editor: {
                                     xtype : "combobox", id:"id_servicio",name:"id_servicio", 
                                 queryMode: 'local', store: ListCatServ,
                                 displayField: 'servicio',valueField: 'id_servicio',allowBlank : false
+                                },renderer:function(id){
+                                  var index = ListCatServ.find('id_servicio',id);
+                                    if(index>-1){
+                                            var record = ListCatServ.getAt(index);
+                                            return record.get('servicio');
+                                    }
+                                    return value;   
                                 }},
-                                {header: 'Concepto',  dataIndex: 'concepto', editor: {
+                                {header: 'Concepto',  dataIndex: 'concepto',flex:1, editor: {
                                         xtype: 'textfield',name:'concepto',
                                     allowBlank: false
                                 }},
@@ -222,6 +219,7 @@ if(typeof(records) != "undefined" && typeof(records) != "string"){
                                         var r = {
                                             cantidad: '1',
                                             concepto: '',
+                                            id_servicio:'1',
                                             valor_concepto: '',
                                             venta_nosujeta: '0.0',
                                             venta_exenta: '0.0',

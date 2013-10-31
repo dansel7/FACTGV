@@ -37,7 +37,7 @@ $pdf->SetPrintFooter(false);
 
 //set margins
 //$pdf->SetMargins(PDF_MARGIN_LEFT, PDF_MARGIN_TOP, PDF_MARGIN_RIGHT);
-$pdf->SetMargins(-0.1, 0.9, 0.635);
+$pdf->SetMargins(0.1, 1.3, 0.635);
 
 //$pdf->SetHeaderMargin(0);
 //$pdf->SetFooterMargin(15);
@@ -147,7 +147,7 @@ $orientacion="vertical";
         $tot_venta_no_sujeta+=$rows_e["venta_nosujeta"];
         $tot_venta_exentas+=$rows_e["venta_exenta"];
         //ESTA ES LA PARTE QUE CONTIENE EL TOTAL EN LETRAS Y SUS DESGLOSES
-        $pie_factura='<tr><td colspan="6" height="75px"></td></tr>
+        $pie_factura='<tr><td colspan="6" height="125px"></td></tr>
                       <tr><td colspan="2" width="445px"></td>
                           <td width="60px"></td>
                           <td width="60px" style="text-align:right">'. number_format($tot_venta_no_sujeta,2) .'</td>

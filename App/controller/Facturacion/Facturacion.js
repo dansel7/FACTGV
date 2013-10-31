@@ -96,7 +96,8 @@ Ext.define('MvcClientes.controller.Facturacion.Facturacion',{
                         for (var i in grid) {
                             JsonDatos.push({
                                 'idDetalle':        grid[i].get('idDetalle'),
-                                'cantidad':        grid[i].get('cantidad'),
+                                'id_servicio':      grid[i].get('id_servicio'),
+                                'cantidad':         grid[i].get('cantidad'),
                                 'concepto':         grid[i].get('concepto'),
                                 'valor_concepto':   grid[i].get('valor_concepto'),
                                 'venta_nosujeta':   grid[i].get('venta_nosujeta'),

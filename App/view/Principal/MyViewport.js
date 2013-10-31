@@ -186,6 +186,10 @@ Ext.define('MvcClientes.view.Principal.MyViewport',{
                                        {
                                           addTabListadoCuentasBancos();
                                        }
+                                       if (index==4)
+                                       {
+                                          addTabListadoCatServicios();
+                                       }
 
                                         }
                                  },
@@ -224,6 +228,12 @@ Ext.define('MvcClientes.view.Principal.MyViewport',{
                             
                                         leaf: true,
                                     iconCls:'icon-empresa'
+                                },
+                                {
+                                    text: 'Catalogo de Servicios',
+                            
+                                        leaf: true,
+                                    iconCls:'icon-users'
                                 }
                             ]	
                         },
@@ -316,7 +326,18 @@ Ext.define('MvcClientes.view.Principal.MyViewport',{
                    } 
 			    this.TabPanelMain.setActiveTab(tab); //Se activa el Tab Clickeado 
        } 
-		
+       
+	    function addTabListadoCatServicios(){
+           var tab=this.TabPanelMain.getComponent('TabListadoCatServicios');
+		   if(!tab){ //si no existe lo creamos
+				tab = Ext.create('MvcClientes.view.CatServicios.PanelCatServicios', {});
+				this.TabPanelMain.add(tab); //Se agrega el Panel Cliente al TabMain 
+				this.TabPanelMain.doLayout(); //Redibujado del Panel 
+				this.TabPanelMain.setActiveTab(tab); //Activamos el Tab
+                   } 
+			    this.TabPanelMain.setActiveTab(tab); //Se activa el Tab Clickeado 
+       } 
+       
 	function addTabListadoFacturas(){ 
       	 var tab=this.TabPanelMain.getComponent('TabListadoFacturacion');
 		   if(!tab){ //si no existe lo creamos
