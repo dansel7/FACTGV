@@ -15,7 +15,7 @@ mysql_select_db($db_name,$connection) or die("Error de conexion a la base de dat
 	
                  $SqlInsert ="INSERT INTO cuentas
                              SET
-                            `numero_cuenta`=$num_cuenta,
+                            `numero_cuenta`='$num_cuenta',
                             `id_banco`=$id_banco,
                             `id_empresa`=$id_empresa";
 			

@@ -60,13 +60,14 @@ $orientacion="vertical";
                
                 f.numero_factura,mc.nom_cliente,mc.direccion,DATE_FORMAT(f.fecha_facturacion,'%d/%m/%Y') fecha_facturacion,f.cond_operacion,f.venta_acta_de,mc.nit,mc.nrc,d.departamento,mc.giro,
                
-                df.cantidad,df.concepto,df.valor_concepto,venta_nosujeta,venta_exenta,venta_gravada,
+                df.cantidad,concat(cs.servicio , '<br>  ' , df.concepto) concepto,df.valor_concepto,venta_nosujeta,venta_exenta,venta_gravada,
                
                 f.venta_total,f.iva,f.iva_retenido
                 FROM facturacion f 
                 LEFT JOIN detalleFacturacion df on f.idFacturacion=df.idFacturacion 
                 INNER JOIN maestroclientes mc on mc.idmaestroClientes=f.idmaestroClientes
                 INNER JOIN departamento d on d.id_departamento=mc.id_departamento 
+                INNER JOIN catalogo_servicios cs on cs.id_servicio=df.id_servicio
                 WHERE f.idFacturacion=".hideunlock($_GET["idf"]);
     	$result = mysql_query($sql,$connection) or die('La consulta fall&oacute;: '.mysql_error());	
         
