@@ -36,7 +36,7 @@ $pdf->SetPrintFooter(false);
 
 //set margins
 //$pdf->SetMargins(PDF_MARGIN_LEFT, PDF_MARGIN_TOP, PDF_MARGIN_RIGHT);
-$pdf->SetMargins(0.1, 1, 0.635);
+$pdf->SetMargins(0.2, 1.5, 0.635);
 
 //$pdf->SetHeaderMargin(0);
 //$pdf->SetFooterMargin(15);
@@ -141,7 +141,7 @@ $orientacion="vertical";
                           <td width="60px"></td>
                           <td width="60px" style="text-align:right">'. number_format($tot_venta_no_sujeta,2) .'</td>
                           <td width="60px" style="text-align:right">'. number_format($tot_venta_exentas,2) .'</td>
-                          <td width="60px"></td>
+                          <td width="59px" style="text-align:right">'. number_format($subTotal*1.13,2) .'</td>
                       </tr>
                       <tr><td colspan="6" style="text-align:left">
                         <table width="680px" cellspacing="3">
@@ -153,7 +153,7 @@ $orientacion="vertical";
                            <td style="text-align:right">'. number_format($rows_e["iva_retenido"],2) .'</td>
                          </tr>
                         <tr>
-                           <td style="text-align:right">'. number_format($subTotal+$rows_e["iva"],2) .'</td>
+                           <td style="text-align:right">'. number_format($subTotal+$rows_e["iva"]-$rows_e["iva_retenido"],2) .'</td>
                          </tr>
                           <tr>
                            <td style="text-align:right" >'. number_format($tot_venta_no_sujeta,2) .'</td>
@@ -167,7 +167,7 @@ $orientacion="vertical";
                      <tr><td colspan="6" style="text-align:right">
                          <table>
                          <tr>    
-                            <td width="680px">
+                            <td width="677px">
                         '. $rows_e["venta_total"] .'
                             </td>
                          </tr>

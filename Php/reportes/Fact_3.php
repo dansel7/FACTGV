@@ -24,7 +24,7 @@ $pdf->SetTitle('GV');
 $pdf->SetSubject('Control');
 $pdf->SetKeywords('TCPDF, PDF, factura, control, contabilidad');
 $pdf->setPrintHeader(false);
-$pdf->SetPrintFooter(false);
+$pdf->SetPrintFooter(true);
 // set default header data
 //$pdf->SetHeaderData(PDF_HEADER_LOGO, PDF_HEADER_LOGO_WIDTH, PDF_HEADER_TITLE, PDF_HEADER_STRING);
 
@@ -99,8 +99,8 @@ $orientacion="vertical";
                 <td colspan="2">&nbsp;</td>
             </tr>
              <tr>
-                <td  colspan="3" width="465px">&nbsp;</td>
-                <td colspan="2" height="18px" style="text-align:left">'.strtoupper($rows_e["departamento"]).'</td>
+                <td  colspan="3" width="475px">&nbsp;</td>
+                <td colspan="2" height="20px" style="text-align:left">'.strtoupper($rows_e["departamento"]).'</td>
             </tr>
              <tr>
                 <td  width="30px">&nbsp;</td>
@@ -119,15 +119,16 @@ $orientacion="vertical";
             </td>
             </tr>
             </table><br>
-            <table>
-                 <tr><td colspan="4" height="40px"></td></tr>';
+            <table style="table-layout:fixed">
+                 <tr><td colspan="4" height="60px"></td></tr>
+                 <tr><td colspan="4" height="160px"><table>';
         
         $detalle_factura.='
                     <tr>
                         <td style="text-align:left" width="100px">
                         '. $rows_e["cantidad"] .'
                         </td>  
-                        <td width="345px">
+                        <td width="335px">
                         '. strtoupper($rows_e["concepto"])  .'
                         </td>
                         <td width="60px" style="text-align:right">
@@ -148,22 +149,22 @@ $orientacion="vertical";
         $tot_venta_no_sujeta+=$rows_e["venta_nosujeta"];
         $tot_venta_exentas+=$rows_e["venta_exenta"];
         //ESTA ES LA PARTE QUE CONTIENE EL TOTAL EN LETRAS Y SUS DESGLOSES
-        $pie_factura='<tr><td colspan="6" height="140px"></td></tr>
-                      <tr><td colspan="2" width="445px"></td>
+        $pie_factura='</table></td></tr>
+                      
+                      <tr><td colspan="2" width="435px"></td>
                           <td width="60px"></td>
                           <td width="60px" style="text-align:right">'. number_format($tot_venta_no_sujeta,2) .'</td>
                           <td width="60px" style="text-align:right">'. number_format($tot_venta_exentas,2) .'</td>
-                          <td width="60px"></td>
+                          <td width="72px"style="text-align:right">'. number_format($subTotal,2) .'</td>
                       </tr>
                       <tr><td colspan="6" style="text-align:left">
-                        <table width="682px" cellspacing="3">
-                         
+                        <table width="674px" cellspacing="4">
                         <tr>
                            <td>'. strtoupper($Total_enLetras->ValorEnLetras($rows_e["venta_total"],"Dolares")) .'</td>
                            <td height="18px" style="text-align:right">'.$rows_e["iva"] .'</td>
                          </tr>
                          <tr>
-                           <td height="18px" style="text-align:right" colspan="2" >'. number_format($subTotal,2) .'</td>
+                           <td height="18px" style="text-align:right" colspan="2" >'. number_format($subTotal+$rows_e["iva"],2) .'</td>
                          </tr>
                          <tr>
                            <td height="18px" style="text-align:right" colspan="2">'. number_format($rows_e["iva_retenido"],2) .'</td>
@@ -180,7 +181,7 @@ $orientacion="vertical";
                      <tr><td colspan="6" style="text-align:right">
                          <table>
                          <tr>    
-                            <td width="680px">
+                            <td width="670px">
                         '. $rows_e["venta_total"] .'
                             </td>
                          </tr>
