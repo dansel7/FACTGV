@@ -120,7 +120,8 @@ $orientacion="vertical";
             </tr>
             </table><br>
             <table cellspacing="3">
-                 <tr><td colspan="4" height="45px"></td></tr>';
+                 <tr><td colspan="4" height="45px"></td></tr>
+                 <tr><td colspan="4" height="160px"><table>';
         $detalle_factura.='
                     <tr>
                         <td style="text-align:left" width="55px">
@@ -149,7 +150,8 @@ $orientacion="vertical";
         
         
         //ESTA ES LA PARTE QUE CONTIENE EL TOTAL EN LETRAS Y SUS DESGLOSES
-        $pie_factura='<tr><td colspan="6" height="105px"></td></tr>
+        $pie_factura='</table></td></tr>
+                  
                       <tr><td colspan="2" width="455px"></td>
                           <td width="60px"></td>
                           <td width="60px" style="text-align:right">'. number_format($tot_venta_no_sujeta,2) .'</td>

@@ -150,7 +150,6 @@ $orientacion="vertical";
         $tot_venta_exentas+=$rows_e["venta_exenta"];
         //ESTA ES LA PARTE QUE CONTIENE EL TOTAL EN LETRAS Y SUS DESGLOSES
         $pie_factura='</table></td></tr>
-                      
                       <tr><td colspan="2" width="435px"></td>
                           <td width="60px"></td>
                           <td width="60px" style="text-align:right">'. number_format($tot_venta_no_sujeta,2) .'</td>

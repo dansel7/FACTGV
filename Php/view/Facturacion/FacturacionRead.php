@@ -22,7 +22,7 @@
                         f.venta_total,
                         if(DATE_FORMAT(f.fecha_quedan, '%d/%m/%Y') = '00/00/0000', null,DATE_FORMAT(f.fecha_quedan, '%d/%m/%Y'))  fecha_quedan,
                         f.comprobante_quedan,
-                        if(DATE_FORMAT(f.fecha_programada_pago, '%d/%m/%Y') = '00/00/0000', null,DATE_FORMAT(f.fecha_quedan, '%d/%m/%Y'))  fecha_programada_pago,
+                        if(DATE_FORMAT(f.fecha_programada_pago, '%d/%m/%Y') = '00/00/0000', null,DATE_FORMAT(f.fecha_programada_pago, '%d/%m/%Y'))  fecha_programada_pago,
                         f.id_empresa,
                         f.id_tipo_facturacion,
                         f.anulado

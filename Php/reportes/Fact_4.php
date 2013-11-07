@@ -107,7 +107,8 @@ $orientacion="vertical";
             
             </table><br>
             <table>
-                 <tr><td colspan="4" height="40px"></td></tr>';
+                 <tr><td colspan="4" height="40px"></td></tr>
+                 <tr><td colspan="4" height="160px"><table>';
         $detalle_factura.='
                     <tr>
                         <td style="text-align:left" width="100px">
@@ -128,12 +129,13 @@ $orientacion="vertical";
         $tot_venta_no_sujeta+=$rows_e["venta_nosujeta"];
         $tot_venta_exentas+=$rows_e["venta_exenta"];
         //ESTA ES LA PARTE QUE CONTIENE EL TOTAL EN LETRAS Y SUS DESGLOSES
-        $pie_factura='<tr><td colspan="6" height="200px"></td></tr>
+          $pie_factura='</table></td></tr>
+                     <tr><td colspan="6" height="60px"></td></tr>
                      <tr><td colspan="6" style="text-align:right">
                          <table>
                          <tr>    
                          <td>'. strtoupper($Total_enLetras->ValorEnLetras($rows_e["venta_total"],"Dolares")) .'</td>
-                         <td width="335px">
+                         <td width="310px">
                         '. $rows_e["venta_total"] .'
                             </td>
                          </tr>
