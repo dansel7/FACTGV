@@ -24,7 +24,7 @@ $pdf->SetTitle('GV');
 $pdf->SetSubject('Control');
 $pdf->SetKeywords('TCPDF, PDF, factura, control, contabilidad');
 $pdf->setPrintHeader(false);
-$pdf->SetPrintFooter(true);
+$pdf->SetPrintFooter(false);
 // set default header data
 //$pdf->SetHeaderData(PDF_HEADER_LOGO, PDF_HEADER_LOGO_WIDTH, PDF_HEADER_TITLE, PDF_HEADER_STRING);
 
@@ -125,10 +125,10 @@ $orientacion="vertical";
         
         $detalle_factura.='
                     <tr>
-                        <td style="text-align:left" width="100px">
+                        <td style="text-align:left" width="80px">
                         '. $rows_e["cantidad"] .'
                         </td>  
-                        <td width="335px">
+                        <td width="370px">
                         '. strtoupper($rows_e["concepto"])  .'
                         </td>
                         <td width="60px" style="text-align:right">
@@ -150,14 +150,14 @@ $orientacion="vertical";
         $tot_venta_exentas+=$rows_e["venta_exenta"];
         //ESTA ES LA PARTE QUE CONTIENE EL TOTAL EN LETRAS Y SUS DESGLOSES
         $pie_factura='</table></td></tr>
-                      <tr><td colspan="2" width="435px"></td>
+                      <tr><td colspan="2" width="460px"></td>
                           <td width="60px"></td>
                           <td width="60px" style="text-align:right">'. number_format($tot_venta_no_sujeta,2) .'</td>
                           <td width="60px" style="text-align:right">'. number_format($tot_venta_exentas,2) .'</td>
-                          <td width="72px"style="text-align:right">'. number_format($subTotal,2) .'</td>
+                          <td width="60px"style="text-align:right">'. number_format($subTotal,2) .'</td>
                       </tr>
                       <tr><td colspan="6" style="text-align:left">
-                        <table width="674px" cellspacing="4">
+                        <table width="686px" cellspacing="4">
                         <tr>
                            <td>'. strtoupper($Total_enLetras->ValorEnLetras($rows_e["venta_total"],"Dolares")) .'</td>
                            <td height="18px" style="text-align:right">'.$rows_e["iva"] .'</td>
@@ -180,8 +180,8 @@ $orientacion="vertical";
                      <tr><td colspan="6" style="text-align:right">
                          <table>
                          <tr>    
-                            <td width="670px">
-                        '. $rows_e["venta_total"] .'
+                            <td width="682px">
+                        '. number_format($rows_e["venta_total"],2) .'
                             </td>
                          </tr>
                          </table>
