@@ -121,8 +121,7 @@ Ext.define('MvcClientes.view.Principal.MyViewport',{
                                            }
                                         if (index==1)
                                            {
-                                              //addTabListadoAbonoClientes();
-                                           }
+                                             window.open("/facturaciones/php/graficas/graf_venta_servicio.php", "nuevo", "location=no, menubar=no, scrollbars=yes, statusbar=no, tittlebar=no");                                           }
                                         if (index==2)
                                            {
                                               //addTabListadoAbonoBancos();
@@ -144,7 +143,7 @@ Ext.define('MvcClientes.view.Principal.MyViewport',{
                                         leaf: true
                                         },
                                         {
-                                        text: 'Cheques Pendientes',
+                                        text: 'Grafica de Ventas por Servicios',
                                         leaf: true
                                         }
                                     ]
