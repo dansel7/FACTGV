@@ -121,9 +121,12 @@ Ext.define('MvcClientes.view.Principal.MyViewport',{
                                            }
                                         if (index==1)
                                            {
-                                             window.open("/facturaciones/php/graficas/graf_venta_servicio.php", "nuevo", "location=no, menubar=no, scrollbars=yes, statusbar=no, tittlebar=no");                                           }
+                                               
+                                             window.open("/facturaciones/php/graficas/graf_venta_servicio.php", "nuevo", "location=no, menubar=no, scrollbars=yes, statusbar=no, tittlebar=no");                                           
+                                            }
                                         if (index==2)
                                            {
+                                               addTabDashboard();
                                               //addTabListadoAbonoBancos();
                                            }
                             }
@@ -144,6 +147,10 @@ Ext.define('MvcClientes.view.Principal.MyViewport',{
                                         },
                                         {
                                         text: 'Grafica de Ventas por Servicios',
+                                        leaf: true
+                                        },
+                                        {
+                                        text: 'Dashboard',
                                         leaf: true
                                         }
                                     ]
@@ -275,6 +282,20 @@ Ext.define('MvcClientes.view.Principal.MyViewport',{
         });
             //------------------FIN------------------//
              me.callParent();	
+             
+              function addTabDashboard(){ 
+      	 var tab=this.TabPanelMain.getComponent('TabDashboard');
+		   if(!tab){ //si no existe lo creamos
+				tab = Ext.create('MvcClientes.view.Dashboard.PanelDashboard', {});
+				this.TabPanelMain.add(tab); //Se agrega el Panel Cliente al TabMain 
+				this.TabPanelMain.doLayout(); //Redibujado del Panel 
+				this.TabPanelMain.setActiveTab(tab); //Activamos el Tab
+               			
+             } 
+			    this.TabPanelMain.setActiveTab(tab); //Se activa el Tab Clickeado 
+				     		 
+	    }
+             
  ////Funci			 
 	 function addTabListadoClientes(){ 
       	 var tab=this.TabPanelMain.getComponent('TabListadoClientes');

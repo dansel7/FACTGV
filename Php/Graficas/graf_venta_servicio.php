@@ -25,7 +25,7 @@ $labels=$servicios;
 
 require_once('../Database_conf.php');
   
-$grafico = new Graph(800, 600, 'auto');
+$grafico = new Graph(1200, 600, 'auto');
 $grafico->SetScale("textint");
 $grafico->title->Set("Ventas por Servicio");
 $grafico->xaxis->title->Set("Servicios");
