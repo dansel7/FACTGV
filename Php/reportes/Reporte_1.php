@@ -56,13 +56,15 @@ $orientacion="vertical";
 	$sql = "SELECT 
 DATE_FORMAT(ab.fecha_remesa,'%d/%m/%Y') fecha_remesa,ab.numero_remesa, 
 ac.numero_cheque,ac.monto_cheque,
-concat(b.nombre_banco,' - ',c.numero_cuenta) cuenta
-FROM db_facturacion.abono_bancos ab 
+concat(b.nombre_banco,' - ',c.numero_cuenta) cuenta,
+f.numero_factura
+FROM abono_bancos ab 
 inner join abono_clientes ac on ac.id_abono_clientes=ab.id_abono_clientes 
 inner join cuentas c on c.id_cuenta=ab.id_cuenta
 inner join bancos b on b.id_banco=c.id_banco
+inner join facturacion f on  f.idfacturacion=ac.idfacturacion
 where c.id_empresa=".$_SESSION["idEmpresa"]."
-order by numero_remesa,cuenta";
+order by fecha_remesa,numero_factura,numero_remesa,cuenta";
         
     	$result = mysql_query($sql,$connection) or die('La consulta fall&oacute;: '.mysql_error());	
         
@@ -72,10 +74,11 @@ order by numero_remesa,cuenta";
       &nbsp;Reporte de Abonos a Bancos - {$_SESSION["nombreEmpresa"]}<br></h2>";
   
   $cuerpo_detalle.= '<table width="700px">
-                     <tr><td width="100px" style="text-align:right"><b>NUMERO DE<br> REMESA</b></td>
+                     <tr><td width="80px" style="text-align:right"><b>NUMERO DE<br> REMESA</b></td>
                      <td width="100px" style="text-align:center"><b>FECHA DE REMESA</b></td> 
-                     <td width="110px" style="text-align:right" ><b>NUMERO DE<br> CHEQUE</b></td>
-                     <td width="140px" style="text-align:right"><b>MONTO DE<br> CHEQUE ABONADO</b></td>
+                     <td width="110px" style="text-align:center" ><b>NUMERO DE<br> CHEQUE</b></td>
+                     <td width="80px" style="text-align:right" ><b>NUMERO DE<br> FACTURA</b></td>
+                     <td width="80px" style="text-align:right"><b>MONTO DE<br> ABONO</b></td>
                      <td width="250px" style="text-align:center"><b>CUENTA BANCARIA</b></td></tr>
                      <tr><td colspan="5"></td></tr>';
  
@@ -83,14 +86,15 @@ order by numero_remesa,cuenta";
   $tempC=0;
   $subTotal=0;
   $c=0;
+  $total=0;
   while($rows_e = mysql_fetch_array($result)){
        $num_rem=$rows_e["numero_remesa"];    
        $cuenta=$rows_e["cuenta"];
        if($num_rem!=$temp || $cuenta!=$tempC){
             if($c!=0){
-             $cuerpo_detalle.='<tr><td style="text-align:right" colspan="3"><b>TOTAL REMESADO</b></td><td style="text-align:right"><b>'.$subTotal.'</b></td><td></td></tr>';
+             $cuerpo_detalle.='<tr><td style="text-align:right" colspan="3"><b>SUB-TOTAL REMESADO</b></td><td></td><td style="text-align:right"><b>'.number_format($subTotal,2).'</b></td><td></td></tr>';
             }
-             $cuerpo_detalle.='<tr><td style="text-align:center"><b>'.$num_rem.'</b><hr></td><td colspan="4">&nbsp;<hr></td></tr>';
+             $cuerpo_detalle.='<tr><td style="text-align:center"><b>'.$num_rem.'</b><hr></td><td colspan="5">&nbsp;<hr></td></tr>';
                              $subTotal=0;
                              $c=0;
        }
@@ -98,16 +102,20 @@ order by numero_remesa,cuenta";
            $cuerpo_detalle.= "<tr><td  style=\"text-align:right\"></td>
                              <td style=\"text-align:center\"> ".$rows_e["fecha_remesa"] ."</td> 
                              <td  style=\"text-align:right\">".$cheque ."</td>
+                                 <td  style=\"text-align:right\">".$rows_e["numero_factura"] ."</td>
                              <td  style=\"text-align:right\">".$rows_e["monto_cheque"]."</td>
-                             <td  style=\"text-align:center\">".strtoupper($rows_e["cuenta"]) ."</td></tr>";
+                             <td  style=\"text-align:right\">".strtoupper($rows_e["cuenta"]) ."</td></tr>";
        
        
        $subTotal+=$rows_e["monto_cheque"];
        $temp=$rows_e["numero_remesa"];
        $tempC=$rows_e["cuenta"];
+       $total+=$subTotal;
        $c++;
         }
-         $cuerpo_detalle.='<tr><td style="text-align:right" colspan="3"><b>TOTAL REMESADO</b></td><td style="text-align:right"><b>'.$subTotal.'</b></td><td></td></tr>';
+        $cuerpo_detalle.='<tr><td style="text-align:right" colspan="3"><b>SUB-TOTAL REMESADO</b></td><td></td><td style="text-align:right"><b>'.number_format($subTotal,2).'</b></td><td></td></tr>';
+        $cuerpo_detalle.='<tr><td colspan="3"></td></tr>';
+        $cuerpo_detalle.='<tr><td style="text-align:right" colspan="3"><b>TOTAL REMESADO</b></td><td></td><td style="text-align:right"><b>'.number_format($total,2).'</b></td><td></td></tr>';
         $cuerpo_detalle.= "</table>";
         $Reporte=$encabezado.$cuerpo_detalle.$pie_factura;
 $pdf->writeHTML($Reporte, true, false, false, false, '');

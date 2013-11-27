@@ -15,7 +15,8 @@ Ext.define('MvcClientes.view.AbonoClientes.GrdAbonoClientes',{
                                    {header:"ID",dataIndex:"idfacturacion",width:50,hidden:true},
                                    {header:"Numero Factura", dataIndex:"numero_factura"},
                                    {header:"Clientes", dataIndex:"nom_cliente",flex:1},
-                                   {header:"Fecha Facturacion",dataIndex : "fecha_facturacion",renderer:Ext.util.Format.dateRenderer('d/m/Y') },
+                                   {header:"Fecha Facturacion",id:"fecha_facturacion",dataIndex : "fecha_facturacion",flex:1,renderer:Ext.util.Format.dateRenderer('d/m/Y') },
+                                   {header:"Fecha Programada Pago", dataIndex:"fecha_programada_pago",flex:1},//EL COLOR LO MANEJA LA CONSULTA EN ABONOCLIENTESREAD
                                    {header:"Saldo Pendiente ($)", dataIndex:"saldo_pendiente",flex:1}
 			],
 			dockedItems: [
@@ -30,8 +31,9 @@ Ext.define('MvcClientes.view.AbonoClientes.GrdAbonoClientes',{
 						scope: this,
 						action:'actLiquidar'
 						//handler:this.OnEditar
-						}
-					]
+						},"|&nbsp;&nbsp;<b style=\"color:red\"> Pago Retrasado </b>",
+                                                "|&nbsp;&nbsp;<b style=\"color:blue\"> Dia de Pago </b>"		
+                                            ]
 				},
 				{
 					xtype: 'pagingtoolbar',//Barra Paginadora al fondo del Grid
