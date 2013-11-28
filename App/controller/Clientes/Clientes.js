@@ -63,7 +63,7 @@ Ext.define('MvcClientes.controller.Clientes.Clientes',{
             form   = win.down('form'),
             record = form.getRecord(),
             values = form.getValues();
-
+        if(form.getForm().isValid()){
 	if (values.idmaestroClientes > 0){ //Si Hay algun Valor, entra en Modo de Actualizacion
 			record.set(values);
 		} else{ //De Lo contrario, si la accion fue para agregar, se inserta un registro
@@ -71,9 +71,9 @@ Ext.define('MvcClientes.controller.Clientes.Clientes',{
 			record.set(values);
 			record.setId(0);
 			this.getClientesClientesStore().add(record);
-		}
+		}   
         win.close();
-       
+        }
     },
 	
 	Eliminar: function()

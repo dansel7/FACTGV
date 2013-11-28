@@ -58,7 +58,7 @@ Ext.applyIf(me, {
     items: [
             {
                 xtype: 'form',
-                height: 50,
+                height: 365,
                 name: 'form',
                 layout: {
                     type: 'auto'
@@ -67,7 +67,7 @@ Ext.applyIf(me, {
                 [   {xtype: 'displayfield',name: 'displayfield1',id:'empDetails',value: ''},
                     {xtype: 'displayfield',name: 'displayfield1',id:'empDetails',value: ''},
                     {xtype : "textfield",id:"id_empresa", name : "id_empresa", fieldLabel : "ID",hidden: true},
-                    {xtype : "textfield", name : "nombre", fieldLabel : "Nombre de Empresa", width: 350},
+                    {xtype : "textfield", name : "nombre", fieldLabel : "Nombre de Empresa", width: 350,allowBlank : false},
                     {xtype: 'itemselector', id:"ISTipoFactura",
                      store:ds, name: 'tipo_factura',
                      width:350 ,anchor: '30%',

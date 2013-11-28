@@ -34,7 +34,7 @@ $pdf->SetPrintFooter(false);
 
 //set margins
 //$pdf->SetMargins(PDF_MARGIN_LEFT, PDF_MARGIN_TOP, PDF_MARGIN_RIGHT);
-$pdf->SetMargins(1, 1, 2);
+$pdf->SetMargins(1, 1.7, 2);
 
 //$pdf->SetHeaderMargin(0);
 //$pdf->SetFooterMargin(15);

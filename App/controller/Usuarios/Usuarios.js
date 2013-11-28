@@ -65,6 +65,7 @@ Ext.define('MvcClientes.controller.Usuarios.Usuarios',{
             record = form.getRecord(),
             values = form.getValues();
             //IMPORTANTE COLOCAR EL NOMBRE DEL ID CORRECTO DEL REGISTRO
+                if(form.getForm().isValid()){
 	if (values.idbenutzer > 0){ //Si Hay algun Valor, entra en Modo de Actualizacion
 			record.set(values);
 		} else{ //De Lo contrario, si la accion fue para agregar, se inserta un registro
@@ -74,7 +75,7 @@ Ext.define('MvcClientes.controller.Usuarios.Usuarios',{
 			this.getUsuariosUsuariosStore().add(record);
 		}
         win.close();
-       
+                }
     },
 	
 	Eliminar: function()

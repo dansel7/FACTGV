@@ -80,7 +80,7 @@ Ext.applyIf(me, {
     items: [
             {
                 xtype: 'form',
-                height: 50,
+                height: 415,
                 name: 'form',
                 layout: {
                     type: 'auto'
@@ -88,12 +88,12 @@ Ext.applyIf(me, {
                 items: 
                 [   {xtype: 'displayfield',name: 'displayfield1',id:'empDetails',value: ''},
                     {xtype : "textfield", name : "idbenutzer", id:"idbenutzer", fieldLabel : "Id",hidden: true},
-                    {xtype : "textfield", name : "Nombre", fieldLabel : "Nombre", width: 350},
+                    {xtype : "textfield", name : "Nombre", fieldLabel : "Nombre", width: 350,allowBlank : false},
                     {xtype : "textfield", name : "Apellido", fieldLabel : "Apellido", width: 350},
-                    {xtype : "textfield", name : "benutzer", fieldLabel : "Usuario", width: 250},
+                    {xtype : "textfield", name : "benutzer", fieldLabel : "Usuario", width: 250,allowBlank : false},
                     {xtype : "textfield", name : "kennwort", fieldLabel : "Contrase&ntilde;a", width: 250,inputType: 'password'},
-                    {xtype : "combobox", fieldLabel: "Perfil",queryMode: 'local', store: list_perfil, displayField: 'perfil',valueField: 'id_perfil',name:"id_perfil", width: 300},
-                    {xtype : "textfield", name : "perfil", fieldLabel : "perfil", width: 350,hidden: true},                  
+                    {xtype : "combobox", fieldLabel: "Perfil",queryMode: 'local', store: list_perfil, displayField: 'perfil',valueField: 'id_perfil',name:"id_perfil", width: 300,allowBlank : false},
+                    {xtype : "textfield", name : "perfil", fieldLabel : "perfil", width: 350,hidden: true},                
                     {
 				xtype: 'itemselector',
 	                        name: 'userEmp',

@@ -64,6 +64,7 @@ Ext.define('MvcClientes.controller.Empresa.Empresa',{
             form   = win.down('form'),
             record = form.getRecord(),
             values = form.getValues();
+    if(form.getForm().isValid()){
             //IMPORTANTE COLOCAR EL NOMBRE DEL ID CORRECTO DEL REGISTRO
 	if (values.id_empresa > 0){ //Si Hay algun Valor, entra en Modo de Actualizacion
 			record.set(values);
@@ -74,7 +75,7 @@ Ext.define('MvcClientes.controller.Empresa.Empresa',{
 			this.getEmpresaEmpresaStore().add(record);
 		}
         win.close();
-       
+    }
     },
 	
 	Eliminar: function()

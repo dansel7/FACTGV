@@ -34,18 +34,18 @@ Ext.define('MvcClientes.view.Clientes.CapturaEdicionClientes', {
             items: [
                     {
                         xtype: 'form',
-                        height: 50,
+                        height: 365,
                         layout: {
                             type: 'auto'
                         },
                         items: 
                         [   {xtype: 'displayfield',name: 'displayfield1',id:'empDetails',value: ''},
                             {xtype : "textfield", name : "idmaestroClientes", fieldLabel : "Id",hidden: true},
-                            {xtype : "textfield", name : "nom_cliente", fieldLabel : "Nombre", width: 350},
-                            {xtype : "textfield", name : "direccion", fieldLabel : "Direccion", width: 350},
-                            {xtype : "textfield", name : "NIT", fieldLabel : "NIT", width: 250},
-                            {xtype : "textfield", name : "NRC", fieldLabel : "NRC", width: 250},
-                            {xtype : "combobox", fieldLabel: "Departamento",queryMode: 'local', store: list_deptos,displayField: 'departamento',valueField: 'id_departamento',name:"id_departamento", width: 300},
+                            {xtype : "textfield", name : "nom_cliente", fieldLabel : "Nombre", width: 350,allowBlank : false},
+                            {xtype : "textfield", name : "direccion", fieldLabel : "Direccion", width: 350,allowBlank : false},
+                            {xtype : "textfield", name : "NIT", fieldLabel : "NIT", width: 250,allowBlank : false},
+                            {xtype : "textfield", name : "NRC", fieldLabel : "NRC", width: 250,allowBlank : false},
+                            {xtype : "combobox", fieldLabel: "Departamento",queryMode: 'local', store: list_deptos,allowBlank : false,displayField: 'departamento',valueField: 'id_departamento',name:"id_departamento", width: 300},
                             {xtype : "textfield", name : "departamento", fieldLabel : "departamento", width: 350,hidden: true},
                             {xtype : "textfield", name : "giro", fieldLabel : "Giro", width: 350},
                             {xtype : "checkbox", name : "gran_contribuyente", fieldLabel : "Gran Contribuyente",  inputValue: 'Si',uncheckedValue :'No'},
