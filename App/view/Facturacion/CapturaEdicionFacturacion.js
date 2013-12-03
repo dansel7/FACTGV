@@ -283,7 +283,7 @@ if(typeof(records) != "undefined" && typeof(records) != "string"){
                             height: 30,
                             maxHeight: 30,
                             maxHeight: 30,
-                            id:'buttons',
+                            id:'buttonFact',
                             ui: 'footer',
                             items: ['->',{xtype : "checkbox", name : "anulado", fieldLabel : "Anular Factura",  inputValue: 'Si',uncheckedValue :'No'}, {
                                     itemId: 'BtnClienteAceptar',

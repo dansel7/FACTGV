@@ -50,7 +50,8 @@ $pdf->setImageScale(PDF_IMAGE_SCALE_RATIO);
 // ---------------------------------------------------------
 // set font
 $pdf->SetFont('helvetica', '', 10);
-
+$fecha_inicio=$_GET["fecha_ini"];
+$fecha_fin=$_GET["fecha_fin"];
 $orientacion="vertical";
 // ---------------INICIO DEL REPORTE-----------------
 	$sql = "SELECT 
@@ -63,8 +64,9 @@ inner join abono_clientes ac on ac.id_abono_clientes=ab.id_abono_clientes
 inner join cuentas c on c.id_cuenta=ab.id_cuenta
 inner join bancos b on b.id_banco=c.id_banco
 inner join facturacion f on  f.idfacturacion=ac.idfacturacion
-where c.id_empresa=".$_SESSION["idEmpresa"]."
+where c.id_empresa=".$_SESSION["idEmpresa"]." and ab.fecha_remesa between '$fecha_inicio' and '$fecha_fin'
 order by fecha_remesa,numero_factura,numero_remesa,cuenta";
+        //QUEDA PENDIENTE EL FILTRADO POR FECHA.
         
     	$result = mysql_query($sql,$connection) or die('La consulta fall&oacute;: '.mysql_error());	
         

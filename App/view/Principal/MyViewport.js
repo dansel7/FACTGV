@@ -117,14 +117,20 @@ Ext.define('MvcClientes.view.Principal.MyViewport',{
                                         
                                         if (index==0)
                                            {
-                                              window.open("/facturaciones/php/reportes/reporte_1.php", "nuevo", "location=no, menubar=no, scrollbars=yes, statusbar=no, tittlebar=no");
+                                               ShowReport_1();
                                            }
                                         if (index==1)
                                            {
                                                
                                              window.open("/facturaciones/php/graficas/graf_venta_servicio.php", "nuevo", "location=no, menubar=no, scrollbars=yes, statusbar=no, tittlebar=no");                                           
                                             }
+                                            
                                         if (index==2)
+                                           {
+                                               addTabDashboard();
+                                              //addTabListadoAbonoBancos();
+                                           }
+                                        if (index==3)
                                            {
                                                addTabDashboard();
                                               //addTabListadoAbonoBancos();
@@ -147,6 +153,10 @@ Ext.define('MvcClientes.view.Principal.MyViewport',{
                                         },
                                         {
                                         text: 'Grafica de Ventas por Servicios',
+                                        leaf: true
+                                        },
+                                        {
+                                        text: 'Facturas Realizadas',
                                         leaf: true
                                         },
                                         {
@@ -393,6 +403,12 @@ Ext.define('MvcClientes.view.Principal.MyViewport',{
                			
                    } 
 			    this.TabPanelMain.setActiveTab(tab); //Se activa el Tab Clickeado 
+       } 
+       
+       /////////////////////////////////////////
+       //---------------REPORTES-------------//
+       function ShowReport_1(){
+          var FormAddEditarEmpresa= Ext.widget('ShowReport1');
        } 
         
 	
