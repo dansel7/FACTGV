@@ -64,7 +64,7 @@ inner join abono_clientes ac on ac.id_abono_clientes=ab.id_abono_clientes
 inner join cuentas c on c.id_cuenta=ab.id_cuenta
 inner join bancos b on b.id_banco=c.id_banco
 inner join facturacion f on  f.idfacturacion=ac.idfacturacion
-where c.id_empresa=".$_SESSION["idEmpresa"]." and ab.fecha_remesa between '$fecha_inicio' and '$fecha_fin'
+where c.id_empresa=".$_SESSION["idEmpresa"]." and ab.fecha_remesa between STR_TO_DATE('$fecha_inicio','%d/%m/%Y') and STR_TO_DATE('$fecha_fin','%d/%m/%Y')
 order by fecha_remesa,numero_factura,numero_remesa,cuenta";
         //QUEDA PENDIENTE EL FILTRADO POR FECHA.
         
@@ -72,7 +72,7 @@ order by fecha_remesa,numero_factura,numero_remesa,cuenta";
         
   $pdf->addpage($orientacion,'letter');      
   
-  $encabezado="<h2><img src=\"/facturaciones/resources/imagenes/gvlogo.png\" align=\"left\">
+  $encabezado="<h2><img src=\"/gv_facturaciones/resources/imagenes/gvlogo.png\" align=\"left\">
       &nbsp;Reporte de Abonos a Bancos - {$_SESSION["nombreEmpresa"]}<br></h2>";
   
   $cuerpo_detalle.= '<table width="700px">
