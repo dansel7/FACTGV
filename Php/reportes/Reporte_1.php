@@ -72,7 +72,7 @@ order by fecha_remesa,numero_factura,numero_remesa,cuenta";
         
   $pdf->addpage($orientacion,'letter');      
   
-  $encabezado="<h2><img src=\"/gv_facturaciones/resources/imagenes/gvlogo.png\" align=\"left\">
+  $encabezado="<h2><img src=\"/facturaciones/resources/imagenes/gvlogo.png\" align=\"left\">
       &nbsp;Reporte de Abonos a Bancos - {$_SESSION["nombreEmpresa"]}<br></h2>";
   
   $cuerpo_detalle.= '<table width="700px">

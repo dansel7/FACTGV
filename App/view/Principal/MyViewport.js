@@ -122,12 +122,12 @@ Ext.define('MvcClientes.view.Principal.MyViewport',{
                                         if (index==1)
                                            {
                                                
-                                             window.open("/facturaciones/php/graficas/graf_venta_servicio.php", "nuevo", "location=no, menubar=no, scrollbars=yes, statusbar=no, tittlebar=no");                                           
+                                             window.open("/gv_facturaciones/php/graficas/graf_venta_servicio.php", "nuevo", "location=no, menubar=no, scrollbars=yes, statusbar=no, tittlebar=no");                                           
                                             }
                                             
                                         if (index==2)
                                            {
-                                               addTabDashboard();
+                                                ShowReport_2();
                                               //addTabListadoAbonoBancos();
                                            }
                                         if (index==3)
@@ -293,20 +293,7 @@ Ext.define('MvcClientes.view.Principal.MyViewport',{
             //------------------FIN------------------//
              me.callParent();	
              
-              function addTabDashboard(){ 
-      	 var tab=this.TabPanelMain.getComponent('TabDashboard');
-		   if(!tab){ //si no existe lo creamos
-				tab = Ext.create('MvcClientes.view.Dashboard.PanelDashboard', {});
-				this.TabPanelMain.add(tab); //Se agrega el Panel Cliente al TabMain 
-				this.TabPanelMain.doLayout(); //Redibujado del Panel 
-				this.TabPanelMain.setActiveTab(tab); //Activamos el Tab
-               			
-             } 
-			    this.TabPanelMain.setActiveTab(tab); //Se activa el Tab Clickeado 
-				     		 
-	    }
-             
- ////Funci			 
+           ////Funci			 
 	 function addTabListadoClientes(){ 
       	 var tab=this.TabPanelMain.getComponent('TabListadoClientes');
 		   if(!tab){ //si no existe lo creamos
@@ -408,7 +395,11 @@ Ext.define('MvcClientes.view.Principal.MyViewport',{
        /////////////////////////////////////////
        //---------------REPORTES-------------//
        function ShowReport_1(){
-          var FormAddEditarEmpresa= Ext.widget('ShowReport1');
+          var FrmReporte1= Ext.widget('ShowReport1');
+       } 
+       
+       function ShowReport_2(){
+          var FrmReporte2= Ext.widget('ShowReport2');
        } 
         
 	

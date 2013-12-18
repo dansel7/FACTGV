@@ -16,15 +16,28 @@ Ext.define('MvcClientes.controller.Reportes.Reportes',{
 		    'ShowReport1 button[action=ShowReport1]'://Usando Ext.Component.Query
 			   {
 				 click:this.ShowReport1
+			   },
+                    'ShowReport2 button[action=ShowReport2]'://Usando Ext.Component.Query
+			   {
+				 click:this.ShowReport2
 			   }
-                           		  
+                          		  
 		});
+                
 	},
         ShowReport1: function(button){
             var win    = button.up('window'),
             form   = win.down('form'),
             values = form.getValues();
-           window.open("/facturaciones/php/reportes/reporte_1.php?fecha_ini="+values.fecha_inicio+"&fecha_fin="+values.fecha_fin, "nuevo", "location=no, menubar=no, scrollbars=yes, statusbar=no, tittlebar=no");
+           window.open("/gv_facturaciones/php/reportes/reporte_1.php?fecha_ini="+values.fecha_inicio+"&fecha_fin="+values.fecha_fin, "nuevo", "location=no, menubar=no, scrollbars=yes, statusbar=no, tittlebar=no");
+	},
+         ShowReport2: function(button){
+            var win    = button.up('window'),
+            form   = win.down('form'),
+            values = form.getValues();
+           window.open("/gv_facturaciones/php/reportes/reporte_2.php?fecha_ini="+values.fecha_inicio+"&fecha_fin="+values.fecha_fin, "nuevo", "location=no, menubar=no, scrollbars=yes, statusbar=no, tittlebar=no");
+           
+           
 	},
 });
 
