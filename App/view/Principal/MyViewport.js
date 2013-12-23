@@ -122,7 +122,7 @@ Ext.define('MvcClientes.view.Principal.MyViewport',{
                                         if (index==1)
                                            {
                                                
-                                             window.open("/gv_facturaciones/php/graficas/graf_venta_servicio.php", "nuevo", "location=no, menubar=no, scrollbars=yes, statusbar=no, tittlebar=no");                                           
+                                             window.open("/facturaciones/php/graficas/graf_venta_servicio.php", "nuevo", "location=no, menubar=no, scrollbars=yes, statusbar=no, tittlebar=no");                                           
                                             }
                                             
                                         if (index==2)

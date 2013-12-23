@@ -2,7 +2,7 @@
 Ext.define('MvcClientes.view.AbonoClientes.CapturaEdicionAbonoClientes', {
     extend: 'Ext.window.Window',
 	alias:'widget.FormAddEdicionAbonoClientes',
-    height: 230,
+    height: 250,
     width: 320,
     layout: {
         type: 'fit'
@@ -18,7 +18,7 @@ Ext.define('MvcClientes.view.AbonoClientes.CapturaEdicionAbonoClientes', {
        
        var tipo= new Ext.data.SimpleStore({
         fields: ['tipo'],
-        data: [['Transferencia'],['Cheque']]
+        data: [['Transferencia'],['Cheque'],['Pago En Efectivo']]
        });
        //list
        var list_cuentas = new Ext.data.Store({
@@ -43,7 +43,7 @@ Ext.applyIf(me, {
     items: [
             {
                 xtype: 'form',
-                height: 196,
+                height: 216,
                 name: 'form',
                 layout: {
                     type: 'auto'
@@ -80,9 +80,26 @@ Ext.applyIf(me, {
                                Ext.getCmp("id_cuenta").setValue("");
                                                               
                                Ext.getCmp("numero_cheque").hide(); 
-                               Ext.getCmp("numero_cheque").setValue("0"); 
+                               Ext.getCmp("numero_cheque").setValue("0"); //SI ES CERO ES UNA TRANSFERENCIA
                                Ext.getCmp("monto_cheque").hide();
                                Ext.getCmp("monto_cheque").setValue("0"); 
+                            }
+                             else if(newValue == "Pago En Efectivo")
+                            {
+                                //FALTA IMPLEMENTAR
+                                //ASI COMO UN CAMPO DE OBSERVACIONES.
+                                
+                          /*    Ext.getCmp("numero_cheque").show(); 
+                               Ext.getCmp("numero_cheque").setValue(""); 
+                               Ext.getCmp("monto_cheque").show();
+                               Ext.getCmp("monto_cheque").setValue("");
+                               
+                               Ext.getCmp("numero_remesa").hide();
+                               Ext.getCmp("numero_remesa").setValue("0"); 
+                               Ext.getCmp("monto_remesa").hide();
+                               Ext.getCmp("monto_remesa").setValue("0");
+                               Ext.getCmp("id_cuenta").hide();
+                               Ext.getCmp("id_cuenta").setValue("-1"); */
                             }
                         }
                      }

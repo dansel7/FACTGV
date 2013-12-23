@@ -39,8 +39,7 @@ mysql_select_db($db_name,$connection) or die("Error de conexion a la base de dat
                     `idfacturacion`=$idFacturacion";  
                     $rs = mysql_query($sql_clientes);
                     $id_abono_clientes=mysql_insert_id();
-                    //FALTA TERMINAR SQL 
-                    
+                   
             $sql_bancos ="INSERT INTO abono_bancos
                      SET
                     `fecha_remesa`='$fecha_pago',

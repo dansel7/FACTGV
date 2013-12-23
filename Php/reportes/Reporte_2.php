@@ -1,5 +1,5 @@
 <?php
-//REPORTE DE UTILIDADES EN BANCOS
+//REPORTE SERVICIOS FACTURADOS
 
 
 error_reporting(0);
@@ -57,14 +57,14 @@ $idempresa=isset($_SESSION["idEmpresa"])? $_SESSION["idEmpresa"]:"-1";
 // ---------------INICIO DEL REPORTE-----------------
 	$sql = "Select f.fecha_facturacion,f.numero_factura,mc.nom_cliente,f.venta_total-f.iva valor_neto,f.iva,f.iva_retenido,f.venta_total
 from facturacion f inner join maestroclientes mc on f.idmaestroClientes=mc.idmaestroClientes 
-where f.id_empresa=".$idempresa ." and f.fecha_facturacion between STR_TO_DATE('$fecha_inicio','%d/%m/%Y') and STR_TO_DATE('$fecha_fin','%d/%m/%Y')";
+where f.id_empresa=".$idempresa ." and f.fecha_facturacion between STR_TO_DATE('$fecha_inicio','%d/%m/%Y') and STR_TO_DATE('$fecha_fin','%d/%m/%Y') order by f.numero_factura";
         //QUEDA PENDIENTE EL FILTRADO POR FECHA.
         
     	$result = mysql_query($sql,$connection) or die('La consulta fall&oacute;: '.mysql_error());	
         
   $pdf->addpage($orientacion,'letter');      
   
-  $encabezado="<h2><img src=\"/gv_facturaciones/resources/imagenes/gvlogo.png\" align=\"left\">
+  $encabezado="<h2><img src=\"/facturaciones/resources/imagenes/gvlogo.png\" align=\"left\">
       &nbsp;Reporte de Facturacion - {$_SESSION["nombreEmpresa"]}<br></h2>";
   
   $cuerpo_detalle.= '<table width="700px" cellpadding="1">

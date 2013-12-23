@@ -95,6 +95,7 @@ order by fecha_remesa,numero_factura,numero_remesa,cuenta";
        if($num_rem!=$temp || $cuenta!=$tempC){
             if($c!=0){
              $cuerpo_detalle.='<tr><td style="text-align:right" colspan="3"><b>SUB-TOTAL REMESADO</b></td><td></td><td style="text-align:right"><b>'.number_format($subTotal,2).'</b></td><td></td></tr>';
+             $total+=$subTotal;
             }
              $cuerpo_detalle.='<tr><td style="text-align:center"><b>'.$num_rem.'</b><hr></td><td colspan="5">&nbsp;<hr></td></tr>';
                              $subTotal=0;
@@ -112,9 +113,9 @@ order by fecha_remesa,numero_factura,numero_remesa,cuenta";
        $subTotal+=$rows_e["monto_cheque"];
        $temp=$rows_e["numero_remesa"];
        $tempC=$rows_e["cuenta"];
-       $total+=$subTotal;
        $c++;
         }
+        $total+=$subTotal;
         $cuerpo_detalle.='<tr><td style="text-align:right" colspan="3"><b>SUB-TOTAL REMESADO</b></td><td></td><td style="text-align:right"><b>'.number_format($subTotal,2).'</b></td><td></td></tr>';
         $cuerpo_detalle.='<tr><td colspan="3"></td></tr>';
         $cuerpo_detalle.='<tr><td style="text-align:right" colspan="3"><b>TOTAL REMESADO</b></td><td></td><td style="text-align:right"><b>'.number_format($total,2).'</b></td><td></td></tr>';
