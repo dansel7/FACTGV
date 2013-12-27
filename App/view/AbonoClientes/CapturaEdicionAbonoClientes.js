@@ -69,6 +69,8 @@ Ext.applyIf(me, {
                                Ext.getCmp("monto_remesa").setValue("0");
                                Ext.getCmp("id_cuenta").hide();
                                Ext.getCmp("id_cuenta").setValue("-1");
+                               Ext.getCmp("monto_efectivo").hide(); 
+                               Ext.getCmp("monto_efectivo").setValue("0"); 
                             }
                             else if(newValue == "Transferencia")
                             {
@@ -83,23 +85,25 @@ Ext.applyIf(me, {
                                Ext.getCmp("numero_cheque").setValue("0"); //SI ES CERO ES UNA TRANSFERENCIA
                                Ext.getCmp("monto_cheque").hide();
                                Ext.getCmp("monto_cheque").setValue("0"); 
+                               Ext.getCmp("monto_efectivo").hide(); 
+                               Ext.getCmp("monto_efectivo").setValue("0"); 
                             }
                              else if(newValue == "Pago En Efectivo")
                             {
-                                //FALTA IMPLEMENTAR
-                                //ASI COMO UN CAMPO DE OBSERVACIONES.
                                 
-                          /*    Ext.getCmp("numero_cheque").show(); 
-                               Ext.getCmp("numero_cheque").setValue(""); 
-                               Ext.getCmp("monto_cheque").show();
-                               Ext.getCmp("monto_cheque").setValue("");
+                               Ext.getCmp("monto_efectivo").show(); 
+                               Ext.getCmp("monto_efectivo").setValue(""); 
                                
+                               Ext.getCmp("numero_cheque").hide(); 
+                               Ext.getCmp("numero_cheque").setValue("-1"); //SI ES -1 ES UN PAGO EN EFECTIVO
+                               Ext.getCmp("monto_cheque").hide();
+                               Ext.getCmp("monto_cheque").setValue("0");                              
                                Ext.getCmp("numero_remesa").hide();
                                Ext.getCmp("numero_remesa").setValue("0"); 
                                Ext.getCmp("monto_remesa").hide();
                                Ext.getCmp("monto_remesa").setValue("0");
                                Ext.getCmp("id_cuenta").hide();
-                               Ext.getCmp("id_cuenta").setValue("-1"); */
+                               Ext.getCmp("id_cuenta").setValue("-1"); 
                             }
                         }
                      }
@@ -116,21 +120,25 @@ Ext.applyIf(me, {
                     //CAMPOS MOSTRADOS SI ES TRANSFERENCIA
                     {xtype : "numberfield",id: "numero_remesa" , name : "numero_remesa", fieldLabel : "No. Transferencia", hideTrigger: true,flex: 1,allowDecimals: false,allowBlank : false,hidden: true},
                     {xtype : "numberfield", id : "monto_remesa", name :"monto_remesa",fieldLabel : "Monto de Remesa",hideTrigger: true,flex: 1,allowDecimals: true,decimalPrecision: 2, margin: '0 10 0 0',decimalSeparator: ".",allowBlank : false,hidden: true},
-                    {xtype : "combobox", id : "id_cuenta",name:"id_cuenta", fieldLabel: "Cuenta",queryMode: 'local', store: list_cuentas, displayField: 'cuenta',valueField: 'id_cuenta', width: 300,allowBlank : false,hidden: true}
+                    {xtype : "combobox", id : "id_cuenta",name:"id_cuenta", fieldLabel: "Cuenta",queryMode: 'local', store: list_cuentas, displayField: 'cuenta',valueField: 'id_cuenta', width: 300,allowBlank : false,hidden: true},
+                    
+                    //CAMPO MOSTRADO SI ES PAGO EN EFECTIVO
+                                        
+                    {xtype : "numberfield", id : "monto_efectivo", name :"monto_efectivo",fieldLabel : "Monto en Efectivo",hideTrigger: true,flex: 1,allowDecimals: true,decimalPrecision: 2, margin: '0 10 0 0',decimalSeparator: ".",allowBlank : false,hidden: true}
                     
                     
                 ],
             dockedItems : [{
                             xtype: 'toolbar',
                             dock: 'bottom',
-                            id:'buttons',
+                            id:'AbClibutton',
                             ui: 'footer',
                             items: ['->', {
-                                    itemId: 'BtnClienteAceptar',
+                                    itemId: 'BtnAbClienteAceptar',
                                     text: 'Guardar',
                                     action: 'actGuardar'
                             },{
-                                    itemId: 'BtnClienteCancelar',
+                                    itemId: 'BtnAbClienteCancelar',
                                     text: 'Cancelar',
                                     scope: this,
                                     handler: this.close

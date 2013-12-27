@@ -121,8 +121,7 @@ Ext.define('MvcClientes.view.Principal.MyViewport',{
                                            }
                                         if (index==1)
                                            {
-                                               
-                                             window.open("/facturaciones/php/graficas/graf_venta_servicio.php", "nuevo", "location=no, menubar=no, scrollbars=yes, statusbar=no, tittlebar=no");                                           
+                                             ShowGraf1() ;
                                             }
                                             
                                         if (index==2)
@@ -401,7 +400,11 @@ Ext.define('MvcClientes.view.Principal.MyViewport',{
        function ShowReport_2(){
           var FrmReporte2= Ext.widget('ShowReport2');
        } 
-        
+        /////////////////////////////////////////
+       //---------------GRAFICAS-------------//
+       function ShowGraf1(){
+          var FrmGraf1= Ext.widget('ShowGraf1');
+       } 
 	
     }
 		

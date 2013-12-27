@@ -7,6 +7,7 @@ Ext.define('MvcClientes.model.Abono.AbonoClientes', {
                                 { name: 'monto_cheque',  type: 'number'},
                                 { name: 'numero_remesa',  type: 'string'},
                                 { name: 'monto_remesa',  type: 'number'},
+                                { name: 'monto_efectivo',  type: 'number'},
                                 { name: 'idfacturacion', type: 'int'},
                                 { name: 'id_cuenta', type: 'int'},
 				{ name: 'numero_factura', type: 'int'},

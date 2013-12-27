@@ -42,6 +42,7 @@ Ext.define('MvcClientes.controller.AbonoClientes.AbonoClientes',{
 	},
 	
 	GuardarLiquidacion: function(button) {
+            
         var win    = button.up('window'),
             form   = win.down('form'),
             record = form.getRecord(),

@@ -164,7 +164,7 @@ if(typeof(records) != "undefined" && typeof(records) != "string"){
                                     xtype : "combobox", id:"id_servicio",name:"id_servicio", 
                                 queryMode: 'local', store: ListCatServ,
                                 displayField: 'servicio',valueField: 'id_servicio',allowBlank : false
-                                },renderer:function(id){
+                                },renderer:function(id){//A PARTIR DEL ID DE SERVICIO SE MUESTRA EL NOMBRE DEL SERVICIO
                                   var index = ListCatServ.find('id_servicio',id);
                                     if(index>-1){
                                             var record = ListCatServ.getAt(index);

@@ -11,7 +11,7 @@
             $sql = "SELECT
                         ac.id_abono_clientes,
                         f.numero_factura, 
-			ac.numero_cheque,
+			if(ac.numero_cheque=-1,'<b>Pago en Efectivo</b>',ac.numero_cheque) numero_cheque,
                         mc.nom_cliente,
                         if(DATE_FORMAT(f.fecha_facturacion, '%d/%m/%Y') = '00/00/0000', null, DATE_FORMAT(f.fecha_facturacion, '%d/%m/%Y')) fecha_facturacion,
 			if(DATE_FORMAT(ac.fecha_pago, '%d/%m/%Y') = '00/00/0000', null, DATE_FORMAT(ac.fecha_pago, '%d/%m/%Y')) fecha_pago

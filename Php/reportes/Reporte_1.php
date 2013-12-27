@@ -72,7 +72,7 @@ order by fecha_remesa,numero_factura,numero_remesa,cuenta";
         
   $pdf->addpage($orientacion,'letter');      
   
-  $encabezado="<h2><img src=\"/facturaciones/resources/imagenes/gvlogo.png\" align=\"left\">
+  $encabezado="<h2><img src=\"/gv_facturaciones/resources/imagenes/gvlogo.png\" align=\"left\">
       &nbsp;Reporte de Abonos a Bancos - {$_SESSION["nombreEmpresa"]}<br></h2>";
   
   $cuerpo_detalle.= '<table width="700px">
@@ -101,7 +101,17 @@ order by fecha_remesa,numero_factura,numero_remesa,cuenta";
                              $subTotal=0;
                              $c=0;
        }
-       $cheque=($rows_e["numero_cheque"]=="0")? "TRANSFERENCIA" : $rows_e["numero_cheque"];
+       $cheque="";
+           if($rows_e["numero_cheque"]=="0"){
+               $cheque= "TRANSFERENCIA";
+               
+           } else if($rows_e["numero_cheque"]=="-1"){
+               $cheque= "PAGO EN EFECTIVO";
+               
+           } else{
+               $cheque= $rows_e["numero_cheque"];
+           }
+       
            $cuerpo_detalle.= "<tr><td  style=\"text-align:right\"></td>
                              <td style=\"text-align:center\"> ".$rows_e["fecha_remesa"] ."</td> 
                              <td  style=\"text-align:right\">".$cheque ."</td>

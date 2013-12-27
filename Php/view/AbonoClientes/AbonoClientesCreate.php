@@ -12,6 +12,8 @@ mysql_select_db($db_name,$connection) or die("Error de conexion a la base de dat
         $numero_cheque=$data->numero_cheque;
 	$monto_cheque=$data->monto_cheque;
         $idFacturacion=$data->idfacturacion;
+       
+        $monto_efectivo=$data->monto_efectivo;
         
         $numero_remesa=$data->numero_remesa;
         $monto_remesa=$data->monto_remesa;
@@ -47,6 +49,17 @@ mysql_select_db($db_name,$connection) or die("Error de conexion a la base de dat
                     `id_abono_clientes`=$id_abono_clientes,
                     `id_cuenta`=$id_cuenta";  
                     $rs = mysql_query($sql_bancos);
+                    
+        }else if($tipo_pago=="Pago En Efectivo"){
+            
+        $SqlInsert ="INSERT INTO abono_clientes
+                     SET
+                    `fecha_pago`='$fecha_pago',
+                    `numero_cheque`='$numero_cheque',
+                    `monto_cheque`=$monto_efectivo,
+                    `idfacturacion`=$idFacturacion";  
+                    $rs = mysql_query($SqlInsert);
+                    
         }
         
         
