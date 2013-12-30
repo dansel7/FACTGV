@@ -13,8 +13,8 @@ require_once ('jpgraph/src/jpgraph_bar.php');
 $fecha_inicio=$_GET["fecha_ini"];
 $fecha_fin=$_GET["fecha_fin"];
 
-$sql="select cs.servicio servicio,sum(df.venta_gravada) ventas from detalleFacturacion df 
-inner join facturacion f on df.idfacturacion=f.idfacturacion
+$sql="select cs.servicio servicio,sum(df.venta_nosujeta + df.venta_exenta + df.venta_gravada) ventas 
+from detalleFacturacion df inner join facturacion f on df.idfacturacion=f.idfacturacion 
 inner join catalogo_servicios cs on cs.id_servicio=df.id_servicio where f.id_empresa={$_SESSION["idEmpresa"]} 
 and f.fecha_facturacion between STR_TO_DATE('$fecha_inicio','%d/%m/%Y') and STR_TO_DATE('$fecha_fin','%d/%m/%Y')
  group by df.id_servicio";
@@ -23,7 +23,7 @@ $result = mysql_query($sql,$connection) or die('La consulta fall&oacute;: '.mysq
 $servicios[]=("");//SE INICIALIZAN
    $ventas[]=("");//EN EL CASO QUE DEVUELVA UN ARREGLO VACIO
 while($row = mysql_fetch_assoc($result)){
-   $servicios[]="{$row['servicio']} \${$row['ventas']}";
+   $servicios[]="{$row['servicio']} \n \${$row['ventas']}";
    $ventas[]=$row['ventas'];
 }
 

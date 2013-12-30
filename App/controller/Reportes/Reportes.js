@@ -34,13 +34,13 @@ Ext.define('MvcClientes.controller.Reportes.Reportes',{
             var win    = button.up('window'),
             form   = win.down('form'),
             values = form.getValues();
-           window.open("/gv_facturaciones/php/reportes/reporte_1.php?fecha_ini="+values.fecha_inicio+"&fecha_fin="+values.fecha_fin, "nuevo", "location=no, menubar=no, scrollbars=yes, statusbar=no, tittlebar=no");
+           window.open("/facturaciones/php/reportes/reporte_1.php?fecha_ini="+values.fecha_inicio+"&fecha_fin="+values.fecha_fin, "nuevo", "location=no, menubar=no, scrollbars=yes, statusbar=no, tittlebar=no");
 	},
          ShowReport2: function(button){
             var win    = button.up('window'),
             form   = win.down('form'),
             values = form.getValues();
-           window.open("/gv_facturaciones/php/reportes/reporte_2.php?fecha_ini="+values.fecha_inicio+"&fecha_fin="+values.fecha_fin, "nuevo", "location=no, menubar=no, scrollbars=yes, statusbar=no, tittlebar=no");
+           window.open("/facturaciones/php/reportes/reporte_2.php?fecha_ini="+values.fecha_inicio+"&fecha_fin="+values.fecha_fin, "nuevo", "location=no, menubar=no, scrollbars=yes, statusbar=no, tittlebar=no");
            
            
 	},
@@ -48,7 +48,7 @@ Ext.define('MvcClientes.controller.Reportes.Reportes',{
             var win    = button.up('window'),
             form   = win.down('form'),
             values = form.getValues();
-           window.open("/gv_facturaciones/php/graficas/graf_venta_servicio.php?fecha_ini="+values.fecha_inicio+"&fecha_fin="+values.fecha_fin, "nuevo", "location=no, menubar=no, scrollbars=yes, statusbar=no, tittlebar=no");
+           window.open("/facturaciones/php/graficas/graf_venta_servicio.php?fecha_ini="+values.fecha_inicio+"&fecha_fin="+values.fecha_fin, "nuevo", "location=no, menubar=no, scrollbars=yes, statusbar=no, tittlebar=no");
            
            
 	}
