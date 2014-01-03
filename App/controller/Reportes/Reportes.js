@@ -1,6 +1,6 @@
 Ext.define('MvcClientes.controller.Reportes.Reportes',{
 	extend		: 'Ext.app.Controller',
-        views		: ['Reportes.ShowReport1','Reportes.ShowReport2','Reportes.ShowGraf1'],
+        views		: ['Reportes.ShowReport1','Reportes.ShowReport2','Reportes.ShowReport3','Reportes.ShowGraf1'],
 	refs:[ //Esta linea se usa cuando se hace referencia a una Vista dentro de un grid en un Controller
 	 
 	  {
@@ -22,6 +22,11 @@ Ext.define('MvcClientes.controller.Reportes.Reportes',{
 				 click:this.ShowReport2
 			   }
                            ,
+                    'ShowReport3 button[action=ShowReport3]'://Usando Ext.Component.Query
+			   {
+				 click:this.ShowReport3
+			   }
+                           ,
                     'ShowGraf1 button[action=ShowGraf1]'://Usando Ext.Component.Query
 			   {
 				 click:this.ShowGraf1
@@ -41,8 +46,12 @@ Ext.define('MvcClientes.controller.Reportes.Reportes',{
             form   = win.down('form'),
             values = form.getValues();
            window.open("/facturaciones/php/reportes/reporte_2.php?fecha_ini="+values.fecha_inicio+"&fecha_fin="+values.fecha_fin, "nuevo", "location=no, menubar=no, scrollbars=yes, statusbar=no, tittlebar=no");
-           
-           
+        },
+         ShowReport3: function(button){
+            var win    = button.up('window'),
+            form   = win.down('form'),
+            values = form.getValues();
+           window.open("/facturaciones/php/reportes/reporte_3.php?fecha_ini="+values.fecha_inicio+"&fecha_fin="+values.fecha_fin, "nuevo", "location=no, menubar=no, scrollbars=yes, statusbar=no, tittlebar=no");
 	},
          ShowGraf1: function(button){
             var win    = button.up('window'),

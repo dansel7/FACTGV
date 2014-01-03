@@ -119,17 +119,21 @@ Ext.define('MvcClientes.view.Principal.MyViewport',{
                                            {
                                                ShowReport_1();
                                            }
-                                        if (index==1)
-                                           {
-                                             ShowGraf1() ;
-                                            }
-                                            
-                                        if (index==2)
+                                           if (index==1)
                                            {
                                                 ShowReport_2();
                                               //addTabListadoAbonoBancos();
+                                           }if (index==2)
+                                           {
+                                                ShowReport_3();
+                                              //addTabListadoAbonoBancos();
                                            }
                                         if (index==3)
+                                           {
+                                             ShowGraf1() ;
+                                            }
+                                                                                    
+                                        if (index==4)
                                            {
                                                addTabDashboard();
                                               //addTabListadoAbonoBancos();
@@ -151,11 +155,15 @@ Ext.define('MvcClientes.view.Principal.MyViewport',{
                                         leaf: true
                                         },
                                         {
-                                        text: 'Grafica de Ventas por Servicios',
+                                        text: 'Facturas Realizadas',
                                         leaf: true
                                         },
                                         {
-                                        text: 'Facturas Realizadas',
+                                        text: 'Facturas Pendientes de Pago',
+                                        leaf: true
+                                        },
+                                        {
+                                        text: 'Grafica de Ventas por Servicios',
                                         leaf: true
                                         },
                                         {
@@ -399,6 +407,9 @@ Ext.define('MvcClientes.view.Principal.MyViewport',{
        
        function ShowReport_2(){
           var FrmReporte2= Ext.widget('ShowReport2');
+       } 
+       function ShowReport_3(){
+          var FrmReporte3= Ext.widget('ShowReport3');
        } 
         /////////////////////////////////////////
        //---------------GRAFICAS-------------//
