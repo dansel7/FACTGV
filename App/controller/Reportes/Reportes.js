@@ -51,7 +51,7 @@ Ext.define('MvcClientes.controller.Reportes.Reportes',{
             var win    = button.up('window'),
             form   = win.down('form'),
             values = form.getValues();
-           window.open("/facturaciones/php/reportes/reporte_3.php?fecha_ini="+values.fecha_inicio+"&fecha_fin="+values.fecha_fin, "nuevo", "location=no, menubar=no, scrollbars=yes, statusbar=no, tittlebar=no");
+           window.open("/facturaciones/php/reportes/reporte_3.php?idmc="+values.idmaestroClientes+"&fecha_ini="+values.fecha_inicio+"&fecha_fin="+values.fecha_fin, "nuevo", "location=no, menubar=no, scrollbars=yes, statusbar=no, tittlebar=no");
 	},
          ShowGraf1: function(button){
             var win    = button.up('window'),

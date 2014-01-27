@@ -276,7 +276,7 @@ Ext.define('MvcClientes.view.Principal.MyViewport',{
                 height: 21,
                 margins: '0',
                 activeItem: 0,
-                html: '<CENTER><p>Propiedad de Grupo Villatoro - Derechos Reservados 2013</p></CENTER>',
+                html: '<CENTER><p>Propiedad de Grupo Villatoro - Derechos Reservados 2014</p></CENTER>',
                 style: 'font-size: 9px; text-align: left;',
                 split: true
             },

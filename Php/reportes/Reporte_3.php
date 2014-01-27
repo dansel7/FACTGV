@@ -50,8 +50,11 @@ $pdf->setImageScale(PDF_IMAGE_SCALE_RATIO);
 // ---------------------------------------------------------
 // set font
 $pdf->SetFont('helvetica', '', 9);
+
+
 $fecha_inicio=$_GET["fecha_ini"];
 $fecha_fin=$_GET["fecha_fin"];
+$idmc=($_GET["idmc"]>0)? " AND mc.idmaestroclientes=".$_GET["idmc"]:"";
 $orientacion="vertical";
 $idempresa=isset($_SESSION["idEmpresa"])? $_SESSION["idEmpresa"]:"-1";
 // ---------------INICIO DEL REPORTE-----------------
@@ -65,7 +68,7 @@ $sql = "SELECT
                 f.venta_total-iFNull(sum(monto_cheque),0) saldo_pendiente 
                 from abono_clientes ac right join facturacion f on ac.idfacturacion=f.idfacturacion 
                 inner join maestroclientes mc on f.idmaestroClientes=mc.idmaestroClientes 
-                WHERE f.anulado='No' AND id_empresa=".$idempresa." AND idbenutzer=".$_SESSION["idbenutzer"]."
+                WHERE f.anulado='No' AND id_empresa=".$idempresa." AND idbenutzer=".$_SESSION["idbenutzer"]." $idmc
                 AND f.fecha_facturacion between STR_TO_DATE('$fecha_inicio','%d/%m/%Y') and STR_TO_DATE('$fecha_fin','%d/%m/%Y')
                 GROUP BY f.idfacturacion
                 HAVING saldo_pendiente>0 order by numero_factura";
@@ -88,6 +91,7 @@ $sql = "SELECT
                      </tr>
                      <tr><td colspan="5"></td></tr>';
    $subTpendiente=0;
+   $nclient="";
   while($rows_e = mysql_fetch_array($result)){
       
       $cuerpo_detalle.= "<tr>
@@ -99,13 +103,15 @@ $sql = "SELECT
                         </tr>";
 
                 $subTpendiente+=$rows_e["saldo_pendiente"];
-       
+                
+       if($idmc!="") $nclient= "ESTADO DE CUENTA: <b>".$rows_e["nom_cliente"]."</b><br><br> ";//Se guarda el nombre del cliente si es que se ha filtrado por uno.
+       //Si se filtro para todos nos almacenara nada ni mostrara nada.
         }
         $cuerpo_detalle.='<tr><td colspan="5"></td></tr>';
         $cuerpo_detalle.='<tr><td style="text-align:right" colspan="4"><b>TOTAL PENDIENTE DE PAGO</b></td><td style="text-align:right"><b>$ '.number_format($subTpendiente,2).'</b></td></tr>';
         $cuerpo_detalle.='<tr><td colspan="5"></td></tr>';
         $cuerpo_detalle.= "</table>";
-        $Reporte=$encabezado.$cuerpo_detalle.$pie_factura;
+        $Reporte=$encabezado.$nclient.$cuerpo_detalle.$pie_factura;
 $pdf->writeHTML($Reporte, true, false, false, false, '');
 
 
