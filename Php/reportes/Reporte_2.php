@@ -55,7 +55,7 @@ $fecha_fin=$_GET["fecha_fin"];
 $orientacion="vertical";
 $idempresa=isset($_SESSION["idEmpresa"])? $_SESSION["idEmpresa"]:"-1";
 // ---------------INICIO DEL REPORTE-----------------
-	$sql = "Select f.fecha_facturacion,f.numero_factura,mc.nom_cliente,f.venta_total-f.iva+f.iva_retenido valor_neto,f.iva,f.iva_retenido,f.venta_total
+	$sql = "Select f.fecha_facturacion,f.numero_factura,mc.nom_cliente,f.venta_total-f.iva+f.iva_retenido valor_neto,f.iva,f.iva_retenido,f.venta_total,f.anulado
 from facturacion f inner join maestroclientes mc on f.idmaestroClientes=mc.idmaestroClientes 
 where f.id_empresa=".$idempresa ." and f.fecha_facturacion between STR_TO_DATE('$fecha_inicio','%d/%m/%Y') and STR_TO_DATE('$fecha_fin','%d/%m/%Y') order by f.numero_factura";
         //QUEDA PENDIENTE EL FILTRADO POR FECHA.
@@ -83,9 +83,16 @@ where f.id_empresa=".$idempresa ." and f.fecha_facturacion between STR_TO_DATE('
   $subTIvaRetenido=0;
   $subTVentaTotal=0;
   while($rows_e = mysql_fetch_array($result)){
-      
-      $cuerpo_detalle.= "<tr>
-                             <td  style=\"text-align:right\"> ".substr($rows_e["fecha_facturacion"],0,11) ."</td> 
+        if($rows_e["anulado"]=="Si"){
+        $cuerpo_detalle.= "<tr style=\"background-color:yellow\">
+                          <td  style=\"text-align:right\"> ".substr($rows_e["fecha_facturacion"],0,11) ."</td> 
+                          <td  style=\"text-align:center\">".$rows_e["numero_factura"] ."</td>
+                          <td  style=\"text-align:left\">".$rows_e["nom_cliente"] ."</td>
+       <td  style=\"text-align:center\" colspan=\"4\">------------      <b>FACTURA ANULADA</b>    ------------</td></tr>";
+        }
+        else{
+              $cuerpo_detalle.= "<tr> 
+                                     <td  style=\"text-align:right\"> ".substr($rows_e["fecha_facturacion"],0,11) ."</td> 
                              <td  style=\"text-align:center\">".$rows_e["numero_factura"] ."</td>
                              <td  style=\"text-align:left\">".$rows_e["nom_cliente"] ."</td>
                              <td  style=\"text-align:right\">".number_format($rows_e["valor_neto"],2)."</td>
@@ -98,6 +105,7 @@ where f.id_empresa=".$idempresa ." and f.fecha_facturacion between STR_TO_DATE('
                 $subTIva+=$rows_e["iva"];
                 $subTIvaRetenido+=$rows_e["iva_retenido"];
                 $subTVentaTotal+=$rows_e["venta_total"];
+            }
        
         }
         $cuerpo_detalle.='<tr><td colspan="7"></td></tr>';

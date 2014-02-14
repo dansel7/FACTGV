@@ -1,5 +1,5 @@
 
-////////////Pueden usar tambien este dise�o de Formulario///////////////////
+////////////Pueden usar tambien este diseno de Formulario///////////////////
 
 
 Ext.define('MvcClientes.view.Facturacion.CapturaEdicionFacturacion', {
@@ -104,7 +104,13 @@ if(typeof(records) != "undefined" && typeof(records) != "string"){
                 Ext.getCmp("venta_total").setValue(sumExenta+sumNoSuj+sum+Ext.getCmp("iva").getValue()-Ext.getCmp("iva_retenido").getValue());   
                  
             }
-   /////// FIN DE FUNCION DE TOTALES         
+   /////// FIN DE FUNCION DE TOTALES     
+   
+   
+   /////EFECTO AL ANULAR FACTURA//////
+  
+   /////EFECTO AL ANULAR FACTURA//////
+   
 
         var me = this;
         Ext.applyIf(me, {
@@ -282,10 +288,13 @@ if(typeof(records) != "undefined" && typeof(records) != "string"){
                             dock: 'bottom',
                             height: 30,
                             maxHeight: 30,
-                            maxHeight: 30,
                             id:'buttonFact',
                             ui: 'footer',
-                            items: ['->',{xtype : "checkbox", name : "anulado", fieldLabel : "Anular Factura",  inputValue: 'Si',uncheckedValue :'No'}, {
+                            items: ['->',{xtype : "checkbox",id:"anulado", name : "anulado", fieldLabel : "Anular Factura",  inputValue: 'Si',uncheckedValue :'No',   
+                                    listeners: {
+            change: function(field, newValue, oldValue, eOpts){
+                console.log('change:' + field.fieldLabel + ' ' + newValue);
+            }}}, {
                                     itemId: 'BtnClienteAceptar',
                                     text: 'Vista Previa',
                                     action: 'actGuardar'

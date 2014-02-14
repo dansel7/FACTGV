@@ -52,7 +52,7 @@ $pdf->setImageScale(PDF_IMAGE_SCALE_RATIO);
 //$pdf->setLanguageArray($l); 
 // ---------------------------------------------------------
 // set font
-$pdf->SetFont('helvetica', '', 10);
+$pdf->SetFont('courierB', '', 10);
 
 $orientacion="vertical";
 // ---------------INICIO DEL REPORTE-----------------
@@ -110,7 +110,7 @@ $orientacion="vertical";
                 <td style="text-align:left;font-size:9pt" width="350px" >'.strtoupper($rows_e["giro"]).'</td>
             </tr>
             <tr>
-            <td >&nbsp;</td>
+            <td>&nbsp;</td>
             <td colspan="3" style="text-align:center" width="400px">
             '.strtoupper($rows_e["cond_operacion"]).'
             </td>
@@ -131,7 +131,7 @@ $orientacion="vertical";
                         <td width="370px">
                         '. strtoupper($rows_e["concepto"])  .'
                         </td>
-                        <td width="60px" style="text-align:right">
+                        <td width="70px" style="text-align:right">
                         '. $rows_e["valor_concepto"] .'
                         </td>
                         <td width="60px" style="text-align:right">
@@ -150,14 +150,14 @@ $orientacion="vertical";
         $tot_venta_exentas+=$rows_e["venta_exenta"];
         //ESTA ES LA PARTE QUE CONTIENE EL TOTAL EN LETRAS Y SUS DESGLOSES
         $pie_factura='</table></td></tr>
-                      <tr><td colspan="2" width="460px"></td>
+                      <tr><td colspan="2" width="468px"></td>
                           <td width="60px"></td>
-                          <td width="60px" style="text-align:right">'. number_format($tot_venta_no_sujeta,2) .'</td>
+                          <td width="62px" style="text-align:right">'. number_format($tot_venta_no_sujeta,2) .'</td>
                           <td width="60px" style="text-align:right">'. number_format($tot_venta_exentas,2) .'</td>
                           <td width="60px"style="text-align:right">'. number_format($subTotal,2) .'</td>
                       </tr>
                       <tr><td colspan="6" style="text-align:left">
-                        <table width="686px" cellspacing="4">
+                        <table width="688px" cellspacing="4">
                         <tr>
                            <td>'. strtoupper($Total_enLetras->ValorEnLetras($rows_e["venta_total"],"Dolares")) .'</td>
                            <td height="18px" style="text-align:right">'.$rows_e["iva"] .'</td>
@@ -180,7 +180,7 @@ $orientacion="vertical";
                      <tr><td colspan="6" style="text-align:right">
                          <table>
                          <tr>    
-                            <td width="682px">
+                            <td width="684px">
                         '. number_format($rows_e["venta_total"],2) .'
                             </td>
                          </tr>

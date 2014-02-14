@@ -104,7 +104,7 @@ $sql = "SELECT
 
                 $subTpendiente+=$rows_e["saldo_pendiente"];
                 
-       if($idmc!="") $nclient= "ESTADO DE CUENTA: <b>".$rows_e["nom_cliente"]."</b><br><br> ";//Se guarda el nombre del cliente si es que se ha filtrado por uno.
+       if($idmc!="") $nclient= "ESTADO DE CUENTA: <b>".$rows_e["nom_cliente"]."</b> <br>DESDE: <b>$fecha_inicio</b> HASTA: <b>$fecha_fin</b><br><br> ";//Se guarda el nombre del cliente si es que se ha filtrado por uno.
        //Si se filtro para todos nos almacenara nada ni mostrara nada.
         }
         $cuerpo_detalle.='<tr><td colspan="5"></td></tr>';

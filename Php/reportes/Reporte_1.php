@@ -65,7 +65,7 @@ inner join cuentas c on c.id_cuenta=ab.id_cuenta
 inner join bancos b on b.id_banco=c.id_banco
 inner join facturacion f on  f.idfacturacion=ac.idfacturacion
 where c.id_empresa=".$_SESSION["idEmpresa"]." and ab.fecha_remesa between STR_TO_DATE('$fecha_inicio','%d/%m/%Y') and STR_TO_DATE('$fecha_fin','%d/%m/%Y')
-order by fecha_remesa,numero_factura,numero_remesa,cuenta";
+order by fecha_remesa,numero_remesa,numero_factura,cuenta";
         //QUEDA PENDIENTE EL FILTRADO POR FECHA.
         
     	$result = mysql_query($sql,$connection) or die('La consulta fall&oacute;: '.mysql_error());	
