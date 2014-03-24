@@ -3,7 +3,9 @@
     model: 'MvcClientes.model.Facturacion.Facturacion',//Llamamos el Modelo Antes Creado
     autoSync: true,//Sincronizacion con el Servidor
     autoSave: true,	//<--- hace las peticiones al servidor autom�ticamente
-    proxy: {
+    pageSize: 25,
+    autoLoad: {start: 0, limit: 25},
+        proxy: {
 type: 'ajax',
 api: { //Declaramos la API y Comienzan en estas lineas las operaciones CRUD
                      read    : "Php/view/Facturacion/FacturacionRead.php",

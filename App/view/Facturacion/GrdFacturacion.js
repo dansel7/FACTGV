@@ -61,14 +61,14 @@ Ext.define('MvcClientes.view.Facturacion.GrdFacturacion',{
 						disabled: true,
 						action:'actBorrar' //Accion manejado por el Controlador
 						}								
-					]
+					],
 				},
 				{
 					xtype: 'pagingtoolbar',//Barra Paginadora al fondo del Grid
 					dock: 'bottom',
 					displayInfo: true,
 					store:me.store
-				}
+                                     }
 			],
 		
 		});
@@ -78,13 +78,7 @@ Ext.define('MvcClientes.view.Facturacion.GrdFacturacion',{
                me.store.on('write', function() {
                   me.store.load();
                 });
-		me.store.load({//Cargamos el Store, al crear la ventana
-			params:{
-				start: 0,
-				limit: 10 //Muestra hasta 100 Registros Maximo
-			}
-		});
-					
+                		
 	}
 	
 	
