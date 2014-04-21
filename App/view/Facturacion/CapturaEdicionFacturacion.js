@@ -89,8 +89,13 @@ if(typeof(records) != "undefined" && typeof(records) != "string"){
                 sumExenta+=record.data.venta_nosujeta;
                 sumNoSuj+=record.data.venta_exenta;
                 
-              });
-              Ext.getCmp("iva").setValue(sum * 0.13);
+              });            
+             //COMPRUEBA QUE SEA UNA FACTURA DE EXPORTACION
+             //PARA NO CALCULAR EL IVA
+            if(Ext.getCmp("id_tipo_factura").getValue()==4){
+              Ext.getCmp("iva").setValue(0);
+            }else{
+              Ext.getCmp("iva").setValue(sum * 0.13);}
               
               //CALCULOS SI ES GRAN CONTRIBUYENTE
               if(Ext.getCmp("idmaestroClientes").valueModels[0].data.gran_contribuyente=="Si" && sum>=100){
@@ -101,7 +106,7 @@ if(typeof(records) != "undefined" && typeof(records) != "string"){
                 Ext.getCmp("iva_retenido").setValue(0);    
               }
                  //MUESTRA EL TOTAL
-                Ext.getCmp("venta_total").setValue(sumExenta+sumNoSuj+sum+Ext.getCmp("iva").getValue()-Ext.getCmp("iva_retenido").getValue());   
+              Ext.getCmp("venta_total").setValue(sumExenta+sumNoSuj+sum+Ext.getCmp("iva").getValue()-Ext.getCmp("iva_retenido").getValue());   
                  
             }
    /////// FIN DE FUNCION DE TOTALES     
@@ -130,7 +135,15 @@ if(typeof(records) != "undefined" && typeof(records) != "string"){
                                     type: 'table'
                             },  
                             items:[
-                            {xtype : "combobox", id:"id_tipo_factura", queryMode: 'local',fieldLabel: "Tipo Factura", store: ListTpFact,displayField: 'tipo',valueField: 'id_tipo_facturacion',name:"id_tipo_facturacion", flex: 1, margin: '0 10 0 0',flex:1,allowBlank : false},    
+                            {xtype : "combobox", id:"id_tipo_factura", queryMode: 'local',fieldLabel: "Tipo Factura", store: ListTpFact,displayField: 'tipo',valueField: 'id_tipo_facturacion',
+                                name:"id_tipo_facturacion", flex: 1, margin: '0 10 0 0',flex:1,allowBlank : false,
+                               listeners: {
+                                        select: function () {
+                                           totales_facturacion();
+                                            
+                                        }
+                                    }
+                                },    
                             {xtype : "textfield", name : "numero_factura", fieldLabel : "No. Factura", flex: 1,allowBlank : false},
                             {xtype : "combobox", queryMode: 'local', fieldLabel: " Cliente",
                                 store: ListMaestroClientes,displayField: 'nom_cliente',valueField: 'idmaestroClientes',

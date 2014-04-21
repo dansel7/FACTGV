@@ -30,7 +30,7 @@
                         f.id_tipo_facturacion,
                         f.anulado
                         FROM facturacion f inner join maestroclientes mc on f.idmaestroClientes=mc.idmaestroClientes
-                        where id_empresa=".$idempresa." and idbenutzer=".$_SESSION["idbenutzer"];
+                        where id_empresa=".$idempresa." and idbenutzer=".$_SESSION["idbenutzer"] ." order by f.fecha_facturacion desc ,f.numero_factura desc";
                 
         $result = mysql_query($sql,$connection) or die('La consulta fall&oacute;: '.mysql_error());	        
         $num =  mysql_num_rows($result);

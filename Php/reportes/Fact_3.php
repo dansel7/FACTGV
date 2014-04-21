@@ -52,7 +52,7 @@ $pdf->setImageScale(PDF_IMAGE_SCALE_RATIO);
 //$pdf->setLanguageArray($l); 
 // ---------------------------------------------------------
 // set font
-$pdf->SetFont('courierB', '', 10);
+$pdf->SetFont('Helvetica', '', 10);
 
 $orientacion="vertical";
 // ---------------INICIO DEL REPORTE-----------------
@@ -157,7 +157,7 @@ $orientacion="vertical";
                           <td width="60px"style="text-align:right">'. number_format($subTotal,2) .'</td>
                       </tr>
                       <tr><td colspan="6" style="text-align:left">
-                        <table width="688px" cellspacing="4">
+                        <table width="695px" cellspacing="4">
                         <tr>
                            <td>'. strtoupper($Total_enLetras->ValorEnLetras($rows_e["venta_total"],"Dolares")) .'</td>
                            <td height="18px" style="text-align:right">'.$rows_e["iva"] .'</td>
@@ -180,7 +180,7 @@ $orientacion="vertical";
                      <tr><td colspan="6" style="text-align:right">
                          <table>
                          <tr>    
-                            <td width="684px">
+                            <td width="692px">
                         '. number_format($rows_e["venta_total"],2) .'
                             </td>
                          </tr>

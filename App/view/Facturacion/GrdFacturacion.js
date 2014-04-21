@@ -75,6 +75,8 @@ Ext.define('MvcClientes.view.Facturacion.GrdFacturacion',{
         
 		me.callParent(arguments);
                
+                me.store.load({start: 0, limit: 100});
+               
                me.store.on('write', function() {
                   me.store.load();
                 });

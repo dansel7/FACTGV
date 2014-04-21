@@ -4,7 +4,7 @@
     autoSync: true,//Sincronizacion con el Servidor
     autoSave: true,	//<--- hace las peticiones al servidor autom�ticamente
     pageSize: 25,
-    autoLoad: {start: 0, limit: 25},
+    autoLoad: {start: 0, limit: 100},
         proxy: {
 type: 'ajax',
 api: { //Declaramos la API y Comienzan en estas lineas las operaciones CRUD

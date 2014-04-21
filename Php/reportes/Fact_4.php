@@ -79,26 +79,27 @@ $orientacion="vertical";
         $tot_venta_exentas=0;
         while($rows_e = mysql_fetch_array($result)){ //CONSULTA PARA ENCABEZADO
        //style="border:solid 1px"
+            //MARGEN DE ALTURA 
         $datos_factura='<br>
             <table  width="690px">
             <tr>
-                <td></td>
+                <td height="20px"></td>
                 <td></td>
                 <td></td>
                 <td></td>
                 <td></td>
             </tr>
             <tr>
-               <td style="text-align:center" width="450px" colspan="4"></td>
-               <td  style="text-align:center">'. $rows_e["fecha_facturacion"] .'</td>
+               <td style="text-align:center" width="475px" colspan="4"></td>
+               <td  style="text-align:center" height="28px" >'. $rows_e["fecha_facturacion"] .'</td>
             </tr>
              <tr>
-               <td style="text-align:center" width="375px" colspan="3"><b>'.strtoupper($rows_e["nom_cliente"]).'</b></td>
+               <td style="text-align:center" width="450px" colspan="3"><b>'.strtoupper($rows_e["nom_cliente"]).'</b></td>
                <td style="text-align:center" width="100px">&nbsp;</td> 
             </tr>
             <tr>
                 <td style="text-align:center;font-size:8pt" colspan="3">'.strtoupper($rows_e["direccion"]).'</td>
-                <td colspan="2" height="20px">&nbsp;</td>
+                <td colspan="2" height="25px">&nbsp;</td>
             </tr>
              <tr>
                 <td  width="150px" colspan="4">&nbsp;</td>
@@ -106,22 +107,23 @@ $orientacion="vertical";
             </tr>
             
             </table><br>
-            <table>
+            <table style="table-layout:fixed">
                  <tr><td colspan="4" height="40px"></td></tr>
-                 <tr><td colspan="4" height="160px"><table>';
+                 <tr><td colspan="4" height="270px">
+                 <table>';
         $detalle_factura.='
                     <tr>
                         <td style="text-align:left" width="100px">
                         '. $rows_e["cantidad"] .'
                         </td>  
-                        <td width="415px" colspan="3">
+                        <td width="405px" colspan="3">
                         '. strtoupper($rows_e["concepto"])  .'
                         </td>
-                        <td width="70px" style="text-align:right">
-                        '. number_format($rows_e["valor_concepto"]*1.13,2) .'
+                        <td width="80px" style="text-align:right">
+                        '. number_format($rows_e["valor_concepto"],2) .'
                         </td>
-                         <td width="90px" style="text-align:right">
-                        '. number_format($rows_e["venta_gravada"]*1.13,2) .'
+                         <td width="80px" style="text-align:right">
+                        '. number_format($rows_e["venta_gravada"],2) .'
                         </td>
                     </tr>';
         
@@ -135,8 +137,8 @@ $orientacion="vertical";
                          <table>
                          <tr>    
                          <td>'. strtoupper($Total_enLetras->ValorEnLetras($rows_e["venta_total"],"Dolares")) .'</td>
-                         <td width="310px">
-                        '. $rows_e["venta_total"] .'
+                         <td width="312px">
+                         '. number_format($rows_e["venta_total"],2) .'
                             </td>
                          </tr>
                          </table>
