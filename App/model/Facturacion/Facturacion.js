@@ -17,6 +17,7 @@ Ext.define('MvcClientes.model.Facturacion.Facturacion', {
 				{ name: 'fecha_programada_pago',  type: 'date',dateFormat:'d/m/Y'},
                                 { name: 'id_empresa', type: 'int'},
                                 { name: 'id_tipo_facturacion', type: 'int'},
+                                { name: 'tipo_facturacion', type: 'string'},
                                 { name: 'anulado', type: 'string'}
                                 
            ]

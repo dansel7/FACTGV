@@ -94,8 +94,9 @@ if(typeof(records) != "undefined" && typeof(records) != "string"){
              //PARA NO CALCULAR EL IVA
             if(Ext.getCmp("id_tipo_factura").getValue()==4){
               Ext.getCmp("iva").setValue(0);
+              Ext.getCmp("iva_retenido").setValue(0); 
             }else{
-              Ext.getCmp("iva").setValue(sum * 0.13);}
+              Ext.getCmp("iva").setValue(sum * 0.13);
               
               //CALCULOS SI ES GRAN CONTRIBUYENTE
               if(Ext.getCmp("idmaestroClientes").valueModels[0].data.gran_contribuyente=="Si" && sum>=100){
@@ -105,10 +106,12 @@ if(typeof(records) != "undefined" && typeof(records) != "string"){
               }else{
                 Ext.getCmp("iva_retenido").setValue(0);    
               }
+          }
                  //MUESTRA EL TOTAL
               Ext.getCmp("venta_total").setValue(sumExenta+sumNoSuj+sum+Ext.getCmp("iva").getValue()-Ext.getCmp("iva_retenido").getValue());   
                  
-            }
+             
+           }
    /////// FIN DE FUNCION DE TOTALES     
    
    
