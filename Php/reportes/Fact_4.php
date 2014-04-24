@@ -36,7 +36,7 @@ $pdf->SetPrintFooter(false);
 
 //set margins
 //$pdf->SetMargins(PDF_MARGIN_LEFT, PDF_MARGIN_TOP, PDF_MARGIN_RIGHT);
-$pdf->SetMargins(0.4, 1.2, 0.635);
+$pdf->SetMargins(0.4, 1.1, 0.635);
 
 //$pdf->SetHeaderMargin(0);
 //$pdf->SetFooterMargin(15);
@@ -94,11 +94,11 @@ $orientacion="vertical";
                <td  style="text-align:center" height="28px" >'. $rows_e["fecha_facturacion"] .'</td>
             </tr>
              <tr>
-               <td style="text-align:center" height="20px" width="450px" colspan="3"><b>'.strtoupper($rows_e["nom_cliente"]).'</b></td>
+               <td style="text-align:center" height="20px"  colspan="4"><b>'.strtoupper($rows_e["nom_cliente"]).'</b></td>
                <td style="text-align:center" width="100px">&nbsp;</td> 
             </tr>
             <tr>
-                <td style="text-align:center;font-size:8pt" colspan="3">'.strtoupper($rows_e["direccion"]).'</td>
+                <td style="text-align:center;font-size:8pt" colspan="4">'.strtoupper($rows_e["direccion"]).'</td>
                 <td colspan="2" height="0px">&nbsp;</td>
             </tr>
              <tr>

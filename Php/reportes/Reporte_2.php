@@ -50,14 +50,17 @@ $pdf->setImageScale(PDF_IMAGE_SCALE_RATIO);
 // ---------------------------------------------------------
 // set font
 $pdf->SetFont('helvetica', '', 9);
+
+
 $fecha_inicio=$_GET["fecha_ini"];
 $fecha_fin=$_GET["fecha_fin"];
+$idmc=($_GET["idmc"]>0)? " AND mc.idmaestroclientes=".$_GET["idmc"]:"";
 $orientacion="vertical";
 $idempresa=isset($_SESSION["idEmpresa"])? $_SESSION["idEmpresa"]:"-1";
 // ---------------INICIO DEL REPORTE-----------------
-	$sql = "Select f.fecha_facturacion,f.numero_factura,mc.nom_cliente,f.venta_total-f.iva+f.iva_retenido valor_neto,f.iva,f.iva_retenido,f.venta_total,f.anulado
+	$sql = "Select f.id_tipo_facturacion,f.fecha_facturacion,f.numero_factura,mc.nom_cliente,f.venta_total-f.iva+f.iva_retenido valor_neto,f.iva,f.iva_retenido,f.venta_total,f.anulado
 from facturacion f inner join maestroclientes mc on f.idmaestroClientes=mc.idmaestroClientes 
-where f.id_empresa=".$idempresa ." and f.fecha_facturacion between STR_TO_DATE('$fecha_inicio','%d/%m/%Y') and STR_TO_DATE('$fecha_fin','%d/%m/%Y') order by f.numero_factura";
+where f.id_empresa=".$idempresa ." $idmc and f.fecha_facturacion between STR_TO_DATE('$fecha_inicio','%d/%m/%Y') and STR_TO_DATE('$fecha_fin','%d/%m/%Y') order by f.numero_factura";
         //QUEDA PENDIENTE EL FILTRADO POR FECHA.
         
     	$result = mysql_query($sql,$connection) or die('La consulta fall&oacute;: '.mysql_error());	
@@ -95,16 +98,25 @@ where f.id_empresa=".$idempresa ." and f.fecha_facturacion between STR_TO_DATE('
                                      <td  style=\"text-align:right\"> ".substr($rows_e["fecha_facturacion"],0,11) ."</td> 
                              <td  style=\"text-align:center\">".$rows_e["numero_factura"] ."</td>
                              <td  style=\"text-align:left\">".$rows_e["nom_cliente"] ."</td>
-                             <td  style=\"text-align:right\">".number_format($rows_e["valor_neto"],2)."</td>
+                             <td  style=\"text-align:right\">".(($rows_e["id_tipo_facturacion"]==1) ?"<b>-</b> ":"").  number_format($rows_e["valor_neto"],2)."</td>
                              <td  style=\"text-align:right\">".number_format($rows_e["iva"],2) ."</td>
                              <td  style=\"text-align:right\">".number_format($rows_e["iva_retenido"],2)."</td>
-                             <td  style=\"text-align:right\">".number_format($rows_e["venta_total"],2) ."</td></tr>";
+                             <td  style=\"text-align:right\">".(($rows_e["id_tipo_facturacion"]==1) ?"<b>-</b> ":"").  number_format($rows_e["venta_total"],2) ."</td></tr>";
       
        
-                $subTValorNeto+=$rows_e["valor_neto"];
+                
                 $subTIva+=$rows_e["iva"];
                 $subTIvaRetenido+=$rows_e["iva_retenido"];
+                
+                //RESTA DE VENTA PARA EL TIPO DE NOTA DE CREDITO
+                if($rows_e["id_tipo_facturacion"]==1){
+     //SI ES UNA NOTA DE CREDITO SE RESTA DEL SUBTOTAL DE VALOR NETO Y VENTA TOTAL
+                $subTValorNeto-=$rows_e["valor_neto"];
+                $subTVentaTotal-=$rows_e["venta_total"]; 
+                }else{
+                $subTValorNeto+=$rows_e["valor_neto"];
                 $subTVentaTotal+=$rows_e["venta_total"];
+                }
             }
        
         }
