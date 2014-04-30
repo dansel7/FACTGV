@@ -25,7 +25,7 @@
                         f.venta_total-iFNull(sum(monto_cheque),0) saldo_pendiente 
                         from abono_clientes ac right join facturacion f on ac.idfacturacion=f.idfacturacion 
                         inner join maestroclientes mc on f.idmaestroClientes=mc.idmaestroClientes 
-                        WHERE f.anulado='No' and id_empresa=".$idempresa." and idbenutzer=".$_SESSION["idbenutzer"]."
+                        WHERE f.id_tipo_facturacion!=1 and f.anulado='No' and id_empresa=".$idempresa." and idbenutzer=".$_SESSION["idbenutzer"]."
                         GROUP BY f.idfacturacion
                         HAVING saldo_pendiente>0";
     	

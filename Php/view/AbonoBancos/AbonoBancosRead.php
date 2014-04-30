@@ -19,7 +19,7 @@
                     left join  abono_bancos ab on ac.id_abono_clientes=ab.id_abono_clientes 
                     inner join facturacion f on f.idfacturacion=ac.idfacturacion
                     inner join maestroclientes mc on mc.idmaestroclientes=f.idmaestroclientes
-                    where isnull(ab.id_abono_clientes) and id_empresa=".$idempresa." and idbenutzer=".$_SESSION["idbenutzer"]." and numero_cheque!=0";
+                    where isnull(ab.id_abono_clientes) and f.id_tipo_facturacion!=1 and id_empresa=".$idempresa." and idbenutzer=".$_SESSION["idbenutzer"]." and numero_cheque!=0";
                 
 //REVISAR LA LOGICA PARA PODER ABONAR SI SOLO ES A TRAVES DE BANCOS SIN CHEQUES
                 
