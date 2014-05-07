@@ -173,7 +173,46 @@ Ext.onReady(function() {
                         name: 'benutzer',
                         id:'benutzer',
                         fieldLabel: 'Usuario',
-                        allowBlank: false
+                        allowBlank: false,
+                        listeners : { //FUNCION QUE PERMITE DAR ENTER Y HACER SUBMIT
+                        specialkey : function(field, e) {
+                        if (e.getKey() == Ext.EventObject.ENTER) {
+                         //---------------------------------------------------------------------
+                             if (this.up('form').getForm().isValid()) {
+                            
+                            var Campos=this.up('form').getForm().getFieldValues();
+                            //SE ENVIA EL FORM A VALIDAR
+                            form.submit({
+                            url: 'Php/controller/Login/LogIn.php',
+                            waitMsg: 'Iniciando Sesion...',
+                            success: function(fp, o) {
+                            win.hide();
+                            ShowListEmpresa();
+                            
+                        ///----OBTIENE PERFIL DE USUARIO PARA MOSTRAR MENUS----///
+                        Ext.Ajax.request({
+                          url: 'Php/controller/Login/Perfil_Benutzer.php',
+                          success: function(response) {
+                            outHTML = response.responseText;
+                            
+                            if(outHTML==1){
+
+                           Ext.getCmp("panelMantto").show();     
+                            }
+
+                          }
+                        });
+                            //------------------FIN------------------//
+                            
+                            }
+                            ,failure: function(fp,o){
+                            Ext.Msg.alert('Error', 'Usuario/Contrase&ntilde;a Incorrecta');
+                            this.up('form').getForm().reset();
+                               }
+                            });                         
+                        }
+                      //---------------------------------------------------------------------
+                        }}}
   
                     }]},{
                 
@@ -192,7 +231,48 @@ Ext.onReady(function() {
                         name: 'kennwort',
                         inputType: 'password',
                         fieldLabel: 'Contrase&ntilde;a',
-                        allowBlank: false
+                        allowBlank: false,
+                        listeners : { //FUNCION QUE PERMITE DAR ENTER Y HACER SUBMIT
+                        specialkey : function(field, e) {
+                        if (e.getKey() == Ext.EventObject.ENTER) {
+                //---------------------------------------------------------------------                             
+                            
+                             if (this.up('form').getForm().isValid()) {
+                            
+                            var Campos=this.up('form').getForm().getFieldValues();
+                            //SE ENVIA EL FORM A VALIDAR
+                            form.submit({
+                            url: 'Php/controller/Login/LogIn.php',
+                            waitMsg: 'Iniciando Sesion...',
+                            success: function(fp, o) {
+                            win.hide();
+                            ShowListEmpresa();
+                            
+                        ///----OBTIENE PERFIL DE USUARIO PARA MOSTRAR MENUS----///
+                        Ext.Ajax.request({
+                          url: 'Php/controller/Login/Perfil_Benutzer.php',
+                          success: function(response) {
+                            outHTML = response.responseText;
+                            
+                            if(outHTML==1){
+
+                           Ext.getCmp("panelMantto").show();     
+                            }
+
+                          }
+                        });
+                            //------------------FIN------------------//
+                            
+                            }
+                            ,failure: function(fp,o){
+                            Ext.Msg.alert('Error', 'Usuario/Contrase&ntilde;a Incorrecta');
+                            this.up('form').getForm().reset();
+                               }
+                            });                         
+                        }
+                        
+                   //---------------------------------------------------------------------     
+                        }}}
                      }]
                 
                 }],
@@ -238,6 +318,7 @@ Ext.onReady(function() {
                 }]
           });
             
+         
            
             win = Ext.widget('window', {
                 title: 'Login',
