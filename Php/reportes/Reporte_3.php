@@ -71,7 +71,7 @@ $sql = "SELECT
                 WHERE f.anulado='No' AND id_empresa=".$idempresa." AND idbenutzer=".$_SESSION["idbenutzer"]." $idmc
                 AND f.id_tipo_facturacion!=1 and f.fecha_facturacion between STR_TO_DATE('$fecha_inicio','%d/%m/%Y') and STR_TO_DATE('$fecha_fin','%d/%m/%Y')
                 GROUP BY f.idfacturacion
-                HAVING saldo_pendiente>0 order by numero_factura";
+                HAVING saldo_pendiente>0 order by length(numero_factura),numero_factura asc";
         //QUEDA PENDIENTE EL FILTRADO POR FECHA.
         
   $result = mysql_query($sql,$connection) or die('La consulta fall&oacute;: '.mysql_error());	

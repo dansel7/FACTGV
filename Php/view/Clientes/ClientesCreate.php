@@ -8,12 +8,12 @@ mysql_select_db($db_name,$connection) or die("Error de conexion a la base de dat
 
 	$data = json_decode($info);
 
-	$nom_cliente = $data->nom_cliente;
-	$direccion = $data->direccion;
-	$NIT = $data->NIT;
-        $NRC = $data->NRC;
+	$nom_cliente = addslashes($data->nom_cliente);
+	$direccion = addslashes($data->direccion); 
+	$NIT = addslashes($data->NIT);
+        $NRC = addslashes($data->NRC);
         $id_departamento=$data->id_departamento;
-        $giro=$data->giro;
+        $giro=addslashes($data->giro);
         $gran_contribuyente=$data->gran_contribuyente;
         $activo=$data->activo;
 	

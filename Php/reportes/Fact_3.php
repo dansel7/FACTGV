@@ -52,7 +52,7 @@ $pdf->setImageScale(PDF_IMAGE_SCALE_RATIO);
 //$pdf->setLanguageArray($l); 
 // ---------------------------------------------------------
 // set font
-$pdf->SetFont('Helvetica', '', 10);
+$pdf->SetFont('dejavusans', '', 10);
 
 $orientacion="vertical";
 // ---------------INICIO DEL REPORTE-----------------

@@ -161,8 +161,12 @@ writer:{
                             else 
                                 if (request.action == 'destroy')
                                     {
-                                            Ext.Msg.alert('Mensaje','Registro Eliminado Exitosamente');
-
+                                         if(Ext.decode(request.callback.arguments[2].responseText).success){
+                                                        Ext.Msg.alert('Mensaje','Registro Eliminado Exitosamente');
+                                                    }else{
+                                                        Ext.Msg.alert('Mensaje','Error al eliminar: Factura Asociado a Abono Clientes y/o Abono Bancos');
+                                                    }
+							
                                 }
             }
             ,

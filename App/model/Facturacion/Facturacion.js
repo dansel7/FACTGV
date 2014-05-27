@@ -2,7 +2,7 @@ Ext.define('MvcClientes.model.Facturacion.Facturacion', {
     extend: 'Ext.data.Model',
     fields: [
 				{ name: 'idfacturacion', type: 'int'},
-				{ name: 'numero_factura',   type: 'int'},
+				{ name: 'numero_factura',   type: 'string'},
                                 { name: 'idmaestroClientes', type: 'int'},
                                 { name: 'nom_cliente', type: 'string'},
                                 { name: 'cond_operacion', type: 'string'},
