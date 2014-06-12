@@ -13,18 +13,32 @@ Ext.define('MvcClientes.controller.Reportes.Reportes',{
 	init	: function() {
 		var me = this;
 		me.control({
-		    'ShowReport1 button[action=ShowReport1]'://Usando Ext.Component.Query
+		    'ShowReport1 button[action=ShowReport1PDF]'://Usando Ext.Component.Query
 			   {
-				 click:this.ShowReport1
+				 click:this.ShowReport1PDF
 			   },
-                    'ShowReport2 button[action=ShowReport2]'://Usando Ext.Component.Query
+                    'ShowReport1 button[action=ShowReport1EXCEL]'://Usando Ext.Component.Query
 			   {
-				 click:this.ShowReport2
+				 click:this.ShowReport1EXCEL
+			   },       
+                    'ShowReport2 button[action=ShowReport2PDF]'://Usando Ext.Component.Query
+			   {
+				 click:this.ShowReport2PDF
 			   }
                            ,
-                    'ShowReport3 button[action=ShowReport3]'://Usando Ext.Component.Query
+                    'ShowReport2 button[action=ShowReport2EXCEL]'://Usando Ext.Component.Query
 			   {
-				 click:this.ShowReport3
+				 click:this.ShowReport2EXCEL
+			   }
+                           ,
+                    'ShowReport3 button[action=ShowReport3PDF]'://Usando Ext.Component.Query
+			   {
+				 click:this.ShowReport3PDF
+			   }
+                           ,
+                    'ShowReport3 button[action=ShowReport3EXCEL]'://Usando Ext.Component.Query
+			   {
+				 click:this.ShowReport3EXCEL
 			   }
                            ,
                     'ShowGraf1 button[action=ShowGraf1]'://Usando Ext.Component.Query
@@ -35,24 +49,48 @@ Ext.define('MvcClientes.controller.Reportes.Reportes',{
 		});
                 
 	},
-        ShowReport1: function(button){
+        ShowReport1PDF: function(button){
             var win    = button.up('window'),
             form   = win.down('form'),
             values = form.getValues();
            window.open("/facturaciones/php/reportes/reporte_1.php?fecha_ini="+values.fecha_inicio+"&fecha_fin="+values.fecha_fin, "nuevo", "location=no, menubar=no, scrollbars=yes, statusbar=no, tittlebar=no");
 	},
-         ShowReport2: function(button){
+         ShowReport1EXCEL: function(button){
+            var win    = button.up('window'),
+            form   = win.down('form'),
+            values = form.getValues();
+           window.open("/facturaciones/php/reportes/reporte_1.php?fecha_ini="+values.fecha_inicio+"&exp=1&fecha_fin="+values.fecha_fin, "nuevo", "location=no, menubar=no, scrollbars=yes, statusbar=no, tittlebar=no");
+	},
+        
+        
+         ShowReport2PDF: function(button){
             var win    = button.up('window'),
             form   = win.down('form'),
             values = form.getValues();
            window.open("/facturaciones/php/reportes/reporte_2.php?idmc="+values.idmaestroClientes+"&fecha_ini="+values.fecha_inicio+"&fecha_fin="+values.fecha_fin, "nuevo", "location=no, menubar=no, scrollbars=yes, statusbar=no, tittlebar=no");
         },
-         ShowReport3: function(button){
+         ShowReport2EXCEL: function(button){
+            var win    = button.up('window'),
+            form   = win.down('form'),
+            values = form.getValues();
+           window.open("/facturaciones/php/reportes/reporte_2.php?idmc="+values.idmaestroClientes+"&exp=1&fecha_ini="+values.fecha_inicio+"&fecha_fin="+values.fecha_fin, "nuevo", "location=no, menubar=no, scrollbars=yes, statusbar=no, tittlebar=no");
+        },
+        
+        
+         ShowReport3PDF: function(button){
             var win    = button.up('window'),
             form   = win.down('form'),
             values = form.getValues();
            window.open("/facturaciones/php/reportes/reporte_3.php?idmc="+values.idmaestroClientes+"&fecha_ini="+values.fecha_inicio+"&fecha_fin="+values.fecha_fin, "nuevo", "location=no, menubar=no, scrollbars=yes, statusbar=no, tittlebar=no");
 	},
+        ShowReport3EXCEL: function(button){
+            var win    = button.up('window'),
+            form   = win.down('form'),
+            values = form.getValues();
+           window.open("/facturaciones/php/reportes/reporte_3.php?idmc="+values.idmaestroClientes+"&exp=1&fecha_ini="+values.fecha_inicio+"&fecha_fin="+values.fecha_fin, "nuevo", "location=no, menubar=no, scrollbars=yes, statusbar=no, tittlebar=no");
+	},
+        
+        
          ShowGraf1: function(button){
             var win    = button.up('window'),
             form   = win.down('form'),

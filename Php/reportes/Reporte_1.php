@@ -131,15 +131,22 @@ order by fecha_remesa,numero_remesa,numero_factura,cuenta";
         $cuerpo_detalle.='<tr><td style="text-align:right" colspan="3"><b>TOTAL REMESADO</b></td><td></td><td style="text-align:right"><b>'.number_format($total,2).'</b></td><td></td></tr>';
         $cuerpo_detalle.= "</table>";
         $Reporte=$encabezado.$cuerpo_detalle.$pie_factura;
-$pdf->writeHTML($Reporte, true, false, false, false, '');
-
-
-
-
+        
+$exp=isset($_GET["exp"])? $_GET["exp"]:"-1";//Tipo de Exportacion
 /////////////////////////////////////////////////////////////////////
+if($exp!="-1"){
+header("Content-Type: application/vnd.ms-excel");
+header("Expires: 0");
+header("Cache-Control: must-revalidate, post-check=0, pre-check=0");
+header("content-disposition: attachment;filename=REP_BANCOS_$fecha_inicio-$fecha_fin.xls");
+echo $Reporte;
 
+}else{
+/////////////////////////////////////////////////////////////////////
+$pdf->writeHTML($Reporte, true, false, false, false, '');
 //Close and output PDF document
 $pdf->Output('Reporte_Bancos.pdf', 'I');
+}
 }
 
 ?>

@@ -52,9 +52,13 @@ Ext.applyIf(me, {
                             id:'ButtonReport3',
                             ui: 'footer',
                             items: ['->', {
-                                    itemId: 'BtnReport3Aceptar',
-                                    text: 'Aceptar',
-                                    action: 'ShowReport3'
+                                    itemId: 'BtnReport3PDF',
+                                    text: 'PDF',
+                                    action: 'ShowReport3PDF'
+                            },{
+                                    itemId: 'BtnReport3EXCEL',
+                                    text: 'EXCEL',
+                                    action: 'ShowReport3EXCEL'
                             },{
                                     itemId: 'BtnReport3Cancelar',
                                     text: 'Cancelar',

@@ -36,7 +36,7 @@ $pdf->SetPrintFooter(false);
 
 //set margins
 //$pdf->SetMargins(PDF_MARGIN_LEFT, PDF_MARGIN_TOP, PDF_MARGIN_RIGHT);
-$pdf->SetMargins(0.4, 1.1, 0.635);
+$pdf->SetMargins(0.6, 1.1, 0.635);
 
 //$pdf->SetHeaderMargin(0);
 //$pdf->SetFooterMargin(15);
@@ -51,7 +51,9 @@ $pdf->setImageScale(PDF_IMAGE_SCALE_RATIO);
 //$pdf->setLanguageArray($l); 
 // ---------------------------------------------------------
 // set font
-$pdf->SetFont('dejavusans', '', 10);
+//$pdf->SetFont('dejavusans', '', 10);
+$fontname = $pdf->addTTFfont('Calibri.ttf', 'TrueTypeUnicode', '', 32);
+$pdf->SetFont($fontname, '', 10);
 
 $orientacion="vertical";
 // ---------------INICIO DEL REPORTE-----------------
@@ -94,7 +96,7 @@ $orientacion="vertical";
                <td  style="text-align:center" height="28px" >'. $rows_e["fecha_facturacion"] .'</td>
             </tr>
              <tr>
-               <td style="text-align:center" height="20px"  colspan="4"><b>'.strtoupper($rows_e["nom_cliente"]).'</b></td>
+               <td style="text-align:center;font-size:11pt" height="20px"  colspan="4"><b>'.strtoupper($rows_e["nom_cliente"]).'</b></td>
                <td style="text-align:center" width="100px">&nbsp;</td> 
             </tr>
             <tr>
@@ -107,7 +109,7 @@ $orientacion="vertical";
             </tr>
             
             </table><br>
-            <table style="table-layout:fixed">
+          <table style="table-layout:fixed;font-size:12pt">
                  <tr><td colspan="4" height="40px"></td></tr>
                  <tr><td colspan="4" height="270px">
                  <table>';

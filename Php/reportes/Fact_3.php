@@ -52,7 +52,8 @@ $pdf->setImageScale(PDF_IMAGE_SCALE_RATIO);
 //$pdf->setLanguageArray($l); 
 // ---------------------------------------------------------
 // set font
-$pdf->SetFont('dejavusans', '', 10);
+$fontname = $pdf->addTTFfont('Calibri.ttf', 'TrueTypeUnicode', '', 32);
+$pdf->SetFont($fontname, '', 10);
 
 $orientacion="vertical";
 // ---------------INICIO DEL REPORTE-----------------
@@ -91,11 +92,11 @@ $orientacion="vertical";
                 <td></td>
             </tr>
             <tr>
-                <td style="text-align:center" width="450px" colspan="3"><b>'.strtoupper($rows_e["nom_cliente"]).'</b></td>
+                <td style="text-align:center;font-size:11pt" width="450px" colspan="3"><b>'.strtoupper($rows_e["nom_cliente"]).'</b></td>
                 <td  style="text-align:center" colspan="2">'. $rows_e["fecha_facturacion"] .'</td>
             </tr>
             <tr>
-                <td style="text-align:center;font-size:7pt" colspan="3">'.strtoupper($rows_e["direccion"]).'</td>
+                <td style="text-align:center;font-size:8pt" colspan="3">'.strtoupper($rows_e["direccion"]).'</td>
                 <td colspan="2">&nbsp;</td>
             </tr>
              <tr>
@@ -103,7 +104,7 @@ $orientacion="vertical";
                 <td colspan="2" height="20px" style="text-align:left">'.strtoupper($rows_e["departamento"]).'</td>
             </tr>
              <tr>
-                <td  width="30px">&nbsp;</td>
+                <td  width="40px">&nbsp;</td>
                 <td  width="170px">'. $rows_e["nit"] .'</td>
                 <td style="text-align:center" width="100px">'. $rows_e["nrc"] .'</td>
                 <td style="text-align:center" width="115px">&nbsp;</td>
@@ -119,7 +120,7 @@ $orientacion="vertical";
             </td>
             </tr>
             </table><br>
-            <table style="table-layout:fixed">
+            <table style="table-layout:fixed;font-size:11.2pt">
                  <tr><td colspan="4" height="60px"></td></tr>
                  <tr><td colspan="4" height="160px"><table>';
         
@@ -150,14 +151,14 @@ $orientacion="vertical";
         $tot_venta_exentas+=$rows_e["venta_exenta"];
         //ESTA ES LA PARTE QUE CONTIENE EL TOTAL EN LETRAS Y SUS DESGLOSES
         $pie_factura='</table></td></tr>
-                      <tr><td colspan="2" width="468px"></td>
+                       <tr><td colspan="2" width="450px"></td>
                           <td width="60px"></td>
                           <td width="62px" style="text-align:right">'. number_format($tot_venta_no_sujeta,2) .'</td>
                           <td width="60px" style="text-align:right">'. number_format($tot_venta_exentas,2) .'</td>
-                          <td width="60px"style="text-align:right">'. number_format($subTotal,2) .'</td>
+                          <td width="80px"style="text-align:right">'. number_format($subTotal,2) .'</td>
                       </tr>
                       <tr><td colspan="6" style="text-align:left">
-                        <table width="695px" cellspacing="4">
+                        <table width="698px" cellspacing="4">
                         <tr>
                            <td>'. strtoupper($Total_enLetras->ValorEnLetras($rows_e["venta_total"],"Dolares")) .'</td>
                            <td height="18px" style="text-align:right">'.$rows_e["iva"] .'</td>
@@ -180,7 +181,7 @@ $orientacion="vertical";
                      <tr><td colspan="6" style="text-align:right">
                          <table>
                          <tr>    
-                            <td width="692px">
+                            <td width="694px">
                         '. number_format($rows_e["venta_total"],2) .'
                             </td>
                          </tr>

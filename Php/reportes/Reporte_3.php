@@ -112,15 +112,22 @@ $sql = "SELECT
         $cuerpo_detalle.='<tr><td colspan="5"></td></tr>';
         $cuerpo_detalle.= "</table>";
         $Reporte=$encabezado.$nclient.$cuerpo_detalle.$pie_factura;
-$pdf->writeHTML($Reporte, true, false, false, false, '');
-
-
-
-
+ 
+$exp=isset($_GET["exp"])? $_GET["exp"]:"-1";//Tipo de Exportacion
 /////////////////////////////////////////////////////////////////////
+if($exp!="-1"){
+header("Content-Type: application/vnd.ms-excel");
+header("Expires: 0");
+header("Cache-Control: must-revalidate, post-check=0, pre-check=0");
+header("content-disposition: attachment;filename=REP_PENDIENTES_$fecha_inicio-$fecha_fin.xls");
+echo $Reporte;
 
+}else{
+/////////////////////////////////////////////////////////////////////
+$pdf->writeHTML($Reporte, true, false, false, false, '');
 //Close and output PDF document
 $pdf->Output('Reporte_Bancos.pdf', 'I');
+}
 }
 
 ?>

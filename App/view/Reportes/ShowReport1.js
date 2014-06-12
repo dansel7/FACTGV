@@ -35,9 +35,13 @@ Ext.applyIf(me, {
                             id:'ButtonReport',
                             ui: 'footer',
                             items: ['->', {
-                                    itemId: 'BtnReport1Aceptar',
-                                    text: 'Aceptar',
-                                    action: 'ShowReport1'
+                                    itemId: 'BtnReport1PDF',
+                                    text: 'PDF',
+                                    action: 'ShowReport1PDF'
+                            },{
+                                    itemId: 'BtnReport1EXCEL',
+                                    text: 'EXCEL',
+                                    action: 'ShowReport1EXCEL'
                             },{
                                     itemId: 'BtnReport1Cancelar',
                                     text: 'Cancelar',
