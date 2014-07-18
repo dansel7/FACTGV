@@ -1,6 +1,6 @@
 Ext.define('MvcClientes.controller.Reportes.Reportes',{
 	extend		: 'Ext.app.Controller',
-        views		: ['Reportes.ShowReport1','Reportes.ShowReport2','Reportes.ShowReport3','Reportes.ShowGraf1'],
+        views		: ['Reportes.ShowReport1','Reportes.ShowReport2','Reportes.ShowReport3','Reportes.ShowReport4','Reportes.ShowGraf1'],
 	refs:[ //Esta linea se usa cuando se hace referencia a una Vista dentro de un grid en un Controller
 	 
 	  {
@@ -39,6 +39,15 @@ Ext.define('MvcClientes.controller.Reportes.Reportes',{
                     'ShowReport3 button[action=ShowReport3EXCEL]'://Usando Ext.Component.Query
 			   {
 				 click:this.ShowReport3EXCEL
+			   }      ,
+                    'ShowReport4 button[action=ShowReport4PDF]'://Usando Ext.Component.Query
+			   {
+				 click:this.ShowReport4PDF
+			   }
+                           ,
+                    'ShowReport4 button[action=ShowReport4EXCEL]'://Usando Ext.Component.Query
+			   {
+				 click:this.ShowReport4EXCEL
 			   }
                            ,
                     'ShowGraf1 button[action=ShowGraf1]'://Usando Ext.Component.Query
@@ -67,13 +76,13 @@ Ext.define('MvcClientes.controller.Reportes.Reportes',{
             var win    = button.up('window'),
             form   = win.down('form'),
             values = form.getValues();
-           window.open("/facturaciones/php/reportes/reporte_2.php?idmc="+values.idmaestroClientes+"&fecha_ini="+values.fecha_inicio+"&fecha_fin="+values.fecha_fin, "nuevo", "location=no, menubar=no, scrollbars=yes, statusbar=no, tittlebar=no");
+           window.open("/facturaciones/php/reportes/reporte_2.php?tpf="+values.id_tipo_facturacion+"&idmc="+values.idmaestroClientes+"&fecha_ini="+values.fecha_inicio+"&fecha_fin="+values.fecha_fin, "nuevo", "location=no, menubar=no, scrollbars=yes, statusbar=no, tittlebar=no");
         },
          ShowReport2EXCEL: function(button){
             var win    = button.up('window'),
             form   = win.down('form'),
             values = form.getValues();
-           window.open("/facturaciones/php/reportes/reporte_2.php?idmc="+values.idmaestroClientes+"&exp=1&fecha_ini="+values.fecha_inicio+"&fecha_fin="+values.fecha_fin, "nuevo", "location=no, menubar=no, scrollbars=yes, statusbar=no, tittlebar=no");
+           window.open("/facturaciones/php/reportes/reporte_2.php?tpf="+values.id_tipo_facturacion+"&idmc="+values.idmaestroClientes+"&exp=1&fecha_ini="+values.fecha_inicio+"&fecha_fin="+values.fecha_fin, "nuevo", "location=no, menubar=no, scrollbars=yes, statusbar=no, tittlebar=no");
         },
         
         
@@ -90,6 +99,19 @@ Ext.define('MvcClientes.controller.Reportes.Reportes',{
            window.open("/facturaciones/php/reportes/reporte_3.php?idmc="+values.idmaestroClientes+"&exp=1&fecha_ini="+values.fecha_inicio+"&fecha_fin="+values.fecha_fin, "nuevo", "location=no, menubar=no, scrollbars=yes, statusbar=no, tittlebar=no");
 	},
         
+        
+         ShowReport4PDF: function(button){
+            var win    = button.up('window'),
+            form   = win.down('form'),
+            values = form.getValues();
+           window.open("/facturaciones/php/reportes/reporte_4.php?idmc="+values.idmaestroClientes+"&fecha_ini="+values.fecha_inicio+"&fecha_fin="+values.fecha_fin, "nuevo", "location=no, menubar=no, scrollbars=yes, statusbar=no, tittlebar=no");
+	},
+        ShowReport4EXCEL: function(button){
+            var win    = button.up('window'),
+            form   = win.down('form'),
+            values = form.getValues();
+           window.open("/facturaciones/php/reportes/reporte_4.php?idmc="+values.idmaestroClientes+"&exp=1&fecha_ini="+values.fecha_inicio+"&fecha_fin="+values.fecha_fin, "nuevo", "location=no, menubar=no, scrollbars=yes, statusbar=no, tittlebar=no");
+	},
         
          ShowGraf1: function(button){
             var win    = button.up('window'),

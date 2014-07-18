@@ -1,4 +1,5 @@
 <?php
+
 //REPORTE SERVICIOS FACTURADOS
 
 
@@ -55,14 +56,17 @@ $pdf->SetFont('helvetica', '', 9);
 $fecha_inicio=$_GET["fecha_ini"];
 $fecha_fin=$_GET["fecha_fin"];
 $idmc=($_GET["idmc"]>0)? " AND mc.idmaestroclientes=".$_GET["idmc"]:"";
+$idtpf=($_GET["tpf"]>0)? " AND f.id_tipo_facturacion=".$_GET["tpf"]:"";
+
 $orientacion="vertical";
 $idempresa=isset($_SESSION["idEmpresa"])? $_SESSION["idEmpresa"]:"-1";
+
 // ---------------INICIO DEL REPORTE-----------------
-	$sql = "Select f.id_tipo_facturacion,f.fecha_facturacion,f.numero_factura,mc.nom_cliente,f.venta_total-f.iva+f.iva_retenido valor_neto,f.iva,f.iva_retenido,f.venta_total,f.anulado
+$sql = "Select f.id_tipo_facturacion,f.fecha_facturacion,f.numero_factura,mc.nom_cliente,f.venta_total-f.iva+f.iva_retenido valor_neto,f.iva,f.iva_retenido,f.venta_total,f.anulado
 from facturacion f inner join maestroclientes mc on f.idmaestroClientes=mc.idmaestroClientes 
-where f.id_empresa=".$idempresa ." $idmc and f.fecha_facturacion between STR_TO_DATE('$fecha_inicio','%d/%m/%Y') and STR_TO_DATE('$fecha_fin','%d/%m/%Y') order by length(f.numero_factura),f.numero_factura asc";
-        //QUEDA PENDIENTE EL FILTRADO POR FECHA.
+where f.id_empresa=".$idempresa ." $idmc $idtpf and f.fecha_facturacion between STR_TO_DATE('$fecha_inicio','%d/%m/%Y') and STR_TO_DATE('$fecha_fin','%d/%m/%Y') order by length(f.numero_factura),f.numero_factura asc";
         
+     
     	$result = mysql_query($sql,$connection) or die('La consulta fall&oacute;: '.mysql_error());	
         
   $pdf->addpage($orientacion,'letter');      

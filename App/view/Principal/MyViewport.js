@@ -128,12 +128,17 @@ Ext.define('MvcClientes.view.Principal.MyViewport',{
                                                 ShowReport_3();
                                               //addTabListadoAbonoBancos();
                                            }
-                                        if (index==3)
+                                           if (index==3)
+                                           {
+                                                ShowReport_4();
+                                              
+                                           }
+                                        if (index==4)
                                            {
                                              ShowGraf1() ;
                                             }
                                                                                     
-                                        if (index==4)
+                                        if (index==5)
                                            {
                                                addTabDashboard();
                                               //addTabListadoAbonoBancos();
@@ -160,6 +165,10 @@ Ext.define('MvcClientes.view.Principal.MyViewport',{
                                         },
                                         {
                                         text: 'Facturas Pendientes de Pago',
+                                        leaf: true
+                                        },
+                                        {
+                                        text: 'Detalle Servicios Facturados',
                                         leaf: true
                                         },
                                         {
@@ -410,6 +419,9 @@ Ext.define('MvcClientes.view.Principal.MyViewport',{
        } 
        function ShowReport_3(){
           var FrmReporte3= Ext.widget('ShowReport3');
+       } 
+       function ShowReport_4(){
+          var FrmReporte4= Ext.widget('ShowReport4');
        } 
         /////////////////////////////////////////
        //---------------GRAFICAS-------------//
