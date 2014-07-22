@@ -27,8 +27,8 @@ $idempresa=isset($_SESSION["idEmpresa"])? $_SESSION["idEmpresa"]:"-1";
         inner join maestroclientes mc on f.idmaestroClientes=mc.idmaestroClientes 
         where f.id_empresa=".$idempresa ." $idmc and f.fecha_facturacion 
         between STR_TO_DATE('$fecha_inicio','%d/%m/%Y') and STR_TO_DATE('$fecha_fin','%d/%m/%Y') 
-        group by numero_factura
-        order by numero_factura,id_tipo_facturacion,df.id_servicio";
+        group by numero_factura,id_tipo_facturacion
+        order by f.fecha_facturacion, numero_factura,id_tipo_facturacion,df.id_servicio";
 //echo $sql;
         
     	$result = mysql_query($sql,$connection) or die('La consulta fall&oacute;: '.mysql_error());	
@@ -99,9 +99,11 @@ $idempresa=isset($_SESSION["idEmpresa"])? $_SESSION["idEmpresa"]:"-1";
           $servTotal=  count(array_unique($serv));
           $venta=explode(',',$rows_e["ventas"]); 
           
+          
           $ventaGroup[$num_row_ser];
         $i=0;
         $b=-1;
+        
         foreach($idserv as $ids){
              $b=-1;
               $ventaGroup[$i]=0; 
@@ -109,6 +111,7 @@ $idempresa=isset($_SESSION["idEmpresa"])? $_SESSION["idEmpresa"]:"-1";
                    
                      if($serv_i==$ids){ 
                         if($b==$serv_i){
+      //SI EL NUMERO DE SERVICIO Y TIPO ES EL MISMO QUE EL ANTERIOR QUE LO SUME SINO QUE SOLO LO MUESTRE. 
                          $ventaGroup[$i]+=$venta[$id];   
                          }else{
                          $ventaGroup[$i]=$venta[$id];   
