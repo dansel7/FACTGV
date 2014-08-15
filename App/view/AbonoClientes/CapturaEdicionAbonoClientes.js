@@ -61,7 +61,7 @@ Ext.applyIf(me, {
                                Ext.getCmp("numero_cheque").show(); 
                                Ext.getCmp("numero_cheque").setValue(""); 
                                Ext.getCmp("monto_cheque").show();
-                               Ext.getCmp("monto_cheque").setValue("");
+                               Ext.getCmp("monto_cheque").setValue(Ext.getCmp("gridAbonoClientes").getSelectionModel().getSelection()[0].data.saldo_pendiente);
                                
                                Ext.getCmp("numero_remesa").hide();
                                Ext.getCmp("numero_remesa").setValue("0"); 
@@ -77,7 +77,7 @@ Ext.applyIf(me, {
                                Ext.getCmp("numero_remesa").show(); 
                                Ext.getCmp("numero_remesa").setValue(""); 
                                Ext.getCmp("monto_remesa").show();
-                               Ext.getCmp("monto_remesa").setValue("");
+                               Ext.getCmp("monto_remesa").setValue(Ext.getCmp("gridAbonoClientes").getSelectionModel().getSelection()[0].data.saldo_pendiente);
                                Ext.getCmp("id_cuenta").show();
                                Ext.getCmp("id_cuenta").setValue("");
                                                               
@@ -92,7 +92,7 @@ Ext.applyIf(me, {
                             {
                                 
                                Ext.getCmp("monto_efectivo").show(); 
-                               Ext.getCmp("monto_efectivo").setValue(""); 
+                               Ext.getCmp("monto_efectivo").setValue(Ext.getCmp("gridAbonoClientes").getSelectionModel().getSelection()[0].data.saldo_pendiente);
                                
                                Ext.getCmp("numero_cheque").hide(); 
                                Ext.getCmp("numero_cheque").setValue("-1"); //SI ES -1 ES UN PAGO EN EFECTIVO

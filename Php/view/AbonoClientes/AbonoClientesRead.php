@@ -13,7 +13,8 @@
                 //Y SI ES IGUAL A LA FECHA ACTUAL SE PONE EN AZUL.
 		$sql = "SELECT
                         f.idfacturacion,
-                        f.numero_factura,                   
+                        f.numero_factura,
+                        tf.tipo tipo_facturacion,
                         mc.nom_cliente,
                         if(DATE_FORMAT(f.fecha_facturacion, '%d/%m/%Y') = '00/00/0000', null, DATE_FORMAT(f.fecha_facturacion, '%d/%m/%Y')) fecha_facturacion,
                         if(DATE_FORMAT(f.fecha_programada_pago, '%d/%m/%Y') = '00/00/0000', null, 
@@ -25,6 +26,7 @@
                         f.venta_total-iFNull(sum(monto_cheque),0) saldo_pendiente 
                         from abono_clientes ac right join facturacion f on ac.idfacturacion=f.idfacturacion 
                         inner join maestroclientes mc on f.idmaestroClientes=mc.idmaestroClientes 
+                        inner join tipo_facturacion tf on f.id_tipo_facturacion=tf.id_tipo_facturacion
                         WHERE f.id_tipo_facturacion!=1 and f.anulado='No' and id_empresa=".$idempresa." and idbenutzer=".$_SESSION["idbenutzer"]."
                         GROUP BY f.idfacturacion
                         HAVING saldo_pendiente>0";

@@ -14,6 +14,7 @@ Ext.define('MvcClientes.view.AbonoClientes.GrdAbonoClientes',{
 			columns : [//Definimos las Columnas del Grid y las Columnas de la Tabla
                                    {header:"ID",dataIndex:"idfacturacion",width:50,hidden:true},
                                    {header:"Numero Factura", dataIndex:"numero_factura"},
+                                   {header:"Tipo de Factura", dataIndex:"tipo_facturacion",flex:1},
                                    {header:"Clientes", dataIndex:"nom_cliente",flex:1},
                                    {header:"Fecha Facturacion",id:"fecha_facturacion",dataIndex : "fecha_facturacion",flex:1,renderer:Ext.util.Format.dateRenderer('d/m/Y') },
                                    {header:"Fecha Programada Pago", dataIndex:"fecha_programada_pago",flex:1},//EL COLOR LO MANEJA LA CONSULTA EN ABONOCLIENTESREAD
