@@ -52,19 +52,24 @@ $pdf->setImageScale(PDF_IMAGE_SCALE_RATIO);
 $pdf->SetFont('helvetica', '', 10);
 $fecha_inicio=$_GET["fecha_ini"];
 $fecha_fin=$_GET["fecha_fin"];
+$idmc=($_GET["idmc"]>0)? " AND mc.idmaestroclientes=".$_GET["idmc"]:"";
+
 $orientacion="vertical";
+$idempresa=isset($_SESSION["idEmpresa"])? $_SESSION["idEmpresa"]:"-1";
+
 // ---------------INICIO DEL REPORTE-----------------
 	$sql = "SELECT 
 DATE_FORMAT(ab.fecha_remesa,'%d/%m/%Y') fecha_remesa,ab.numero_remesa, 
 ac.numero_cheque,ac.monto_cheque,
 concat(b.nombre_banco,' - ',c.numero_cuenta) cuenta,
-f.numero_factura
+f.numero_factura,mc.nom_cliente
 FROM abono_bancos ab 
 inner join abono_clientes ac on ac.id_abono_clientes=ab.id_abono_clientes 
 inner join cuentas c on c.id_cuenta=ab.id_cuenta
 inner join bancos b on b.id_banco=c.id_banco
 inner join facturacion f on  f.idfacturacion=ac.idfacturacion
-where c.id_empresa=".$_SESSION["idEmpresa"]." and ab.fecha_remesa between STR_TO_DATE('$fecha_inicio','%d/%m/%Y') and STR_TO_DATE('$fecha_fin','%d/%m/%Y')
+inner join maestroclientes mc on f.idmaestroClientes=mc.idmaestroClientes 
+where c.id_empresa=".$idempresa ." $idmc and ab.fecha_remesa between STR_TO_DATE('$fecha_inicio','%d/%m/%Y') and STR_TO_DATE('$fecha_fin','%d/%m/%Y')
 order by fecha_remesa,numero_remesa,numero_factura,cuenta";
         //QUEDA PENDIENTE EL FILTRADO POR FECHA.
         
@@ -73,10 +78,10 @@ order by fecha_remesa,numero_remesa,numero_factura,cuenta";
   $pdf->addpage($orientacion,'letter');      
   
   $encabezado="<h2><img src=\"/facturaciones/resources/imagenes/gvlogo.png\" align=\"left\">
-      &nbsp;Reporte de Abonos a Bancos - {$_SESSION["nombreEmpresa"]}<br></h2>";
+      &nbsp;Reporte de Abonos a Bancos - {$_SESSION["nombreEmpresa"]}</h2>";
   
   $cuerpo_detalle.= '<table width="700px">
-                     <tr><td width="80px" style="text-align:right"><b>NUMERO DE<br> REMESA</b></td>
+                     <tr><td width="80px" style="text-align:left"><b>NUMERO DE<br>REMESA<Hr>CLIENTE</b></td>
                      <td width="100px" style="text-align:center"><b>FECHA DE REMESA</b></td> 
                      <td width="110px" style="text-align:center" ><b>NUMERO DE<br> CHEQUE</b></td>
                      <td width="80px" style="text-align:right" ><b>NUMERO DE<br> FACTURA</b></td>
@@ -89,7 +94,12 @@ order by fecha_remesa,numero_remesa,numero_factura,cuenta";
   $subTotal=0;
   $c=0;
   $total=0;
-  while($rows_e = mysql_fetch_array($result)){
+  $cliente="";
+      while($rows_e = mysql_fetch_array($result)){
+          
+      if($idmc!=""){
+      $cliente="<H3  align=\"CENTER\"><B>CLIENTE:</B> ". $rows_e["nom_cliente"]."</H3>";
+      }
        $num_rem=$rows_e["numero_remesa"];    
        $cuenta=$rows_e["cuenta"];
        if($num_rem!=$temp || $cuenta!=$tempC){
@@ -112,12 +122,12 @@ order by fecha_remesa,numero_remesa,numero_factura,cuenta";
                $cheque= $rows_e["numero_cheque"];
            }
        
-           $cuerpo_detalle.= "<tr><td  style=\"text-align:right\"></td>
+           $cuerpo_detalle.= "<tr><td  style=\"text-align:right;font-size:275px\">".$rows_e["nom_cliente"]."</td>
                              <td style=\"text-align:center\"> ".$rows_e["fecha_remesa"] ."</td> 
                              <td  style=\"text-align:right\">".$cheque ."</td>
                                  <td  style=\"text-align:right\">".$rows_e["numero_factura"] ."</td>
                              <td  style=\"text-align:right\">".$rows_e["monto_cheque"]."</td>
-                             <td  style=\"text-align:right\">".strtoupper($rows_e["cuenta"]) ."</td></tr>";
+                             <td  style=\"text-align:center;font-size:300px\">".strtoupper($rows_e["cuenta"]) ."</td></tr>";
        
        
        $subTotal+=$rows_e["monto_cheque"];
@@ -130,7 +140,7 @@ order by fecha_remesa,numero_remesa,numero_factura,cuenta";
         $cuerpo_detalle.='<tr><td colspan="3"></td></tr>';
         $cuerpo_detalle.='<tr><td style="text-align:right" colspan="3"><b>TOTAL REMESADO</b></td><td></td><td style="text-align:right"><b>'.number_format($total,2).'</b></td><td></td></tr>';
         $cuerpo_detalle.= "</table>";
-        $Reporte=$encabezado.$cuerpo_detalle.$pie_factura;
+        $Reporte=$encabezado.$cliente.$cuerpo_detalle.$pie_factura;
         
 $exp=isset($_GET["exp"])? $_GET["exp"]:"-1";//Tipo de Exportacion
 /////////////////////////////////////////////////////////////////////

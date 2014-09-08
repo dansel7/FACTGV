@@ -89,7 +89,12 @@ where f.id_empresa=".$idempresa ." $idmc $idtpf and f.fecha_facturacion between 
   $subTIva=0;
   $subTIvaRetenido=0;
   $subTVentaTotal=0;
+  $cliente="";
   while($rows_e = mysql_fetch_array($result)){
+       if($idmc!=""){
+      $cliente="<H3  align=\"CENTER\"><B>CLIENTE:</B> ". $rows_e["nom_cliente"]."</H3>";
+      }
+      
         if($rows_e["anulado"]=="Si"){
         $cuerpo_detalle.= "<tr style=\"background-color:yellow\">
                           <td  style=\"text-align:right\"> ".substr($rows_e["fecha_facturacion"],0,11) ."</td> 
@@ -128,7 +133,7 @@ where f.id_empresa=".$idempresa ." $idmc $idtpf and f.fecha_facturacion between 
         $cuerpo_detalle.='<tr><td style="text-align:right" colspan="3"><b>TOTALES</b></td><td style="text-align:right"><b>'.number_format($subTValorNeto,2).'</b></td><td style="text-align:right"><b>'.number_format($subTIva,2).'</b></td><td style="text-align:right"><b>'.number_format($subTIvaRetenido,2).'</b></td><td style="text-align:right"><b>'.number_format($subTVentaTotal,2).'</b></td></tr>';
         $cuerpo_detalle.='<tr><td colspan="7"></td></tr>';
         $cuerpo_detalle.= "</table>";
-        $Reporte=$encabezado.$cuerpo_detalle.$pie_factura;
+        $Reporte=$encabezado.$cliente.$cuerpo_detalle.$pie_factura;
 
 $exp=isset($_GET["exp"])? $_GET["exp"]:"-1";//Tipo de Exportacion
 /////////////////////////////////////////////////////////////////////
