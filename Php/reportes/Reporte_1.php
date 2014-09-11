@@ -70,7 +70,7 @@ inner join bancos b on b.id_banco=c.id_banco
 inner join facturacion f on  f.idfacturacion=ac.idfacturacion
 inner join maestroclientes mc on f.idmaestroClientes=mc.idmaestroClientes 
 where c.id_empresa=".$idempresa ." $idmc and ab.fecha_remesa between STR_TO_DATE('$fecha_inicio','%d/%m/%Y') and STR_TO_DATE('$fecha_fin','%d/%m/%Y')
-order by fecha_remesa,numero_remesa,numero_factura,cuenta";
+order by DATE_FORMAT(ab.fecha_remesa,'%Y/%m/%d') asc,numero_remesa,numero_factura,cuenta";
         //QUEDA PENDIENTE EL FILTRADO POR FECHA.
         
     	$result = mysql_query($sql,$connection) or die('La consulta fall&oacute;: '.mysql_error());	
