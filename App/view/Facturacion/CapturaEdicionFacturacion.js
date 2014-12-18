@@ -128,7 +128,7 @@ if(typeof(records) != "undefined" && typeof(records) != "string"){
                         height: 580,
                         layout: {
                             type: 'auto'
-                        },bodyPadding: 25,
+                        },bodyPadding: 10,
                         items: 
                         [   
                             //DATOS GENERALES
@@ -139,7 +139,7 @@ if(typeof(records) != "undefined" && typeof(records) != "string"){
                             },  
                             items:[
                             {xtype : "combobox", id:"id_tipo_factura", queryMode: 'local',fieldLabel: "Tipo Factura", store: ListTpFact,displayField: 'tipo',valueField: 'id_tipo_facturacion',
-                                name:"id_tipo_facturacion", flex: 1, margin: '0 10 0 0',flex:1,allowBlank : false,
+                                name:"id_tipo_facturacion", flex: 1, margin: '0 10 0 0',allowBlank : false,
                                listeners: {
                                         select: function () {
                                            totales_facturacion();
@@ -162,7 +162,25 @@ if(typeof(records) != "undefined" && typeof(records) != "string"){
                             {xtype : "textfield", name : "n_comprobante_credito", fieldLabel : "No.Comprobante Credito", flex: 1},
                             
                             ]},
-                            
+                        
+                        
+                            //Campos para AWB
+                            {xtype: 'fieldset',title: 'Datos exclusivos para AWB', width:900,
+                            layout: {
+                                    columns: 6,
+                                    type: 'table'
+                            },  
+                            items:[
+                               
+                            {xtype : 'numberfield', name : "peso", fieldLabel : "Peso", flex:1,labelWidth:30,width:100,decimalPrecision: 2,  hideTrigger: true, decimalSeparator: "." , margin: '0 10 5 0'},
+                            {xtype : "numberfield", name : "nbultos", fieldLabel : "Num. Bultos", flex: 1 ,labelWidth:80,width:150 ,allowDecimals: false, hideTrigger: true, margin: '0 10 0 0'},
+                            {xtype : "textfield", name : "embarcador", fieldLabel : "Embarcador", flex: 1 ,labelWidth:80,width:250 , margin: '0 10 0 0'},
+                            {xtype : "textfield", name : "wr", fieldLabel : "WR", flex: 1,labelWidth:50,width:100 , margin: '0 10 0 0'},
+                            {xtype : "textfield", name : "hawb", fieldLabel : "HAWB", flex: 1,labelWidth:50,width:100 , margin: '0 10 0 0'},
+                            {xtype : "textfield", name : "mawb", fieldLabel : "MAWB", flex: 1,labelWidth:50,width:100 , margin: '0 10 0 0'}
+                            ]},
+                        
+                        
                             
                             //GRID DE FACTURACION
                             {xtype : 'grid',name:'gridDetalle',id:'gridDetalle', allowBlank : false,

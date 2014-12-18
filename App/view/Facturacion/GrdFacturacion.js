@@ -36,6 +36,13 @@ Ext.define('MvcClientes.view.Facturacion.GrdFacturacion',{
                             { dataIndex : "n_comprobante_credito", header : "n comprobante credito", flex:1,hidden: true},
                             { dataIndex : "id_tipo_facturacion", header : "Tipo Factura", flex:1,hidden: true},
                             { dataIndex : "anulado", header : "Anulado", flex:1},
+                            { dataIndex : "peso", header : "Peso", flex:1,hidden: true},
+                            { dataIndex : "nbultos", header : "Bultos", flex:1,hidden: true},
+                            { dataIndex : "embaracador", header : "Embarcador", flex:1,hidden: true},
+                            { dataIndex : "wr", header : "wr", flex:1,hidden: true},
+                            { dataIndex : "hawb", header : "hawb", flex:1,hidden: true},
+                            { dataIndex : "mawb", header : "mawb", flex:1,hidden: true}
+
 				   
 			],
 			dockedItems: [

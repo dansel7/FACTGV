@@ -18,8 +18,13 @@ Ext.define('MvcClientes.model.Facturacion.Facturacion', {
                                 { name: 'id_empresa', type: 'int'},
                                 { name: 'id_tipo_facturacion', type: 'int'},
                                 { name: 'tipo_facturacion', type: 'string'},
-                                { name: 'anulado', type: 'string'}
-                                
+                                { name: 'anulado', type: 'string'},
+                                { name: 'peso', type: 'number'},
+                                { name: 'nbultos', type: 'int'},
+                                { name: 'embarcador', type: 'string'},
+                                { name: 'wr', type: 'string'},
+                                { name: 'hawb', type: 'string'},
+                                { name: 'mawb', type: 'string'}
            ]
 });
 
