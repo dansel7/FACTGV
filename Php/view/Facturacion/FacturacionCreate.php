@@ -25,6 +25,12 @@ mysql_select_db($db_name,$connection) or die("Error de conexion a la base de dat
                                 $id_empresa=$_SESSION["idEmpresa"];
                                 $id_tipo_facturacion=$data->id_tipo_facturacion;
                                 $anulado=$data->anulado;
+                                $peso=$data->peso;
+                                $nbultos=$data->nbultos;
+                                $embarcador=$data->embarcador;
+                                $wr=$data->wr;
+                                $hawb=$data->hawb;
+                                $mawb=$data->mawb;
 	
 	
                  $SqlInsert ="INSERT INTO facturacion
@@ -44,6 +50,12 @@ mysql_select_db($db_name,$connection) or die("Error de conexion a la base de dat
                                 `id_empresa`=$id_empresa,
                                 `id_tipo_facturacion`=$id_tipo_facturacion,
                                 `anulado`='$anulado',
+                                `peso`=$peso,
+                                `nbultos`=$nbultos',
+                                `embarcador`='$embarcador',    
+                                `wr`='$wr',
+                                `hawb`='$hawb',
+                                `mawb`='$mawb',    
                                 `idbenutzer`=".$_SESSION["idbenutzer"];
 			
 			$rs = mysql_query($SqlInsert);
@@ -66,6 +78,12 @@ mysql_select_db($db_name,$connection) or die("Error de conexion a la base de dat
                                                 "fecha_quedan"=>$fecha_quedan,
                                                 "comprobante_quedan"=>$comprobante_quedan,
                                                 "fecha_programada_pago"=>$fecha_programada_pago,
+                                                "peso"=>$peso,
+                                                "nbultos"=>$nbultos,
+                                                "embarcador"=>$embarcador,    
+                                                "wr"=>$wr,
+                                                "hawb"=>$hawb,
+                                                "mawb"=>$mawb, 
                                                 "id_tipo_facturacion"=>$id_tipo_facturacion
                                             )
 					)

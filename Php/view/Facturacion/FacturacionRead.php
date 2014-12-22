@@ -29,6 +29,12 @@
                         f.id_empresa,
                         f.id_tipo_facturacion,
                         tf.tipo tipo_facturacion,
+                        f.peso,
+                        f.nbultos,
+                        f.embarcador,
+                        f.wr,
+                        f.hawb,
+                        f.mawb,
                         f.anulado
                         FROM facturacion f inner join maestroclientes mc on f.idmaestroClientes=mc.idmaestroClientes inner join tipo_facturacion tf on tf.id_tipo_facturacion=f.id_tipo_facturacion 
                         where id_empresa=".$idempresa." and idbenutzer=".$_SESSION["idbenutzer"] ." order by f.fecha_facturacion desc ,f.numero_factura desc";
