@@ -51,7 +51,7 @@ mysql_select_db($db_name,$connection) or die("Error de conexion a la base de dat
                                 `id_tipo_facturacion`=$id_tipo_facturacion,
                                 `anulado`='$anulado',
                                 `peso`=$peso,
-                                `nbultos`=$nbultos',
+                                `nbultos`=$nbultos,
                                 `embarcador`='$embarcador',    
                                 `wr`='$wr',
                                 `hawb`='$hawb',
