@@ -31,6 +31,7 @@ mysql_select_db($db_name,$connection) or die("Error de conexion a la base de dat
                                 $wr=$data->wr;
                                 $hawb=$data->hawb;
                                 $mawb=$data->mawb;
+                                $tipo_servicio_carga=$data->tipo_servicio_carga;
 	
 	
                  $SqlInsert ="INSERT INTO facturacion
@@ -55,7 +56,8 @@ mysql_select_db($db_name,$connection) or die("Error de conexion a la base de dat
                                 `embarcador`='$embarcador',    
                                 `wr`='$wr',
                                 `hawb`='$hawb',
-                                `mawb`='$mawb',    
+                                `mawb`='$mawb',
+                                `tipo_servicio_carga`='$tipo_servicio_carga',
                                 `idbenutzer`=".$_SESSION["idbenutzer"];
 			
 			$rs = mysql_query($SqlInsert);
@@ -84,6 +86,7 @@ mysql_select_db($db_name,$connection) or die("Error de conexion a la base de dat
                                                 "wr"=>$wr,
                                                 "hawb"=>$hawb,
                                                 "mawb"=>$mawb, 
+                                                "tipo_servicio_carga"=>$tipo_servicio_carga, 
                                                 "id_tipo_facturacion"=>$id_tipo_facturacion
                                             )
 					)

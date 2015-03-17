@@ -24,7 +24,8 @@ Ext.define('MvcClientes.model.Facturacion.Facturacion', {
                                 { name: 'embarcador', type: 'string'},
                                 { name: 'wr', type: 'string'},
                                 { name: 'hawb', type: 'string'},
-                                { name: 'mawb', type: 'string'}
+                                { name: 'mawb', type: 'string'},
+                                { name: 'tipo_servicio_carga', type: 'string'}
            ]
 });
 

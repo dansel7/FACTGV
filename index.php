@@ -42,7 +42,7 @@ error_reporting(0);
 ]);
 
 Ext.onReady(function() {
-
+               
      var win;
      var winList;
      var list_empresas = new Ext.data.Store({
@@ -196,9 +196,15 @@ Ext.onReady(function() {
                             
                             if(outHTML==1){
 
-                           Ext.getCmp("panelMantto").show();     
+                           Ext.getCmp("panelMantto").show();  
+                           Ext.getCmp("panelReportes").show(); 
+                           Ext.getCmp("panelFacturas").show(); 
+                          //Ext.Msg.alert('Evento MyViewport al dar enter al usuario');
                             }
-
+                            if(outHTML==3){
+            
+                            Ext.getCmp("panelReportes").show(); 
+                            }
                           }
                         });
                             //------------------FIN------------------//
@@ -255,8 +261,17 @@ Ext.onReady(function() {
                             
                             if(outHTML==1){
 
-                           Ext.getCmp("panelMantto").show();     
+                           Ext.getCmp("panelMantto").show();  
+                           Ext.getCmp("panelReportes").show(); 
+                           Ext.getCmp("panelFacturas").show(); 
+                           //Ext.Msg.alert('Evento al Dar Enter en el campo Password');
                             }
+                            
+                            if(outHTML==3){
+            
+                            Ext.getCmp("panelReportes").show(); 
+                            }
+                            
                           }
                         });
                         
@@ -299,8 +314,15 @@ Ext.onReady(function() {
                             outHTML = response.responseText;
                             
                             if(outHTML==1){
-
-                           Ext.getCmp("panelMantto").show();     
+                             
+                           Ext.getCmp("panelMantto").show();  
+                           Ext.getCmp("panelReportes").show(); 
+                           Ext.getCmp("panelFacturas").show(); 
+                           //Ext.Msg.alert('Evento Al dar Clic Boton');
+                            }
+                            if(outHTML==3){
+            
+                            Ext.getCmp("panelReportes").show(); 
                             }
 
                           }

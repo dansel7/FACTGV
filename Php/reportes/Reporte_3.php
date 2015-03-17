@@ -68,7 +68,7 @@ $sql = "SELECT
                 f.venta_total-iFNull(sum(monto_cheque),0) saldo_pendiente 
                 from abono_clientes ac right join facturacion f on ac.idfacturacion=f.idfacturacion 
                 inner join maestroclientes mc on f.idmaestroClientes=mc.idmaestroClientes 
-                WHERE f.anulado='No' AND id_empresa=".$idempresa." AND idbenutzer=".$_SESSION["idbenutzer"]." $idmc
+                WHERE f.anulado='No' AND id_empresa=".$idempresa." $idmc
                 AND f.id_tipo_facturacion!=1 and f.fecha_facturacion between STR_TO_DATE('$fecha_inicio','%d/%m/%Y') and STR_TO_DATE('$fecha_fin','%d/%m/%Y')
                 GROUP BY f.idfacturacion
                 HAVING saldo_pendiente>0 order by length(numero_factura),numero_factura asc";

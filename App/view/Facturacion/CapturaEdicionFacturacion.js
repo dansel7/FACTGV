@@ -51,6 +51,13 @@ Ext.define('MvcClientes.view.Facturacion.CapturaEdicionFacturacion', {
             },
             autoLoad: true
         });
+ //STORE DE LOS TIPOS DE SERVICIO DE CARGA
+         var TpServCarga = new Ext.data.Store({
+            fields: ['tipo_serv','cod_serv'],
+            data: [{'tipo_serv':'Courier','cod_serv':'COU'},{'tipo_serv':'Completo','cod_serv':'FCL'} ,{'tipo_serv':'Carga Aerea','cod_serv':'CAR'} ,{'tipo_serv':'Carga Maritima','cod_serv':'MAR'}],
+            autoLoad: true
+        });
+        
         
   //STORE DE CATALOGO DE SERVICIOS
          var ListCatServ = Ext.create('MvcClientes.store.CatServicios.CatServicios');
@@ -128,7 +135,7 @@ if(typeof(records) != "undefined" && typeof(records) != "string"){
                         height: 580,
                         layout: {
                             type: 'auto'
-                        },bodyPadding: 10,
+                        },bodyPadding: 10,autoScroll:true,overflowY: 'scroll',
                         items: 
                         [   
                             //DATOS GENERALES
@@ -160,6 +167,10 @@ if(typeof(records) != "undefined" && typeof(records) != "string"){
                             },
                             {xtype : "textfield",id : "idfacturacion", name : "idfacturacion", fieldLabel : "Id",hidden: true, margin: '0 10 0 0'},
                             {xtype : "textfield", name : "n_comprobante_credito", fieldLabel : "No.Comprobante Credito", flex: 1},
+/*Tipo Servicio Carga AWB*/ {xtype : "combobox", queryMode: 'local', fieldLabel: "Tipo de Servicio (Exclusivo AWB)",
+                                 store: TpServCarga,displayField: 'tipo_serv',valueField: 'cod_serv',
+                                 name:"tipo_servicio_carga", id:"tipo_servicio_carga", flex: 1, margin: '0 10 0 0',width:340
+                             },
                             
                             ]},
                         
@@ -173,11 +184,11 @@ if(typeof(records) != "undefined" && typeof(records) != "string"){
                             items:[
                                
                             {xtype : 'numberfield', name : "peso", fieldLabel : "Peso", flex:1,labelWidth:30,width:100,decimalPrecision: 2,  hideTrigger: true, decimalSeparator: "." , margin: '0 10 5 0'},
-                            {xtype : "numberfield", name : "nbultos", fieldLabel : "Num. Bultos", flex: 1 ,labelWidth:80,width:150 ,allowDecimals: false, hideTrigger: true, margin: '0 10 0 0'},
+                            {xtype : "numberfield", name : "nbultos", fieldLabel : "Num. Bultos", flex: 1 ,labelWidth:70,width:125 ,allowDecimals: false, hideTrigger: true, margin: '0 10 0 0'},
                             {xtype : "textfield", name : "embarcador", fieldLabel : "Embarcador", flex: 1 ,labelWidth:80,width:250 , margin: '0 10 0 0'},
-                            {xtype : "textfield", name : "wr", fieldLabel : "WR", flex: 1,labelWidth:50,width:100 , margin: '0 10 0 0'},
-                            {xtype : "textfield", name : "hawb", fieldLabel : "HAWB", flex: 1,labelWidth:50,width:100 , margin: '0 10 0 0'},
-                            {xtype : "textfield", name : "mawb", fieldLabel : "MAWB", flex: 1,labelWidth:50,width:100 , margin: '0 10 0 0'}
+                            {xtype : "textfield", name : "wr", fieldLabel : "WR", flex: 1,labelWidth:18,width:100 , margin: '0 10 0 0'},
+                            {xtype : "textfield", name : "hawb", fieldLabel : "HAWB", flex: 1,labelWidth:33,width:115 , margin: '0 10 0 0'},
+                            {xtype : "textfield", name : "mawb", fieldLabel : "MAWB", flex: 1,labelWidth:33,width:115 , margin: '0 10 0 0'}
                             ]},
                         
                         

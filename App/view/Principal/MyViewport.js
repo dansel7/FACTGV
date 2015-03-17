@@ -30,19 +30,22 @@ Ext.define('MvcClientes.view.Principal.MyViewport',{
                 collapsible: true,
                 margins: '3,3,0,0',
                 layout: 'accordion',
-			activeItem: 1,
+			activeItem: 0,
                 items: [
                     {
                         xtype: 'treepanel',
                         title: 'Facturaciones',
+                        id:'panelFacturas',
                         height: 212,
 			iconCls:'movimientos',
                         forceLayout: true,
-                        collapsed: true,
-                        collapsible: true,
+                        collapsed: false,
+                        collapsible: false,
                         rootVisible: false,
                         border: false,
                         autoWidth: true,
+                        hidden:true,
+                        flex:1,
                         listeners:{//Listeners apuntando a cada node
                             itemclick:function(view, record, item, index, e)
                                         {
@@ -102,14 +105,17 @@ Ext.define('MvcClientes.view.Principal.MyViewport',{
                     {
                         xtype: 'treepanel',
                         title: 'Reportes',
+                        id: 'panelReportes',
 			iconCls:'reportes',
                         height: 212,
                         forceLayout: true,
                         collapsed: true,
-                        collapsible: true,
+                        collapsible: false,
                         rootVisible: false,
                         border: false,
                         autoWidth: true,
+                        hidden:true,
+                        flex:1,
                         listeners:{//Listeners apuntando a cada node
                             itemclick:function(view, record, item, index, e)
                                         {
@@ -191,12 +197,13 @@ Ext.define('MvcClientes.view.Principal.MyViewport',{
                         height: 212,
 			iconCls:'catalogos',
                         forceLayout: true,
-                        collapsed: false,
+                        collapsed: true,
                         collapsible: true,
                         rootVisible: false,
                         border: false,
                         autoWidth: true,
                         hidden:true,
+                        flex:1,
                         listeners:{//Listeners apuntando a cada node
                             itemclick:function(view, record, item, index, e)
                                         {
@@ -293,6 +300,9 @@ Ext.define('MvcClientes.view.Principal.MyViewport',{
 		 TabPanelMain
 		];
                 
+                  me.callParent();	
+                  
+                  
    ///----OBTIENE PERFIL DE USUARIO PARA MOSTRAR MENUS----///
         Ext.Ajax.request({
           url: 'Php/controller/Login/Perfil_Benutzer.php',
@@ -301,13 +311,19 @@ Ext.define('MvcClientes.view.Principal.MyViewport',{
             
             if(outHTML==1){
                 
-           Ext.getCmp("panelMantto").show();     
+            Ext.getCmp("panelMantto").show();  
+            Ext.getCmp("panelReportes").show(); 
+            Ext.getCmp("panelFacturas").show();     
+           // Ext.Msg.alert('Evento MyViewport');
             }
-
+            if(outHTML==3){
+            
+            Ext.getCmp("panelReportes").show(); 
+            }
           }
         });
             //------------------FIN------------------//
-             me.callParent();	
+           
              
            ////Funci			 
 	 function addTabListadoClientes(){ 

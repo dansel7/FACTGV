@@ -36,7 +36,7 @@ $pdf->SetPrintFooter(false);
 
 //set margins
 //$pdf->SetMargins(PDF_MARGIN_LEFT, PDF_MARGIN_TOP, PDF_MARGIN_RIGHT);
-$pdf->SetMargins(0.6, 1.1, 0.635);
+$pdf->SetMargins(0.2, 0.57, 0.635);
 
 //$pdf->SetHeaderMargin(0);
 //$pdf->SetFooterMargin(15);
@@ -85,7 +85,7 @@ $orientacion="vertical";
         $datos_factura='<br>
             <table  width="690px">
             <tr>
-                <td height="10px"></td>
+                <td height="22px"></td>
                 <td></td>
                 <td></td>
                 <td></td>
@@ -93,7 +93,7 @@ $orientacion="vertical";
             </tr>
             <tr>
                <td style="text-align:center" width="475px" colspan="4"></td>
-               <td  style="text-align:center" height="28px" >'. $rows_e["fecha_facturacion"] .'</td>
+               <td  style="text-align:center" height="20px" >'. $rows_e["fecha_facturacion"] .'</td>
             </tr>
              <tr>
                <td style="text-align:center;font-size:11pt" height="20px"  colspan="4"><b>'.strtoupper($rows_e["nom_cliente"]).'</b></td>
@@ -110,8 +110,8 @@ $orientacion="vertical";
             
             </table><br>
           <table style="table-layout:fixed;font-size:12pt">
-                 <tr><td colspan="4" height="40px"></td></tr>
-                 <tr><td colspan="4" height="270px">
+                 <tr><td colspan="4" height="60px"></td></tr>
+                 <tr><td colspan="4" height="250px">
                  <table>';
         $detalle_factura.='
                     <tr>
@@ -134,7 +134,7 @@ $orientacion="vertical";
         $tot_venta_exentas+=$rows_e["venta_exenta"];
         //ESTA ES LA PARTE QUE CONTIENE EL TOTAL EN LETRAS Y SUS DESGLOSES
           $pie_factura='</table></td></tr>
-                     <tr><td colspan="6" height="60px"></td></tr>
+                     <tr><td colspan="6" height="58px"></td></tr>
                      <tr><td colspan="6" style="text-align:right">
                          <table>
                          <tr>    

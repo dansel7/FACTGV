@@ -41,7 +41,8 @@ Ext.define('MvcClientes.view.Facturacion.GrdFacturacion',{
                             { dataIndex : "embaracador", header : "Embarcador", flex:1,hidden: true},
                             { dataIndex : "wr", header : "wr", flex:1,hidden: true},
                             { dataIndex : "hawb", header : "hawb", flex:1,hidden: true},
-                            { dataIndex : "mawb", header : "mawb", flex:1,hidden: true}
+                            { dataIndex : "mawb", header : "mawb", flex:1,hidden: true},
+                            { dataIndex : "tipo_servicio_carga", header : "Tipo Servicio de Carga", flex:1,hidden: true}
 
 				   
 			],
