@@ -60,7 +60,18 @@ Ext.define('MvcClientes.view.Facturacion.CapturaEdicionFacturacion', {
         
         
   //STORE DE CATALOGO DE SERVICIOS
-         var ListCatServ = Ext.create('MvcClientes.store.CatServicios.CatServicios');
+         var ListCatServ = new Ext.data.Store({
+             fields: ['id_servicio','servicio'],
+            proxy: {
+                type: 'ajax',
+                url : 'Php/store/list_CatServicio.php?opx=c4t53Rv1C3',
+                reader: {
+                    type: 'json'
+                }
+            },
+            autoLoad: true
+        });
+Ext.create('MvcClientes.store.CatServicios.CatServicios');
         ListCatServ.load();
 //STORE DE LOS DETALLES DE FACTURAS    
 //Verificar que se envian datos para editar
@@ -93,8 +104,8 @@ if(typeof(records) != "undefined" && typeof(records) != "string"){
                 record.set("venta_gravada",record.data.cantidad*record.data.valor_concepto);
                 //SUBTOTAL
                 sum+=record.data.venta_gravada;
-                sumExenta+=record.data.venta_nosujeta;
-                sumNoSuj+=record.data.venta_exenta;
+                sumExenta+=record.data.venta_exenta;
+                sumNoSuj+=record.data.venta_nosujeta;
                 
               });            
              //COMPRUEBA QUE SEA UNA FACTURA DE EXPORTACION
@@ -291,7 +302,7 @@ if(typeof(records) != "undefined" && typeof(records) != "string"){
 			            }
 			        }],
                                 plugins: [
-                                    Ext.create('Ext.grid.plugin.RowEditing', {
+                                    Ext.create('Ext.grid.plugin.CellEditing', {
                                         id:'rowedit',
                                         clickToEdit : 1,
                                         listeners: {
