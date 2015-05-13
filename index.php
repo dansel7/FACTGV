@@ -17,10 +17,10 @@ error_reporting(0);
                  <link rel="stylesheet" type="text/css" href="ux/css/ItemSelector.css" />
 		 <link rel="stylesheet" type="text/css" href="ux/css/LiveSearchGridPanel.css" />
 		<!-- En Esta Linea, para cuando se esta desarrollando se pone:ext-all-dev.js, en produccion ext-all.js--> 
-		<script type="text/javascript" src="/ext-4.0.7/ext-all-dev.js"></script>
+		<script type="text/javascript" src="/ext-4.0.7/ext-all.js"></script>
                 <script type="text/javascript" src="App/ext-code.js"></script>
-		<script type="text/javascript" src="/ext-4.0.7/bootstrap.js"></script>
-		<script type="text/javascript" src="/ext-4.0.7/ext-all-debug.js"></script>
+		<!--<script type="text/javascript" src="/ext-4.0.7/bootstrap.js"></script>
+		<script type="text/javascript" src="/ext-4.0.7/ext-all-debug.js"></script>-->
                 
 		<script type="text/javascript" src="/ext-4.0.7/locale/ext-lang-es.js"></script>
                 
@@ -199,6 +199,9 @@ Ext.onReady(function() {
                            Ext.getCmp("panelMantto").show();  
                            Ext.getCmp("panelReportes").show(); 
                            Ext.getCmp("panelFacturas").show(); 
+                           Ext.getCmp("btnListFact").show();  
+                           Ext.getCmp("btnNuevaFact").show(); 
+                           Ext.getCmp("titleAtajos").show(); 
                           //Ext.Msg.alert('Evento MyViewport al dar enter al usuario');
                             }
                             if(outHTML==3){
@@ -263,7 +266,11 @@ Ext.onReady(function() {
 
                            Ext.getCmp("panelMantto").show();  
                            Ext.getCmp("panelReportes").show(); 
-                           Ext.getCmp("panelFacturas").show(); 
+                           Ext.getCmp("panelFacturas").show();
+                           Ext.getCmp("btnListFact").show();  
+                           Ext.getCmp("btnNuevaFact").show(); 
+                           Ext.getCmp("titleAtajos").show();  
+                           
                            //Ext.Msg.alert('Evento al Dar Enter en el campo Password');
                             }
                             
@@ -317,7 +324,10 @@ Ext.onReady(function() {
                              
                            Ext.getCmp("panelMantto").show();  
                            Ext.getCmp("panelReportes").show(); 
-                           Ext.getCmp("panelFacturas").show(); 
+                           Ext.getCmp("panelFacturas").show();
+                           Ext.getCmp("btnListFact").show();  
+                           Ext.getCmp("btnNuevaFact").show(); 
+                           Ext.getCmp("titleAtajos").show();  
                            //Ext.Msg.alert('Evento Al dar Clic Boton');
                             }
                             if(outHTML==3){
