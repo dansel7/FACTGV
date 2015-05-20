@@ -19,9 +19,10 @@
                     left join  abono_bancos ab on ac.id_abono_clientes=ab.id_abono_clientes 
                     inner join facturacion f on f.idfacturacion=ac.idfacturacion
                     inner join maestroclientes mc on mc.idmaestroclientes=f.idmaestroclientes
-                    where isnull(ab.id_abono_clientes) and f.id_tipo_facturacion!=1 and id_empresa=".$idempresa." and idbenutzer=".$_SESSION["idbenutzer"]." and numero_cheque!=0";
-                
-//REVISAR LA LOGICA PARA PODER ABONAR SI SOLO ES A TRAVES DE BANCOS SIN CHEQUES
+                where isnull(ab.id_abono_clientes) and f.id_tipo_facturacion!=1 and id_empresa=".$idempresa." and numero_cheque!=0";
+                //CONDICION PARA QUE MUESTRE LO QUE POR USUARIO SE HA HECHO
+                //where isnull(ab.id_abono_clientes) and f.id_tipo_facturacion!=1 and id_empresa=".$idempresa." and idbenutzer=".$_SESSION["idbenutzer"]." and numero_cheque!=0";
+
                 
                 $result = mysql_query($sql,$connection) or die('La consulta fall&oacute;: '.mysql_error());		
 		//Formamos el Array de Datos, si ejecutamos este archivo PHP veremos el array formado

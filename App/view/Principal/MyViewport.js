@@ -35,7 +35,7 @@ Ext.define('MvcClientes.view.Principal.MyViewport',{
                     {
                         xtype: 'treepanel',
                         title: 'Facturaciones',
-                        id:'panelFacturas',
+                        id:'UserAdminPanelFact',
                         height: 212,
 			iconCls:'movimientos',
                         forceLayout: true,
@@ -81,6 +81,65 @@ Ext.define('MvcClientes.view.Principal.MyViewport',{
                                     iconCls:'icon-facturacion'
                                     
                                 },
+                                {
+                                    text: 'Abono a Clientes',
+                                  
+                                        leaf: true,
+                                    iconCls:'icon-users'
+                                }
+                                ,
+                                {
+                                    text: 'Abono a Bancos',
+                                  
+                                        leaf: true,
+                                    iconCls:'icon-users'
+                                        
+                                    
+                                }
+                            ]
+                        },
+                        loader: {
+
+                        }
+                    },       {
+                        xtype: 'treepanel',
+                        title: 'Abonos y Remesas',
+                        id:'UserAsistPanelFact',
+                        height: 212,
+			iconCls:'movimientos',
+                        forceLayout: true,
+                        collapsed: false,
+                        collapsible: false,
+                        rootVisible: false,
+                        border: false,
+                        autoWidth: true,
+                        hidden:true,
+                        flex:1,
+                        listeners:{//Listeners apuntando a cada node
+                            itemclick:function(view, record, item, index, e)
+                                        {
+                 //DEPENDIENDO QUE OPCION SE QUIERE SE DEBE DE DEFINIR EL INDICE DE LA OPCION
+ 
+                                        if (index==0)
+                                           {
+                                              addTabListadoAbonoClientes();
+                                           }
+                                        if (index==1)
+                                           {
+                                              addTabListadoAbonoBancos();
+                                           }
+                            }
+                        }  , 
+                        root: {
+                            text: '',
+                            isTarget: false,
+                            expanded: true,
+                            checked: false,
+                            allowDrag: false,
+                            allowDrop: false,
+                            editable: false,
+                            qtip: 1,
+                            children: [
                                 {
                                     text: 'Abono a Clientes',
                                   
@@ -309,17 +368,25 @@ Ext.define('MvcClientes.view.Principal.MyViewport',{
           success: function(response) {
             outHTML = response.responseText;
             
-            if(outHTML==1){
-                
-            Ext.getCmp("panelMantto").show();  
-            Ext.getCmp("panelReportes").show(); 
-            Ext.getCmp("panelFacturas").show();     
-           // Ext.Msg.alert('Evento MyViewport');
-            }
-            if(outHTML==3){
+             if(outHTML==1){//USUARIO ADMINISTRADOR
+
+                           Ext.getCmp("panelMantto").show();  
+                           Ext.getCmp("panelReportes").show(); 
+                           Ext.getCmp("UserAdminPanelFact").show(); 
+                           Ext.getCmp("btnListFact").show();  
+                           Ext.getCmp("btnNuevaFact").show(); 
+                           Ext.getCmp("titleAtajos").show(); 
+                          //Ext.Msg.alert('Evento MyViewport al dar enter al usuario');
+                            }
+                            if(outHTML==2){//USUARIO ASISTENTE
+                           Ext.getCmp("panelReportes").show(); 
+                           Ext.getCmp("UserAsistPanelFact").show();
+                          //Ext.Msg.alert('Evento MyViewport al dar enter al usuario');
+                            }
+                            if(outHTML==3){//USUARIO VISOR REPORTES
             
-            Ext.getCmp("panelReportes").show(); 
-            }
+                            Ext.getCmp("panelReportes").show(); 
+                            }
           }
         });
             //------------------FIN------------------//

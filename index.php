@@ -194,17 +194,22 @@ Ext.onReady(function() {
                           success: function(response) {
                             outHTML = response.responseText;
                             
-                            if(outHTML==1){
+                           if(outHTML==1){//USUARIO ADMINISTRADOR
 
                            Ext.getCmp("panelMantto").show();  
                            Ext.getCmp("panelReportes").show(); 
-                           Ext.getCmp("panelFacturas").show(); 
+                           Ext.getCmp("UserAdminPanelFact").show(); 
                            Ext.getCmp("btnListFact").show();  
                            Ext.getCmp("btnNuevaFact").show(); 
                            Ext.getCmp("titleAtajos").show(); 
                           //Ext.Msg.alert('Evento MyViewport al dar enter al usuario');
                             }
-                            if(outHTML==3){
+                            if(outHTML==2){//USUARIO ASISTENTE
+                           Ext.getCmp("panelReportes").show(); 
+                           Ext.getCmp("UserAsistPanelFact").show();
+                          //Ext.Msg.alert('Evento MyViewport al dar enter al usuario');
+                            }
+                            if(outHTML==3){//USUARIO VISOR REPORTES
             
                             Ext.getCmp("panelReportes").show(); 
                             }
@@ -262,19 +267,22 @@ Ext.onReady(function() {
                           success: function(response) {
                             outHTML = response.responseText;
                             
-                            if(outHTML==1){
+                             if(outHTML==1){//USUARIO ADMINISTRADOR
 
                            Ext.getCmp("panelMantto").show();  
                            Ext.getCmp("panelReportes").show(); 
-                           Ext.getCmp("panelFacturas").show();
+                           Ext.getCmp("UserAdminPanelFact").show(); 
                            Ext.getCmp("btnListFact").show();  
                            Ext.getCmp("btnNuevaFact").show(); 
-                           Ext.getCmp("titleAtajos").show();  
-                           
-                           //Ext.Msg.alert('Evento al Dar Enter en el campo Password');
+                           Ext.getCmp("titleAtajos").show(); 
+                          //Ext.Msg.alert('Evento MyViewport al dar enter al usuario');
                             }
-                            
-                            if(outHTML==3){
+                            if(outHTML==2){//USUARIO ASISTENTE
+                           Ext.getCmp("panelReportes").show(); 
+                           Ext.getCmp("UserAsistPanelFact").show();
+                          //Ext.Msg.alert('Evento MyViewport al dar enter al usuario');
+                            }
+                            if(outHTML==3){//USUARIO VISOR REPORTES
             
                             Ext.getCmp("panelReportes").show(); 
                             }
@@ -320,17 +328,22 @@ Ext.onReady(function() {
                           success: function(response) {
                             outHTML = response.responseText;
                             
-                            if(outHTML==1){
-                             
+                            if(outHTML==1){//USUARIO ADMINISTRADOR
+
                            Ext.getCmp("panelMantto").show();  
                            Ext.getCmp("panelReportes").show(); 
-                           Ext.getCmp("panelFacturas").show();
+                           Ext.getCmp("UserAdminPanelFact").show(); 
                            Ext.getCmp("btnListFact").show();  
                            Ext.getCmp("btnNuevaFact").show(); 
-                           Ext.getCmp("titleAtajos").show();  
-                           //Ext.Msg.alert('Evento Al dar Clic Boton');
+                           Ext.getCmp("titleAtajos").show(); 
+                          //Ext.Msg.alert('Evento MyViewport al dar enter al usuario');
                             }
-                            if(outHTML==3){
+                            if(outHTML==2){//USUARIO ASISTENTE
+                           Ext.getCmp("panelReportes").show(); 
+                           Ext.getCmp("UserAsistPanelFact").show();
+                          //Ext.Msg.alert('Evento MyViewport al dar enter al usuario');
+                            }
+                            if(outHTML==3){//USUARIO VISOR REPORTES
             
                             Ext.getCmp("panelReportes").show(); 
                             }
