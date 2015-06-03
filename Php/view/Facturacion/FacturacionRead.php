@@ -9,6 +9,7 @@
    
 		$arr = array();
                 $idempresa=isset($_SESSION["idEmpresa"])? $_SESSION["idEmpresa"]:"-1";
+                $idBenutzer=isset($_SESSION["idbenutzer"])? $_SESSION["idbenutzer"]:"-1";
 		// Llamamos a la Tabla y sus datos 
                 
 		$sql = "SELECT
@@ -38,7 +39,7 @@
                         f.anulado,
                         f.tipo_servicio_carga
                         FROM facturacion f inner join maestroclientes mc on f.idmaestroClientes=mc.idmaestroClientes inner join tipo_facturacion tf on tf.id_tipo_facturacion=f.id_tipo_facturacion 
-                        where id_empresa=".$idempresa." and idbenutzer=".$_SESSION["idbenutzer"] ." order by f.fecha_facturacion desc ,f.numero_factura desc";
+                        where id_empresa=".$idempresa." and idbenutzer=".$idBenutzer." order by f.fecha_facturacion desc ,f.numero_factura desc";
                 
         $result = mysql_query($sql,$connection) or die('La consulta fall&oacute;: '.mysql_error());	        
         $num =  mysql_num_rows($result);

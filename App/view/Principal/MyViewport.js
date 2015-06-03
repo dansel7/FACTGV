@@ -34,12 +34,12 @@ Ext.define('MvcClientes.view.Principal.MyViewport',{
                 items: [
                     {
                         xtype: 'treepanel',
-                        title: 'Facturaciones',
+                        title: 'Facturacion y Cobros',
                         id:'UserAdminPanelFact',
                         height: 212,
 			iconCls:'movimientos',
                         forceLayout: true,
-                        collapsed: false,
+                        collapsed: true,
                         collapsible: false,
                         rootVisible: false,
                         border: false,
@@ -82,7 +82,7 @@ Ext.define('MvcClientes.view.Principal.MyViewport',{
                                     
                                 },
                                 {
-                                    text: 'Abono a Clientes',
+                                    text: 'Cuentas por Cobrar',
                                   
                                         leaf: true,
                                     iconCls:'icon-users'
@@ -93,8 +93,6 @@ Ext.define('MvcClientes.view.Principal.MyViewport',{
                                   
                                         leaf: true,
                                     iconCls:'icon-users'
-                                        
-                                    
                                 }
                             ]
                         },
@@ -103,7 +101,7 @@ Ext.define('MvcClientes.view.Principal.MyViewport',{
                         }
                     },       {
                         xtype: 'treepanel',
-                        title: 'Abonos y Remesas',
+                        title: 'Cobros y Abonos',
                         id:'UserAsistPanelFact',
                         height: 212,
 			iconCls:'movimientos',
@@ -141,7 +139,7 @@ Ext.define('MvcClientes.view.Principal.MyViewport',{
                             qtip: 1,
                             children: [
                                 {
-                                    text: 'Abono a Clientes',
+                                    text: 'Cuentas Por Cobrar',
                                   
                                         leaf: true,
                                     iconCls:'icon-users'
