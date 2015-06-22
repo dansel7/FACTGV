@@ -108,23 +108,24 @@ where f.id_empresa=".$idempresa ." $idmc $idtpf and f.fecha_facturacion between 
                              <td  style=\"text-align:center\">".$rows_e["numero_factura"] ."</td>
                              <td  style=\"text-align:left\">".$rows_e["nom_cliente"] ."</td>
                              <td  style=\"text-align:right\">".(($rows_e["id_tipo_facturacion"]==1) ?"<b>-</b> ":"").  number_format($rows_e["valor_neto"],2)."</td>
-                             <td  style=\"text-align:right\">".number_format($rows_e["iva"],2) ."</td>
-                             <td  style=\"text-align:right\">".number_format($rows_e["iva_retenido"],2)."</td>
+                             <td  style=\"text-align:right\">".((number_format($rows_e["iva"],2)==0)?'0.00':(($rows_e["id_tipo_facturacion"]==1) ?"<b>-</b> ":"").number_format($rows_e["iva"],2))."</td>
+                             <td  style=\"text-align:right\">".((number_format($rows_e["iva_retenido"],2)==0)?'0.00':(($rows_e["id_tipo_facturacion"]==1) ?"<b>-</b> ":"").number_format($rows_e["iva_retenido"],2))."</td>
                              <td  style=\"text-align:right\">".(($rows_e["id_tipo_facturacion"]==1) ?"<b>-</b> ":"").  number_format($rows_e["venta_total"],2) ."</td></tr>";
       
-       
-                
-                $subTIva+=$rows_e["iva"];
-                $subTIvaRetenido+=$rows_e["iva_retenido"];
+
                 
                 //RESTA DE VENTA PARA EL TIPO DE NOTA DE CREDITO
                 if($rows_e["id_tipo_facturacion"]==1){
      //SI ES UNA NOTA DE CREDITO SE RESTA DEL SUBTOTAL DE VALOR NETO Y VENTA TOTAL
                 $subTValorNeto-=$rows_e["valor_neto"];
                 $subTVentaTotal-=$rows_e["venta_total"]; 
+                $subTIva-=$rows_e["iva"];
+                $subTIvaRetenido-=$rows_e["iva_retenido"];
                 }else{
                 $subTValorNeto+=$rows_e["valor_neto"];
                 $subTVentaTotal+=$rows_e["venta_total"];
+                $subTIva+=$rows_e["iva"];
+                $subTIvaRetenido+=$rows_e["iva_retenido"];
                 }
             }
        

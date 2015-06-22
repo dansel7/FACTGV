@@ -14,7 +14,7 @@ mysql_select_db($db_name,$connection) or die("Error de conexion a la base de dat
                                 $idmaestroClientes=$data->idmaestroClientes;
                                 $fecha_facturacion= $data->fecha_facturacion;
                                 $cond_operacion= $data->cond_operacion;
-                                $n_comprobante_credito= $data->n_comprobante_credito;
+                                $n_comprobante_credito= ($data->n_comprobante_credito=='')?'null':$data->n_comprobante_credito;
                                 $venta_acta_de= $data->venta_acta_de;
                                 $iva=  $data->iva;
                                 $iva_retenido=  $data->iva_retenido;

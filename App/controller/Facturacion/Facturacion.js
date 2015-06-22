@@ -66,8 +66,23 @@ Ext.define('MvcClientes.controller.Facturacion.Facturacion',{
                 var EditForm=FormAddEditarFacturacion.down('form');	
                 var record=records[0];
                 EditForm.loadRecord(record);
+                //PARA QUE MUESTRE U OCULTE EL CAMPO DE N_COMPROBANTE_CREDITO A MENOS QUE SEA NOTA DE CREDITO
+                 if(Ext.getCmp("id_tipo_factura").value==1){
+                    Ext.getCmp("Container_Comprobante").show();
+                    Ext.getCmp("n_comprobante_credito").enable();
+                }else{
+                     Ext.getCmp("Container_Comprobante").hide();
+                     Ext.getCmp("n_comprobante_credito").reset();
+                     Ext.getCmp("n_comprobante_credito").setValue(null);
+                     Ext.getCmp("n_comprobante_credito").disable();
+
+                     
+                }
+                
                 TabPanelMain.add(FormAddEditarFacturacion);
                 TabPanelMain.setActiveTab(FormAddEditarFacturacion); //Activamos el Tab
+                
+               
             }
              
          	 
@@ -77,7 +92,9 @@ Ext.define('MvcClientes.controller.Facturacion.Facturacion',{
         var form = button.up('form'),
             record = form.getRecord(),
             values = form.getValues();
-            
+    //VALIDACION PARA RELACIONAR NOTA DE CREDITO, Y SI ESTA DESHABILITADO
+     values.n_comprobante_credito=(values.n_comprobante_credito==null)?'':values.n_comprobante_credito;
+
             //IMPORTANTE COLOCAR EL NOMBRE DEL ID CORRECTO DEL REGISTRO
 	if (values.idfacturacion > 0){ //Si Hay algun Valor, entra en MODO UPDATE
                 //SE VALIDA EL FORMULARIO

@@ -51,13 +51,25 @@ Ext.define('MvcClientes.view.Facturacion.CapturaEdicionFacturacion', {
             },
             autoLoad: true
         });
+        
+ //STORE DE LOS COMPROBANTES FACTURACION.
+         var ListComprobantes = new Ext.data.Store({
+            fields: ['idFact', 'comprobante'],
+            proxy: {
+                type: 'ajax',
+                url : 'Php/store/list_comprobantes.php?opx=c0m7r0b4nt3',
+                reader: {
+                    type: 'json'
+                }
+            }
+        });
+        
  //STORE DE LOS TIPOS DE SERVICIO DE CARGA
          var TpServCarga = new Ext.data.Store({
             fields: ['tipo_serv','cod_serv'],
             data: [{'tipo_serv':'Courier','cod_serv':'COU'},{'tipo_serv':'Completo','cod_serv':'FCL'} ,{'tipo_serv':'Carga Aerea','cod_serv':'CAR'} ,{'tipo_serv':'Carga Maritima','cod_serv':'MAR'}],
             autoLoad: true
         });
-        
         
   //STORE DE CATALOGO DE SERVICIOS
          var ListCatServ = new Ext.data.Store({
@@ -163,9 +175,18 @@ if(typeof(records) != "undefined" && typeof(records) != "string"){
                             {xtype : "combobox", id:"id_tipo_factura", queryMode: 'local',fieldLabel: "Tipo Factura", store: ListTpFact,displayField: 'tipo',valueField: 'id_tipo_facturacion',
                                 name:"id_tipo_facturacion", flex: 1, margin: '0 10 0 0',allowBlank : false,
                                listeners: {
-                                        select: function () {
+                                        select: function (id) {
                                            totales_facturacion();
-                                            
+                                            if(this.value==="1"){
+                                                Ext.getCmp("Container_Comprobante").show();
+                                                Ext.getCmp("n_comprobante_credito").enable();
+                                            }else{
+                                                 Ext.getCmp("Container_Comprobante").hide();
+                                                 Ext.getCmp("n_comprobante_credito").reset();
+                                                 Ext.getCmp("n_comprobante_credito").setValue(null);
+                                                 Ext.getCmp("n_comprobante_credito").disable();
+                                                 
+                                            }
                                         }
                                     }
                                 },    
@@ -181,8 +202,16 @@ if(typeof(records) != "undefined" && typeof(records) != "string"){
                                 name:"cond_operacion", id:"cond_operacion", flex: 1, margin: '0 10 0 0',width:340
                             },
                             {xtype : "textfield",id : "idfacturacion", name : "idfacturacion", fieldLabel : "Id",hidden: true, margin: '0 10 0 0'},
-                            {xtype : "textfield", name : "n_comprobante_credito", fieldLabel : "No.Comprobante Credito", flex: 1},
-/*Tipo Servicio Carga AWB*/ {xtype : "combobox", queryMode: 'local', fieldLabel: "Tipo de Servicio (Exclusivo AWB)",
+                            
+/*CAMPO DE NOTA CREDITO*/   {xtype: 'fieldcontainer',layout: {columns: 2,type: 'table'}, hidden: true, id:'Container_Comprobante',
+                               items:[
+                               {xtype: "combobox",id : "n_comprobante_credito",displayField: 'comprobante',valueField: 'idFact',store: ListComprobantes,  name : "n_comprobante_credito", disabled:true,
+                                   fieldLabel : "No.Comprobante Credito", allowBlank : false,triggerAction: 'query',
+                                   hideTrigger:true,typeAhead: true, minChars: 1,emptyText: 'Nº Comprobante',
+                               }
+                               ]
+                            },
+/*Tipo Servicio Carga AWB*/ {xtype : "combobox", queryMode: 'remote',fieldLabel: "Tipo de Servicio (Exclusivo AWB)",
                                  store: TpServCarga,displayField: 'tipo_serv',valueField: 'cod_serv',
                                  name:"tipo_servicio_carga", id:"tipo_servicio_carga", flex: 1, margin: '0 10 0 0',width:340
                              },
@@ -369,6 +398,9 @@ if(typeof(records) != "undefined" && typeof(records) != "string"){
               }]
           }); 
 		  me.callParent(arguments);
+  
+            
+
                   
       }					
 });	

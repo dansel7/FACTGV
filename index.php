@@ -11,7 +11,7 @@ error_reporting(0);
 		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 		<title>Facturacion de Clientes </title>
 		<link rel="stylesheet" type="text/css" href="/ext-4.0.7/resources/css/ext-all.css" />
-         
+                <link href="/favicon.ico" rel="shortcut icon" type="image/x-icon">
 		<!-- Iconos del Sistema -->  
 		 <link rel="stylesheet" type="text/css" href="resources/css/mvcclientes.css" />
                  <link rel="stylesheet" type="text/css" href="ux/css/ItemSelector.css" />

@@ -33,7 +33,9 @@ $idempresa=isset($_SESSION["idEmpresa"])? $_SESSION["idEmpresa"]:"-1";
         
     	$result = mysql_query($sql,$connection) or die('La consulta fall&oacute;: '.mysql_error());	
         
-        $sql_serv = "select cs.servicio servicio,cs.id_servicio id_servicio,sum(df.venta_nosujeta + df.venta_exenta + df.venta_gravada) ventas from detalleFacturacion df inner join facturacion f on df.idfacturacion=f.idfacturacion 
+        $sql_serv = "select cs.servicio servicio,cs.id_servicio id_servicio,
+        sum(IF(f.id_tipo_facturacion=1,(df.venta_nosujeta + df.venta_exenta + df.venta_gravada)*-1,(df.venta_nosujeta + df.venta_exenta + df.venta_gravada))) ventas
+        from detalleFacturacion df inner join facturacion f on df.idfacturacion=f.idfacturacion 
         inner join maestroclientes mc on f.idmaestroClientes=mc.idmaestroClientes             
         inner join catalogo_servicios cs on cs.id_servicio=df.id_servicio where f.id_empresa={$_SESSION["idEmpresa"]} $idmc 
         and f.anulado<>'Si' and f.fecha_facturacion between STR_TO_DATE('$fecha_inicio','%d/%m/%Y') and STR_TO_DATE('$fecha_fin','%d/%m/%Y')
@@ -130,7 +132,7 @@ $idempresa=isset($_SESSION["idEmpresa"])? $_SESSION["idEmpresa"]:"-1";
           //print_r($ventaGroup);
           //echo "<br>";
         foreach($ventaGroup as $vent_serv){
-        $cuerpo_detalle.= "<td  style=\"text-align:right;width:80px\">". number_format($vent_serv,2) ."</td>";    
+        $cuerpo_detalle.= "<td  style=\"text-align:right;width:80px\">".((number_format($vent_serv,2)==0)?'0.00':(($rows_e["id_tipo_facturacion"]==1) ?"<b>-</b> ":"").number_format($vent_serv,2)) ."</td>";    
         }
         
           
@@ -138,24 +140,23 @@ $idempresa=isset($_SESSION["idEmpresa"])? $_SESSION["idEmpresa"]:"-1";
           
          
             $cuerpo_detalle.= "<td  style=\"text-align:right\">".(($rows_e["id_tipo_facturacion"]==1) ?"<b>-</b> ":"").  number_format($rows_e["valor_neto"],2)."</td>
-                             <td  style=\"text-align:right\">".number_format($rows_e["iva"],2) ."</td>
-                             <td  style=\"text-align:right\">".number_format($rows_e["iva_retenido"],2)."</td>
+                             <td  style=\"text-align:right\">".((number_format($rows_e["iva"],2)==0)?'0.00':(($rows_e["id_tipo_facturacion"]==1) ?"<b>-</b> ":"").number_format($rows_e["iva"],2))."</td>
+                             <td  style=\"text-align:right\">".((number_format($rows_e["iva_retenido"],2)==0)?'0.00':(($rows_e["id_tipo_facturacion"]==1) ?"<b>-</b> ":"").number_format($rows_e["iva_retenido"],2))."</td>
                              <td  style=\"text-align:right\">".(($rows_e["id_tipo_facturacion"]==1) ?"<b>-</b> ":"").  number_format($rows_e["venta_total"],2) ."</td></tr>";
          
             
-                $subTIva+=$rows_e["iva"];
-                $subTIvaRetenido+=$rows_e["iva_retenido"];
-                
-                //RESTA DE VENTA PARA EL TIPO DE NOTA DE CREDITO
-                if($rows_e["id_tipo_facturacion"]==1){
+               if($rows_e["id_tipo_facturacion"]==1){
      //SI ES UNA NOTA DE CREDITO SE RESTA DEL SUBTOTAL DE VALOR NETO Y VENTA TOTAL
                 $subTValorNeto-=$rows_e["valor_neto"];
                 $subTVentaTotal-=$rows_e["venta_total"]; 
+                $subTIva-=$rows_e["iva"];
+                $subTIvaRetenido-=$rows_e["iva_retenido"];
                 }else{
                 $subTValorNeto+=$rows_e["valor_neto"];
                 $subTVentaTotal+=$rows_e["venta_total"];
+                $subTIva+=$rows_e["iva"];
+                $subTIvaRetenido+=$rows_e["iva_retenido"];
                 }
-         
         }
        
         }
