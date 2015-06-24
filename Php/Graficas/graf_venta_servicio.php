@@ -34,18 +34,19 @@ $datos=$ventas;
 $labels=$servicios;
 
 require_once('../Database_conf.php');
-  
-$grafico = new Graph(1200, 600, "auto");
+$num=  count($servicios);
+$grafico = new Graph(100*$num, 40*$num, "auto");
 $grafico->SetScale("textint");
 $grafico->title->Set("Ventas por Servicio del ".$fecha_inicio." al ".$fecha_fin);
 $grafico->xaxis->title->Set("Servicios");
+$grafico->xaxis->SetFont(FF_FONT0,FS_NORMAL,10);
 $grafico->xaxis->SetTickLabels($labels);
 $grafico->yaxis->title->Set("Ventas Totales");
 $barplot1 =new BarPlot($datos);
 // Un gradiente Horizontal de morados
-$barplot1->SetFillGradient("#BE81F7", "#E3CEF6", GRAD_HOR);
+$barplot1->SetFillGradient("#4171D8", "white", GRAD_HOR);
 // 30 pixeles de ancho para cada barra
-$barplot1->SetWidth(50);
+$barplot1->SetWidth(60);
 $grafico->Add($barplot1);
 $grafico->Stroke();
 

@@ -177,15 +177,24 @@ if(typeof(records) != "undefined" && typeof(records) != "string"){
                                listeners: {
                                         select: function (id) {
                                            totales_facturacion();
+                                           //PARA QUE MUESTRE U OCULTE EL CAMPO DE N_COMPROBANTE_CREDITO A MENOS QUE SEA NOTA DE CREDITO
                                             if(this.value==="1"){
-                                                Ext.getCmp("Container_Comprobante").show();
+                                                Ext.getCmp("n_comprobante_credito").show();
                                                 Ext.getCmp("n_comprobante_credito").enable();
                                             }else{
-                                                 Ext.getCmp("Container_Comprobante").hide();
+                                                 Ext.getCmp("n_comprobante_credito").hide();
                                                  Ext.getCmp("n_comprobante_credito").reset();
                                                  Ext.getCmp("n_comprobante_credito").setValue(null);
                                                  Ext.getCmp("n_comprobante_credito").disable();
                                                  
+                                            }
+                                            //PARA QUE MUESTRE U OCULTE CUANDO SEA AIR WAY BILL
+                                            if(this.value==="6"){
+                                                Ext.getCmp("tipo_servicio_carga").show();
+                                                Ext.getCmp("awbDatos").show();
+                                            }else{
+                                                 Ext.getCmp("tipo_servicio_carga").hide();    
+                                                 Ext.getCmp("awbDatos").hide();
                                             }
                                         }
                                     }
@@ -203,16 +212,28 @@ if(typeof(records) != "undefined" && typeof(records) != "string"){
                             },
                             {xtype : "textfield",id : "idfacturacion", name : "idfacturacion", fieldLabel : "Id",hidden: true, margin: '0 10 0 0'},
                             
-/*CAMPO DE NOTA CREDITO*/   {xtype: 'fieldcontainer',layout: {columns: 2,type: 'table'}, hidden: true, id:'Container_Comprobante',
-                               items:[
-                               {xtype: "combobox",id : "n_comprobante_credito",displayField: 'comprobante',valueField: 'idFact',store: ListComprobantes,  name : "n_comprobante_credito", disabled:true,
+/*CAMPO DE NOTA CREDITO*/   {xtype: "combobox",id : "n_comprobante_credito",displayField: 'comprobante',valueField: 'idFact',
+                                   store: ListComprobantes,  name : "n_comprobante_credito", disabled:true,hidden: true, 
                                    fieldLabel : "No.Comprobante Credito", allowBlank : false,triggerAction: 'query',
                                    hideTrigger:true,typeAhead: true, minChars: 1,emptyText: 'Nº Comprobante',
-                               }
-                               ]
-                            },
+                                   regex: /^(\d+\s\d+\D+)|(\d+)\s\|\|\s[0-3][0-9]\/[0-1][0-9]\/\d{4}$/,regexText:'Seleccione unicamente comprobantes del Listado',
+                                   listeners:{
+                                       afterrender: function(id){
+                                         //CARGA DE STORE CON UN UNICO REGISTRO A PARTIR DEL ID TOMADO
+                                         ListComprobantes.load({
+                                            id: id, //set the id here
+                                            scope:this,
+                                            callback: function(records, operation, success){
+                                              if(success){
+                                                var ComprobanteCred = records[0];
+                                              }
+                                            }
+                                          });
+                                     }
+                                   }
+                               },
 /*Tipo Servicio Carga AWB*/ {xtype : "combobox", queryMode: 'remote',fieldLabel: "Tipo de Servicio (Exclusivo AWB)",
-                                 store: TpServCarga,displayField: 'tipo_serv',valueField: 'cod_serv',
+                             store: TpServCarga,displayField: 'tipo_serv',valueField: 'cod_serv',hidden:true,
                                  name:"tipo_servicio_carga", id:"tipo_servicio_carga", flex: 1, margin: '0 10 0 0',width:340
                              },
                             
@@ -220,11 +241,11 @@ if(typeof(records) != "undefined" && typeof(records) != "string"){
                         
                         
                             //Campos para AWB
-                            {xtype: 'fieldset',title: 'Datos exclusivos para AWB', width:900,
+                            {xtype: 'fieldset',title: 'Datos exclusivos para AWB', width:900,id:'awbDatos',
                             layout: {
                                     columns: 6,
                                     type: 'table'
-                            },  
+                            },  hidden:true,
                             items:[
                                
                             {xtype : 'numberfield', name : "peso", fieldLabel : "Peso", flex:1,labelWidth:30,width:100,decimalPrecision: 2,  hideTrigger: true, decimalSeparator: "." , margin: '0 10 5 0'},

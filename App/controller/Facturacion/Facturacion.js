@@ -68,15 +68,21 @@ Ext.define('MvcClientes.controller.Facturacion.Facturacion',{
                 EditForm.loadRecord(record);
                 //PARA QUE MUESTRE U OCULTE EL CAMPO DE N_COMPROBANTE_CREDITO A MENOS QUE SEA NOTA DE CREDITO
                  if(Ext.getCmp("id_tipo_factura").value==1){
-                    Ext.getCmp("Container_Comprobante").show();
+                    Ext.getCmp("n_comprobante_credito").show();
                     Ext.getCmp("n_comprobante_credito").enable();
                 }else{
-                     Ext.getCmp("Container_Comprobante").hide();
+                     Ext.getCmp("n_comprobante_credito").hide();
                      Ext.getCmp("n_comprobante_credito").reset();
                      Ext.getCmp("n_comprobante_credito").setValue(null);
-                     Ext.getCmp("n_comprobante_credito").disable();
-
-                     
+                     Ext.getCmp("n_comprobante_credito").disable();                     
+                }
+                //PARA QUE MUESTRE U OCULTE CUANDO SEA AIR WAY BILL
+                if(Ext.getCmp("id_tipo_factura").value==6){
+                    Ext.getCmp("tipo_servicio_carga").show();
+                    Ext.getCmp("awbDatos").show();
+                }else{
+                     Ext.getCmp("tipo_servicio_carga").hide();    
+                     Ext.getCmp("awbDatos").hide();
                 }
                 
                 TabPanelMain.add(FormAddEditarFacturacion);
