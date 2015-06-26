@@ -66,7 +66,7 @@ $sql = "SELECT
                 if(DATE_FORMAT(f.fecha_facturacion, '%d/%m/%Y') = '00/00/0000', null, DATE_FORMAT(f.fecha_facturacion, '%d/%m/%Y')) fecha_facturacion,
                 if( DATE_FORMAT(f.fecha_programada_pago, '%d/%m/%Y') = '00/00/0000', null, 
                     DATE_FORMAT(f.fecha_programada_pago, '%d/%m/%Y') ) fecha_programada_pago,
-                (f.venta_total-iFNull(NotaCred.venta_total,0))-iFNull(sum(monto_cheque),0) saldo_pendiente
+                (f.venta_total-iF(NotaCred.anulado='No',iFNull(NotaCred.venta_total,0),0))-iFNull(sum(monto_cheque),0) saldo_pendiente
                 from abono_clientes ac right join facturacion f on ac.idfacturacion=f.idfacturacion 
                 left join facturacion NotaCred on f.idfacturacion=NotaCred.n_comprobante_credito
                 inner join maestroclientes mc on f.idmaestroClientes=mc.idmaestroClientes 
