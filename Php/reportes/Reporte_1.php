@@ -53,6 +53,10 @@ $pdf->SetFont('helvetica', '', 10);
 $fecha_inicio=$_GET["fecha_ini"];
 $fecha_fin=$_GET["fecha_fin"];
 $idmc=($_GET["idmc"]>0)? " AND mc.idmaestroclientes=".$_GET["idmc"]:"";
+$tipoLiquidacion="";
+if($_GET["tipoliq"]=='0' || $_GET["tipoliq"]=='-1'){ $tipoLiquidacion=" AND ac.numero_cheque=".$_GET["tipoliq"];}
+else if($_GET["tipoliq"]=='-2'){ $tipoLiquidacion=" AND ac.numero_cheque>0";}
+else { $tipoLiquidacion="";} 
 
 $orientacion="vertical";
 $idempresa=isset($_SESSION["idEmpresa"])? $_SESSION["idEmpresa"]:"-1";
@@ -69,10 +73,10 @@ inner join cuentas c on c.id_cuenta=ab.id_cuenta
 inner join bancos b on b.id_banco=c.id_banco
 inner join facturacion f on  f.idfacturacion=ac.idfacturacion
 inner join maestroclientes mc on f.idmaestroClientes=mc.idmaestroClientes 
-where c.id_empresa=".$idempresa ." $idmc and ab.fecha_remesa between STR_TO_DATE('$fecha_inicio','%d/%m/%Y') and STR_TO_DATE('$fecha_fin','%d/%m/%Y')
+where c.id_empresa=".$idempresa ." $idmc $tipoLiquidacion and ab.fecha_remesa between STR_TO_DATE('$fecha_inicio','%d/%m/%Y') and STR_TO_DATE('$fecha_fin','%d/%m/%Y')
 order by DATE_FORMAT(ab.fecha_remesa,'%Y/%m/%d') asc,numero_remesa,numero_factura,cuenta";
         //QUEDA PENDIENTE EL FILTRADO POR FECHA.
-        
+       
     	$result = mysql_query($sql,$connection) or die('La consulta fall&oacute;: '.mysql_error());	
         
   $pdf->addpage($orientacion,'letter');      
@@ -81,12 +85,12 @@ order by DATE_FORMAT(ab.fecha_remesa,'%Y/%m/%d') asc,numero_remesa,numero_factur
       &nbsp;Reporte de Abonos a Bancos - {$_SESSION["nombreEmpresa"]}</h2>";
   
   $cuerpo_detalle.= '<table width="700px">
-                     <tr><td width="80px" style="text-align:left"><b>NUMERO DE<br>REMESA<Hr>CLIENTE</b></td>
+                     <tr><td width="140px" style="text-align:left"><b>NUMERO DE<br>REMESA<Hr>CLIENTE</b></td>
                      <td width="100px" style="text-align:center"><b>FECHA DE REMESA</b></td> 
                      <td width="110px" style="text-align:center" ><b>NUMERO DE<br> CHEQUE</b></td>
-                     <td width="80px" style="text-align:right" ><b>NUMERO DE<br> FACTURA</b></td>
-                     <td width="80px" style="text-align:right"><b>MONTO DE<br> ABONO</b></td>
-                     <td width="250px" style="text-align:center"><b>CUENTA BANCARIA</b></td></tr>
+                     <td width="70px" style="text-align:right" ><b>NUMERO DE<br> FACTURA</b></td>
+                     <td width="70px" style="text-align:right"><b>MONTO DE<br> ABONO</b></td>
+                     <td width="210px" style="text-align:center"><b>CUENTA BANCARIA</b></td></tr>
                      <tr><td colspan="5"></td></tr>';
  
   $temp=0;
@@ -122,12 +126,12 @@ order by DATE_FORMAT(ab.fecha_remesa,'%Y/%m/%d') asc,numero_remesa,numero_factur
                $cheque= $rows_e["numero_cheque"];
            }
        
-           $cuerpo_detalle.= "<tr><td  style=\"text-align:right;font-size:275px\">".$rows_e["nom_cliente"]."</td>
+           $cuerpo_detalle.= "<tr><td  style=\"text-align:right;\"><h5>".$rows_e["nom_cliente"]."</h5></td>
                              <td style=\"text-align:center\"> ".$rows_e["fecha_remesa"] ."</td> 
                              <td  style=\"text-align:right\">".$cheque ."</td>
                                  <td  style=\"text-align:right\">".$rows_e["numero_factura"] ."</td>
                              <td  style=\"text-align:right\">".$rows_e["monto_cheque"]."</td>
-                             <td  style=\"text-align:center;font-size:300px\">".strtoupper($rows_e["cuenta"]) ."</td></tr>";
+                             <td  style=\"text-align:center;\"><h5>".strtoupper($rows_e["cuenta"]) ."</h5></td></tr>";
        
        
        $subTotal+=$rows_e["monto_cheque"];

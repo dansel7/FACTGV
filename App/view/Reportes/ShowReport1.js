@@ -1,7 +1,7 @@
 Ext.define('MvcClientes.view.Reportes.ShowReport1', {
     extend: 'Ext.window.Window',
 	alias:'widget.ShowReport1',
-    height: 165,
+    height: 200,
     width: 360,
     layout: {
         type: 'fit'
@@ -13,6 +13,12 @@ Ext.define('MvcClientes.view.Reportes.ShowReport1', {
 	
     initComponent: function() {
 //STORE DE LOS CLIENTES
+
+ var tipoLiquidacion= new Ext.data.SimpleStore({
+        fields: ['tipo','valor'],
+        data: [['Todos',''],['Transferencia','0'],['Cheque','-2'],['Pago En Efectivo','-1']]
+       });
+       
          var ListMaestroClientes = new Ext.data.Store({
             fields: ['idmaestroClientes', 'nom_cliente','gran_contribuyente'],
             proxy: {
@@ -43,7 +49,8 @@ Ext.applyIf(me, {
                     {xtype : "combobox", queryMode: 'local', fieldLabel: "Seleccione un Cliente", value:"Todos Los Clientes",
                     store: ListMaestroClientes,displayField: 'nom_cliente',valueField: 'idmaestroClientes',
                     name:"idmaestroClientes", id:"idmaestroClientes", flex: 1, margin: '0 10 0 0',width:340 ,allowBlank : false
-                    },],
+                    },
+                    {xtype : "combobox", name:"tipo_pago", fieldLabel: "Tipo de Liquidacion",value:"Todos",queryMode: 'local', store: tipoLiquidacion, displayField: 'tipo',valueField: 'valor', width: 300,allowBlank : false}],
             dockedItems : [{
                             xtype: 'toolbar',
                             dock: 'bottom',

@@ -126,7 +126,7 @@ if(typeof(records) != "undefined" && typeof(records) != "string"){
               Ext.getCmp("iva").setValue(0);
               Ext.getCmp("iva_retenido").setValue(0); 
             }else{
-              Ext.getCmp("iva").setValue(sum * 0.13);
+              Ext.getCmp("iva").setValue(Math.round(sum * 0.13*100)/100);
               
               //CALCULOS SI ES GRAN CONTRIBUYENTE
               if(Ext.getCmp("idmaestroClientes").valueModels!=0){

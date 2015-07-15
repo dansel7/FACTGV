@@ -62,13 +62,13 @@ Ext.define('MvcClientes.controller.Reportes.Reportes',{
             var win    = button.up('window'),
             form   = win.down('form'),
             values = form.getValues();
-           window.open("/facturaciones/php/reportes/reporte_1.php?fecha_ini="+values.fecha_inicio+"&fecha_fin="+values.fecha_fin+"&idmc="+values.idmaestroClientes, "nuevo", "location=no, menubar=no, scrollbars=yes, statusbar=no, tittlebar=no");
+           window.open("/facturaciones/php/reportes/reporte_1.php?tipoliq="+values.tipo_pago+"&fecha_ini="+values.fecha_inicio+"&fecha_fin="+values.fecha_fin+"&idmc="+values.idmaestroClientes, "nuevo", "location=no, menubar=no, scrollbars=yes, statusbar=no, tittlebar=no");
 	},
          ShowReport1EXCEL: function(button){
             var win    = button.up('window'),
             form   = win.down('form'),
             values = form.getValues();
-           window.open("/facturaciones/php/reportes/reporte_1.php?fecha_ini="+values.fecha_inicio+"&exp=1&fecha_fin="+values.fecha_fin+"&idmc="+values.idmaestroClientes, "nuevo", "location=no, menubar=no, scrollbars=yes, statusbar=no, tittlebar=no");
+           window.open("/facturaciones/php/reportes/reporte_1.php?tipoliq="+values.tipo_pago+"&fecha_ini="+values.fecha_inicio+"&exp=1&fecha_fin="+values.fecha_fin+"&idmc="+values.idmaestroClientes, "nuevo", "location=no, menubar=no, scrollbars=yes, statusbar=no, tittlebar=no");
 	},
         
         
