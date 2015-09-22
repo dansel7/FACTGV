@@ -48,7 +48,7 @@ Ext.define('MvcClientes.controller.Facturacion.Facturacion',{
             records="null";
             var FormAddEditarFacturacion= Ext.widget('FormAddEdicionFacturacion',{closable: true});
             TabPanelMain.add(FormAddEditarFacturacion);
-            TabPanelMain.setActiveTab(FormAddEditarFacturacion); //Activamos el Tab     
+            TabPanelMain.setActiveTab(FormAddEditarFacturacion); //Activamos el Tab  
             
 	    
            

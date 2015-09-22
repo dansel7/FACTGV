@@ -32,9 +32,19 @@ Ext.define('MvcClientes.view.AbonoClientes.GrdAbonoClientes',{
 						scope: this,
 						action:'actLiquidar'
 						//handler:this.OnEditar
-						},"|&nbsp;&nbsp;<b style=\"color:red\"> Pago Retrasado </b>",
-                                                "|&nbsp;&nbsp;<b style=\"color:blue\"> Dia de Pago </b>"		
+						}		
                                             ]
+				},
+                                {
+					xtype: 'toolbar',//Barra Paginadora al fondo del Grid
+					dock: 'top',
+                                        items: ["&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<b style=\"color:red\">* Fecha Pago Retrasado </b>",
+                                                "|&nbsp;&nbsp;<b style=\"color:blue\">* Fecha Dia de Pago </b>",
+                                                "|&nbsp;&nbsp;<tt style=\"color:#CC4F14\">* Fecha Sugerida Pago Retrasado </tt>",
+                                                "|&nbsp;&nbsp;<tt style=\"color:#4D14CC\">* Fecha Sugerida Dia de Pago </tt>"		
+                                            ],
+					displayInfo: true,
+					store: me.store
 				},
 				{
 					xtype: 'pagingtoolbar',//Barra Paginadora al fondo del Grid

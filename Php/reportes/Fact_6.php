@@ -37,7 +37,7 @@ $pdf->SetPrintFooter(false);
 
 //set margins
 //$pdf->SetMargins(PDF_MARGIN_LEFT, PDF_MARGIN_TOP, PDF_MARGIN_RIGHT);
-$pdf->SetMargins(-0.1, 0.4, 0.635);
+$pdf->SetMargins(0.7, 0.4, 0.635);
 
 //$pdf->SetHeaderMargin(0);
 //$pdf->SetFooterMargin(15);
@@ -93,13 +93,13 @@ $orientacion="vertical";
             </tr>
             <tr>
                 <td height="20px"  style="text-align:center;font-size:11pt" width="450px" colspan="3"><b>'.strtoupper($rows_e["nom_cliente"]).'</b></td>
-                <td  style="text-align:center" colspan="2">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;'. $rows_e["fecha_facturacion"] .'</td>
+                <td  style="text-align:center" colspan="2">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;'. $rows_e["fecha_facturacion"] .'</td>
             </tr>
             <tr>
                 <td style="text-align:center;font-size:8pt" colspan="3" >'.strtoupper($rows_e["direccion"]).'</td>
                 
                 <td height="20px" style="text-align:right;font-size:10pt" width="165px">'. $rows_e["peso"] .'</td>
-                <td style="text-align:right;font-size:10pt" width="95px">'. $rows_e["nbultos"] .'</td>
+                <td style="text-align:right;font-size:10pt" width="80px">'. $rows_e["nbultos"] .'</td>
             </tr>
              <tr>
                 <td height="18px"  width="30px">&nbsp;</td>
@@ -129,11 +129,11 @@ $orientacion="vertical";
             </table><br>
             <table style="table-layout:fixed;font-size:11.2pt">
                  <tr><td colspan="4" height="60px"></td></tr>
-                 <tr><td colspan="4" height="380px"><table>';
+                 <tr><td colspan="4" height="390px"><table>';
         
         $detalle_factura.='
                     <tr>
-                        <td style="text-align:left" width="80px">
+                        <td style="text-align:left" width="60px">
                         '. $rows_e["cantidad"] .'
                         </td>  
                         <td width="370px">
@@ -145,7 +145,7 @@ $orientacion="vertical";
                         <td width="60px" style="text-align:right">
                         '. sinZero($rows_e["venta_nosujeta"]) .'
                         </td>
-                        <td width="60px" style="text-align:right">
+                        <td width="80px" style="text-align:right">
                         '. sinZero($rows_e["venta_exenta"]) .'
                         </td>
                         <td width="60px" style="text-align:right">
@@ -158,11 +158,11 @@ $orientacion="vertical";
         $tot_venta_exentas+=$rows_e["venta_exenta"];
         //ESTA ES LA PARTE QUE CONTIENE EL TOTAL EN LETRAS Y SUS DESGLOSES
         $pie_factura='</table></td></tr>
-                       <tr><td colspan="2" width="470px"></td>
+                       <tr><td colspan="2" width="442px"></td>
                           <td width="60px"></td>
-                          <td width="62px" style="text-align:right">'. sinZero(number_format($tot_venta_no_sujeta,2)).'</td>
-                          <td width="60px" style="text-align:right">'. sinZero(number_format($tot_venta_exentas,2)) .'</td>
-                          <td width="60px"style="text-align:right">'. sinZero(number_format($subTotal,2)) .'</td>
+                          <td width="70px" style="text-align:right">'. sinZero(number_format($tot_venta_no_sujeta,2)).'</td>
+                          <td width="70px" style="text-align:right">'. sinZero(number_format($tot_venta_exentas,2)) .'</td>
+                          <td width="70px"style="text-align:right">'. sinZero(number_format($subTotal,2)) .'</td>
                       </tr>
                       <tr><td colspan="6" style="text-align:left">
                         <table width="698px" cellspacing="4">

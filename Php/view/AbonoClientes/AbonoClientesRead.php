@@ -17,12 +17,21 @@
                         tf.tipo tipo_facturacion,                  
                         mc.nom_cliente,
                         if(DATE_FORMAT(f.fecha_facturacion, '%d/%m/%Y') = '00/00/0000', null, DATE_FORMAT(f.fecha_facturacion, '%d/%m/%Y')) fecha_facturacion,
-                        if(DATE_FORMAT(f.fecha_programada_pago, '%d/%m/%Y') = '00/00/0000', null, 
+                        
+                        if(DATE_FORMAT(f.fecha_programada_pago, '%d/%m/%Y') = '00/00/0000', 
+							
+                            if(NOW() >= ADDDATE(f.fecha_facturacion, INTERVAL 30 DAY),
+                                if(DATE_FORMAT(NOW(), '%d/%m/%Y') = DATE_FORMAT(ADDDATE(f.fecha_facturacion, INTERVAL 30 DAY), '%d/%m/%Y')
+				 ,CONCAT('<tt style=\"color:#4D14CC\">',DATE_FORMAT(ADDDATE(f.fecha_facturacion, INTERVAL 30 DAY), '%d/%m/%Y'),'</tt>')
+                                 ,concat('<tt style=\"color:#CC4F14\">',DATE_FORMAT(ADDDATE(f.fecha_facturacion, INTERVAL 30 DAY), '%d/%m/%Y'),'</tt>'))
+                             ,CONCAT('<tt>',DATE_FORMAT(ADDDATE(f.fecha_facturacion, INTERVAL 30 DAY), '%d/%m/%Y'),'</tt>')), 
+                            
                             if(NOW() >= f.fecha_programada_pago,
-                                if(DATE_FORMAT(NOW(), '%d/%m/%Y') = DATE_FORMAT(f.fecha_programada_pago, '%d/%m/%Y'),
-                                    CONCAT('<b style=\"color:blue\">',DATE_FORMAT(f.fecha_programada_pago, '%d/%m/%Y'),'</b>')
+                                if(DATE_FORMAT(NOW(), '%d/%m/%Y') = DATE_FORMAT(f.fecha_programada_pago, '%d/%m/%Y')
+				,CONCAT('<b style=\"color:blue\">',DATE_FORMAT(f.fecha_programada_pago, '%d/%m/%Y'),'</b>')
                                 ,concat('<b style=\"color:red\">',DATE_FORMAT(f.fecha_programada_pago, '%d/%m/%Y'),'</b>'))
-                             ,CONCAT('',DATE_FORMAT(f.fecha_programada_pago, '%d/%m/%Y'),''))) fecha_programada_pago,
+                             ,CONCAT('<b>',DATE_FORMAT(f.fecha_programada_pago, '%d/%m/%Y'),'</b>'))) fecha_programada_pago,
+                             
                         (f.venta_total-iF(NotaCred.anulado='No',iFNull(NotaCred.venta_total,0),0))-iFNull(sum(monto_cheque),0) saldo_pendiente
                         from abono_clientes ac right join facturacion f on ac.idfacturacion=f.idfacturacion 
                         left join facturacion NotaCred on f.idfacturacion=NotaCred.n_comprobante_credito

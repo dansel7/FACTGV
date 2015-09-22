@@ -76,12 +76,12 @@ $sql = "SELECT
                 GROUP BY f.idfacturacion
                 HAVING saldo_pendiente>0 order by length(f.numero_factura),f.numero_factura asc";
         //QUEDA PENDIENTE EL FILTRADO POR FECHA.
-        
+
   $result = mysql_query($sql,$connection) or die('La consulta fall&oacute;: '.mysql_error());	
    
   $pdf->addpage($orientacion,'letter');      
   
-  $encabezado="<h2><img src=\"/facturaciones/resources/imagenes/gvlogo.png\" align=\"left\">
+  $encabezado="<h2><img src=\"/gv_facturaciones/resources/imagenes/gvlogo.png\" align=\"left\">
       &nbsp;Reporte de Pagos Pendientes - {$_SESSION["nombreEmpresa"]}<hr></h2>";
   
   $cuerpo_detalle.= '<table width="700px" cellpadding="2">

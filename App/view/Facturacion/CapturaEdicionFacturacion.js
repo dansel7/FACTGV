@@ -405,6 +405,15 @@ if(typeof(records) != "undefined" && typeof(records) != "string"){
                                     listeners: {
             change: function(field, newValue, oldValue, eOpts){
                 console.log('change:' + field.fieldLabel + ' ' + newValue);
+                                    if(newValue){
+                                    Ext.getCmp("n_comprobante_credito").reset();
+                                    Ext.getCmp("n_comprobante_credito").setValue(null);
+                                    Ext.getCmp("n_comprobante_credito").disable();
+                                    }else{
+                                    Ext.getCmp("n_comprobante_credito").show();
+                                    Ext.getCmp("n_comprobante_credito").enable();
+                                    }
+                                    
             }}}, {
                                     itemId: 'BtnClienteAceptar',
                                     text: 'Vista Previa',

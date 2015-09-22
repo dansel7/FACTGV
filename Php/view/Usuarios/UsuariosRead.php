@@ -6,6 +6,7 @@
 		$arr = array();
 		// Llamamos a la Tabla y sus datos 
 		$sql = "select * from benutzer b inner join perfil p on b.id_perfil=p.id_perfil";
+                mysql_query('SET CHARACTER SET utf8');
     	$result = mysql_query($sql,$connection) or die('La consulta fall&oacute;: '.mysql_error());		
 		//Formamos el Array de Datos, si ejecutamos este archivo PHP veremos el array formado
 		while($obj = mysql_fetch_object($result)) {
