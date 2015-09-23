@@ -31,12 +31,14 @@
 				,CONCAT('<b style=\"color:blue\">',DATE_FORMAT(f.fecha_programada_pago, '%d/%m/%Y'),'</b>')
                                 ,concat('<b style=\"color:red\">',DATE_FORMAT(f.fecha_programada_pago, '%d/%m/%Y'),'</b>'))
                              ,CONCAT('<b>',DATE_FORMAT(f.fecha_programada_pago, '%d/%m/%Y'),'</b>'))) fecha_programada_pago,
-                             
-                        (f.venta_total-iF(NotaCred.anulado='No',iFNull(NotaCred.venta_total,0),0))-iFNull(sum(monto_cheque),0) saldo_pendiente
-                        from abono_clientes ac right join facturacion f on ac.idfacturacion=f.idfacturacion 
-                        left join facturacion NotaCred on f.idfacturacion=NotaCred.n_comprobante_credito
+                     
+                        (f.venta_total-iFNull(sum(ac.monto_cheque),0)-iFNull(sum(NotaC.venta_total),0)) saldo_pendiente
+                        from facturacion f
+                        left join abono_clientes ac on f.idfacturacion=ac.idfacturacion
                         inner join maestroclientes mc on f.idmaestroClientes=mc.idmaestroClientes 
                         inner join tipo_facturacion tf on f.id_tipo_facturacion=tf.id_tipo_facturacion
+                        left join (select n_comprobante_credito idfactura, numero_factura numero_NotaC, venta_total from facturacion where id_tipo_facturacion=1 AND id_empresa=".$idempresa.") NotaC on f.idfacturacion=NotaC.idfactura
+
                         WHERE f.id_tipo_facturacion!=1 and f.anulado='No' and f.id_empresa=".$idempresa."
                         GROUP BY f.idfacturacion
                         HAVING saldo_pendiente>0";
