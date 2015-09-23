@@ -41,7 +41,8 @@
 
                         WHERE f.id_tipo_facturacion!=1 and f.anulado='No' and f.id_empresa=".$idempresa."
                         GROUP BY f.idfacturacion
-                        HAVING saldo_pendiente>0";
+                        HAVING saldo_pendiente>0
+                        ORDER BY mc.nom_cliente ASC";
     //CONDICIONES PARA QUE MUESTRE SOLO LO QUE POR USUARIO SE HA REALIZADO
     //WHERE f.id_tipo_facturacion!=1 and f.anulado='No' and id_empresa=".$idempresa." and idbenutzer=".$_SESSION["idbenutzer"]."
     	
