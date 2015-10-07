@@ -4,7 +4,7 @@ Ext.define('MvcClientes.view.Facturacion.PanelFacturacion', {
 	alias:'widget.panelGrdFacturacion',
 	closable:   true,  
 	title   :   'Facturacion',
-    layout:'fit',
+        layout:'fit',
 	itemId:'TabListadoFacturacion',
 	initComponent: function() {
 	    var me = this;

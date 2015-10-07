@@ -203,8 +203,8 @@ Ext.define('MvcClientes.view.Principal.MyViewport',{
                                                                                     
                                         if (index==5)
                                            {
-                                               addTabDashboard();
-                                              //addTabListadoAbonoBancos();
+                                               addTabDashboard1();
+                                      
                                            }
                             }
                         } ,
@@ -488,6 +488,26 @@ Ext.define('MvcClientes.view.Principal.MyViewport',{
                    } 
 			    this.TabPanelMain.setActiveTab(tab); //Se activa el Tab Clickeado 
        } 
+       
+       
+       ////////////////DASHBOARD/////////////
+       //---------------------------------//
+       
+       function addTabDashboard1(){ 
+      	 var tab=this.TabPanelMain.getComponent('TabDashb1');
+		   if(!tab){ //si no existe lo creamos
+				tab = Ext.create('MvcClientes.view.Dashboard.TabDashb1', {});
+				this.TabPanelMain.add(tab); //Se agrega el Panel del Dashboard1 al TabMain 
+				this.TabPanelMain.doLayout(); //Redibujado del Panel 
+				this.TabPanelMain.setActiveTab(tab); //Activamos el Tab
+               			
+                   } 
+			    this.TabPanelMain.setActiveTab(tab); //Se activa el Tab Clickeado 
+				     		 
+	    }
+       
+       //----------------------------------//
+       /////////////FIN DASHBOARD////////////      
        
        /////////////////////////////////////////
        //---------------REPORTES-------------//

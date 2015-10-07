@@ -37,7 +37,7 @@
                         left join abono_clientes ac on f.idfacturacion=ac.idfacturacion
                         inner join maestroclientes mc on f.idmaestroClientes=mc.idmaestroClientes 
                         inner join tipo_facturacion tf on f.id_tipo_facturacion=tf.id_tipo_facturacion
-                        left join (select n_comprobante_credito idfactura, numero_factura numero_NotaC, venta_total from facturacion where id_tipo_facturacion=1 AND id_empresa=".$idempresa.") NotaC on f.idfacturacion=NotaC.idfactura
+                        left join (select n_comprobante_credito idfactura, numero_factura numero_NotaC, venta_total from facturacion where id_tipo_facturacion=1 and anulado='No' AND id_empresa=".$idempresa.") NotaC on f.idfacturacion=NotaC.idfactura
 
                         WHERE f.id_tipo_facturacion!=1 and f.anulado='No' and f.id_empresa=".$idempresa."
                         GROUP BY f.idfacturacion
