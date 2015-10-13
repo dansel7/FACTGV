@@ -1,7 +1,18 @@
 Ext.require([
     'Ext.ux.LiveSearchGridPanel'
 ]);
+var Flag=false;
+//OBTENER ID PERFIL
+ Ext.Ajax.request({
+              url: 'Php/controller/Login/Perfil_Benutzer.php',
+              success: function(response) {
+                Salida = response.responseText;
 
+                 if(Salida==1){//USUARIO FACTURACION
+                     Flag=true;            
+                }
+              }
+            });
 Ext.define('MvcClientes.view.Facturacion.GrdFacturacion',{
 	extend: 'Ext.ux.LiveSearchGridPanel',
 	alias:'widget.gridFacturacion',
@@ -10,8 +21,10 @@ Ext.define('MvcClientes.view.Facturacion.GrdFacturacion',{
 	border: false,
 	listeners: {
             'selectionchange': function(view, records) {
-                this.down('#delete').setDisabled(!records.length);//Se Habilita el Boton Delete
-                //    Ext.Msg.alert('Mensaje','selecionado');
+             
+                       if(Flag){
+                       this.down('#delete').setDisabled(!records.length);//Se Habilita el Boton Delete     
+                       }
             }
     },
 	initComponent: function() {

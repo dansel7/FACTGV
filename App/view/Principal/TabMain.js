@@ -20,6 +20,11 @@ Ext.define('MvcClientes.view.Principal.TabMain', {
             Ext.getCmp("btnNuevaFact").show(); 
             Ext.getCmp("titleAtajos").show(); 
             }
+            if(outHTML==4){
+             Ext.getCmp("btnListFact").show();  
+            Ext.getCmp("btnNuevaFact").show(); 
+            Ext.getCmp("titleAtajos").show();     
+            }
           }
         });
             //------------------FIN------------------//

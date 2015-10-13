@@ -212,6 +212,13 @@ Ext.onReady(function() {
                             if(outHTML==3){//USUARIO VISOR REPORTES
             
                             Ext.getCmp("panelReportes").show(); 
+                            }if(outHTML==4){//USUARIO FACTURACION
+                                
+                            Ext.getCmp("btnListFact").show();  
+                            Ext.getCmp("btnNuevaFact").show(); 
+                            Ext.getCmp("titleAtajos").show();     
+                            Ext.getCmp("UserAdminPanelFact").show();     
+                            Ext.getCmp("panelReportes").show(); 
                             }
                           }
                         });
@@ -285,6 +292,13 @@ Ext.onReady(function() {
                             if(outHTML==3){//USUARIO VISOR REPORTES
             
                             Ext.getCmp("panelReportes").show(); 
+                            }if(outHTML==4){//USUARIO FACTURACION
+                                
+                            Ext.getCmp("btnListFact").show();  
+                            Ext.getCmp("btnNuevaFact").show(); 
+                            Ext.getCmp("titleAtajos").show();     
+                            Ext.getCmp("UserAdminPanelFact").show();     
+                            Ext.getCmp("panelReportes").show(); 
                             }
                             
                           }
@@ -345,6 +359,13 @@ Ext.onReady(function() {
                             }
                             if(outHTML==3){//USUARIO VISOR REPORTES
             
+                            Ext.getCmp("panelReportes").show(); 
+                            }if(outHTML==4){//USUARIO FACTURACION
+                                
+                            Ext.getCmp("btnListFact").show();  
+                            Ext.getCmp("btnNuevaFact").show(); 
+                            Ext.getCmp("titleAtajos").show();     
+                            Ext.getCmp("UserAdminPanelFact").show();     
                             Ext.getCmp("panelReportes").show(); 
                             }
 

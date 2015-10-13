@@ -4,27 +4,31 @@ Ext.require([
     'Ext.data.*',
     'Ext.chart.*',
     'Ext.grid.Panel',
-    'Ext.layout.container.Column'
+    'Ext.layout.container.*'
 ]);
 
    
-    function perc(v) {
+    function Porcentaje(v) {
         return v + '%';
+    }
+    
+     function DolarAmericano(v) {
+        return '$'+v ;
     }
     
     var form = false;
     var rec = false;
     var selectedStoreItem = false;
     function selectItem(storeItem) {
-            var name = storeItem.get('company'),
-                series = barChart.series.get(0),
+            var name = storeItem.get('Fecha'),
+                series = GraficaBarra.series.get(0),
                 i, items, l;
             
             series.highlight = true;
             series.unHighlightItem();
             series.cleanHighlights();
             for (i = 0, items = series.items, l = items.length; i < l; i++) {
-                if (name == items[i].storeItem.get('company')) {
+                if (name == items[i].storeItem.get('Fecha')) {
                     selectedStoreItem = items[i].storeItem;
                     series.highlightItem(items[i]);
                     break;
@@ -35,20 +39,14 @@ Ext.require([
        
          function updateRecord(rec) {
             var name, series, i, l, items, json = [{
-                'Name': 'Price',
-                'Data': rec.get('price')
+                'Name': 'Abonado',
+                'Data': rec.get('Porcentaje_Abonado')
             }, {
-                'Name': 'Revenue %',
-                'Data': rec.get('revenue %')
+                'Name': 'Nota Credito',
+                'Data': rec.get('Porcentaje_Nota_Credito')
             }, {
-                'Name': 'Growth %',
-                'Data': rec.get('growth %')
-            }, {
-                'Name': 'Product %',
-                'Data': rec.get('product %')
-            }, {
-                'Name': 'Market %',
-                'Data': rec.get('market %')
+                'Name': 'Pendiente',
+                'Data': rec.get('Porcentaje_Pendiente')
             }];
             chs.loadData(json);
             selectItem(rec);
@@ -70,171 +68,160 @@ Ext.require([
                 }
             };
         };
-  
-            
-    // sample static data for the store
-    var myData = [
-        ['3m Co'],
-        ['Alcoa Inc'],
-        ['Altria Group Inc'],
-        ['American Express Company'],
-        ['American International Group, Inc.'],
-        ['AT&T Inc'],
-        ['Boeing Co.'],
-        ['Caterpillar Inc.'],
-        ['Citigroup, Inc.'],
-        ['E.I. du Pont de Nemours and Company'],
-        ['Exxon Mobil Corp'],
-        ['General Electric Company'],
-        ['General Motors Corporation'],
-        ['Hewlett-Packard Co'],
-        ['Honeywell Intl Inc'],
-        ['Intel Corporation'],
-        ['International Business Machines'],
-        ['Johnson & Johnson'],
-        ['JP Morgan & Chase & Co'],
-        ['McDonald\'s Corporation'],
-        ['Merck & Co., Inc.'],
-        ['Microsoft Corporation'],
-        ['Pfizer Inc'],
-        ['The Coca-Cola Company'],
-        ['The Home Depot, Inc.'],
-        ['The Procter & Gamble Company'],
-        ['United Technologies Corporation'],
-        ['Verizon Communications'],
-        ['Wal-Mart Stores, Inc.']
-    ];
-    
-    for (var i = 0, l = myData.length, rand = Math.random; i < l; i++) {
-        var data = myData[i];
-        data[1] = ((rand() * 10000) >> 0) / 100;
-        data[2] = ((rand() * 10000) >> 0) / 100;
-        data[3] = ((rand() * 10000) >> 0) / 100;
-        data[4] = ((rand() * 10000) >> 0) / 100;
-        data[5] = ((rand() * 10000) >> 0) / 100;
-    }
 
-    //create data store to be shared among the grid and bar series.
-    var ds = Ext.create('Ext.data.ArrayStore', {
-        fields: [
-            {name: 'company'},
-            {name: 'price',   type: 'float'},
-            {name: 'revenue %', type: 'float'},
-            {name: 'growth %',  type: 'float'},
-            {name: 'product %', type: 'float'},
-            {name: 'market %',  type: 'float'}
-        ],
-        data: myData
-    });
-    
+     //STORE DE LA DATA
+        var st_data = new Ext.data.Store({
+            fields: ['Fecha','Anio', 'Mes','Facturado','Abonado','Nota_Credito','Pendiente',
+                    'Porcentaje_Abonado','Porcentaje_Nota_Credito','Porcentaje_Pendiente'],
+            proxy: {
+                type: 'ajax',
+                url : 'Php/store/dashb1_data.php?token=X208df%Ln',
+                reader: {
+                    type: 'json'
+                }
+            },
+            autoLoad: true
+        });
     //create radar dataset model.
     var chs = Ext.create('Ext.data.JsonStore', {
         fields: ['Name', 'Data'],
         data: [
         {
-            'Name': 'Price',
-            'Data': 100
+            'Name': 'Abonado',
+            'Data': 33.34
         }, {
-            'Name': 'Revenue %',
-            'Data': 100
+            'Name': 'Nota Credito',
+            'Data': 33.33
         }, {
-            'Name': 'Growth %',
-            'Data': 100
-        }, {
-            'Name': 'Product %',
-            'Data': 100
-        }, {
-            'Name': 'Market %',
-            'Data': 100
+            'Name': 'Pendiente',
+            'Data': 33.33
         }]
     });
+  
     
     //Radar chart will render information for a selected company in the
     //list. Selection can also be done via clicking on the bars in the series.
-    var radarChart = Ext.create('Ext.chart.Chart', {
-        margin: '0 0 0 0',
-        insetPadding: 20,
-        flex: 1.2,
+    var GraficaPastel = Ext.create('Ext.chart.Chart', {
+        width: 180,
+        height: 180,
         animate: true,
         store: chs,
-        axes: [{
-            steps: 5,
-            type: 'Radial',
-            position: 'radial',
-            maximum: 100
-        }],
-        series: [{
-            type: 'radar',
-            xField: 'Name',
-            yField: 'Data',
-            showInLegend: false,
-            showMarkers: true,
-            markerConfig: {
-                radius: 4,
-                size: 4
+        shadow: true,
+        insetPadding: 0,
+        theme: 'Base:gradients',
+        legend: {
+                position: 'right'
             },
-            style: {
-                fill: 'rgb(194,214,240)',
-                opacity: 0.5,
-                'stroke-width': 0.5
+     series: [{
+                type: 'pie',
+                field: 'Data',
+                showInLegend: true,
+                donut: false,
+                tips: {
+                  trackMouse: true,
+                  width: 130,
+                  height: 25,
+                  renderer: function(storeItem, item) {
+                    //calculate percentage.
+                    var total = 0;
+                    chs.each(function(rec) {
+                        total += rec.get('Data')*1;
+                    });
+                    this.setTitle(storeItem.get('Name') + ': ' + Math.round(storeItem.get('Data') / total * 100) + '%');
+                  }
+                },
+                highlight: {
+                  segment: {
+                    margin: 20
+                  }
+                },
+               label: {
+                field: 'Name',
+                display: 'rotate',
+                contrast: true,
+                font: '10px Arial'
             }
-        }]
+            }]
     });
+    
+    
     
     //create a grid that will list the dataset items.
     var gridPanel = Ext.create('Ext.grid.Panel', {
         id: 'company-form',
-        flex: 0.60,
-        store: ds,
-        title:'Company Data',
+        flex: 0.9,
+        store: st_data,
+        title:'Datos de Empresa',
 
         columns: [
             {
-                id       :'company',
-                text   : 'Company',
+                id       :'Fecha',
+                text   : 'Fecha',
                 flex: 1,
                 sortable : true,
-                dataIndex: 'company'
+                dataIndex: 'Fecha',
+                hidden:true
             },
             {
-                text   : 'Price',
-                width    : 75,
+                text   : 'Año',
+                flex: 0.5,
                 sortable : true,
-                dataIndex: 'price',
-                align: 'right',
-                renderer : 'usMoney'
+                dataIndex: 'Anio',
             },
             {
-                text   : 'Revenue',
-                width    : 75,
+                text   : 'Mes',
+                 flex: 1,
                 sortable : true,
-                align: 'right',
-                dataIndex: 'revenue %',
-                renderer: perc
+                dataIndex: 'Mes',
             },
             {
-                text   : 'Growth',
-                width    : 75,
+                text   : 'Facturado',
+                flex: 1,
                 sortable : true,
-                align: 'right',
-                dataIndex: 'growth %',
-                renderer: perc
+                dataIndex: 'Facturado',
+                renderer : DolarAmericano
             },
             {
-                text   : 'Product',
-                width    : 75,
+                text   : 'Abonado',
+                 flex: 1,
                 sortable : true,
-                align: 'right',
-                dataIndex: 'product %',
-                renderer: perc
+                dataIndex: 'Abonado',
+                renderer : DolarAmericano
             },
             {
-                text   : 'Market',
-                width    : 75,
+                text   : 'Nota de Credito',
+                 flex: 1,
                 sortable : true,
-                align: 'right',
-                dataIndex: 'market %',
-                renderer: perc
+                dataIndex: 'Nota_Credito',
+                renderer : DolarAmericano
+            },
+            {
+                text   : 'Pendiente',
+                 flex: 1,
+                sortable : true,
+                dataIndex: 'Pendiente',
+                renderer : DolarAmericano
+            },
+            {
+                text   : 'Porcentaje Abonado',
+                 flex: 1,
+                sortable : true,
+                dataIndex: 'Porcentaje_Abonado',
+                renderer: Porcentaje
+            },
+            {
+                text   : 'Porcentaje Nota de Credito',
+                 flex: 1,
+                sortable : true,
+                dataIndex: 'Porcentaje_Nota_Credito',
+                renderer: Porcentaje
+            },
+            {
+                text   : 'Porcentaje Pendiente',
+                 flex: 1,
+                sortable : true,
+                dataIndex: 'Porcentaje_Pendiente',
+                renderer: Porcentaje
             }
         ],
 
@@ -247,7 +234,7 @@ Ext.require([
                         form = this.up('form').getForm();
                         fields = form.getFields();
                         fields.each(function(field){
-                            if (field.name != 'company') {
+                            if (field.name != 'Fecha') {
                                 field.setDisabled(false);
                             }
                         });
@@ -270,21 +257,21 @@ Ext.require([
     });
 
     //create a bar series to be at the top of the panel.
-    var barChart = Ext.create('Ext.chart.Chart', {
+    var GraficaBarra = Ext.create('Ext.chart.Chart', {
         flex: 1,
         shadow: true,
         animate: true,
-        store: ds,
+        store: st_data,
         axes: [{
             type: 'Numeric',
             position: 'left',
-            fields: ['price'],
+            fields: ['Facturado'],
             minimum: 0,
             hidden: true
         }, {
             type: 'Category',
             position: 'bottom',
-            fields: ['company'],
+            fields: ['Fecha'],
             label: {
                 renderer: function(v) {
                     return Ext.String.ellipsis(v, 15, false);
@@ -305,17 +292,17 @@ Ext.require([
             highlightCfg: {
                 fill: '#a2b5ca'
             },
-            label: {
+            label:{
                 contrast: true,
-                display: 'insideEnd',
-                field: 'price',
+                display: 'Facturado',
+                field: 'Facturado',
                 color: '#000',
                 orientation: 'vertical',
                 'text-anchor': 'middle'
             },
             listeners: {
                 'itemmouseup': function(item) {
-                     var series = barChart.series.get(0),
+                     var series = GraficaBarra.series.get(0),
                          index = Ext.Array.indexOf(series.items, item),
                          selectionModel = gridPanel.getSelectionModel();
                      
@@ -323,16 +310,16 @@ Ext.require([
                      selectionModel.select(index);
                 }
             },
-            xField: 'name',
-            yField: ['price']
+            xField: ['Fecha'],
+            yField: ['Facturado']
         }]        
     });
     
     //disable highlighting by default.
-    barChart.series.get(0).highlight = false;
+    GraficaBarra.series.get(0).highlight = false;
     
     //add listener to (re)select bar item after sorting or refreshing the dataset.
-    barChart.addListener('beforerefresh', (function() {
+    GraficaBarra.addListener('beforerefresh', (function() {
         var timer = false;
         return function() {
             clearTimeout(timer);
@@ -350,7 +337,7 @@ Ext.require([
    Ext.define('MvcClientes.view.Dashboard.TabDashb1', {
         extend: 'Ext.form.Panel',
 	closable:   true,
-        title: 'Dashboard Cuentas Por Cobrar',
+        title: 'Dashboard Facturacion',
 	itemId:'TabDashb1',
         fieldDefaults: {
             labelAlign: 'left',
@@ -360,8 +347,7 @@ Ext.require([
         layout: {
             type: 'vbox',
             align: 'stretch'
-        },
-        
+        },        
         items: [
             
             {
@@ -371,77 +357,69 @@ Ext.require([
             border: false,
             bodyStyle: 'background-color: transparent',
             
-            items: [gridPanel, {
+            items: [{
                 flex: 0.4,
                 layout: {
                     type: 'vbox',
                     align:'stretch'
                 },
                 margin: '0 0 0 5',
-                title: 'Company Details',
+                title: 'Personalizar Vista',
                 items: [{
                     margin: '5',
                     xtype: 'fieldset',
                     flex: 1,
-                    title:'Company details',
+                    title:'Filtros',
                     defaults: {
-                        width: 240,
+                        width: 200,
                         labelWidth: 90,
                         disabled: true
                     },
                     defaultType: 'numberfield',
                     items: [{
-                        fieldLabel: 'Name',
-                        name: 'company',
+                        fieldLabel: 'Fecha',
+                        name: 'Fecha',
                         xtype: 'textfield'
                     },{
-                        fieldLabel: 'Price',
-                        name: 'price',
+                        fieldLabel: 'Facturado',
+                        name: 'Facturado',
                         maxValue: 100,
                         minValue: 0,
                         enforceMaxLength: true,
                         maxLength: 5,
-                        listeners: createListeners('price')
+                        listeners: createListeners('Facturado')
                     },{
-                        fieldLabel: 'Revenue %',
-                        name: 'revenue %',
+                        fieldLabel: 'Abonado',
+                        name: 'Abonado',
                         maxValue: 100,
                         minValue: 0,
                         enforceMaxLength: true,
                         maxLength: 5,
-                        listeners: createListeners('revenue %')
+                        listeners: createListeners('Abonado')
                     },{
-                        fieldLabel: 'Growth %',
-                        name: 'growth %',
+                        fieldLabel: 'Nota Credito',
+                        name: 'Nota_Credito',
                         maxValue: 100,
                         minValue: 0,
                         enforceMaxLength: true,
                         maxLength: 5,
-                        listeners: createListeners('growth %')
+                        listeners: createListeners('Nota_Credito')
                     },{
-                        fieldLabel: 'Product %',
-                        name: 'product %',
+                        fieldLabel: 'Pendiente',
+                        name: 'Pendiente',
                         maxValue: 100,
                         minValue: 0,
                         enforceMaxLength: true,
                         maxLength: 5,
-                        listeners: createListeners('product %')
-                    },{
-                        fieldLabel: 'Market %',
-                        name: 'market %',
-                        maxValue: 100,
-                        minValue: 0,
-                        enforceMaxLength: true,
-                        maxLength: 5,
-                        listeners: createListeners('market %')
+                        listeners: createListeners('Pendiente')
                     }]
-                }, radarChart]
-            }]
+                },  GraficaPastel]
+            },gridPanel]
         },{
                 height: 200,
                 layout: 'fit',
                 margin: '0 0 3 0',
-                items: [barChart]
+                items: [GraficaBarra]
             }
     ]
     });

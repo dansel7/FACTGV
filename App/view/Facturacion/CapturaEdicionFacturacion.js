@@ -281,7 +281,7 @@ if(typeof(records) != "undefined" && typeof(records) != "string"){
                                 queryMode: 'local', store: ListCatServ,
                                 displayField: 'servicio',valueField: 'id_servicio',allowBlank : false
                                 },renderer:function(id){//A PARTIR DEL ID DE SERVICIO SE MUESTRA EL NOMBRE DEL SERVICIO
-                                 ListCatServ.clearFilter();    
+                                 ListCatServ.clearFilter(); //SE LIMPIA EL STORE   
                                 var index = ListCatServ.find('id_servicio',id);
                                     if(index>-1){
                                             var record = ListCatServ.getAt(index);
@@ -405,6 +405,7 @@ if(typeof(records) != "undefined" && typeof(records) != "string"){
                                     listeners: {
             change: function(field, newValue, oldValue, eOpts){
                 console.log('change:' + field.fieldLabel + ' ' + newValue);
+                if(Ext.getCmp("id_tipo_factura").value==1){
                                     if(newValue){
                                     Ext.getCmp("n_comprobante_credito").reset();
                                     Ext.getCmp("n_comprobante_credito").setValue(null);
@@ -413,6 +414,7 @@ if(typeof(records) != "undefined" && typeof(records) != "string"){
                                     Ext.getCmp("n_comprobante_credito").show();
                                     Ext.getCmp("n_comprobante_credito").enable();
                                     }
+                                }
                                     
             }}}, {
                                     itemId: 'BtnClienteAceptar',

@@ -66,6 +66,33 @@ Ext.define('MvcClientes.controller.Facturacion.Facturacion',{
                 var EditForm=FormAddEditarFacturacion.down('form');	
                 var record=records[0];
                 EditForm.loadRecord(record);
+                
+                 ///----OBTIENE PERFIL DE USUARIO PARA DESHABILITAR CAMPOS DE CAPTURA----///
+                        Ext.Ajax.request({
+                          url: 'Php/controller/Login/Perfil_Benutzer.php',
+                          success: function(response) {
+                            outHTML = response.responseText;
+                            if(outHTML==4){//USUARIO FACTURACION
+                            //SE PONEN EN MODO READ ONLY
+                                   EditForm.getForm().getFields().each (function (field) {
+                                    field.setReadOnly(true);
+                                    field.setFieldStyle('background-color: #E4E4E4; background-image: none;')
+                                    Ext.getCmp("gridDetalle").disable(true);
+                                  });
+                                  
+                              //SE DEJAN HABILITADO LOS CAMPOS DE FECHA QUEDAN Y COMPROBANTE 
+                                  EditForm.getForm().findField("fecha_quedan").setReadOnly(false);
+                                    EditForm.getForm().findField("fecha_quedan").setFieldStyle('background-color: white;');
+                                  EditForm.getForm().findField("comprobante_quedan").setReadOnly(false);
+                                    EditForm.getForm().findField("comprobante_quedan").setFieldStyle('background-color: white;');
+                                  EditForm.getForm().findField("fecha_programada_pago").setReadOnly(false);
+                                    EditForm.getForm().findField("fecha_programada_pago").setFieldStyle('background-color: white;');
+
+                            }
+                            
+                          }
+                        });
+                
                 //PARA QUE MUESTRE U OCULTE EL CAMPO DE N_COMPROBANTE_CREDITO A MENOS QUE SEA NOTA DE CREDITO
                  if(Ext.getCmp("id_tipo_factura").value==1){
                     Ext.getCmp("n_comprobante_credito").show();
