@@ -35,7 +35,7 @@ $pdf->SetPrintFooter(false);
 
 //set margins
 //$pdf->SetMargins(PDF_MARGIN_LEFT, PDF_MARGIN_TOP, PDF_MARGIN_RIGHT);
-$pdf->SetMargins(1, 1.7, 2);
+$pdf->SetMargins(0.5, 1.7, 2);
 
 //$pdf->SetHeaderMargin(0);
 //$pdf->SetFooterMargin(15);
@@ -50,7 +50,7 @@ $pdf->setImageScale(PDF_IMAGE_SCALE_RATIO);
 //$pdf->setLanguageArray($l); 
 // ---------------------------------------------------------
 // set font
-$pdf->SetFont('helvetica', '', 9);
+$pdf->SetFont('helvetica', '', 7.5);
 
 
 $fecha_inicio=$_GET["fecha_ini"];
@@ -62,9 +62,14 @@ $orientacion="vertical";
 $idempresa=isset($_SESSION["idEmpresa"])? $_SESSION["idEmpresa"]:"-1";
 
 // ---------------INICIO DEL REPORTE-----------------
-$sql = "Select f.id_tipo_facturacion,f.fecha_facturacion,f.numero_factura,mc.nom_cliente,f.venta_total-f.iva+f.iva_retenido valor_neto,f.iva,f.iva_retenido,f.venta_total,f.anulado
-from facturacion f inner join maestroclientes mc on f.idmaestroClientes=mc.idmaestroClientes 
-where f.id_empresa=".$idempresa ." $idmc $idtpf and f.fecha_facturacion between STR_TO_DATE('$fecha_inicio','%d/%m/%Y') and STR_TO_DATE('$fecha_fin','%d/%m/%Y') order by length(f.numero_factura),f.numero_factura asc";
+$sql = "Select f.id_tipo_facturacion,f.fecha_facturacion,f.numero_factura,mc.nom_cliente,
+        sum(df.venta_nosujeta) nosujeta,sum(df.venta_exenta) exenta, sum(df.venta_gravada) gravada,
+        f.venta_total-f.iva+f.iva_retenido valor_neto,f.iva,f.iva_retenido,f.venta_total,f.anulado
+        from facturacion f inner join maestroclientes mc on f.idmaestroClientes=mc.idmaestroClientes 
+        left join detallefacturacion df on f.idfacturacion=df.idfacturacion
+        where f.id_empresa=".$idempresa ." $idmc $idtpf and f.fecha_facturacion between STR_TO_DATE('$fecha_inicio','%d/%m/%Y') and STR_TO_DATE('$fecha_fin','%d/%m/%Y') 
+        group by f.idfacturacion
+        order by f.fecha_facturacion,length(f.numero_factura),f.numero_factura asc";
         
      
     	$result = mysql_query($sql,$connection) or die('La consulta fall&oacute;: '.mysql_error());	
@@ -75,13 +80,16 @@ where f.id_empresa=".$idempresa ." $idmc $idtpf and f.fecha_facturacion between 
       &nbsp;Reporte de Facturacion - {$_SESSION["nombreEmpresa"]}<br></h2>";
   
   $cuerpo_detalle.= '<table width="700px" cellpadding="1">
-                     <tr><td width="70px" style="text-align:center"><b>FECHA DE CCF</b></td>
+                     <tr><td width="70px" style="text-align:center;"><b>FECHA DE CCF</b></td>
                      <td width="75px" style="text-align:center"><b>NUMERO DE CCF</b></td> 
                      <td width="190px" style="text-align:center" ><b>CLIENTE</b></td>
-                     <td width="80px" style="text-align:right" ><b>VALOR NETO DE CCF</b></td>
-                     <td width="60px" style="text-align:right"><b>IVA</b></td>
-                     <td width="90px" style="text-align:right"><b>RETENCIONES</b></td>
-                     <td width="110px" style="text-align:right"><b>TOTAL DE VENTA</b></td></tr>
+                     <td width="50px" style="text-align:center" ><b>NO SUJETA</b></td>
+                     <td width="50px" style="text-align:left" ><b>EXENTA</b></td>
+                     <td width="50px" style="text-align:left" ><b>GRAVADA</b></td>
+                     <td width="70px" style="text-align:right" ><b>VALOR NETO DE CCF</b></td>
+                     <td width="50px" style="text-align:right"><b>IVA</b></td>
+                     <td width="55px" style="text-align:right"><b>RETENCIONES</b></td>
+                     <td width="65px" style="text-align:right"><b>TOTAL DE VENTA</b></td></tr>
                      <tr><td colspan="6"></td></tr>';
  
 
@@ -89,6 +97,9 @@ where f.id_empresa=".$idempresa ." $idmc $idtpf and f.fecha_facturacion between 
   $subTIva=0;
   $subTIvaRetenido=0;
   $subTVentaTotal=0;
+  $subExenta=0;
+  $subNoSujeta=0;
+  $subGravada=0;
   $cliente="";
   while($rows_e = mysql_fetch_array($result)){
        if($idmc!=""){
@@ -100,13 +111,16 @@ where f.id_empresa=".$idempresa ." $idmc $idtpf and f.fecha_facturacion between 
                           <td  style=\"text-align:right\"> ".substr($rows_e["fecha_facturacion"],0,11) ."</td> 
                           <td  style=\"text-align:center\">".$rows_e["numero_factura"] ."</td>
                           <td  style=\"text-align:left\">".$rows_e["nom_cliente"] ."</td>
-       <td  style=\"text-align:center\" colspan=\"4\">------------      <b>FACTURA ANULADA</b>    ------------</td></tr>";
+       <td  style=\"text-align:center\" colspan=\"6\">------------      <b>FACTURA ANULADA</b>    ------------</td></tr>";
         }
         else{
               $cuerpo_detalle.= "<tr> 
                                      <td  style=\"text-align:right\"> ".substr($rows_e["fecha_facturacion"],0,11) ."</td> 
                              <td  style=\"text-align:center\">".$rows_e["numero_factura"] ."</td>
                              <td  style=\"text-align:left\">".$rows_e["nom_cliente"] ."</td>
+                             <td  style=\"text-align:right\">".((number_format($rows_e["nosujeta"],2)==0)?'0.00':(($rows_e["id_tipo_facturacion"]==1) ?"<b>-</b> ":"").number_format($rows_e["nosujeta"],2)) ."</td>
+                             <td  style=\"text-align:right\">".((number_format($rows_e["exenta"],2)==0)?'0.00':(($rows_e["id_tipo_facturacion"]==1) ?"<b>-</b> ":"").number_format($rows_e["exenta"],2)) ."</td>  
+                             <td  style=\"text-align:right\">".((number_format($rows_e["gravada"],2)==0)?'0.00':(($rows_e["id_tipo_facturacion"]==1) ?"<b>-</b> ":"").number_format($rows_e["gravada"],2)) ."</td>  
                              <td  style=\"text-align:right\">".(($rows_e["id_tipo_facturacion"]==1) ?"<b>-</b> ":"").  number_format($rows_e["valor_neto"],2)."</td>
                              <td  style=\"text-align:right\">".((number_format($rows_e["iva"],2)==0)?'0.00':(($rows_e["id_tipo_facturacion"]==1) ?"<b>-</b> ":"").number_format($rows_e["iva"],2))."</td>
                              <td  style=\"text-align:right\">".((number_format($rows_e["iva_retenido"],2)==0)?'0.00':(($rows_e["id_tipo_facturacion"]==1) ?"<b>-</b> ":"").number_format($rows_e["iva_retenido"],2))."</td>
@@ -121,18 +135,23 @@ where f.id_empresa=".$idempresa ." $idmc $idtpf and f.fecha_facturacion between 
                 $subTVentaTotal-=$rows_e["venta_total"]; 
                 $subTIva-=$rows_e["iva"];
                 $subTIvaRetenido-=$rows_e["iva_retenido"];
+                $subExenta-=$rows_e["exenta"];
+                $subNoSujeta-=$rows_e["nosujeta"];
+                $subGravada-=$rows_e["gravada"];
                 }else{
                 $subTValorNeto+=$rows_e["valor_neto"];
                 $subTVentaTotal+=$rows_e["venta_total"];
                 $subTIva+=$rows_e["iva"];
                 $subTIvaRetenido+=$rows_e["iva_retenido"];
+                $subExenta+=$rows_e["exenta"];
+                $subNoSujeta+=$rows_e["nosujeta"];
+                $subGravada+=$rows_e["gravada"];
                 }
             }
        
         }
-        $cuerpo_detalle.='<tr><td colspan="7"></td></tr>';
-        $cuerpo_detalle.='<tr><td style="text-align:right" colspan="3"><b>TOTALES</b></td><td style="text-align:right"><b>'.number_format($subTValorNeto,2).'</b></td><td style="text-align:right"><b>'.number_format($subTIva,2).'</b></td><td style="text-align:right"><b>'.number_format($subTIvaRetenido,2).'</b></td><td style="text-align:right"><b>'.number_format($subTVentaTotal,2).'</b></td></tr>';
-        $cuerpo_detalle.='<tr><td colspan="7"></td></tr>';
+        $cuerpo_detalle.='<tr><td colspan="8"></td></tr>';
+        $cuerpo_detalle.='<tr><td style="text-align:right" colspan="3"><b>TOTALES</b></td><td style="text-align:right"><b>'. number_format($subNoSujeta,2) .'</b></td><td style="text-align:right"><b>'. number_format($subExenta,2) .'</b></td><td style="text-align:right"><b>'. number_format($subGravada,2) .'</b></td><td style="text-align:right"><b>'.number_format($subTValorNeto,2).'</b></td><td style="text-align:right"><b>'.number_format($subTIva,2).'</b></td><td style="text-align:right"><b>'.number_format($subTIvaRetenido,2).'</b></td><td style="text-align:right"><b>'.number_format($subTVentaTotal,2).'</b></td></tr>';
         $cuerpo_detalle.= "</table>";
         $Reporte=$encabezado.$cliente.$cuerpo_detalle.$pie_factura;
 

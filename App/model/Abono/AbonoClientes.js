@@ -16,6 +16,7 @@ Ext.define('MvcClientes.model.Abono.AbonoClientes', {
                                 { name: 'fecha_programada_pago',  type: 'string'},
                                 { name: 'saldo_pendiente', type: 'number'},
                                 { name: 'tipo_pago', type: 'string'},
-                                { name: 'tipo_facturacion', type: 'string'}
+                                { name: 'tipo_facturacion', type: 'string'},
+                                { name: 'DiasMora', type: 'number'}
            ]
 });

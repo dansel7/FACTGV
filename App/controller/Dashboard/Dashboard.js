@@ -13,16 +13,16 @@ Ext.define('MvcClientes.controller.Dashboard.Dashboard',{
 	init	: function() {
 		var me = this;
 		me.control({
-		    'Dashb1 button[action=Dashb1]'://Usando Ext.Component.Query
+		    'TabDashb1 button[action=ShowDataDashb1]'://Usando Ext.Component.Query
 			   {
-				 click:this.Dashb1
+				 click:this.ShowDataDashb1
 			   }
                           		  
 		});
                 
 	},
-        Dashb1: function(button){
-           }
+        ShowDataDashb1: function(button){
+	}
         
         
 });

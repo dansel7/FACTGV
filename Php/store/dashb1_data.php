@@ -1,13 +1,32 @@
 <?php
 session_start();
 error_reporting(0); 
-      
+
    $benutzer=isset($_SESSION["benutzer"])?$_SESSION["benutzer"]:"";
 if(isset($_GET["token"]) && $benutzer!="" ){ 
     
    $idempresa=isset($_SESSION["idEmpresa"]) ? $_SESSION["idEmpresa"]:"";
-   $anio=isset($_GET["anio"]) ? $_GET["anio"]:"2013";
-   $mes=isset($_GET["mes"]) ? $_GET["mes"]:"1";
+    $filtros=json_decode (stripslashes ($_GET["filter"]), true);
+    $anio="";
+    $dmes="";
+    $hmes="";             
+    $mes="";
+    foreach ($filtros as $key => $value) {
+      if($value["property"]=="Anio"){
+         $anio=" and year(fecha_facturacion)=".$value["value"];
+      }
+      if($value["property"]=="dMes"){
+         $dmes=" and MONTH(fecha_facturacion)>=".$value["value"];
+      }
+      if($value["property"]=="hMes"){
+         $hmes=" and MONTH(fecha_facturacion)<=".$value["value"]; 
+      }
+      if($value["property"]=="Mes"){
+         $mes=" and MONTH(fecha_facturacion)=".$value["value"]; 
+      }
+      
+    }
+   
    
    require '../Database_conf.php';
    mysql_select_db($db_name,$connection) or die("Error de conexion a la base de datos");
@@ -15,31 +34,19 @@ if(isset($_GET["token"]) && $benutzer!="" ){
 		$arr = array();
 		// Llamamos a la Tabla maestro clientes y filtramos solo los que esten activos
 		$sql = "SELECT concat(T1.anio,' ',CASE(T2.mes)
-                        when 1 then 'Enero'
-                        when 2 then 'Febrero'
-                        when 3 then 'Marzo'
-                        when 4 then 'Abril'
-                        when 5 then 'Mayo'
-                        when 6 then 'Junio'
-                        when 7 then 'Julio'
-                        when 8 then 'Agosto'
-                        when 9 then 'Septiembre'
+                        when 01 then 'Enero'
+                        when 02 then 'Febrero'
+                        when 03 then 'Marzo'
+                        when 04 then 'Abril'
+                        when 05 then 'Mayo'
+                        when 06 then 'Junio'
+                        when 07 then 'Julio'
+                        when 08 then 'Agosto'
+                        when 09 then 'Septiembre'
                         when 10 then 'Octubre'
                         when 11 then 'Noviembre'
                         when 12 then 'Diciembre' END ) Fecha,
-                        T1.Anio,CASE(T2.mes)
-                        when 1 then 'Enero'
-                        when 2 then 'Febrero'
-                        when 3 then 'Marzo'
-                        when 4 then 'Abril'
-                        when 5 then 'Mayo'
-                        when 6 then 'Junio'
-                        when 7 then 'Julio'
-                        when 8 then 'Agosto'
-                        when 9 then 'Septiembre'
-                        when 10 then 'Octubre'
-                        when 11 then 'Noviembre'
-                        when 12 then 'Diciembre' END Mes,
+                        T1.Anio,T2.mes Mes,
                         ifnull(facturado,0) Facturado,
                         ifnull(abonado,0) Abonado,
                         ifnull(nota_credito,0) Nota_Credito,
@@ -51,7 +58,7 @@ if(isset($_GET["token"]) && $benutzer!="" ){
                         (select year(fecha_facturacion) anio,MONTH(fecha_facturacion) mes,sum(venta_total) facturado 
                                     from facturacion
                                     WHERE id_tipo_facturacion!=1 and anulado='No' and id_empresa=".$idempresa ."
-                                    and MONTH(fecha_facturacion)>".$mes ." and year(fecha_facturacion)>".$anio ."
+                                    ".$mes." ".$dmes ." ".$hmes ." ".$anio ."
                                     group by year(fecha_facturacion),month(fecha_facturacion)
                         ) T1 
                         LEFT JOIN
@@ -59,17 +66,18 @@ if(isset($_GET["token"]) && $benutzer!="" ){
                                     from facturacion f 
                                     left join  abono_clientes ac on f.idfacturacion=ac.idfacturacion
                                     WHERE id_tipo_facturacion!=1 and anulado='No' and id_empresa=".$idempresa ."
-                                    and MONTH(fecha_facturacion)>".$mes ." and year(fecha_facturacion)>".$anio ."
+                                    ".$mes." ".$dmes ." ".$hmes ." ".$anio ."
                                     group by year(fecha_facturacion),month(fecha_facturacion)
                         ) T2 ON T1.anio=T2.anio AND T1.mes=T2.mes
                         LEFT JOIN
                         (select year(fecha_facturacion) anio,MONTH(fecha_facturacion) mes,sum(venta_total) nota_credito
                                     from facturacion 
                                     where id_tipo_facturacion=1  and anulado='No' AND id_empresa=".$idempresa ."
-                                    and MONTH(fecha_facturacion)>".$mes ." and year(fecha_facturacion)>".$anio ."
+                                    ".$mes." ".$dmes ." ".$hmes ." ".$anio ."
                                     group by year(fecha_facturacion),month(fecha_facturacion)
-                        )T3 ON T1.anio=T3.anio AND T1.mes=T3.mes";
-                
+                        )T3 ON T1.anio=T3.anio AND T1.mes=T3.mes
+                        order by T2.anio,T2.mes";
+
     	$result = mysql_query($sql,$connection) or die('La consulta fall&oacute;: '.mysql_error());	
       
 		//Formamos el Array de Datos, si ejecutamos este archivo PHP veremos el array formado

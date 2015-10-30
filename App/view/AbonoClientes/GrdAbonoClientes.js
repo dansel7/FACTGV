@@ -18,7 +18,8 @@ Ext.define('MvcClientes.view.AbonoClientes.GrdAbonoClientes',{
                                    {header:"Clientes", dataIndex:"nom_cliente",flex:1},
                                    {header:"Fecha Facturacion",id:"fecha_facturacion",dataIndex : "fecha_facturacion",flex:1,renderer:Ext.util.Format.dateRenderer('d/m/Y') },
                                    {header:"Fecha Programada Pago", dataIndex:"fecha_programada_pago",flex:1},//EL COLOR LO MANEJA LA CONSULTA EN ABONOCLIENTESREAD
-                                   {header:"Saldo Pendiente ($)", dataIndex:"saldo_pendiente",flex:1}
+                                   {header:"Saldo Pendiente ($)", dataIndex:"saldo_pendiente",flex:1},
+                                   {header:"Dias de Mora", dataIndex:"DiasMora",flex:1}
 			],
 			dockedItems: [
 					{

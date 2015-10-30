@@ -7,14 +7,22 @@ Ext.require([
     'Ext.layout.container.*'
 ]);
 
-   
+    function DolarAmericano(v) {
+        return '$'+v ;
+    }
+    
     function Porcentaje(v) {
         return v + '%';
     }
     
-     function DolarAmericano(v) {
-        return '$'+v ;
+   function DecodMes(v) {
+       if(v!=""){
+       var Mes=Meses.findRecord('CodMes', v);
+       return Mes.get('Mes');
+       }
+       return "";
     }
+    
     
     var form = false;
     var rec = false;
@@ -23,7 +31,6 @@ Ext.require([
             var name = storeItem.get('Fecha'),
                 series = GraficaBarra.series.get(0),
                 i, items, l;
-            
             series.highlight = true;
             series.unHighlightItem();
             series.cleanHighlights();
@@ -78,8 +85,9 @@ Ext.require([
                 url : 'Php/store/dashb1_data.php?token=X208df%Ln',
                 reader: {
                     type: 'json'
-                }
+                } 
             },
+        remoteFilter: true,
             autoLoad: true
         });
     //create radar dataset model.
@@ -88,13 +96,13 @@ Ext.require([
         data: [
         {
             'Name': 'Abonado',
-            'Data': 33.34
+            'Data': 50
         }, {
             'Name': 'Nota Credito',
-            'Data': 33.33
+            'Data': 10
         }, {
             'Name': 'Pendiente',
-            'Data': 33.33
+            'Data': 40
         }]
     });
   
@@ -148,11 +156,10 @@ Ext.require([
     
     //create a grid that will list the dataset items.
     var gridPanel = Ext.create('Ext.grid.Panel', {
-        id: 'company-form',
+        id: 'PanelDataGrid',
         flex: 0.9,
-        store: st_data,
+      store: st_data,
         title:'Datos de Empresa',
-
         columns: [
             {
                 id       :'Fecha',
@@ -173,6 +180,7 @@ Ext.require([
                  flex: 1,
                 sortable : true,
                 dataIndex: 'Mes',
+                renderer : DecodMes
             },
             {
                 text   : 'Facturado',
@@ -262,6 +270,7 @@ Ext.require([
         shadow: true,
         animate: true,
         store: st_data,
+        height:150,
         axes: [{
             type: 'Numeric',
             position: 'left',
@@ -331,12 +340,77 @@ Ext.require([
         };
     })());
     
+    ////STORE MESES///
+      var Meses = new Ext.data.Store({
+            fields: ['Mes','CodMes'],
+            data: [
+         {
+            'Mes': 'Todos',
+            'CodMes': 'Todos'
+         },{
+            'Mes': 'Enero',
+            'CodMes': '1'
+         }, {
+            'Mes': 'Febrero',
+            'CodMes': '2'
+         }, {
+            'Mes': 'Marzo',
+            'CodMes': '3'
+        }, {
+            'Mes': 'Abril',
+            'CodMes': '4'
+        }, {
+            'Mes': 'Mayo',
+            'CodMes': '5'
+        }, {
+            'Mes': 'Junio',
+            'CodMes': '6'
+        }, {
+            'Mes': 'Julio',
+            'CodMes': '7'
+        }, {
+            'Mes': 'Agosto',
+            'CodMes': '8'
+        }, {
+            'Mes': 'Septiembre',
+            'CodMes': '9'
+        }, {
+            'Mes': 'Octubre',
+            'CodMes': '10'
+        }, {
+            'Mes': 'Noviembre',
+            'CodMes': '11'
+        }, {
+            'Mes': 'Diciembre',
+            'CodMes': '12'
+        }]
+        });
+/////////-////////
+        
+/////STORE AÑOS////
+        var years = [];
+        var currentTime = new Date();
+        var now = currentTime.getFullYear();
+        y = 2013;
+        years.push(["Todos"]);
+        while (y<=now){
+             years.push([y]);
+             y++;
+        }
+
+        var anio = new Ext.data.SimpleStore
+        ({
+              fields : ['Anio'],
+              data : years
+        });
+/////////-////////
     /*
      * Here is where we create the Form
      */
    Ext.define('MvcClientes.view.Dashboard.TabDashb1', {
         extend: 'Ext.form.Panel',
-	closable:   true,
+        alias:'widget.TabDashb1',
+	//closable:   true,
         title: 'Dashboard Facturacion',
 	itemId:'TabDashb1',
         fieldDefaults: {
@@ -353,13 +427,14 @@ Ext.require([
             {
             
             layout: {type: 'hbox', align: 'stretch'},
-            flex: 3,
+            flex: 1,
             border: false,
             bodyStyle: 'background-color: transparent',
             
             items: [{
+                  
                 flex: 0.4,
-                layout: {
+               layout: {
                     type: 'vbox',
                     align:'stretch'
                 },
@@ -370,49 +445,92 @@ Ext.require([
                     xtype: 'fieldset',
                     flex: 1,
                     title:'Filtros',
+                    width: 327,
+                    height:150,
+                    minWidth: 300,
+                    minHeight: 118,
                     defaults: {
-                        width: 200,
-                        labelWidth: 90,
-                        disabled: true
+                        height: 25,
+                        width: 230,
+                        labelWidth: 100
                     },
-                    defaultType: 'numberfield',
                     items: [{
-                        fieldLabel: 'Fecha',
-                        name: 'Fecha',
-                        xtype: 'textfield'
+                        xtype : "combobox", queryMode: 'local', fieldLabel: "Seleccione Año",value:"Todos",
+                    store: anio,displayField: 'Anio',valueField: 'Anio',
+                    name:"year", id:"year", flex: 1, 
+                    margin: '0 10 0 20'
                     },{
-                        fieldLabel: 'Facturado',
-                        name: 'Facturado',
-                        maxValue: 100,
-                        minValue: 0,
-                        enforceMaxLength: true,
-                        maxLength: 5,
-                        listeners: createListeners('Facturado')
+                        xtype : "combobox", queryMode: 'local', fieldLabel: "Desde el Mes de",value:"Todos",
+                    store: Meses,displayField: 'Mes',valueField: 'CodMes',
+                    name:"dmes", id:"dmes", flex: 1, 
+                    margin: '0 10 0 20'
                     },{
-                        fieldLabel: 'Abonado',
-                        name: 'Abonado',
-                        maxValue: 100,
-                        minValue: 0,
-                        enforceMaxLength: true,
-                        maxLength: 5,
-                        listeners: createListeners('Abonado')
-                    },{
-                        fieldLabel: 'Nota Credito',
-                        name: 'Nota_Credito',
-                        maxValue: 100,
-                        minValue: 0,
-                        enforceMaxLength: true,
-                        maxLength: 5,
-                        listeners: createListeners('Nota_Credito')
-                    },{
-                        fieldLabel: 'Pendiente',
-                        name: 'Pendiente',
-                        maxValue: 100,
-                        minValue: 0,
-                        enforceMaxLength: true,
-                        maxLength: 5,
-                        listeners: createListeners('Pendiente')
-                    }]
+                        xtype : "combobox", queryMode: 'local', fieldLabel: "Hasta el Mes de",value:"Todos",
+                    store: Meses,displayField: 'Mes',valueField: 'CodMes',
+                    name:"hmes", id:"hmes", flex: 1, 
+                    margin: '0 10 0 20'
+                    },
+                    { 
+                        xtype: 'button',
+                        margin: '0 10 0 20',
+                        itemId: 'BtnFiltro',
+                        text: 'Filtrar',
+                        listeners: {
+                            click: function() {
+                                
+                               var form = this.up('form'),
+                                   year = form.down('#year').getValue(),
+                                   hmes = form.down('#hmes').getValue(),
+                                   dmes = form.down('#dmes').getValue();
+                            //Limpia los Filtros   
+                            st_data.clearFilter(); 
+                            //Si selecciona solo el campo Desde el Mes
+                            if(dmes!="Todos" && year=="Todos" && hmes=="Todos"){
+                                st_data.filter('Mes',dmes);
+                            }
+                            //Si selecciona solo el campo Hasta el Mes
+                            if(hmes!="Todos" && year=="Todos" && dmes=="Todos"){
+                                st_data.filter('Mes',hmes);
+                            }
+                            //Si selecciona solo el campo Año
+                            if(year!="Todos" && hmes=="Todos" && dmes=="Todos"){
+                                 st_data.filter('Anio',year);
+                            }
+                            //Si seleccionan los campos Desde el Mes y el Año
+                            if(dmes!="Todos" && year!="Todos" && hmes=="Todos"){
+                                st_data.filter([
+                                    {property: 'Mes', value: dmes},
+                                    {property: 'Anio', value: year}
+                                 ]);
+                            }
+                            //Si seleccionan los campos Hasta el Mes y el Año
+                            if(hmes!="Todos" && year!="Todos" && dmes=="Todos"){
+                                st_data.filter([
+                                    {property: 'Mes', value: hmes},
+                                    {property: 'Anio', value: year}
+                                 ]);
+                            }
+                            //Si seleccionan los campos Desde y Hasta el Mes
+                            if(dmes!="Todos" && hmes!="Todos"  && year=="Todos"){
+                                st_data.filter([
+                                    {property: 'dMes', value: dmes},
+                                    {property: 'hMes', value: hmes}
+                                 ]);
+                            }
+                            //Si seleccionan los campos Desde y Hasta el Mes Y el Año
+                            if(dmes!="Todos" && hmes!="Todos"  && year!="Todos"){
+                                  st_data.filter([
+                                    {property: 'dMes', value: dmes},
+                                    {property: 'hMes', value: hmes},
+                                    {property: 'Anio', value: year}
+                                 ]);
+                            }   
+                            
+
+                            GraficaBarra.refresh();
+                            
+                            }}
+                     }]
                 },  GraficaPastel]
             },gridPanel]
         },{
