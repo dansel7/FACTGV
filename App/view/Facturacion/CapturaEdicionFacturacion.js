@@ -202,7 +202,12 @@ if(typeof(records) != "undefined" && typeof(records) != "string"){
                             {xtype : "textfield", name : "numero_factura", fieldLabel : "No. Factura", flex: 1,allowBlank : false},
                             {xtype : "combobox", queryMode: 'local', fieldLabel: " Cliente",
                                 store: ListMaestroClientes,displayField: 'nom_cliente',valueField: 'idmaestroClientes',
-                                name:"idmaestroClientes", id:"idmaestroClientes", flex: 1, margin: '0 10 0 0',width:340 ,allowBlank : false
+                                name:"idmaestroClientes", id:"idmaestroClientes", flex: 1, margin: '0 10 0 0',width:340 ,allowBlank : false,
+                               listeners: {
+                                    select: function(combo, record, index) {
+                                      totales_facturacion();
+                                    }
+                                  } 
                             },
                             {xtype : "datefield", format: 'd/m/Y', value: new Date(), name : "fecha_facturacion", fieldLabel : " Fecha Facturacion", flex: 1, margin: '0 10 0 0'},
                             {xtype : "textfield", name : "venta_acta_de", fieldLabel : " Venta A Cuenta De", flex: 1, margin: '0 10 0 0'},
@@ -419,7 +424,12 @@ if(typeof(records) != "undefined" && typeof(records) != "string"){
             }}}, {
                                     itemId: 'BtnClienteAceptar',
                                     text: 'Vista Previa',
-                                    action: 'actGuardar'
+                                    action: 'actGuardar',
+                                    listeners: {
+                                    click: function(){
+                                       totales_facturacion();
+                                    } }
+                                    
                             },{
                                     itemId: 'BtnClienteCancelar',
                                     text: 'Cancelar',
