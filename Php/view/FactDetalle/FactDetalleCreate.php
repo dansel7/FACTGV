@@ -12,7 +12,7 @@ mysql_select_db($db_name,$connection) or die("Error de conexion a la base de dat
         $qry="";
         foreach($data as $fila){
         //SE ASIGNAN LOS VALORES AL ARRAY PARA PODER INSERTARLOS COMO VALUES en el formato ('val1','val2')
-        $qry.= "(".$idFacturacion .",". $fila->id_servicio .",". $fila->cantidad .",'". $fila->concepto ."',". $fila->valor_concepto .",". (($fila->venta_nosujeta !='') ? $fila->venta_nosujeta : '0.0') .",". (($fila->venta_exenta !='') ? $fila->venta_exenta : '0.0') .",". (($fila->venta_gravada !='') ? $fila->venta_gravada : '0.0') . "),";
+        $qry.= "(".$idFacturacion .",". $fila->id_servicio .",". $fila->cantidad .",'". $fila->concepto ."',". $fila->valor_concepto .",". (($fila->venta_nosujeta !='') ? $fila->venta_nosujeta : '0.0') .",". (($fila->venta_exenta !='') ? $fila->venta_exenta : '0.0') .",". (($fila->venta_gravada !='') ? $fila->venta_gravada : '0.0') . ",".$_SESSION["idbenutzer"]."),";
         }
         
         $qry = preg_replace('/,$/', '', $qry);//para quitar la coma del final de la cadena
@@ -31,7 +31,8 @@ mysql_select_db($db_name,$connection) or die("Error de conexion a la base de dat
                             `valor_concepto`,
                             `venta_nosujeta`,
                             `venta_exenta`,
-                            `venta_gravada`)
+                            `venta_gravada`,
+                            `idbenutzer`)
                             VALUES ".$qry;
 			
 		$rs = mysql_query($SqlInsert);

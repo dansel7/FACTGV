@@ -34,7 +34,7 @@ $pdf->SetPrintFooter(false);
 
 //set margins
 //$pdf->SetMargins(PDF_MARGIN_LEFT, PDF_MARGIN_TOP, PDF_MARGIN_RIGHT);
-$pdf->SetMargins(1, 1.7, 2);
+$pdf->SetMargins(0.6, 1.7, 2);
 
 //$pdf->SetHeaderMargin(0);
 //$pdf->SetFooterMargin(15);
@@ -67,7 +67,8 @@ $sql = "SELECT
                 if( DATE_FORMAT(f.fecha_programada_pago, '%d/%m/%Y') = '00/00/0000', null, 
                     DATE_FORMAT(f.fecha_programada_pago, '%d/%m/%Y') ) fecha_programada_pago,
                 f.venta_total total_facturado,
-                (f.venta_total-iFNull(sum(ac.monto_cheque),0)-iFNull(sum(NotaC.venta_total),0)) saldo_pendiente
+                (f.venta_total-iFNull(sum(ac.monto_cheque),0)-iFNull(sum(NotaC.venta_total),0)) saldo_pendiente,
+                DATEDIFF(ADDDATE(NOW(), INTERVAL 1 DAY),f.fecha_facturacion) DiasMora
                 from facturacion f
                 left join abono_clientes ac on f.idfacturacion=ac.idfacturacion
                 inner join maestroclientes mc on f.idmaestroClientes=mc.idmaestroClientes 
@@ -76,7 +77,7 @@ $sql = "SELECT
                 WHERE f.anulado='No' AND f.id_empresa=".$idempresa." $idmc
                 AND f.id_tipo_facturacion!=1 and f.fecha_facturacion between STR_TO_DATE('$fecha_inicio','%d/%m/%Y') and STR_TO_DATE('$fecha_fin','%d/%m/%Y')
                 GROUP BY f.idfacturacion
-                HAVING saldo_pendiente>0 order by length(f.numero_factura),f.numero_factura asc";
+                HAVING saldo_pendiente>0 order by f.fecha_facturacion asc";
         //QUEDA PENDIENTE EL FILTRADO POR FECHA.
 
   $result = mysql_query($sql,$connection) or die('La consulta fall&oacute;: '.mysql_error());	
@@ -86,7 +87,7 @@ $sql = "SELECT
   $encabezado="<h2><img src=\"/facturaciones/resources/imagenes/gvlogo.png\" align=\"left\">
       &nbsp;Reporte de Pagos Pendientes - {$_SESSION["nombreEmpresa"]}<hr></h2>";
   
-  $cuerpo_detalle.= '<table width="700px" cellpadding="2">
+  $cuerpo_detalle.= '<table width="700px" cellpadding="1">
                      <tr>
                      <td width="60px" style="text-align:center"><b>No. FACTURA</b></td> 
                      <td width="110px" style="text-align:center"><b>TIPO FACTURA</b></td> 
@@ -94,7 +95,8 @@ $sql = "SELECT
                      <td width="70px" style="text-align:center"><b>FECHA DE FACTURA</b></td>
                      <td width="70px" style="text-align:center"><b>FECHA DE PAGO</b></td>
                      <td width="80px" style="text-align:right" ><b>VALOR DE FACTURA&nbsp;&nbsp;</b></td>
-                     <td width="80px" style="text-align:right" ><b>SALDO PENDIENTE</b></td>
+                     <td width="80px" style="text-align:center" ><b>SALDO PENDIENTE</b></td>
+                     <td width="50px" style="text-align:right" ><b>DIAS DE MORA</b></td>
                      </tr>
                      <tr><td colspan="5"></td></tr>';
    $subTpendiente=0;
@@ -109,6 +111,7 @@ $sql = "SELECT
                              <td  style=\"text-align:center\"> ".substr($rows_e["fecha_programada_pago"],0,11) ."</td> 
                              <td  style=\"text-align:right\">$ ".number_format($rows_e["total_facturado"],2) ."</td>
                              <td  style=\"text-align:right\">$ ".number_format($rows_e["saldo_pendiente"],2) ."</td>
+                             <td  style=\"text-align:right\">".$rows_e["DiasMora"] ."</td>
                         </tr>";
 
                 $subTpendiente+=$rows_e["saldo_pendiente"];
@@ -117,7 +120,7 @@ $sql = "SELECT
        //Si se filtro para todos nos almacenara nada ni mostrara nada.
         }
         $cuerpo_detalle.='<tr><td colspan="5"></td></tr>';
-        $cuerpo_detalle.='<tr><td style="text-align:right" colspan="5"><b>TOTAL PENDIENTE DE PAGO</b></td><td style="text-align:right"><b>$ '.number_format($subTpendiente,2).'</b></td></tr>';
+        $cuerpo_detalle.='<tr><td style="text-align:right" colspan="5"><b>TOTAL PENDIENTE DE PAGO</b></td><td></td><td style="text-align:right"><b>$ '.number_format($subTpendiente,2).'</b></td></tr>';
         $cuerpo_detalle.='<tr><td colspan="5"></td></tr>';
         $cuerpo_detalle.= "</table>";
         $Reporte=$encabezado.$nclient.$cuerpo_detalle.$pie_factura;

@@ -1,5 +1,6 @@
 <?php
-
+  session_start();
+  error_reporting(0);
 // Conexion a la Bd
 require '../../Database_conf.php';
 mysql_select_db($db_name,$connection) or die("Error de conexion a la base de datos");
@@ -28,7 +29,8 @@ mysql_select_db($db_name,$connection) or die("Error de conexion a la base de dat
                     `fecha_pago`='$fecha_pago',
                     `numero_cheque`='$numero_cheque',
                     `monto_cheque`=$monto_cheque,
-                    `idfacturacion`=$idFacturacion";  
+                    `idfacturacion`=$idFacturacion,
+                    `idbenutzer`=".$_SESSION["idbenutzer"];  
                     $rs = mysql_query($SqlInsert);
                     
         }else if($tipo_pago=="Transferencia"){
@@ -38,7 +40,8 @@ mysql_select_db($db_name,$connection) or die("Error de conexion a la base de dat
                     `fecha_pago`='$fecha_pago',
                     `numero_cheque`='$numero_cheque',
                     `monto_cheque`= $monto_remesa,
-                    `idfacturacion`=$idFacturacion";  
+                    `idfacturacion`=$idFacturacion,
+                    `idbenutzer`=".$_SESSION["idbenutzer"];  
                     $rs = mysql_query($sql_clientes);
                     $id_abono_clientes=mysql_insert_id();
                    
@@ -57,9 +60,9 @@ mysql_select_db($db_name,$connection) or die("Error de conexion a la base de dat
                     `fecha_pago`='$fecha_pago',
                     `numero_cheque`='$numero_cheque',
                     `monto_cheque`=$monto_efectivo,
-                    `idfacturacion`=$idFacturacion";  
+                    `idfacturacion`=$idFacturacion,
+                    `idbenutzer`=".$_SESSION["idbenutzer"];  
                     $rs = mysql_query($SqlInsert);
-                    
         }
         
         

@@ -1,5 +1,6 @@
 <?php
-
+  session_start();
+  error_reporting(0);
 // Conexion a la Bd
 require '../../Database_conf.php';
 mysql_select_db($db_name,$connection) or die("Error de conexion a la base de datos");
@@ -18,7 +19,8 @@ mysql_select_db($db_name,$connection) or die("Error de conexion a la base de dat
                             `fecha_remesa`='$fecha_remesa',
                             `numero_remesa`='$numero_remesa',
                             `id_cuenta`=$id_cuenta,    
-                            `id_abono_clientes`=$id_abono_clientes";
+                            `id_abono_clientes`=$id_abono_clientes,
+                            `idbenutzer`=".$_SESSION["idbenutzer"];  
                  
 			$rs = mysql_query($SqlInsert);
                         

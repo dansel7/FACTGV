@@ -32,6 +32,7 @@ mysql_select_db($db_name,$connection) or die("Error de conexion a la base de dat
         $mawb=$data->mawb;
         $tipo_servicio_carga=$data->tipo_servicio_carga;
         $id = $data->idfacturacion;
+
         
 
         
@@ -58,8 +59,10 @@ mysql_select_db($db_name,$connection) or die("Error de conexion a la base de dat
                             `hawb`='$hawb',
                             `mawb`='$mawb',        
                             `tipo_servicio_carga`='$tipo_servicio_carga',
-                            `id_tipo_facturacion`=$id_tipo_facturacion
-			 WHERE idfacturacion=$id";
+                            `id_tipo_facturacion`=$id_tipo_facturacion,
+                            `auditoria_fecha_update`=NOW(),   
+                            `idbenutzer_update`=".$_SESSION["idbenutzer"]   
+			    ." WHERE idfacturacion=$id";
         
         
 	$rs = mysql_query($SqlUpdate);
