@@ -4,6 +4,7 @@
     autoSync: true,//Sincronizacion con el Servidor
     autoSave: true,	//<--- hace las peticiones al servidor autom�ticamente
     pageSize: 25,
+    remoteFilter: true,
     autoLoad: {start: 0, limit: 100},
         proxy: {
 type: 'ajax',

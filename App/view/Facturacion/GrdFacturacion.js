@@ -1,10 +1,7 @@
-Ext.require([
-    'Ext.ux.LiveSearchGridPanel'
-]);
 var Flag=false;
 
 Ext.define('MvcClientes.view.Facturacion.GrdFacturacion',{
-	extend: 'Ext.ux.LiveSearchGridPanel',
+	extend: 'Ext.grid.Panel',
 	alias:'widget.gridFacturacion',
 	store: 'Facturacion.Facturacion',
         id: "GRDFacturacion",
@@ -36,6 +33,27 @@ Ext.define('MvcClientes.view.Facturacion.GrdFacturacion',{
     },
 	initComponent: function() {
 		var me = this;
+                var campos=new Ext.data.Store({
+                     fields: ['titulo','campo'],
+                     data: [
+                     {
+                        'titulo': 'Numero Factura',
+                        'campo': 'numero_factura'
+                     },{
+                        'titulo': 'Concepto Factura',
+                        'campo': 'concepto'
+                     },{
+                        'titulo': 'Nombre Cliente',
+                        'campo': 'nom_cliente'
+                     },{
+                        'titulo': 'HAWB',
+                        'campo': 'hawb'
+                     },{
+                         'titulo': 'Fecha Facturacion',
+                         'campo': 'fecha_facturacion'
+                     }]
+                    });
+             
 		Ext.applyIf(me, {
 			columns : [//Definimos las Columnas del Grid y las Columnas de la Tabla
 			   
@@ -90,6 +108,36 @@ Ext.define('MvcClientes.view.Facturacion.GrdFacturacion',{
 						disabled: true,
 						action:'actBorrar' //Accion manejado por el Controlador
 						}								
+					],
+				},{
+					xtype: 'toolbar',
+					dock: 'top',
+					items: [
+                                        {xtype : "textfield",id:"busqueda", name : "busqueda", fieldLabel : "Ingrese Frase:", flex: 0.8},
+                                        {
+                                            xtype : "combobox", queryMode: 'local', fieldLabel: "Seleccione Campo",text:'Numero Factura',value:'numero_factura',
+                                        store: campos,displayField: 'titulo',valueField: 'campo',
+                                        name:"campos", id:"campos", flex: 0.5},"-",
+                       			{xtype: 'button',margin: '0 0 0 0',iconCls: 'grid',name: 'btnBuscar',text: 'Buscar',flex: 0.2,
+                                        listeners: {
+                                            click: function() {
+                                                me.store.remoteFilter = false;
+                                                me.store.clearFilter();
+                                                me.store.remoteFilter = true;
+                                                me.store.filter({
+                                                property: Ext.getCmp('campos').value ,
+                                                value: Ext.getCmp('busqueda').value ,
+                                                anyMatch: true,
+                                                caseSensitive: false});
+                                            
+                                            }}
+                                            },"-",
+                                            {xtype: 'button',margin: '0 0 0 0',iconCls: 'cancelar',name: 'btnReset',text: 'Limpiar',flex: 0.2,
+                                            listeners: {
+                                            click: function() {	
+                                                me.store.clearFilter(); 
+                                            }}
+                                            }	
 					],
 				},
 				{

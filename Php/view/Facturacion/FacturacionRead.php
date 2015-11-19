@@ -6,11 +6,20 @@
    mysql_select_db($db_name,$connection) or die("Error de conexion a la base de datos");
     $start = (integer) (isset($_POST['start']) ? $_POST['start'] : $_GET['start']);
     $end = (integer) (isset($_POST['limit']) ? $_POST['limit'] : $_GET['limit']);  
-   
-		$arr = array();
-                $idempresa=isset($_SESSION["idEmpresa"])? $_SESSION["idEmpresa"]:"-1";
-                $idBenutzer=isset($_SESSION["idbenutzer"])? $_SESSION["idbenutzer"]:"-1";
-		// Llamamos a la Tabla y sus datos 
+    
+
+    $arr = array();
+    $idempresa=isset($_SESSION["idEmpresa"])? $_SESSION["idEmpresa"]:"-1";
+    $idBenutzer=isset($_SESSION["idbenutzer"])? $_SESSION["idbenutzer"]:"-1";
+    // Llamamos a la Tabla y sus datos 
+    
+    //Filtro
+    $condicion="";
+    
+   if(isset($_GET["filter"])){
+    $filtros=json_decode (stripslashes ($_GET["filter"]), true);
+    $condicion=" and ". $filtros[0]['property']." like '%". $filtros[0]['value'] . "%' ";
+   }
                 
 		$sql = "SELECT
                         f.idfacturacion,
@@ -38,10 +47,15 @@
                         f.mawb,
                         f.anulado,
                         f.tipo_servicio_carga
-                        FROM facturacion f inner join maestroclientes mc on f.idmaestroClientes=mc.idmaestroClientes inner join tipo_facturacion tf on tf.id_tipo_facturacion=f.id_tipo_facturacion 
-                        where id_empresa=".$idempresa." order by f.fecha_facturacion desc ,f.numero_factura desc";
+                        FROM facturacion f 
+                        inner join maestroclientes mc on f.idmaestroClientes=mc.idmaestroClientes 
+                        inner join tipo_facturacion tf on tf.id_tipo_facturacion=f.id_tipo_facturacion 
+                        left join detallefacturacion df on df.idfacturacion=f.idfacturacion  
+                        where id_empresa=".$idempresa.$condicion."
+                        group by f.idfacturacion    
+                        order by f.fecha_facturacion desc ,f.numero_factura desc";
                         //where id_empresa=".$idempresa." and idbenutzer=".$idBenutzer." order by f.fecha_facturacion desc ,f.numero_factura desc";
-                
+
         $result = mysql_query($sql,$connection) or die('La consulta fall&oacute;: '.mysql_error());	        
         $num =  mysql_num_rows($result);
         

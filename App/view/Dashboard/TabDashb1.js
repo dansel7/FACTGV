@@ -483,7 +483,9 @@ Ext.require([
                                    hmes = form.down('#hmes').getValue(),
                                    dmes = form.down('#dmes').getValue();
                             //Limpia los Filtros   
+                            st_data.remoteFilter = false;
                             st_data.clearFilter(); 
+                            st_data.remoteFilter = true;
                             //Si selecciona solo el campo Desde el Mes
                             if(dmes!="Todos" && year=="Todos" && hmes=="Todos"){
                                 st_data.filter('Mes',dmes);
