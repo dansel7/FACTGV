@@ -20,14 +20,15 @@ $idempresa=isset($_SESSION["idEmpresa"])? $_SESSION["idEmpresa"]:"-1";
         $sql="select f.fecha_facturacion,f.id_tipo_facturacion,f.numero_factura,mc.nom_cliente,
         f.venta_total-f.iva+f.iva_retenido valor_neto,
         f.iva,f.iva_retenido,f.venta_total,f.anulado,
-        GROUP_CONCAT(cs.id_servicio) id_servicio,GROUP_CONCAT(df.venta_nosujeta + df.venta_exenta + df.venta_gravada ) ventas
+        GROUP_CONCAT(df.id_servicio ORDER BY df.id_servicio) id_servicio,
+        GROUP_CONCAT(df.venta_nosujeta + df.venta_exenta + df.venta_gravada ORDER BY df.id_servicio) ventas
         from detalleFacturacion df 
         inner join facturacion f on df.idfacturacion=f.idfacturacion 
         inner join catalogo_servicios cs on cs.id_servicio=df.id_servicio
         inner join maestroclientes mc on f.idmaestroClientes=mc.idmaestroClientes 
         where f.id_empresa=".$idempresa ." $idmc and f.fecha_facturacion 
         between STR_TO_DATE('$fecha_inicio','%d/%m/%Y') and STR_TO_DATE('$fecha_fin','%d/%m/%Y') 
-        group by numero_factura,id_tipo_facturacion
+        group by f.idfacturacion,id_tipo_facturacion
         order by f.fecha_facturacion, numero_factura,id_tipo_facturacion,df.id_servicio";
 //echo $sql;
         
@@ -40,7 +41,7 @@ $idempresa=isset($_SESSION["idEmpresa"])? $_SESSION["idEmpresa"]:"-1";
         inner join catalogo_servicios cs on cs.id_servicio=df.id_servicio where f.id_empresa={$_SESSION["idEmpresa"]} $idmc 
         and f.anulado<>'Si' and f.fecha_facturacion between STR_TO_DATE('$fecha_inicio','%d/%m/%Y') and STR_TO_DATE('$fecha_fin','%d/%m/%Y')
         group by df.id_servicio";
-    
+
     	$serv_res = mysql_query($sql_serv,$connection) or die('La consulta fall&oacute;: '.mysql_error());	
         
   $encabezado="<h2><img src=\"/facturaciones/resources/imagenes/gvlogo.png\" align=\"left\">
