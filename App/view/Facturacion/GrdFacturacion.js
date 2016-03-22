@@ -113,7 +113,7 @@ Ext.define('MvcClientes.view.Facturacion.GrdFacturacion',{
 					xtype: 'toolbar',
 					dock: 'top',
 					items: [
-                                        {xtype : "textfield",id:"busqueda", name : "busqueda", fieldLabel : "Ingrese Frase:", flex: 0.8},
+                                        {xtype : "textfield",id:"busqueda", name : "busqueda", fieldLabel : "Ingrese Valor", flex: 0.8},
                                         {
                                             xtype : "combobox", queryMode: 'local', fieldLabel: "Seleccione Campo",text:'Numero Factura',value:'numero_factura',
                                         store: campos,displayField: 'titulo',valueField: 'campo',
@@ -136,6 +136,8 @@ Ext.define('MvcClientes.view.Facturacion.GrdFacturacion',{
                                             listeners: {
                                             click: function() {	
                                                 me.store.clearFilter(); 
+                                                Ext.getCmp('busqueda').setValue("");
+                                                Ext.getCmp('busqueda').focus();
                                             }}
                                             }	
 					],

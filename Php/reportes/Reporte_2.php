@@ -35,13 +35,13 @@ $pdf->SetPrintFooter(false);
 
 //set margins
 //$pdf->SetMargins(PDF_MARGIN_LEFT, PDF_MARGIN_TOP, PDF_MARGIN_RIGHT);
-$pdf->SetMargins(0.5, 1.7, 2);
+$pdf->SetMargins(0.8, 1.2, 2);
 
 //$pdf->SetHeaderMargin(0);
 //$pdf->SetFooterMargin(15);
 
 //set auto page breaks
-$pdf->SetAutoPageBreak(TRUE, 5);
+$pdf->SetAutoPageBreak(TRUE, 2);
 
 //set image scale factor
 $pdf->setImageScale(PDF_IMAGE_SCALE_RATIO); 
@@ -58,15 +58,16 @@ $fecha_fin=$_GET["fecha_fin"];
 $idmc=($_GET["idmc"]>0)? " AND mc.idmaestroclientes=".$_GET["idmc"]:"";
 $idtpf=($_GET["tpf"]>0)? " AND f.id_tipo_facturacion=".$_GET["tpf"]:"";
 
-$orientacion="vertical";
+$orientacion="landscape";
 $idempresa=isset($_SESSION["idEmpresa"])? $_SESSION["idEmpresa"]:"-1";
 
 // ---------------INICIO DEL REPORTE-----------------
-$sql = "Select f.id_tipo_facturacion,f.fecha_facturacion,f.numero_factura,mc.nom_cliente,
+$sql = "Select f.id_tipo_facturacion,f.fecha_facturacion,f.numero_factura, tpf.tipo,f.hawb,mc.nom_cliente,
         sum(df.venta_nosujeta) nosujeta,sum(df.venta_exenta) exenta, sum(df.venta_gravada) gravada,
         f.venta_total-f.iva+f.iva_retenido valor_neto,f.iva,f.iva_retenido,f.venta_total,f.anulado
         from facturacion f inner join maestroclientes mc on f.idmaestroClientes=mc.idmaestroClientes 
         left join detallefacturacion df on f.idfacturacion=df.idfacturacion
+        inner join tipo_facturacion tpf on f.id_tipo_facturacion=tpf.id_tipo_facturacion
         where f.id_empresa=".$idempresa ." $idmc $idtpf and f.fecha_facturacion between STR_TO_DATE('$fecha_inicio','%d/%m/%Y') and STR_TO_DATE('$fecha_fin','%d/%m/%Y') 
         group by f.idfacturacion
         order by f.fecha_facturacion,length(f.numero_factura),f.numero_factura asc";
@@ -77,19 +78,21 @@ $sql = "Select f.id_tipo_facturacion,f.fecha_facturacion,f.numero_factura,mc.nom
   $pdf->addpage($orientacion,'letter');      
   
   $encabezado="<h2><img src=\"/facturaciones/resources/imagenes/gvlogo.png\" align=\"left\">
-      &nbsp;Reporte de Facturacion - {$_SESSION["nombreEmpresa"]}<br></h2>";
+      &nbsp;Reporte de Facturacion realizada - {$_SESSION["nombreEmpresa"]}<br></h2>";
   
-  $cuerpo_detalle.= '<table width="700px" cellpadding="1">
-                     <tr><td width="70px" style="text-align:center;"><b>FECHA DE CCF</b></td>
-                     <td width="75px" style="text-align:center"><b>NUMERO DE CCF</b></td> 
-                     <td width="190px" style="text-align:center" ><b>CLIENTE</b></td>
-                     <td width="50px" style="text-align:center" ><b>NO SUJETA</b></td>
+  $cuerpo_detalle.= '<table width="900px" cellpadding="1">
+                     <tr><td width="60px" style="text-align:center;"><b>FECHA DE CCF</b></td>
+                     <td width="60px" style="text-align:center"><b>NUMERO DE CCF</b></td> 
+                     <td width="100px" style="text-align:center"><b>TIPO DE DOCUMENTO</b></td> 
+                     <td width="45px" style="text-align:center"><b>&nbsp;&nbsp;</b></td> 
+                     <td width="200px" style="text-align:center" ><b>CLIENTE</b></td>
+                     <td width="55px" style="text-align:center" ><b>NO SUJETA</b></td>
                      <td width="50px" style="text-align:left" ><b>EXENTA</b></td>
                      <td width="50px" style="text-align:left" ><b>GRAVADA</b></td>
-                     <td width="70px" style="text-align:right" ><b>VALOR NETO DE CCF</b></td>
+                     <td width="70px" style="text-align:right" ><b>VALOR NETO CCF</b></td>
                      <td width="50px" style="text-align:right"><b>IVA</b></td>
-                     <td width="55px" style="text-align:right"><b>RETENCIONES</b></td>
-                     <td width="65px" style="text-align:right"><b>TOTAL DE VENTA</b></td></tr>
+                     <td width="80px" style="text-align:right"><b>RETENCIONES</b></td>
+                     <td width="90px" style="text-align:right"><b>TOTAL DE VENTA</b></td></tr>
                      <tr><td colspan="6"></td></tr>';
  
 
@@ -110,13 +113,17 @@ $sql = "Select f.id_tipo_facturacion,f.fecha_facturacion,f.numero_factura,mc.nom
         $cuerpo_detalle.= "<tr style=\"background-color:yellow\">
                           <td  style=\"text-align:right\"> ".substr($rows_e["fecha_facturacion"],0,11) ."</td> 
                           <td  style=\"text-align:center\">".$rows_e["numero_factura"] ."</td>
+                          <td  style=\"text-align:center\">".$rows_e["tipo"] ."</td>
+                          <td  style=\"text-align:center\"></td>                              
                           <td  style=\"text-align:left\">".$rows_e["nom_cliente"] ."</td>
-       <td  style=\"text-align:center\" colspan=\"6\">------------      <b>FACTURA ANULADA</b>    ------------</td></tr>";
+       <td  style=\"text-align:center\" colspan=\"7\">------------      <b>FACTURA ANULADA</b>    ------------</td></tr>";
         }
         else{
               $cuerpo_detalle.= "<tr> 
                                      <td  style=\"text-align:right\"> ".substr($rows_e["fecha_facturacion"],0,11) ."</td> 
                              <td  style=\"text-align:center\">".$rows_e["numero_factura"] ."</td>
+                             <td  style=\"text-align:center\">".$rows_e["tipo"] ."</td>    
+                             <td  style=\"text-align:left\">".$rows_e["hawb"] ."</td>                                 
                              <td  style=\"text-align:left\">".$rows_e["nom_cliente"] ."</td>
                              <td  style=\"text-align:right\">".((number_format($rows_e["nosujeta"],2)==0)?'0.00':(($rows_e["id_tipo_facturacion"]==1) ?"<b>-</b> ":"").number_format($rows_e["nosujeta"],2)) ."</td>
                              <td  style=\"text-align:right\">".((number_format($rows_e["exenta"],2)==0)?'0.00':(($rows_e["id_tipo_facturacion"]==1) ?"<b>-</b> ":"").number_format($rows_e["exenta"],2)) ."</td>  
@@ -168,7 +175,7 @@ echo $Reporte;
 /////////////////////////////////////////////////////////////////////
 $pdf->writeHTML($Reporte, true, false, false, false, '');
 //Close and output PDF document
-$pdf->Output('Reporte_Bancos.pdf', 'I');
+$pdf->Output('Reporte Facturas Realizadas.pdf', 'I');
 }
 }
 

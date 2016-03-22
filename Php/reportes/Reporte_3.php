@@ -73,7 +73,7 @@ $sql = "SELECT
                 left join abono_clientes ac on f.idfacturacion=ac.idfacturacion
                 inner join maestroclientes mc on f.idmaestroClientes=mc.idmaestroClientes 
                 inner join tipo_facturacion tpf on f.id_tipo_facturacion=tpf.id_tipo_facturacion
-                left join (select n_comprobante_credito idfactura, numero_factura numero_NotaC, venta_total from facturacion where id_tipo_facturacion=1 AND id_empresa=5 and anulado='No') NotaC on f.idfacturacion=NotaC.idfactura
+                left join (select n_comprobante_credito idfactura, numero_factura numero_NotaC, venta_total from facturacion where id_tipo_facturacion=1 AND id_empresa=".$idempresa." and anulado='No') NotaC on f.idfacturacion=NotaC.idfactura
                 WHERE f.anulado='No' AND f.id_empresa=".$idempresa." $idmc
                 AND f.id_tipo_facturacion!=1 and f.fecha_facturacion between STR_TO_DATE('$fecha_inicio','%d/%m/%Y') and STR_TO_DATE('$fecha_fin','%d/%m/%Y')
                 GROUP BY f.idfacturacion
