@@ -84,14 +84,14 @@ $sql = "Select f.id_tipo_facturacion,f.fecha_facturacion,f.numero_factura, tpf.t
                      <tr><td width="60px" style="text-align:center;"><b>FECHA DE CCF</b></td>
                      <td width="60px" style="text-align:center"><b>NUMERO DE CCF</b></td> 
                      <td width="100px" style="text-align:center"><b>TIPO DE DOCUMENTO</b></td> 
-                     <td width="45px" style="text-align:center"><b>&nbsp;&nbsp;</b></td> 
+                     <td width="65px" style="text-align:center"><b>&nbsp;&nbsp;</b></td> 
                      <td width="200px" style="text-align:center" ><b>CLIENTE</b></td>
                      <td width="55px" style="text-align:center" ><b>NO SUJETA</b></td>
                      <td width="50px" style="text-align:left" ><b>EXENTA</b></td>
                      <td width="50px" style="text-align:left" ><b>GRAVADA</b></td>
                      <td width="70px" style="text-align:right" ><b>VALOR NETO CCF</b></td>
                      <td width="50px" style="text-align:right"><b>IVA</b></td>
-                     <td width="80px" style="text-align:right"><b>RETENCIONES</b></td>
+                     <td width="60px" style="text-align:right"><b>RETENCION</b></td>
                      <td width="90px" style="text-align:right"><b>TOTAL DE VENTA</b></td></tr>
                      <tr><td colspan="6"></td></tr>';
  
@@ -113,7 +113,7 @@ $sql = "Select f.id_tipo_facturacion,f.fecha_facturacion,f.numero_factura, tpf.t
         $cuerpo_detalle.= "<tr style=\"background-color:yellow\">
                           <td  style=\"text-align:right\"> ".substr($rows_e["fecha_facturacion"],0,11) ."</td> 
                           <td  style=\"text-align:center\">".$rows_e["numero_factura"] ."</td>
-                          <td  style=\"text-align:center\">".$rows_e["tipo"] ."</td>
+                          <td  style=\"text-align:left\">".$rows_e["tipo"] ."</td>
                           <td  style=\"text-align:center\"></td>                              
                           <td  style=\"text-align:left\">".$rows_e["nom_cliente"] ."</td>
        <td  style=\"text-align:center\" colspan=\"7\">------------      <b>FACTURA ANULADA</b>    ------------</td></tr>";
@@ -122,7 +122,7 @@ $sql = "Select f.id_tipo_facturacion,f.fecha_facturacion,f.numero_factura, tpf.t
               $cuerpo_detalle.= "<tr> 
                                      <td  style=\"text-align:right\"> ".substr($rows_e["fecha_facturacion"],0,11) ."</td> 
                              <td  style=\"text-align:center\">".$rows_e["numero_factura"] ."</td>
-                             <td  style=\"text-align:center\">".$rows_e["tipo"] ."</td>    
+                             <td  style=\"text-align:left\">".$rows_e["tipo"] ."</td>    
                              <td  style=\"text-align:left\">".$rows_e["hawb"] ."</td>                                 
                              <td  style=\"text-align:left\">".$rows_e["nom_cliente"] ."</td>
                              <td  style=\"text-align:right\">".((number_format($rows_e["nosujeta"],2)==0)?'0.00':(($rows_e["id_tipo_facturacion"]==1) ?"<b>-</b> ":"").number_format($rows_e["nosujeta"],2)) ."</td>
@@ -158,7 +158,7 @@ $sql = "Select f.id_tipo_facturacion,f.fecha_facturacion,f.numero_factura, tpf.t
        
         }
         $cuerpo_detalle.='<tr><td colspan="8"></td></tr>';
-        $cuerpo_detalle.='<tr><td style="text-align:right" colspan="3"><b>TOTALES</b></td><td style="text-align:right"><b>'. number_format($subNoSujeta,2) .'</b></td><td style="text-align:right"><b>'. number_format($subExenta,2) .'</b></td><td style="text-align:right"><b>'. number_format($subGravada,2) .'</b></td><td style="text-align:right"><b>'.number_format($subTValorNeto,2).'</b></td><td style="text-align:right"><b>'.number_format($subTIva,2).'</b></td><td style="text-align:right"><b>'.number_format($subTIvaRetenido,2).'</b></td><td style="text-align:right"><b>'.number_format($subTVentaTotal,2).'</b></td></tr>';
+        $cuerpo_detalle.='<tr><td style="text-align:right" colspan="5"><b>TOTALES</b></td><td style="text-align:right"><b>'. number_format($subNoSujeta,2) .'</b></td><td style="text-align:right"><b>'. number_format($subExenta,2) .'</b></td><td style="text-align:right"><b>'. number_format($subGravada,2) .'</b></td><td style="text-align:right"><b>'.number_format($subTValorNeto,2).'</b></td><td style="text-align:right"><b>'.number_format($subTIva,2).'</b></td><td style="text-align:right"><b>'.number_format($subTIvaRetenido,2).'</b></td><td style="text-align:right"><b>'.number_format($subTVentaTotal,2).'</b></td></tr>';
         $cuerpo_detalle.= "</table>";
         $Reporte=$encabezado.$cliente.$cuerpo_detalle.$pie_factura;
 

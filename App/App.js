@@ -12,7 +12,9 @@ Ext.application({
 	   controllers	: ['Clientes.Clientes','Usuarios.Usuarios','Empresa.Empresa',
                           'Facturacion.Facturacion','AbonoClientes.AbonoClientes',
                           'AbonoBancos.AbonoBancos','CuentasBancos.CuentasBancos',
-                          'CatServicios.CatServicios','Reportes.Reportes','Dashboard.Dashboard'],//<--Controladores de la aplicacion
+                          'CatServicios.CatServicios','Reportes.Reportes','Dashboard.Dashboard',
+                          'Contabilidad.Partidas_Clientes','Contabilidad.Partidas_Servicios'
+                           ],//<--Controladores de la aplicacion
 		launch      : function(){  
 		      var MyViewPrincipal = Ext.create("MvcClientes.view.Principal.MyViewport")
 		     } 

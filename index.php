@@ -201,12 +201,14 @@ Ext.onReady(function() {
                            Ext.getCmp("UserAdminPanelFact").show(); 
                            Ext.getCmp("btnListFact").show();  
                            Ext.getCmp("btnNuevaFact").show(); 
-                           Ext.getCmp("titleAtajos").show(); 
+                           Ext.getCmp("titleAtajos").show();
+                           Ext.getCmp("PanelContabilidad").show(); 
                           //Ext.Msg.alert('Evento MyViewport al dar enter al usuario');
                             }
                             if(outHTML==2){//USUARIO ASISTENTE
-                           Ext.getCmp("panelReportes").show(); 
-                           Ext.getCmp("UserAsistPanelFact").show();
+                            Ext.getCmp("panelReportes").show(); 
+                            Ext.getCmp("UserAsistPanelFact").show();
+                            Ext.getCmp("PanelContabilidad").show(); 
                           //Ext.Msg.alert('Evento MyViewport al dar enter al usuario');
                             }
                             if(outHTML==3){//USUARIO VISOR REPORTES
@@ -281,12 +283,14 @@ Ext.onReady(function() {
                            Ext.getCmp("UserAdminPanelFact").show(); 
                            Ext.getCmp("btnListFact").show();  
                            Ext.getCmp("btnNuevaFact").show(); 
-                           Ext.getCmp("titleAtajos").show(); 
+                           Ext.getCmp("titleAtajos").show();
+                           Ext.getCmp("PanelContabilidad").show(); 
                           //Ext.Msg.alert('Evento MyViewport al dar enter al usuario');
                             }
                             if(outHTML==2){//USUARIO ASISTENTE
                            Ext.getCmp("panelReportes").show(); 
                            Ext.getCmp("UserAsistPanelFact").show();
+                           Ext.getCmp("PanelContabilidad").show();
                           //Ext.Msg.alert('Evento MyViewport al dar enter al usuario');
                             }
                             if(outHTML==3){//USUARIO VISOR REPORTES
@@ -349,12 +353,14 @@ Ext.onReady(function() {
                            Ext.getCmp("UserAdminPanelFact").show(); 
                            Ext.getCmp("btnListFact").show();  
                            Ext.getCmp("btnNuevaFact").show(); 
-                           Ext.getCmp("titleAtajos").show(); 
+                           Ext.getCmp("titleAtajos").show();
+                           Ext.getCmp("PanelContabilidad").show(); 
                           //Ext.Msg.alert('Evento MyViewport al dar enter al usuario');
                             }
                             if(outHTML==2){//USUARIO ASISTENTE
                            Ext.getCmp("panelReportes").show(); 
-                           Ext.getCmp("UserAsistPanelFact").show();
+                           Ext.getCmp("UserAsistPanelFact").show(); 
+                           Ext.getCmp("PanelContabilidad").show();
                           //Ext.Msg.alert('Evento MyViewport al dar enter al usuario');
                             }
                             if(outHTML==3){//USUARIO VISOR REPORTES

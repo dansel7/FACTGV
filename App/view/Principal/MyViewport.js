@@ -336,6 +336,65 @@ Ext.define('MvcClientes.view.Principal.MyViewport',{
                         loader: {
                                 
                         }
+                    },{
+                        xtype: 'treepanel',
+                        title: 'Contabilidad',
+                        id:'PanelContabilidad',
+                        height: 212,
+			iconCls:'movimientos',
+                        forceLayout: true,
+                        collapsed: false,
+                        collapsible: false,
+                        rootVisible: false,
+                        border: false,
+                        autoWidth: true,
+                        hidden:true,
+                        flex:1,
+                        listeners:{//Listeners apuntando a cada node
+                            itemclick:function(view, record, item, index, e)
+                                        {
+                 //DEPENDIENDO QUE OPCION SE QUIERE SE DEBE DE DEFINIR EL INDICE DE LA OPCION
+ 
+                                        if (index==0)
+                                           {
+                                              addTabPartidas_Clientes();
+                                           }
+                                        if (index==1)
+                                           {
+                                              addTabPartidas_Servicios();
+                                           }
+                            }
+                        }  , 
+                        root: {
+                            text: '',
+                            isTarget: false,
+                            expanded: true,
+                            checked: false,
+                            allowDrag: false,
+                            allowDrop: false,
+                            editable: false,
+                            qtip: 1,
+                            children: [
+                                {
+                                    text: 'Partidas de Clientes',
+                                  
+                                        leaf: true,
+                                    iconCls:'icon-cliente'
+                                }
+                                ,
+                                {
+                                    text: 'Partidas de Servicios',
+                                  
+                                        leaf: true,
+                                    iconCls:'icon-users'
+                                        
+                                    
+                                }
+                            ]
+                        },
+                        loader: {
+
+                        }
                     }
                 ]
 			
@@ -372,12 +431,14 @@ Ext.define('MvcClientes.view.Principal.MyViewport',{
                            Ext.getCmp("UserAdminPanelFact").show(); 
                            Ext.getCmp("btnListFact").show();  
                            Ext.getCmp("btnNuevaFact").show(); 
-                           Ext.getCmp("titleAtajos").show(); 
+                           Ext.getCmp("titleAtajos").show();
+                           Ext.getCmp("PanelContabilidad").show(); 
                           //Ext.Msg.alert('Evento MyViewport al dar enter al usuario');
                             }
                             if(outHTML==2){//USUARIO ASISTENTE
                            Ext.getCmp("panelReportes").show(); 
                            Ext.getCmp("UserAsistPanelFact").show();
+                           Ext.getCmp("PanelContabilidad").show();
                           //Ext.Msg.alert('Evento MyViewport al dar enter al usuario');
                             }
                             if(outHTML==3){//USUARIO VISOR REPORTES
@@ -534,7 +595,35 @@ Ext.define('MvcClientes.view.Principal.MyViewport',{
        //---------------GRAFICAS-------------//
        function ShowGraf1(){
           var FrmGraf1= Ext.widget('ShowGraf1');
-       } 
+       }
+       
+       ////////////////////////////////////////////
+       //---------------CONTABILIDAD-------------//
+       function addTabPartidas_Clientes(){ 
+      	 var tab=this.TabPanelMain.getComponent('TabPartidas_Clientes');
+		   if(!tab){ //si no existe lo creamos
+				tab = Ext.create('MvcClientes.view.Contabilidad.Partidas_Clientes.PanelPartidas_Clientes', {});
+				this.TabPanelMain.add(tab); //Se agrega el Panel Cliente al TabMain 
+				this.TabPanelMain.doLayout(); //Redibujado del Panel 
+				this.TabPanelMain.setActiveTab(tab); //Activamos el Tab
+               			
+             } 
+			    this.TabPanelMain.setActiveTab(tab); //Se activa el Tab Clickeado 
+				     		 
+	    }
+        function addTabPartidas_Servicios(){ 
+      	 var tab=this.TabPanelMain.getComponent('TabPartidas_Servicios');
+		   if(!tab){ //si no existe lo creamos
+				tab = Ext.create('MvcClientes.view.Contabilidad.Partidas_Servicios.PanelPartidas_Servicios', {});
+				this.TabPanelMain.add(tab); //Se agrega el Panel Cliente al TabMain 
+				this.TabPanelMain.doLayout(); //Redibujado del Panel 
+				this.TabPanelMain.setActiveTab(tab); //Activamos el Tab
+               			
+             } 
+			    this.TabPanelMain.setActiveTab(tab); //Se activa el Tab Clickeado 
+				     		 
+	    }
+       ////////////////////////////////////////////
 	
     }
 		
