@@ -49,7 +49,7 @@
                                         else 
 					    if (request.action == 'create')
 						{
-							Ext.Msg.alert('Mensaje','Registro Ingresado Exitosamente');
+							//Ext.Msg.alert('Mensaje','Registro Ingresado Exitosamente');
                                                         
 					    }
                                         else 

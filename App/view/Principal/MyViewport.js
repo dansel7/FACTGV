@@ -600,7 +600,7 @@ Ext.define('MvcClientes.view.Principal.MyViewport',{
        ////////////////////////////////////////////
        //---------------CONTABILIDAD-------------//
        function addTabPartidas_Clientes(){ 
-      	 var tab=this.TabPanelMain.getComponent('TabPartidas_Clientes');
+      	 var tab=this.TabPanelMain.getComponent('TabListadoPartidas_Clientes');
 		   if(!tab){ //si no existe lo creamos
 				tab = Ext.create('MvcClientes.view.Contabilidad.Partidas_Clientes.PanelPartidas_Clientes', {});
 				this.TabPanelMain.add(tab); //Se agrega el Panel Cliente al TabMain 
@@ -612,7 +612,7 @@ Ext.define('MvcClientes.view.Principal.MyViewport',{
 				     		 
 	    }
         function addTabPartidas_Servicios(){ 
-      	 var tab=this.TabPanelMain.getComponent('TabPartidas_Servicios');
+      	 var tab=this.TabPanelMain.getComponent('TabListadoPartidas_Servicios');
 		   if(!tab){ //si no existe lo creamos
 				tab = Ext.create('MvcClientes.view.Contabilidad.Partidas_Servicios.PanelPartidas_Servicios', {});
 				this.TabPanelMain.add(tab); //Se agrega el Panel Cliente al TabMain 

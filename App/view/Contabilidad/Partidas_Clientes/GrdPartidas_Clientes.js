@@ -9,7 +9,7 @@ Ext.define('MvcClientes.view.Contabilidad.Partidas_Clientes.GrdPartidas_Clientes
 	border: false,
 	listeners: {
             'selectionchange': function(view, records) {
-                this.down('#delete').setDisabled(!records.length);//Se Habilita el Boton Delete
+                this.down('#EliminarPartidaClie').setDisabled(!records.length);//Se Habilita el Boton Delete
             }
     },
 	initComponent: function() {
@@ -36,9 +36,9 @@ Ext.define('MvcClientes.view.Contabilidad.Partidas_Clientes.GrdPartidas_Clientes
                                editor: {
                                 xtype: 'textfield',name:'id_partidas_cliente'}
                            },
-                           {header: 'Cliente',  dataIndex: 'idmaestroClientes',flex:1, 
+                           {header: 'Cliente',  dataIndex: 'idmaestroclientes',flex:1, 
                                 editor: {
-                                xtype : "combobox", id:"idmaestroClientes",name:"idmaestroClientes", 
+                                xtype : "combobox", id:"idmaestroclientes",name:"idmaestroclientes", 
                                 queryMode: 'local', store: ListClientes,
                                 displayField: 'nom_cliente',valueField: 'idmaestroClientes',allowBlank : false
                                 },renderer:function(id){//A PARTIR DEL ID DE SERVICIO SE MUESTRA EL NOMBRE DEL SERVICIO
@@ -65,9 +65,9 @@ Ext.define('MvcClientes.view.Contabilidad.Partidas_Clientes.GrdPartidas_Clientes
 			            iconCls: 'add',
                                     action: 'actGuardar',
 			            id: 'NuevaPartidaClie',
-			            handler : function() {//AGREGANDO UN NUEVO DETALLE A LA FACTURACION
+			            handler : function() {
                                        var r = {
-                                            idmaestroClientes:'1',
+                                            idmaestroclientes:'1',
                                             numero_partida: ''
                                         };
                                 
@@ -82,7 +82,13 @@ Ext.define('MvcClientes.view.Contabilidad.Partidas_Clientes.GrdPartidas_Clientes
 			            iconCls: 'delete',
                                     disabled: true
 			        }]
-                        }],
+                        },
+				{
+					xtype: 'pagingtoolbar',//Barra Paginadora al fondo del Grid
+					dock: 'bottom',
+					displayInfo: true,
+                                        store:me.store
+				}],
                                 plugins: [
                                     Ext.create('Ext.grid.plugin.RowEditing', {
                                         id:'rowedit',

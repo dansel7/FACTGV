@@ -14,18 +14,7 @@ Ext.define('MvcClientes.controller.Contabilidad.Partidas_Clientes',{
 
 	init	: function() {
 		var me = this;
-		me.control({
-		    'gridPartidas_Clientes dataview': { //Usando Ext.Component.Query,aca hacemos referencia a la vista del Grid
-                            itemdblclick: this.Editar
-			},
-		    'gridPartidas_Clientes button[action=actAgregar]'://Usando Ext.Component.Query
-			   {
-				 click:this.Agregar
-			   },
-			'gridPartidas_Clientes button[action=actEditar]'://Usando Ext.Component.Query
-			   {
-				 click:this.Editar
-			   },
+		me.control({		    
 		   'FormAddEdicionPartidas_Clientes button[action=actGuardar]'://Usando Ext.Component.Query
 			   {
 				 
@@ -43,22 +32,6 @@ Ext.define('MvcClientes.controller.Contabilidad.Partidas_Clientes',{
 	},
 	//Inician Funciones
 		
-	Agregar: function(){
-            records="null";
-            var FormAddEditarPartidas_Clientes= Ext.widget('FormAddEdicionPartidas_Clientes');
-	},
-	
-	Editar: function(grid, record){
-	    records = this.getGridPartidas_Clientes().getSelectionModel().getSelection();
-	    if(records.length > 0){
-		     var FormAddEditarPartidas_Clientes= Ext.widget('FormAddEdicionPartidas_Clientes');
-		     var EditForm=FormAddEditarPartidas_Clientes.down('form');	
-		     var record=records[0];
-		     EditForm.loadRecord(record);
-		}
-         	 
-	},
-	
 	ActualizarPartidas_Clientes: function(button) {
         var win    = button.up('window'),
             form   = win.down('form'),
@@ -72,7 +45,7 @@ Ext.define('MvcClientes.controller.Contabilidad.Partidas_Clientes',{
 			record = Ext.create('MvcClientes.model.Contabilidad.Partidas_Clientes');
 			record.set(values);
 			record.setId(0);
-			this.getPartidas_ClientesStore().add(record);
+			this.getContabilidadPartidas_ClientesStore().add(record);
 		}
         win.close();
             }
@@ -85,7 +58,7 @@ Ext.define('MvcClientes.controller.Contabilidad.Partidas_Clientes',{
 		record = grid.getSelectionModel().getSelection(); 
 		Partida=grid.getSelectionModel().getSelection()[0].data.numero_partida;
 		//En esta parte automaticamente el Controller crea las Funciones Getters
-		store = this.getPartidas_ClientesStore();//Nota 1: Get+Carpeta.Partidas_Clientes Store+La palabra Store
+		store = this.getContabilidadPartidas_ClientesStore();//Nota 1: Get+Carpeta.Partidas_Clientes Store+La palabra Store
 	    Ext.MessageBox.show({
            title : 'Eliminar Registro',
     	   buttons : Ext.MessageBox.YESNO,

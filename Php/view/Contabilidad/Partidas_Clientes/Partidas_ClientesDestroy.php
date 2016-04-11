@@ -5,9 +5,9 @@
 
 	$info = $_POST["data"];
 	$data = json_decode(stripslashes($info));
-	$id = $data->id_servicio;
+	$id = $data->id_partidas_cliente;
 
-	$SqlDelete = sprintf("DELETE FROM catalogo_servicios WHERE `id_servicio`=%d LIMIT 1;",
+	$SqlDelete = sprintf("DELETE FROM conta_partidas_maestroclientes WHERE `id_partidas_cliente`=%d LIMIT 1;",
 		mysql_real_escape_string($id));
 
 	$rs  = mysql_query($SqlDelete);

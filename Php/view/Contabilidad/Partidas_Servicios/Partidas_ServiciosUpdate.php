@@ -7,14 +7,15 @@ mysql_select_db($db_name,$connection) or die("Error de conexion a la base de dat
 	$info = $_POST["data"];
 
 	$data = json_decode($info);
-
-	$servicio = $data->servicio;
-	$id = $data->id_servicio;
+        $id_partidas_servicios=$data->id_partidas_servicios;
+        $numero_partida=$data->numero_partida;
+	$id_servicio = $data->id_servicio;
 	
-	$SqlUpdate ="UPDATE catalogo_servicios
+	$SqlUpdate ="UPDATE conta_partidas_servicios
                              SET
-                            `servicio`='$servicio'
-			 WHERE id_servicio=$id";
+                            `numero_partida`='$numero_partida',
+                            `id_servicio`=$id_servicio
+			 WHERE id_partidas_servicios=$id_partidas_servicios";
         
 	$rs = mysql_query($SqlUpdate);
 

@@ -65,7 +65,7 @@ Ext.define('MvcClientes.view.Contabilidad.Partidas_Servicios.GrdPartidas_Servici
 			            iconCls: 'add',
                                     action: 'actGuardar',
 			            id: 'NuevaPartidaServ',
-			            handler : function() {//AGREGANDO UN NUEVO DETALLE A LA FACTURACION
+			            handler : function() {
                                        var r = {
                                             id_servicio:'1',
                                             numero_partida: ''
@@ -82,7 +82,13 @@ Ext.define('MvcClientes.view.Contabilidad.Partidas_Servicios.GrdPartidas_Servici
 			            iconCls: 'delete',
                                     disabled: true
 			        }]
-                        }],
+                        },
+				{
+					xtype: 'pagingtoolbar',//Barra Paginadora al fondo del Grid
+					dock: 'bottom',
+					displayInfo: true,
+                                        store:me.store
+				}],
                                 plugins: [
                                     Ext.create('Ext.grid.plugin.RowEditing', {
                                         id:'rowedit',
