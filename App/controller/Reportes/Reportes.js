@@ -1,6 +1,6 @@
 Ext.define('MvcClientes.controller.Reportes.Reportes',{
 	extend		: 'Ext.app.Controller',
-        views		: ['Reportes.ShowReport1','Reportes.ShowReport2','Reportes.ShowReport3','Reportes.ShowReport4','Reportes.ShowGraf1'],
+        views		: ['Reportes.ShowReport1','Reportes.ShowReport2','Reportes.ShowReport3','Reportes.ShowReport4','Reportes.ShowPartidasDiario','Reportes.ShowGraf1'],
 	refs:[ //Esta linea se usa cuando se hace referencia a una Vista dentro de un grid en un Controller
 	 
 	  {
@@ -48,6 +48,16 @@ Ext.define('MvcClientes.controller.Reportes.Reportes',{
                     'ShowReport4 button[action=ShowReport4EXCEL]'://Usando Ext.Component.Query
 			   {
 				 click:this.ShowReport4EXCEL
+			   }
+                           ,
+                     'ShowPartidasDiario button[action=ShowPartidasDiarioPDF]'://Usando Ext.Component.Query
+			   {
+				 click:this.ShowPartidasDiarioPDF
+			   }
+                           ,
+                    'ShowPartidasDiario button[action=ShowPartidasDiarioEXCEL]'://Usando Ext.Component.Query
+			   {
+				 click:this.ShowPartidasDiarioEXCEL
 			   }
                            ,
                     'ShowGraf1 button[action=ShowGraf1]'://Usando Ext.Component.Query
@@ -112,6 +122,20 @@ Ext.define('MvcClientes.controller.Reportes.Reportes',{
             values = form.getValues();
            window.open("/facturaciones/php/reportes/reporte_4.php?idmc="+values.idmaestroClientes+"&exp=1&fecha_ini="+values.fecha_inicio+"&fecha_fin="+values.fecha_fin, "nuevo", "location=no, menubar=no, scrollbars=yes, statusbar=no, tittlebar=no");
 	},
+        
+         ShowPartidasDiarioPDF: function(button){
+            var win    = button.up('window'),
+            form   = win.down('form'),
+            values = form.getValues();
+           window.open("/facturaciones/php/contabilidad/PartidaDiario_Ventas.php?fecha_ini="+values.fecha_inicio+"&fecha_fin="+values.fecha_fin, "nuevo", "location=no, menubar=no, scrollbars=yes, statusbar=no, tittlebar=no");
+	},
+        ShowPartidasDiarioEXCEL: function(button){
+            var win    = button.up('window'),
+            form   = win.down('form'),
+            values = form.getValues();
+           window.open("/facturaciones/php/contabilidad/PartidaDiario_Ventas.php?exp=1&fecha_ini="+values.fecha_inicio+"&fecha_fin="+values.fecha_fin, "nuevo", "location=no, menubar=no, scrollbars=yes, statusbar=no, tittlebar=no");
+	},
+        
         
          ShowGraf1: function(button){
             var win    = button.up('window'),

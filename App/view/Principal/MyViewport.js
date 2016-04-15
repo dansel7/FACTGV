@@ -343,8 +343,8 @@ Ext.define('MvcClientes.view.Principal.MyViewport',{
                         height: 212,
 			iconCls:'movimientos',
                         forceLayout: true,
-                        collapsed: false,
-                        collapsible: false,
+                        collapsed: true,
+                        collapsible: true,
                         rootVisible: false,
                         border: false,
                         autoWidth: true,
@@ -362,6 +362,10 @@ Ext.define('MvcClientes.view.Principal.MyViewport',{
                                         if (index==1)
                                            {
                                               addTabPartidas_Servicios();
+                                           }
+                                        if (index==2)
+                                           {
+                                              ShowPartidasDiario();
                                            }
                             }
                         }  , 
@@ -387,6 +391,14 @@ Ext.define('MvcClientes.view.Principal.MyViewport',{
                                   
                                         leaf: true,
                                     iconCls:'icon-users'
+                                        
+                                    
+                                },
+                                {
+                                    text: 'Reporte Partida de Diario',
+                                  
+                                        leaf: true,
+                                    iconCls:'reportes'
                                         
                                     
                                 }
@@ -599,6 +611,11 @@ Ext.define('MvcClientes.view.Principal.MyViewport',{
        
        ////////////////////////////////////////////
        //---------------CONTABILIDAD-------------//
+       
+       function ShowPartidasDiario(){
+          var FrmPartD= Ext.widget('ShowPartidasDiario');
+       }
+       
        function addTabPartidas_Clientes(){ 
       	 var tab=this.TabPanelMain.getComponent('TabListadoPartidas_Clientes');
 		   if(!tab){ //si no existe lo creamos
