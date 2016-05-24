@@ -66,7 +66,9 @@ $idempresa=isset($_SESSION["idEmpresa"])? $_SESSION["idEmpresa"]:"-1";
 
   while($rows_e = mysql_fetch_array($result)){
       $flag++;
-      
+       $subTCargos=0;
+  $subTAbonos=0;
+  $subTIvaRetenido=0;
         $cuerpo_detalle.= "<tr> 
                          <td  style=\"text-align:right\">".$rows_e["num_partida_clien"] ."</td> 
                          <td  style=\"text-align:left\">Venta segun CCF #".$rows_e["numero_factura"] ."</td>
@@ -112,12 +114,12 @@ $idempresa=isset($_SESSION["idEmpresa"])? $_SESSION["idEmpresa"]:"-1";
                    //SUMATORIA ABONOS
                      $subTAbonos+=$rows_e["iva"] ;
         
-       
+        $cuerpo_detalle.='<tr><td style="text-align:right" colspan="2"></td>';
+
+        $cuerpo_detalle.='<td style="text-align:right"><b>'.number_format($subTCargos,2).'</b></td><td style="text-align:right"><b>'.number_format($subTAbonos,2).'</b></td></tr>';
+
         }
-        $pie.='<tr><td style="text-align:right" colspan="2"></td>';
-
-        $pie.='<td style="text-align:right"><b>'.number_format($subTCargos,2).'</b></td><td style="text-align:right"><b>'.number_format($subTAbonos,2).'</b></td></tr>';
-
+       
         $pie.= "</table> </center>";
         
         $Reporte=$encabezado.$cuerpo_detalle.$pie;

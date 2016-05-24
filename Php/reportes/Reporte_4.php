@@ -17,7 +17,7 @@ $idmc=($_GET["idmc"]>0)? " AND mc.idmaestroclientes=".$_GET["idmc"]:"";
 $idempresa=isset($_SESSION["idEmpresa"])? $_SESSION["idEmpresa"]:"-1";
 // ---------------INICIO DEL REPORTE-----------------
 
-        $sql="select f.fecha_facturacion,f.id_tipo_facturacion,f.numero_factura,mc.nom_cliente,
+        $sql="select f.fecha_facturacion,f.id_tipo_facturacion,f.numero_factura,mc.nom_cliente,f.hawb,
         f.venta_total-f.iva+f.iva_retenido valor_neto,
         f.iva,f.iva_retenido,f.venta_total,f.anulado,
         GROUP_CONCAT(df.id_servicio ORDER BY df.id_servicio) id_servicio,
@@ -47,11 +47,14 @@ $idempresa=isset($_SESSION["idEmpresa"])? $_SESSION["idEmpresa"]:"-1";
   $encabezado="<h2><img src=\"/facturaciones/resources/imagenes/gvlogo.png\" align=\"left\">
       &nbsp;Reporte Detalle de Facturacion - {$_SESSION["nombreEmpresa"]}<br><br><br><br></h2>";
   
+/////////    INICIO - ENCABEZADO //////////
+      
   $cuerpo_detalle.= '<table style="font-size: 11px" cellpadding="1">
                      <tr><td  style="text-align:center"><b>FECHA DE CCF</b></td>
                      <td  style="text-align:center"><b>NUMERO DE CCF</b></td> 
-                     <td style="text-align:center" ><b>CLIENTE</b></td>';
-  
+                     <td style="text-align:center" ><b>CLIENTE</b></td>
+                     <td style="text-align:center;width:80px" ><b>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</b></td>';
+    
   $num_row_ser=  mysql_num_rows($serv_res);
   
 
@@ -70,10 +73,35 @@ $idempresa=isset($_SESSION["idEmpresa"])? $_SESSION["idEmpresa"]:"-1";
   $cuerpo_detalle.= '<td  style="text-align:right" ><b>VALOR NETO DE CCF</b></td>
                      <td style="text-align:right"><b>IVA</b></td>
                      <td  style="text-align:right"><b>RETENCIONES</b></td>
-                     <td   style="text-align:right"><b>TOTAL DE VENTA</b></td></tr>
-                     <tr><td colspan="6"></td></tr>';
+                     <td   style="text-align:right"><b>TOTAL DE VENTA</b></td></tr>';
+  
+////////////FIN ENCABEZADO//////////
+  
+//////////// INICIO DETALLE ///////
+  
+///////INICIO FUNCION PARA DEFINIR TIPO SERVICIO AIRBOX/////////
+  $total_aereo=0;
+  $total_maritimo=0;
+  $total_tramite_ajeno=0;
+ function tipo_serv($servicio,$total,$tipo_factura){
+     global  $total_aereo,$total_maritimo,$total_tramite_ajeno;
+     if($_SESSION["idEmpresa"]==5 and $tipo_factura!=1){ //Comprobara si es Airbox
+        if(substr($servicio,0,4)=="HBOL") {
+            $total_maritimo+=$total;
+             return "MARITIMO";
+        }else if( (strlen($servicio)>=5 and substr($servicio,0,2)=="10")  or substr($servicio,0,4)=="HAWB"){
+             $total_aereo+=$total;   
+             return "AEREO";
+        }else {
+            $total_tramite_ajeno+=$total;
+             return "TR. AJENO";
+        }
+         
+     } else { return "";}
  
-
+ }
+  ///////FIN FUNCION PARA DEFINIR TIPO SERVICIO AIRBOX/////
+  
   $subTValorNeto=0;
   $subTIva=0;
   $subTIvaRetenido=0;
@@ -88,7 +116,7 @@ $idempresa=isset($_SESSION["idEmpresa"])? $_SESSION["idEmpresa"]:"-1";
                           <td  style=\"text-align:right\"> ".substr($rows_e["fecha_facturacion"],0,11) ."</td> 
                           <td  style=\"text-align:center\">".$rows_e["numero_factura"] ."</td>
                           <td  style=\"text-align:left\">".$rows_e["nom_cliente"] ."</td>
-                          <td  style=\"text-align:center\" colspan=\"". ($num_row_ser+4) ."\">------------------------------      <b>FACTURA ANULADA</b>    ------------------------------</td></tr>";
+                          <td  style=\"text-align:center\" colspan=\"". ($num_row_ser+5) ."\">------------------------------      <b>FACTURA ANULADA</b>    ------------------------------</td></tr>";
         }
         else
         { 
@@ -96,7 +124,8 @@ $idempresa=isset($_SESSION["idEmpresa"])? $_SESSION["idEmpresa"]:"-1";
         $cuerpo_detalle.= "<tr> 
                          <td  style=\"text-align:right\"> ".substr($rows_e["fecha_facturacion"],0,11) ."</td> 
                          <td  style=\"text-align:center\">".$rows_e["numero_factura"] ."</td>
-                         <td  style=\"text-align:left\">".$rows_e["nom_cliente"] ."</td>";
+                         <td  style=\"text-align:left\">".$rows_e["nom_cliente"] ."</td>
+                         <td  style=\"text-align:left\">".tipo_serv($rows_e["hawb"],$rows_e["venta_total"],$rows_e["id_tipo_facturacion"]) ."</td>";
 
           $serv=explode(',',$rows_e["id_servicio"]);
           $servTotal=  count(array_unique($serv));
@@ -162,16 +191,17 @@ $idempresa=isset($_SESSION["idEmpresa"])? $_SESSION["idEmpresa"]:"-1";
        
         }
         $cuerpo_detalle.='<tr><td colspan="7"></td></tr>';
-        $cuerpo_detalle.='<tr><td style="text-align:right" colspan="3"><b>TOTALES</b></td>';
+        $cuerpo_detalle.='<tr><td style="text-align:right" colspan="4"><b>TOTALES</b></td>';
           
    foreach($total_venta as $s){
                 $cuerpo_detalle.= "<td  style=\"text-align:right\"><b>". number_format($s,2) ."</b></td>";
             }
         $cuerpo_detalle.='<td style="text-align:right"><b>'.number_format($subTValorNeto,2).'</b></td><td style="text-align:right"><b>'.number_format($subTIva,2).'</b></td><td style="text-align:right"><b>'.number_format($subTIvaRetenido,2).'</b></td><td style="text-align:right"><b>'.number_format($subTVentaTotal,2).'</b></td></tr>';
-        $cuerpo_detalle.='<tr><td colspan="7"></td></tr>';
+        $cuerpo_detalle.='<tr><td colspan="8"></td></tr>';
         $cuerpo_detalle.= "</table>";
         $Reporte=$encabezado.$cuerpo_detalle.$pie_factura;
-
+        
+////////////////FIN DE DETALLE//////////
 
 $exp=isset($_GET["exp"])? $_GET["exp"]:"-1";//Tipo de Exportacion
 /////////////////////////////////////////////////////////////////////
