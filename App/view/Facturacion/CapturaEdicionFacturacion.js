@@ -374,10 +374,24 @@ if(typeof(records) != "undefined" && typeof(records) != "string"){
                                     
                                 ]
                             },/////FIN GRID////////
-                            
-                            
+                             
+                            ////////INICIO  DE FIELDSET GASTOS///////
+                            {xtype: 'fieldset',title: 'Gastos Reintegrables',width:900,height:45,
+                            style: {color: 'red'},  
+                              layout: {
+                                    columns: 3,
+                                    type: 'table'
+                              },
+                              items:[  
+                                  
+                                  {xtype : "textfield", id : "gastos_observaciones",name : "gastos_observaciones", fieldLabel : "Observaciones", allowDecimals: true,width:515,flex: 2, margin: '0 15 0 0',decimalSeparator: "."},
+                                  {xtype : "numberfield", id : "gastos_reintegro", name : "gastos_reintegro",fieldLabel : "Gastos Totales", flex: 1,allowDecimals: true,hideTrigger: true,decimalPrecision: 2, margin: '0 15 0 0',decimalSeparator: "."},
+                                  
+                               ]
+                            },///////FIN DE FIELDSET GASTOS////////
                             
                             {xtype: 'fieldset',title: 'Totales',width:900,
+                            style: {color: 'navy'},
                             layout: {
                                     columns: 3,
                                     type: 'table'
