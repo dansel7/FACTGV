@@ -30,6 +30,8 @@
                         mc.nom_cliente,
                         if(DATE_FORMAT(f.fecha_facturacion, '%d/%m/%Y') = '00/00/0000', null, DATE_FORMAT(f.fecha_facturacion, '%d/%m/%Y')) fecha_facturacion,
                         f.venta_acta_de,
+                        f.gastos_reintegro,
+                        f.gastos_observaciones,
                         f.iva,
                         f.iva_retenido,
                         f.venta_total,

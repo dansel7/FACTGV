@@ -16,6 +16,8 @@ mysql_select_db($db_name,$connection) or die("Error de conexion a la base de dat
                                 $cond_operacion= $data->cond_operacion;
                                 $n_comprobante_credito= ($data->n_comprobante_credito=='')?'null':$data->n_comprobante_credito;
                                 $venta_acta_de= $data->venta_acta_de;
+                                $gastos_reintegro= $data->gastos_reintegro;
+                                $gastos_observaciones= $data->gastos_observaciones;
                                 $iva=  $data->iva;
                                 $iva_retenido=  $data->iva_retenido;
                                 $venta_total=  $data->venta_total;
@@ -42,6 +44,8 @@ mysql_select_db($db_name,$connection) or die("Error de conexion a la base de dat
                                 `cond_operacion` = '$cond_operacion',  
                                 `n_comprobante_credito` = $n_comprobante_credito,
                                 `venta_acta_de`='$venta_acta_de',
+                                `gastos_reintegro`=$gastos_reintegro,
+                                `gastos_observaciones`='$gastos_observaciones',   
                                 `iva`='$iva',
                                 `iva_retenido`='$iva_retenido',
                                 `venta_total`='$venta_total',
@@ -74,6 +78,8 @@ mysql_select_db($db_name,$connection) or die("Error de conexion a la base de dat
                                                 "n_comprobante_credito" => $n_comprobante_credito,
                                                 "fecha_facturacion"=>$fecha_facturacion,
                                                 "venta_acta_de"=>$venta_acta_de,
+                                                "gastos_reintegro"=>$gastos_reintegro,
+                                                "gastos_observaciones"=>$gastos_observaciones,
                                                 "iva"=>$iva,
                                                 "iva_retenido"=>$iva_retenido,
                                                 "venta_total"=>$venta_total,

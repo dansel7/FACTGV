@@ -253,7 +253,7 @@ if(typeof(records) != "undefined" && typeof(records) != "string"){
                             },  hidden:true,
                             items:[
                                
-                            {xtype : 'numberfield', name : "peso", fieldLabel : "Peso", flex:1,labelWidth:30,width:100,decimalPrecision: 2,  hideTrigger: true, decimalSeparator: "." , margin: '0 10 5 0'},
+                            {xtype : 'numberfield', name : "peso", fieldLabel : "Peso", flex:1,labelWidth:30,width:100,decimalPrecision: 3,  hideTrigger: true, decimalSeparator: "." , margin: '0 10 5 0'},
                             {xtype : "numberfield", name : "nbultos", fieldLabel : "Num. Bultos", flex: 1 ,labelWidth:70,width:125 ,allowDecimals: false, hideTrigger: true, margin: '0 10 0 0'},
                             {xtype : "textfield", name : "embarcador", fieldLabel : "Embarcador", flex: 1 ,labelWidth:80,width:250 , margin: '0 10 0 0'},
                             {xtype : "textfield", name : "wr", fieldLabel : "WR", flex: 1,labelWidth:18,width:100 , margin: '0 10 0 0'},
@@ -301,7 +301,7 @@ if(typeof(records) != "undefined" && typeof(records) != "string"){
                                 {header: 'Precio Unitario', dataIndex: 'valor_concepto',summaryType: 'sum',	
                                     editor: {
                                         xtype: 'numberfield',allowDecimals: true, name:'valor_concepto',
-                                        decimalPrecision: 2,  hideTrigger: true,
+                                        decimalPrecision: 3 ,  hideTrigger: true,
                                         allowBlank: false, decimalSeparator: "."
                                 }, summaryRenderer: function(value, summaryData, dataIndex) {
                                         return Math.round(value*100)/100;
@@ -309,7 +309,7 @@ if(typeof(records) != "undefined" && typeof(records) != "string"){
                                 {header: 'Venta No sujeta', dataIndex: 'venta_nosujeta',summaryType: 'sum',
                                     editor: {
                                         xtype: 'numberfield',allowDecimals: true, name:'venta_nosujeta',
-                                        decimalPrecision: 2 ,  hideTrigger: true,
+                                        decimalPrecision: 3  ,  hideTrigger: true,
                                         allowBlank: true, decimalSeparator: "." 
                                 }, summaryRenderer: function(value, summaryData, dataIndex) {
                                         return Math.round(value*100)/100;
@@ -317,7 +317,7 @@ if(typeof(records) != "undefined" && typeof(records) != "string"){
                                 {header: 'Valor Exenta', dataIndex: 'venta_exenta', summaryType: 'sum',
                                     editor: {
                                         xtype: 'numberfield',allowDecimals: true, name:'venta_exenta',
-                                        decimalPrecision: 2 ,  hideTrigger: true,
+                                        decimalPrecision: 3  ,  hideTrigger: true,
                                         allowBlank: true, decimalSeparator: "." 
                                 }, summaryRenderer: function(value, summaryData, dataIndex) {
                                         return Math.round(value*100)/100;
@@ -325,7 +325,7 @@ if(typeof(records) != "undefined" && typeof(records) != "string"){
                                 {header: 'Venta Gravada', dataIndex: 'venta_gravada',summaryType: 'sum', 
                                     editor: {
                                         xtype: 'numberfield',allowDecimals: true, name:'venta_gravada',
-                                        decimalPrecision: 2 ,  hideTrigger: true,
+                                        decimalPrecision: 3  ,  hideTrigger: true,
                                         allowBlank: true, decimalSeparator: "."
                                 },   summaryRenderer: function(value, summaryData, dataIndex) {
                                          return Math.round(value*100)/100;
@@ -395,12 +395,12 @@ if(typeof(records) != "undefined" && typeof(records) != "string"){
                             layout: {
                                     columns: 3,
                                     type: 'table'
-                            },              
+                            },            
                             //TOTALES 
                             items:[
-                            {xtype : "numberfield", id : "iva", name : "iva", fieldLabel : "IVA", flex: 1,margin: '0 10 5 0',readOnly:true, allowDecimals: true,decimalPrecision: 2 ,  hideTrigger: true,allowBlank: true,decimalSeparator: "." },
+                            {xtype : "numberfield", id : "iva", name : "iva", fieldLabel : "IVA", flex: 1,margin: '0 10 5 0',readOnly:true, allowDecimals: true,decimalPrecision: 3  ,  hideTrigger: true,allowBlank: true,decimalSeparator: "." },
                             {xtype : "numberfield", id : "iva_retenido",name : "iva_retenido", fieldLabel : " Iva Retenido",readOnly:true, allowDecimals: true,flex: 1, margin: '0 10 0 0',decimalSeparator: "."},
-                            {xtype : "numberfield", id : "venta_total", name : "venta_total",fieldLabel : " Venta Total",readOnly:true, flex: 1,allowDecimals: true,decimalPrecision: 2, margin: '0 10 0 0',decimalSeparator: "."},
+                            {xtype : "numberfield", id : "venta_total", name : "venta_total",fieldLabel : " Venta Total",readOnly:true, flex: 1,allowDecimals: true,decimalPrecision: 2 , margin: '0 10 0 0',decimalSeparator: "."},
                             ]},
                             {xtype: 'fieldset',title: 'Datos de Quedan y Pago',width:900,
                             layout: {

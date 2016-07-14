@@ -9,6 +9,8 @@ Ext.define('MvcClientes.model.Facturacion.Facturacion', {
                                 { name: 'n_comprobante_credito', type: 'int'},
                                 { name: 'fecha_facturacion',  type: 'date',dateFormat:'d/m/Y'},
                                 { name: 'venta_acta_de',   type: 'string'},
+                                { name: 'gastos_reintegro',   type: 'number'},
+                                { name: 'gastos_observaciones',   type: 'string'},
                                 { name: 'iva',   type: 'number'},
                                 { name: 'iva_retenido',   type: 'number'},
                                 { name: 'venta_total',   type: 'number'},
