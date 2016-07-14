@@ -13,13 +13,15 @@ Ext.define('MvcClientes.view.AbonoClientes.GrdAbonoClientes',{
 		Ext.applyIf(me, {
 			columns : [//Definimos las Columnas del Grid y las Columnas de la Tabla
                                    {header:"ID",dataIndex:"idfacturacion",width:50,hidden:true},
-                                   {header:"Numero Factura", dataIndex:"numero_factura"},
-                                   {header:"Tipo de Factura", dataIndex:"tipo_facturacion",flex:1},
-                                   {header:"Clientes", dataIndex:"nom_cliente",flex:1},
-                                   {header:"Fecha Facturacion",id:"fecha_facturacion",dataIndex : "fecha_facturacion",flex:1,renderer:Ext.util.Format.dateRenderer('d/m/Y') },
-                                   {header:"Fecha Programada Pago", dataIndex:"fecha_programada_pago",flex:1},//EL COLOR LO MANEJA LA CONSULTA EN ABONOCLIENTESREAD
-                                   {header:"Saldo Pendiente ($)", dataIndex:"saldo_pendiente",flex:1},
-                                   {header:"Dias de Mora", dataIndex:"DiasMora",flex:1}
+                                   {header:"No.Factura", dataIndex:"numero_factura",flex:0.5},
+                                   {header:"Tipo de Factura", dataIndex:"tipo_facturacion",flex:0.8},
+                                   {header:"Clientes", dataIndex:"nom_cliente",flex:2},
+                                   {header:"Fecha Facturacion",id:"fecha_facturacion",dataIndex : "fecha_facturacion",flex:0.7,renderer:Ext.util.Format.dateRenderer('d/m/Y') },
+                                   {header:"Fecha Programada Pago", dataIndex:"fecha_programada_pago",flex:0.9},//EL COLOR LO MANEJA LA CONSULTA EN ABONOCLIENTESREAD
+                                   {header:"Total Factura", dataIndex:"total_factura",flex:0.5},
+                                   {header:"Total Gastos", dataIndex:"gastos_reintegro",flex:0.5},                                   
+                                   {header:"Saldo Pendiente ($)", dataIndex:"saldo_pendiente",flex:0.7},
+                                   {header:"Dias de Mora", dataIndex:"DiasMora",flex:0.5}
 			],
 			dockedItems: [
 					{
