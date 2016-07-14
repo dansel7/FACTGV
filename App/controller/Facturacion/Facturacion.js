@@ -79,7 +79,16 @@ Ext.define('MvcClientes.controller.Facturacion.Facturacion',{
                                     field.setFieldStyle('background-color: #E4E4E4; background-image: none;')
                                     Ext.getCmp("gridDetalle").disable(true);
                                   });
-                                  
+                                
+                                //HABILITA CAMPOS DE GASTOS Y OBSERVACIONES SI ESTAN EN BLANCO
+                                   banderaGastos=EditForm.getForm().findField("gastos_reintegro").value;
+                                   if(banderaGastos=="0.0"){
+                                   EditForm.getForm().findField("gastos_reintegro").setReadOnly(false);
+                                   EditForm.getForm().findField("gastos_reintegro").setFieldStyle('background-color: white;');
+                                   EditForm.getForm().findField("gastos_observaciones").setReadOnly(false);
+                                   EditForm.getForm().findField("gastos_observaciones").setFieldStyle('background-color: white;');
+                                   }
+                                   
                               //SE DEJAN HABILITADO LOS CAMPOS DE FECHA QUEDAN Y COMPROBANTE 
                                   EditForm.getForm().findField("fecha_quedan").setReadOnly(false);
                                     EditForm.getForm().findField("fecha_quedan").setFieldStyle('background-color: white;');
