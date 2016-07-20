@@ -34,7 +34,7 @@ $pdf->SetPrintFooter(false);
 
 //set margins
 //$pdf->SetMargins(PDF_MARGIN_LEFT, PDF_MARGIN_TOP, PDF_MARGIN_RIGHT);
-$pdf->SetMargins(0.6, 1.7, 2);
+$pdf->SetMargins(0.6, 1, 2);
 
 //$pdf->SetHeaderMargin(0);
 //$pdf->SetFooterMargin(15);
@@ -49,7 +49,7 @@ $pdf->setImageScale(PDF_IMAGE_SCALE_RATIO);
 //$pdf->setLanguageArray($l); 
 // ---------------------------------------------------------
 // set font
-$pdf->SetFont('helvetica', '', 9);
+$pdf->SetFont('helvetica', '', 8);
 
 
 $fecha_inicio=$_GET["fecha_ini"];
@@ -67,7 +67,8 @@ $sql = "SELECT
                 if( DATE_FORMAT(f.fecha_programada_pago, '%d/%m/%Y') = '00/00/0000', null, 
                     DATE_FORMAT(f.fecha_programada_pago, '%d/%m/%Y') ) fecha_programada_pago,
                 f.venta_total total_facturado,
-                (f.venta_total-iFNull(sum(ac.monto_cheque),0)-iFNull(sum(NotaC.venta_total),0)) saldo_pendiente,
+                f.gastos_reintegro,
+                ((f.venta_total+f.gastos_reintegro)-iFNull(sum(ac.monto_cheque),0)-iFNull(sum(NotaC.venta_total),0)) saldo_pendiente,
                 DATEDIFF(ADDDATE(NOW(), INTERVAL 1 DAY),f.fecha_facturacion) DiasMora
                 from facturacion f
                 left join abono_clientes ac on f.idfacturacion=ac.idfacturacion
@@ -90,13 +91,14 @@ $sql = "SELECT
   $cuerpo_detalle.= '<table width="700px" cellpadding="1">
                      <tr>
                      <td width="60px" style="text-align:center"><b>No. FACTURA</b></td> 
-                     <td width="110px" style="text-align:center"><b>TIPO FACTURA</b></td> 
+                     <td width="100px" style="text-align:center"><b>TIPO FACTURA</b></td> 
                      <td width="190px" style="text-align:center" ><b>CLIENTE</b></td>
-                     <td width="70px" style="text-align:center"><b>FECHA DE FACTURA</b></td>
-                     <td width="70px" style="text-align:center"><b>FECHA DE PAGO</b></td>
-                     <td width="80px" style="text-align:right" ><b>VALOR DE FACTURA&nbsp;&nbsp;</b></td>
-                     <td width="80px" style="text-align:center" ><b>SALDO PENDIENTE</b></td>
-                     <td width="50px" style="text-align:right" ><b>DIAS DE MORA</b></td>
+                     <td width="56px" style="text-align:center"><b>FECHA DE FACTURA</b></td>
+                     <td width="56px" style="text-align:center"><b>FECHA DE PAGO</b></td>
+                     <td width="70px" style="text-align:right" ><b>VALOR DE FACTURA&nbsp;&nbsp;</b></td>
+                     <td width="70px" style="text-align:center" ><b>GASTOS DE REINTEGRO</b></td>
+                     <td width="70px" style="text-align:center" ><b>SALDO PENDIENTE</b></td>
+                     <td width="45px" style="text-align:right" ><b>DIAS DE MORA</b></td>
                      </tr>
                      <tr><td colspan="5"></td></tr>';
    $subTpendiente=0;
@@ -110,6 +112,7 @@ $sql = "SELECT
                              <td  style=\"text-align:center\"> ".substr($rows_e["fecha_facturacion"],0,11) ."</td> 
                              <td  style=\"text-align:center\"> ".substr($rows_e["fecha_programada_pago"],0,11) ."</td> 
                              <td  style=\"text-align:right\">$ ".number_format($rows_e["total_facturado"],2) ."</td>
+                             <td  style=\"text-align:right\">$ ".number_format($rows_e["gastos_reintegro"],2) ."</td>
                              <td  style=\"text-align:right\">$ ".number_format($rows_e["saldo_pendiente"],2) ."</td>
                              <td  style=\"text-align:right\">".$rows_e["DiasMora"] ."</td>
                         </tr>";
@@ -119,9 +122,9 @@ $sql = "SELECT
        if($idmc!="") $nclient= "ESTADO DE CUENTA: <b>".$rows_e["nom_cliente"]."</b> <br>DESDE: <b>$fecha_inicio</b> HASTA: <b>$fecha_fin</b><br><br> ";//Se guarda el nombre del cliente si es que se ha filtrado por uno.
        //Si se filtro para todos nos almacenara nada ni mostrara nada.
         }
-        $cuerpo_detalle.='<tr><td colspan="5"></td></tr>';
-        $cuerpo_detalle.='<tr><td style="text-align:right" colspan="5"><b>TOTAL PENDIENTE DE PAGO</b></td><td></td><td style="text-align:right"><b>$ '.number_format($subTpendiente,2).'</b></td></tr>';
-        $cuerpo_detalle.='<tr><td colspan="5"></td></tr>';
+        $cuerpo_detalle.='<tr><td colspan="6"></td></tr>';
+        $cuerpo_detalle.='<tr><td style="text-align:right" colspan="6"><b>TOTAL PENDIENTE DE PAGO</b></td><td></td><td style="text-align:right"><b>$ '.number_format($subTpendiente,2).'</b></td></tr>';
+        $cuerpo_detalle.='<tr><td colspan="6"></td></tr>';
         $cuerpo_detalle.= "</table>";
         $Reporte=$encabezado.$nclient.$cuerpo_detalle.$pie_factura;
  

@@ -10,7 +10,7 @@ Ext.define('MvcClientes.model.Abono.AbonoClientes', {
                                 { name: 'monto_efectivo',  type: 'number'},
                                 { name: 'idfacturacion', type: 'int'},
                                 { name: 'id_cuenta', type: 'int'},
-				{ name: 'numero_factura', type: 'int'},
+				{ name: 'numero_factura', type: 'string'},
                                 { name: 'nom_cliente', type: 'string'},
                                 { name: 'fecha_facturacion',  type: 'date',dateFormat:'d/m/Y'},
                                 { name: 'fecha_programada_pago',  type: 'string'},
