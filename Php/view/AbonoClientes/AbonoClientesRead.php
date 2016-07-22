@@ -32,15 +32,16 @@
                                 ,concat('<b style=\"color:red\">',DATE_FORMAT(f.fecha_programada_pago, '%d/%m/%Y'),'</b>'))
                              ,CONCAT('<b>',DATE_FORMAT(f.fecha_programada_pago, '%d/%m/%Y'),'</b>'))) fecha_programada_pago,
                      
+                        iFNull(sum(ac.monto_cheque),0) abonado,
                         f.venta_total total_factura,
                         f.gastos_reintegro,
-                        ((f.venta_total+f.gastos_reintegro)-iFNull(sum(ac.monto_cheque),0)-iFNull(sum(NotaC.venta_total),0)) saldo_pendiente,
+                        ((f.venta_total+f.gastos_reintegro)-iFNull(sum(ac.monto_cheque),0)-iFNull((NotaC.venta_total),0)) saldo_pendiente,
                         DATEDIFF(ADDDATE(NOW(), INTERVAL 1 DAY),f.fecha_facturacion) DiasMora
                         from facturacion f
                         left join abono_clientes ac on f.idfacturacion=ac.idfacturacion
                         inner join maestroclientes mc on f.idmaestroClientes=mc.idmaestroClientes 
                         inner join tipo_facturacion tf on f.id_tipo_facturacion=tf.id_tipo_facturacion
-                        left join (select n_comprobante_credito idfactura, numero_factura numero_NotaC, venta_total from facturacion where id_tipo_facturacion=1 and anulado='No' AND id_empresa=".$idempresa.") NotaC on f.idfacturacion=NotaC.idfactura
+                        left join (select n_comprobante_credito idfactura, numero_factura numero_NotaC, sum(venta_total) venta_total from facturacion where id_tipo_facturacion=1 and anulado='No' AND id_empresa=".$idempresa." group by n_comprobante_credito) NotaC on f.idfacturacion=NotaC.idfactura
 
                         WHERE f.id_tipo_facturacion!=1 and f.anulado='No' and f.id_empresa=".$idempresa."
                         GROUP BY f.idfacturacion
