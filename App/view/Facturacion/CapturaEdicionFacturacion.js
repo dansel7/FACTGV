@@ -181,15 +181,16 @@ if(typeof(records) != "undefined" && typeof(records) != "string"){
                                             if(this.value==="1"){
                                                 Ext.getCmp("n_comprobante_credito").show();
                                                 Ext.getCmp("n_comprobante_credito").enable();
+                                                Ext.getCmp("GastosR").hide();
                                             }else{
                                                  Ext.getCmp("n_comprobante_credito").hide();
                                                  Ext.getCmp("n_comprobante_credito").reset();
                                                  Ext.getCmp("n_comprobante_credito").setValue(null);
                                                  Ext.getCmp("n_comprobante_credito").disable();
-                                                 
+                                                 Ext.getCmp("GastosR").show();
                                             }
                                             //PARA QUE MUESTRE U OCULTE CUANDO SEA AIR WAY BILL
-                                            if(this.value==="6"){
+                                            if(this.value==="6" || this.value==="7"){
                                                 Ext.getCmp("tipo_servicio_carga").show();
                                                 Ext.getCmp("awbDatos").show();
                                             }else{
@@ -376,7 +377,7 @@ if(typeof(records) != "undefined" && typeof(records) != "string"){
                             },/////FIN GRID////////
                              
                             ////////INICIO  DE FIELDSET GASTOS///////
-                            {xtype: 'fieldset',title: 'Gastos Reintegrables',width:900,height:45,
+                            {xtype: 'fieldset',title: 'Gastos Reintegrables',id:'GastosR',width:900,height:45,
                             style: {color: 'red'},  
                               layout: {
                                     columns: 3,
@@ -425,6 +426,7 @@ if(typeof(records) != "undefined" && typeof(records) != "string"){
             change: function(field, newValue, oldValue, eOpts){
                 console.log('change:' + field.fieldLabel + ' ' + newValue);
                 if(Ext.getCmp("id_tipo_factura").value==1){
+                                    Ext.getCmp("GastosR").hide();
                                     if(newValue){
                                     Ext.getCmp("n_comprobante_credito").reset();
                                     Ext.getCmp("n_comprobante_credito").setValue(null);
@@ -433,6 +435,8 @@ if(typeof(records) != "undefined" && typeof(records) != "string"){
                                     Ext.getCmp("n_comprobante_credito").show();
                                     Ext.getCmp("n_comprobante_credito").enable();
                                     }
+                                }else{
+                                    Ext.getCmp("GastosR").show();
                                 }
                                     
             }}}, {

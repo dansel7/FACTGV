@@ -1,17 +1,21 @@
 <?php
-////FACTURA CONSUMIDOR FINAL
+////FACTURA CONSUMIDOR FINAL AWB
+
 error_reporting(0);
 session_start();
+
 if(!isset($_SESSION['benutzer']) || !isset($_SESSION["idEmpresa"]) ){
 		$direccion = "Location: ../../index.php";
 		header($direccion);
 	}else{
 require_once('tcpdf/config/lang/eng.php');
 require_once('tcpdf/tcpdf.php');
+
 require_once('../funcionesFact.php');
 $Total_enLetras=new EnLetras();
  
 $pdf = new TCPDF("vertical", "cm", "Letter", true, 'UTF-8', false); 
+
 // set document information
 $pdf->SetCreator(PDF_CREATOR);
 $pdf->SetAuthor('Daniel E. Diaz');
@@ -22,33 +26,41 @@ $pdf->setPrintHeader(false);
 $pdf->SetPrintFooter(false);
 // set default header data
 //$pdf->SetHeaderData(PDF_HEADER_LOGO, PDF_HEADER_LOGO_WIDTH, PDF_HEADER_TITLE, PDF_HEADER_STRING);
+
 // set header and footer fonts
 //$pdf->setHeaderFont(Array(PDF_FONT_NAME_MAIN, '', PDF_FONT_SIZE_MAIN));
 //$pdf->setFooterFont(Array(PDF_FONT_NAME_DATA, '', PDF_FONT_SIZE_DATA));
+
 // set default monospaced font
 //$pdf->SetDefaultMonospacedFont(PDF_FONT_MONOSPACED);
+
 //set margins
 //$pdf->SetMargins(PDF_MARGIN_LEFT, PDF_MARGIN_TOP, PDF_MARGIN_RIGHT);
-$pdf->SetMargins(0.2, 1.5, 0.635);
+$pdf->SetMargins(1.3, 1.1, 0.635);
+
 //$pdf->SetHeaderMargin(0);
 //$pdf->SetFooterMargin(15);
+
 //set auto page breaks
 $pdf->SetAutoPageBreak(TRUE, 5);
+
 //set image scale factor
 $pdf->setImageScale(PDF_IMAGE_SCALE_RATIO); 
+
 //set some language-dependent strings
 //$pdf->setLanguageArray($l); 
 // ---------------------------------------------------------
 // set font
 $pdf->SetFont('helvetica', '', 10);
+
 $orientacion="vertical";
 // ---------------INICIO DEL REPORTE-----------------
 	$sql = "SELECT 
                
                 f.numero_factura,mc.nom_cliente,mc.direccion,DATE_FORMAT(f.fecha_facturacion,'%d/%m/%Y') fecha_facturacion,f.cond_operacion,f.venta_acta_de,mc.nit,mc.nrc,d.departamento,mc.giro,
                
-                df.cantidad,concat(cs.servicio , '<br>  ' , df.concepto) concepto,df.valor_concepto,venta_nosujeta,venta_exenta,venta_gravada,
-               
+                df.cantidad,concat(cs.servicio ,'', df.concepto) concepto,df.valor_concepto,venta_nosujeta,venta_exenta,venta_gravada,
+                f.peso, f.hawb, f.mawb,f.wr,
                 f.venta_total,f.iva,f.iva_retenido
                 FROM facturacion f 
                 LEFT JOIN detalleFacturacion df on f.idFacturacion=df.idFacturacion 
@@ -69,6 +81,13 @@ $orientacion="vertical";
        //style="border:solid 1px"
         $datos_factura='<br>
             <table  width="690px">
+			<tr>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td>'. $rows_e["fecha_facturacion"] .'</td>
+            </tr>
             <tr>
                 <td></td>
                 <td></td>
@@ -78,27 +97,32 @@ $orientacion="vertical";
             </tr>
             <tr>
                 <td style="text-align:center" width="375px" colspan="3"><b>'.strtoupper($rows_e["nom_cliente"]).'</b></td>
-               <td style="text-align:center" width="100px">&nbsp;</td> 
-               <td  style="text-align:center">'. $rows_e["fecha_facturacion"] .'</td>
+               <td style="text-align:center" width="80px">&nbsp;</td> 
+               <td  style="text-align:center">'. $rows_e["peso"] .'</td>
             </tr>
             <tr>
                 <td colspan="5" height="8px">&nbsp;</td>
             </tr>
             <tr>
                 <td style="text-align:center;font-size:8pt" colspan="3">'.strtoupper($rows_e["direccion"]).'</td>
-                <td colspan="2" height="20px">&nbsp;</td>
+                <td colspan="2" height="40px">&nbsp;</td>
             </tr>
              <tr>
                 <td  width="55px" colspan="2">&nbsp;</td>
+                <td  width="170px">&nbsp;</td>
+                <td style="text-align:center" width="250px">&nbsp;</td>
+                <td style="text-align:left" width="200px" >'.strtoupper($rows_e["hawb"]).'</td>
+            </tr>
+			 <tr>
+                <td  width="55px" colspan="2">&nbsp;</td>
                 <td  width="170px">'. $rows_e["nit"] .'</td>
                 <td style="text-align:center" width="250px">&nbsp;</td>
-                <td style="text-align:left" width="200px" >'.strtoupper($rows_e["venta_acta_de"]).'</td>
+                <td style="text-align:left" width="200px" >'.strtoupper($rows_e["mawb"]).'</td>
             </tr>
             
             </table><br>
             <table>
-                 <tr><td colspan="4" height="40px"></td></tr>
-                 <tr><td colspan="4" height="160px"><table>';
+                 <tr><td colspan="4" height="40px"></td></tr>';
         $detalle_factura.='
                     <tr>
                         <td style="text-align:left" width="100px">
@@ -107,7 +131,7 @@ $orientacion="vertical";
                         <td width="345px">
                         '. strtoupper($rows_e["concepto"])  .'
                         </td>
-                        <td width="60px" style="text-align:right">
+                        <td width="60px" style="text-align:right" >
                         '. number_format($rows_e["valor_concepto"]*1.13,2) .'
                         </td>
                         <td width="60px" style="text-align:right">
@@ -125,8 +149,7 @@ $orientacion="vertical";
         $tot_venta_no_sujeta+=$rows_e["venta_nosujeta"];
         $tot_venta_exentas+=$rows_e["venta_exenta"];
         //ESTA ES LA PARTE QUE CONTIENE EL TOTAL EN LETRAS Y SUS DESGLOSES
-       $pie_factura='</table></td></tr>
-                   
+        $pie_factura='<tr><td colspan="6" height="15px"></td></tr>
                       <tr><td colspan="2" width="445px"></td>
                           <td width="60px"></td>
                           <td width="60px" style="text-align:right">'. number_format($tot_venta_no_sujeta,2) .'</td>
@@ -134,7 +157,7 @@ $orientacion="vertical";
                           <td width="59px" style="text-align:right">'. number_format($subTotal*1.13,2) .'</td>
                       </tr>
                       <tr><td colspan="6" style="text-align:left">
-                        <table width="680px" cellspacing="3">
+                        <table width="680px" cellspacing="4">
                          
                         <tr>
                            <td>'. strtoupper($Total_enLetras->ValorEnLetras($rows_e["venta_total"],"Dolares")) .'</td>
@@ -169,8 +192,15 @@ $orientacion="vertical";
         }
         $factura=$datos_factura.$detalle_factura.$pie_factura;
 $pdf->writeHTML($factura, true, false, false, false, '');
+
+
+
+
 /////////////////////////////////////////////////////////////////////
+
 //Close and output PDF document
 $pdf->Output('factura.pdf', 'I');
 }
+
 ?>
+

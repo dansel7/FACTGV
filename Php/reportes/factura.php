@@ -32,6 +32,9 @@ if(!isset($_SESSION['benutzer']) || !isset($_SESSION["idEmpresa"]) ){
          case 6:
              require_once 'Fact_6.php';//CREDITO FISCAL AWB
          break;
+        case 7:
+             require_once 'Fact_7.php';//NOTA DE REMISION
+         break;
         //ESTO SE REALIZA MANUALMENTE DEPENDIENDO DEL ID QUE TENGA EL TIPO DE FACTURA INGRESADO
         //SE GENERA UN MODELO Y SEGUN SU ID SE MANDA A LLAMAR.
         //..... SI SE AGREGA OTRO TIPO DE FACTURA AGREGARLO DEBAJO CON LA MISMA LOGICA.
