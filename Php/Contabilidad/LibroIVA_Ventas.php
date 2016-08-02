@@ -34,7 +34,7 @@ $pdf->SetPrintFooter(false);
 
 //set margins
 //$pdf->SetMargins(PDF_MARGIN_LEFT, PDF_MARGIN_TOP, PDF_MARGIN_RIGHT);
-$pdf->SetMargins(0.8, 0.7, 2);
+$pdf->SetMargins(0.5, 0.7, 2);
 
 //$pdf->SetHeaderMargin(0);
 //$pdf->SetFooterMargin(15);
@@ -49,7 +49,7 @@ $pdf->setImageScale(PDF_IMAGE_SCALE_RATIO);
 //$pdf->setLanguageArray($l); 
 // ---------------------------------------------------------
 // set font
-$pdf->SetFont('helvetica', '', 7.5);
+$pdf->SetFont('courier', '', 6);
 
 
 $fecha_inicio=$_GET["fecha_ini"];
@@ -76,68 +76,68 @@ $sql = "Select f.id_tipo_facturacion,f.fecha_facturacion,f.numero_factura, tpf.t
         
   $pdf->addpage($orientacion,'letter');      
   
-  $encabezado='<b><table width="935px">
+  $encabezado='<table width="960px" style="font-weight:bold;font-family:courier">
                 <tr>
-                <td style="width:25%"></td>
-                <td style="width:50%;text-align:center;">LIBRO DE VENTAS A CONTRIBUYENTES</td>
-                <td style="width:25%"></td>
+                <td style="width:25%" colspan="3"></td>
+                <td style="width:50%;text-align:center;" colspan="6">LIBRO DE VENTAS A CONTRIBUYENTES</td>
+                <td style="width:25%" colspan="3"></td>
                 </tr>
                 <tr>
-                <td style="width:25%"></td>
-                <td style="width:50%;text-align:center;">MES DE JULIO DE 2016</td>
-                <td style="width:25%"></td>
+                <td style="width:25%" colspan="3"></td>
+                <td style="width:50%;text-align:center;" colspan="6">MES DE JULIO DE 2016</td>
+                <td style="width:25%" colspan="3"></td>
                 </tr>
                 <tr>
-                <td style="width:25%"></td>
-                <td style="width:50%;text-align:center;">EXPRESADO EN DOLARES DE LOS ESTADOS UNIDOS DE NORTEAMERICA.</td>
-                <td style="width:25%"></td>
+                <td style="width:25%" colspan="3"></td>
+                <td style="width:50%;text-align:center;" colspan="6">EXPRESADO EN DOLARES DE LOS ESTADOS UNIDOS DE NORTEAMERICA.</td>
+                <td style="width:25%" colspan="3"></td>
                 </tr>
                 <tr>
-                <td style="width:25%"></td>
-                <td style="width:50%;text-align:center;"></td>
-                <td style="width:25%"></td>
+                <td style="width:25%" colspan="3"></td>
+                <td style="width:50%;text-align:center;" colspan="6"></td>
+                <td style="width:25%" colspan="3"></td>
                 </tr>
                 <tr>
-                <td style="width:25%"></td>
-                <td style="width:50%;text-align:center;">'. strtoupper($_SESSION["nombreEmpresa"]). '</td>
-                <td style="width:25%"></td>
+                <td style="width:25%" colspan="3"></td>
+                <td style="width:50%;text-align:center;" colspan="6">'. strtoupper($_SESSION["nombreEmpresa"]). '</td>
+                <td style="width:25%" colspan="3"></td>
                 </tr>
                 <tr>
-                <td style="width:25%"></td>
-                <td style="width:50%;text-align:center;">CALLE LOS CASTAÑOS Y AVENIDA LAS CAMELIAS N°7, COLONIA SAN FRANCISCO, SAN SALVADOR</td>
-                <td style="width:25%"></td>
+                <td style="width:25%" colspan="3"></td>
+                <td style="width:50%;text-align:center;" colspan="6">'. strtoupper($_SESSION["direccionEmp"]). '</td>
+                <td style="width:25%" colspan="3"></td>
                 </tr>
                 <tr>
-                <td style="width:25%"></td>
-                <td style="width:50%;text-align:center;"></td>
-                <td style="width:25%"></td>
+                <td style="width:25%" colspan="3"></td>
+                <td style="width:50%;text-align:center;" colspan="6"></td>
+                <td style="width:25%" colspan="3"></td>
                 </tr>
                 <tr>
-                <td style="width:25%">N.R.C. 237021-4</td>
-                <td style="width:50%;text-align:center;">N.I.T. 0614-271014-102-0</td>
-                <td style="width:25%"></td>
+                <td style="width:25%" colspan="3">N.R.C. '. strtoupper($_SESSION["nrcEmp"]). '</td>
+                <td style="width:50%;text-align:center;" colspan="6">N.I.T. '. strtoupper($_SESSION["nitEmp"]). '</td>
+                <td style="width:25%"  colspan="3"></td>
                 </tr>
                
-              </table></b>';
+              </table>';
   
-  $cuerpo_detalle.= '<table width="935px" border="1" cellpadding="1">
+  $cuerpo_detalle.= '<table width="960px" border="1" cellpadding="1" style="font-family:courier">
                     <tr>
                     <td width="60px" rowspan="2" style="text-align:center;"><b>No. OPERACION</b></td>
                     <td width="60px" rowspan="2" style="text-align:center;"><b>FECHA DE EMISION</b></td>
-                     <td width="60px" rowspan="2" style="text-align:center"><b>NUMERO DE COMPROBANTE</b></td> 
-                     <td width="200px" rowspan="2" style="text-align:center" ><b>CLIENTE</b></td>
+                     <td width="80px" rowspan="2" style="text-align:center"><b>NUMERO DE<br> COMPROBANTE</b></td> 
+                     <td width="240px" rowspan="2" style="text-align:center" ><b>CLIENTE</b></td>
                      <td width="150px" colspan="2" style="text-align:center" ><b>NUMERO</b></td>
-                     <td width="150px" colspan="2" style="text-align:center" ><b>VENTAS PROPIAS</b></td>
-                     <td width="50px" rowspan="2" style="text-align:right"><b>DEBITO FISCAL</b></td>
-                     <td width="70px" rowspan="2" style="text-align:right" ><b>TOTAL VENTAS</b></td>
-                     <td width="70px" rowspan="2" style="text-align:right"><b>IVA RETENIDO</b></td>
-                     <td width="70px" rowspan="2" style="text-align:right"><b>TOTAL VENTAS NETAS</b></td></tr>
+                     <td width="130px" colspan="2" style="text-align:center" ><b>VENTAS PROPIAS</b></td>
+                     <td width="50px" rowspan="2" style="text-align:center"><b>DEBITO FISCAL</b></td>
+                     <td width="60px" rowspan="2" style="text-align:center" ><b>TOTAL VENTAS</b></td>
+                     <td width="55px" rowspan="2" style="text-align:center"><b>IVA RETENIDO</b></td>
+                     <td width="75px" rowspan="2" style="text-align:center"><b>TOTAL VENTAS NETAS</b></td></tr>
                      
                      <tr>
-                     <td width="60px" style="text-align:left" ><b>N.R.C.</b></td>
-                     <td width="90px" style="text-align:left" ><b>N.I.T.</b></td>
-                     <td width="75px" style="text-align:left" ><b>EXENTA</b></td>
-                     <td width="75px" style="text-align:left" ><b>GRAVADA</b></td></tr>';
+                     <td width="60px" style="text-align:center" ><b>N.R.C.</b></td>
+                     <td width="90px" style="text-align:center" ><b>N.I.T.</b></td>
+                     <td width="65px" style="text-align:center" ><b>EXENTA</b></td>
+                     <td width="65px" style="text-align:center" ><b>GRAVADA</b></td></tr>';
  
   //Funcion Para Clasificar Tipo Servicio de Carga para Airbox.
   $total_aereo=0;
@@ -178,50 +178,52 @@ $sql = "Select f.id_tipo_facturacion,f.fecha_facturacion,f.numero_factura, tpf.t
       
         if($rows_e["anulado"]=="Si"){
         $cuerpo_detalle.= "<tr >
-                          <td  style=\"text-align:right\"> ".$numOp ."</td> 
-                          <td  style=\"text-align:right\"> ".substr($rows_e["fecha_facturacion"],0,11) ."</td> 
+                          <td  style=\"text-align:center\"> ".$numOp ."</td> 
+                          <td  style=\"text-align:center\"> ".substr($rows_e["fecha_facturacion"],0,11) ."</td> 
                           <td  style=\"text-align:center\">".$rows_e["numero_factura"] ."</td>
        <td  style=\"text-align:left\" colspan=\"9\"><b>ANULADO</b></td></tr>";
         }
         else{
               $cuerpo_detalle.= "<tr> 
-                             <td  style=\"text-align:right\"> ".$numOp ."</td> 
-                             <td  style=\"text-align:right\"> ".substr($rows_e["fecha_facturacion"],0,11) ."</td> 
+                             <td  style=\"text-align:center\"> ".$numOp ."</td> 
+                             <td  style=\"text-align:center\"> ".substr($rows_e["fecha_facturacion"],0,11) ."</td> 
                              <td  style=\"text-align:center\">".$rows_e["numero_factura"] ."</td> 
                              <td  style=\"text-align:left\">".$rows_e["nom_cliente"] ."</td>
                              <td  style=\"text-align:left\">".$rows_e["nrc"] ."</td>
                              <td  style=\"text-align:left\">".$rows_e["nit"] ."</td>
-                             <td  style=\"text-align:right\">".((number_format($rows_e["exenta"]+$rows_e["nosujeta"],2)==0)?'0.00':(($rows_e["id_tipo_facturacion"]==1) ?"<b>-</b> ":"").number_format($rows_e["exenta"]+$rows_e["nosujeta"],2)) ."</td>  
-                             <td  style=\"text-align:right\">".((number_format($rows_e["gravada"],2)==0)?'0.00':(($rows_e["id_tipo_facturacion"]==1) ?"<b>-</b> ":"").number_format($rows_e["gravada"],2)) ."</td>  
-                             <td  style=\"text-align:right\">".((number_format($rows_e["iva"],2)==0)?'0.00':(($rows_e["id_tipo_facturacion"]==1) ?"<b>-</b> ":"").number_format($rows_e["iva"],2))."</td>
-                             <td  style=\"text-align:right\">".(($rows_e["id_tipo_facturacion"]==1) ?"<b>-</b> ":"").  number_format($rows_e["gravada"]+$rows_e["iva"],2)."</td>
-                             <td  style=\"text-align:right\">".((number_format($rows_e["iva_retenido"],2)==0)?'0.00':(($rows_e["id_tipo_facturacion"]==1) ?"<b>-</b> ":"").number_format($rows_e["iva_retenido"],2))."</td>
-                             <td  style=\"text-align:right\">".(($rows_e["id_tipo_facturacion"]==1) ?"<b>-</b> ":"").  number_format($rows_e["venta_total"],2) ."</td></tr>";
+                             <td  style=\"text-align:right;mso-number-format: currency\">".((number_format($rows_e["exenta"]+$rows_e["nosujeta"],2)==0)?'0.00':(($rows_e["id_tipo_facturacion"]==1) ?"<b>-</b> ":"").number_format($rows_e["exenta"]+$rows_e["nosujeta"],2)) ."</td>  
+                             <td  style=\"text-align:right;mso-number-format: currency\">".((number_format($rows_e["gravada"],2)==0)?'0.00':(($rows_e["id_tipo_facturacion"]==1) ?"<b>-</b> ":"").number_format($rows_e["gravada"],2)) ."</td>  
+                             <td  style=\"text-align:right;mso-number-format: currency\">".((number_format($rows_e["iva"],2)==0)?'0.00':(($rows_e["id_tipo_facturacion"]==1) ?"<b>-</b> ":"").number_format($rows_e["iva"],2))."</td>
+                             <td  style=\"text-align:right;mso-number-format: currency\">".(($rows_e["id_tipo_facturacion"]==1) ?"<b>-</b> ":"").  number_format($rows_e["gravada"]+$rows_e["iva"],2)."</td>
+                             <td  style=\"text-align:right;mso-number-format: currency\">".((number_format($rows_e["iva_retenido"],2)==0)?'0.00':(($rows_e["id_tipo_facturacion"]==1) ?"<b>-</b> ":"").number_format($rows_e["iva_retenido"],2))."</td>
+                             <td  style=\"text-align:right;mso-number-format: currency\">".(($rows_e["id_tipo_facturacion"]==1) ?"<b>-</b> ":"").  number_format($rows_e["venta_total"],2) ."</td></tr>";
       
 
                 
                 //RESTA DE VENTA PARA EL TIPO DE NOTA DE CREDITO
                 if($rows_e["id_tipo_facturacion"]==1){
      //SI ES UNA NOTA DE CREDITO SE RESTA DEL SUBTOTAL DE VALOR NETO Y VENTA TOTAL
-                $subTValorNeto-=$rows_e["valor_neto"];
-                $subTVentaTotal-=$rows_e["venta_total"]; 
-                $subTIva-=$rows_e["iva"];
-                $subTIvaRetenido-=$rows_e["iva_retenido"];
+                
                 $subExenta-=($rows_e["exenta"]+$rows_e["nosujeta"]);
                 $subGravada-=$rows_e["gravada"];
+                $subTIva-=$rows_e["iva"];
+                $subTVentaTotal-=($rows_e["gravada"]+$rows_e["iva"]); 
+                $subTIvaRetenido-=$rows_e["iva_retenido"];
+                $subTValorNeto-=$rows_e["venta_total"];
                 }else{
-                $subTValorNeto+=$rows_e["valor_neto"];
-                $subTVentaTotal+=$rows_e["venta_total"];
-                $subTIva+=$rows_e["iva"];
-                $subTIvaRetenido+=$rows_e["iva_retenido"];
+                
                 $subExenta+=($rows_e["exenta"]+$rows_e["nosujeta"]);
                 $subGravada+=$rows_e["gravada"];
+                $subTIva+=$rows_e["iva"];
+                $subTVentaTotal+=($rows_e["gravada"]+$rows_e["iva"]);
+                $subTIvaRetenido+=$rows_e["iva_retenido"];
+                $subTValorNeto+=$rows_e["venta_total"];
                 }
             }
        $numOp++;
         }
-        $cuerpo_detalle.='<tr><td colspan="10"></td></tr>';
-        $cuerpo_detalle.='<tr><td style="text-align:right" colspan="6"><b>TOTALES</b></td><td style="text-align:right"><b>'. number_format($subExenta,2) .'</b></td><td style="text-align:right"><b>'. number_format($subGravada,2) .'</b></td><td style="text-align:right"><b>'.number_format($subTValorNeto,2).'</b></td><td style="text-align:right"><b>'.number_format($subTIva,2).'</b></td><td style="text-align:right"><b>'.number_format($subTIvaRetenido,2).'</b></td><td style="text-align:right"><b>'.number_format($subTVentaTotal,2).'</b></td></tr>';
+        $cuerpo_detalle.='<tr><td colspan="12"></td></tr>';
+        $cuerpo_detalle.='<tr><td style="text-align:right" colspan="6"><b>TOTALES</b></td><td style="text-align:right;mso-number-format: currency"><b>'. number_format($subExenta,2) .'</b></td><td style="text-align:right;mso-number-format: currency"><b>'. number_format($subGravada,2) .'</b></td><td style="text-align:right;mso-number-format: currency"><b>'.number_format($subTIva,2).'</b></td><td style="text-align:right;mso-number-format: currency"><b>'.number_format($subTVentaTotal,2).'</b></td><td style="text-align:right;mso-number-format: currency"><b>'.number_format($subTIvaRetenido,2).'</b></td><td style="text-align:right;mso-number-format: currency"><b>'.number_format($subTValorNeto,2).'</b></td></tr>';
        $cuerpo_detalle.= "</table>";
         $Reporte=$encabezado.$cliente.$cuerpo_detalle.$pie_factura;
 
