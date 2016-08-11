@@ -367,6 +367,10 @@ Ext.define('MvcClientes.view.Principal.MyViewport',{
                                            {
                                               ShowPartidasDiario();
                                            }
+                                        if (index==3)
+                                           {
+                                              ShowLibroIVA();
+                                           }
                             }
                         }  , 
                         root: {
@@ -396,6 +400,14 @@ Ext.define('MvcClientes.view.Principal.MyViewport',{
                                 },
                                 {
                                     text: 'Reporte Partida de Diario',
+                                  
+                                        leaf: true,
+                                    iconCls:'reportes'
+                                        
+                                    
+                                },
+                                {
+                                    text: 'Libros de IVA',
                                   
                                         leaf: true,
                                     iconCls:'reportes'
@@ -616,6 +628,10 @@ Ext.define('MvcClientes.view.Principal.MyViewport',{
           var FrmPartD= Ext.widget('ShowPartidasDiario');
        }
        
+       function ShowLibroIVA(){
+          var FrmLibIVA= Ext.widget('ShowLibroIVA');
+       }
+       
        function addTabPartidas_Clientes(){ 
       	 var tab=this.TabPanelMain.getComponent('TabListadoPartidas_Clientes');
 		   if(!tab){ //si no existe lo creamos
@@ -640,6 +656,7 @@ Ext.define('MvcClientes.view.Principal.MyViewport',{
 			    this.TabPanelMain.setActiveTab(tab); //Se activa el Tab Clickeado 
 				     		 
 	    }
+        //---------------CONTABILIDAD-------------//    
        ////////////////////////////////////////////
 	
     }

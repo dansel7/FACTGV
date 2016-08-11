@@ -52,10 +52,52 @@ $pdf->setImageScale(PDF_IMAGE_SCALE_RATIO);
 $pdf->SetFont('courier', '', 6);
 
 
-$fecha_inicio=$_GET["fecha_ini"];
-$fecha_fin=$_GET["fecha_fin"];
-$idmc=($_GET["idmc"]>0)? " AND mc.idmaestroclientes=".$_GET["idmc"]:"";
+$mes_inicio=$_GET["mes_inicio"];
+$mes_fin=$_GET["mes_fin"];
+$anio=$_GET["anio"];
 $idtpf=($_GET["tpf"]>0)? " AND f.id_tipo_facturacion=".$_GET["tpf"]:"";
+
+function mes($id){
+    
+switch($id){
+            
+            Case 1:
+       return  'Enero'; break;
+            
+            Case 2:
+       return  'Febrero'; break;
+            
+            Case 3:
+      return  'Marzo'; break;
+            
+            Case 4:
+      return  'Abril'; break;
+            
+            Case 5:
+      return  'Mayo'; break;
+            
+            Case 6:
+      return  'Junio'; break;
+            
+            Case 7:
+      return  'Julio'; break;
+            
+            Case 8:
+      return  'Agosto'; break;
+            
+            Case 9:
+      return  'Septiembre'; break;
+            
+            Case 10:
+      return  'Octubre'; break;
+            
+            Case 11:
+      return  'Noviembre'; break;
+            
+            Case 12:
+       return  'Diciembre'; break;
+        }
+}
 
 $orientacion="landscape";
 $idempresa=isset($_SESSION["idEmpresa"])? $_SESSION["idEmpresa"]:"-1";
@@ -67,7 +109,7 @@ $sql = "Select f.id_tipo_facturacion,f.fecha_facturacion,f.numero_factura, tpf.t
         from facturacion f inner join maestroclientes mc on f.idmaestroClientes=mc.idmaestroClientes 
         left join detallefacturacion df on f.idfacturacion=df.idfacturacion
         inner join tipo_facturacion tpf on f.id_tipo_facturacion=tpf.id_tipo_facturacion
-        where f.id_empresa=".$idempresa ." $idmc $idtpf and f.fecha_facturacion between STR_TO_DATE('$fecha_inicio','%d/%m/%Y') and STR_TO_DATE('$fecha_fin','%d/%m/%Y') 
+        where f.id_empresa=".$idempresa ." $idtpf and CONCAT(YEAR(f.fecha_facturacion),MONTH(f.fecha_facturacion)) BETWEEN $anio$mes_inicio and $anio$mes_fin 
         group by f.idfacturacion
         order by f.fecha_facturacion,length(f.numero_factura),f.numero_factura asc";
         
@@ -84,7 +126,7 @@ $sql = "Select f.id_tipo_facturacion,f.fecha_facturacion,f.numero_factura, tpf.t
                 </tr>
                 <tr>
                 <td style="width:25%" colspan="3"></td>
-                <td style="width:50%;text-align:center;" colspan="6">MES DE JULIO DE 2016</td>
+                <td style="width:50%;text-align:center;" colspan="6">MES DE '. strtoupper(mes($mes_inicio)) .' DE '. $anio.'</td>
                 <td style="width:25%" colspan="3"></td>
                 </tr>
                 <tr>
@@ -140,28 +182,7 @@ $sql = "Select f.id_tipo_facturacion,f.fecha_facturacion,f.numero_factura, tpf.t
                      <td width="65px" style="text-align:center" ><b>GRAVADA</b></td></tr>';
  
   //Funcion Para Clasificar Tipo Servicio de Carga para Airbox.
-  $total_aereo=0;
-  $total_maritimo=0;
-  $total_tramite_ajeno=0;
- function tipo_serv($servicio,$total,$tipo_factura){
-     global  $total_aereo,$total_maritimo,$total_tramite_ajeno;
-     if($_SESSION["idEmpresa"]==5 and $tipo_factura!=1){ //Comprobara si es Airbox
-        if(substr($servicio,0,4)=="HBOL") {
-            $total_maritimo+=$total;
-                return "MARITIMO";
-        }else if( (strlen($servicio)>=5 and substr($servicio,0,2)=="10")  or substr($servicio,0,4)=="HAWB"){
-             $total_aereo+=$total;   
-             return "AEREO";
-        }else {
-            $total_tramite_ajeno+=$total;
-             return "TR. AJENO";
-        }
-         
- } else { return "";}
- 
- }
   
-
   $subTValorNeto=0;
   $subTIva=0;
   $subTIvaRetenido=0;
@@ -233,14 +254,14 @@ if($exp!="-1"){
 header("Content-Type: application/vnd.ms-excel");
 header("Expires: 0");
 header("Cache-Control: must-revalidate, post-check=0, pre-check=0");
-header("content-disposition: attachment;filename=REP_FACTURADOS_$fecha_inicio-$fecha_fin.xls");
+header("content-disposition: attachment;filename=LIBRO_IVA_$mes_inicio_$anio.xls");
 echo $Reporte;
 
 }else{
 /////////////////////////////////////////////////////////////////////
 $pdf->writeHTML($Reporte, true, false, false, false, '');
 //Close and output PDF document
-$pdf->Output('Reporte Facturas Realizadas.pdf', 'I');
+$pdf->Output("Libro de IVA $mes_inicio $anio.pdf", 'I');
 }
 }
 

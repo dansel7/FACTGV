@@ -1,6 +1,6 @@
 Ext.define('MvcClientes.controller.Reportes.Reportes',{
 	extend		: 'Ext.app.Controller',
-        views		: ['Reportes.ShowReport1','Reportes.ShowReport2','Reportes.ShowReport3','Reportes.ShowReport4','Reportes.ShowPartidasDiario','Reportes.ShowGraf1'],
+        views		: ['Reportes.ShowReport1','Reportes.ShowReport2','Reportes.ShowReport3','Reportes.ShowReport4','Reportes.ShowPartidasDiario','Reportes.ShowLibroIVA','Reportes.ShowGraf1'],
 	refs:[ //Esta linea se usa cuando se hace referencia a una Vista dentro de un grid en un Controller
 	 
 	  {
@@ -58,6 +58,17 @@ Ext.define('MvcClientes.controller.Reportes.Reportes',{
                     'ShowPartidasDiario button[action=ShowPartidasDiarioEXCEL]'://Usando Ext.Component.Query
 			   {
 				 click:this.ShowPartidasDiarioEXCEL
+			   }
+                           ,
+                           
+                     'ShowLibroIVA button[action=ShowLibroIVAPDF]'://Usando Ext.Component.Query
+			   {
+				 click:this.ShowLibroIVAPDF
+			   }
+                           ,
+                     'ShowLibroIVA button[action=ShowLibroIVAEXCEL]'://Usando Ext.Component.Query
+			   {
+				 click:this.ShowLibroIVAEXCEL
 			   }
                            ,
                     'ShowGraf1 button[action=ShowGraf1]'://Usando Ext.Component.Query
@@ -135,6 +146,24 @@ Ext.define('MvcClientes.controller.Reportes.Reportes',{
             values = form.getValues();
            window.open("/facturaciones/php/contabilidad/PartidaDiario_Ventas.php?exp=1&fecha_ini="+values.fecha_inicio+"&fecha_fin="+values.fecha_fin, "nuevo", "location=no, menubar=no, scrollbars=yes, statusbar=no, tittlebar=no");
 	},
+        ShowLibroIVAPDF: function(button){
+            var win    = button.up('window'),
+            form   = win.down('form'),
+            values = form.getValues();
+            
+            if(form.getForm().isValid()){
+            window.open("/facturaciones/php/contabilidad/LibroIVA_Ventas.php?tpf="+values.id_tipo_facturacion+"&mes_inicio="+values.mes_inicio+"&mes_fin="+values.mes_fin+"&anio="+values.anio, "nuevo", "location=no, menubar=no, scrollbars=yes, statusbar=no, tittlebar=no");
+            }
+           
+	},
+        ShowLibroIVAEXCEL: function(button){
+            var win    = button.up('window'),
+            form   = win.down('form'),
+            values = form.getValues();
+            if(form.getForm().isValid()){
+            window.open("/facturaciones/php/contabilidad/LibroIVA_Ventas.php?exp=1&tpf="+values.id_tipo_facturacion+"&mes_inicio="+values.mes_inicio+"&mes_fin="+values.mes_fin+"&anio="+values.anio, "nuevo", "location=no, menubar=no, scrollbars=yes, statusbar=no, tittlebar=no");
+            }
+        },
         
         
          ShowGraf1: function(button){
