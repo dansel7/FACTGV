@@ -79,10 +79,10 @@ $sql = "SELECT
                 GROUP_CONCAT(DISTINCT ac.id_abono_clientes,';', ac.numero_cheque,';',iFNull((ac.monto_cheque),0),';',DATE_FORMAT(ac.fecha_pago, '%d/%m/%Y') order by ac.fecha_pago) abonos,
                 GROUP_CONCAT(DISTINCT idNotaCred,';', NotaC.numero_NotaC,';', iFNull((NotaC.venta_total),0),';',DATE_FORMAT(NotaC.fecha_Nota, '%d/%m/%Y')) NotasCredito
                 from facturacion f
-                inner join abono_clientes ac on f.idfacturacion=ac.idfacturacion
+                left join abono_clientes ac on f.idfacturacion=ac.idfacturacion
                 inner join maestroclientes mc on f.idmaestroClientes=mc.idmaestroClientes 
                 inner join tipo_facturacion tpf on f.id_tipo_facturacion=tpf.id_tipo_facturacion
-                left join (select idfacturacion idNotaCred,n_comprobante_credito idfactura, numero_factura numero_NotaC, venta_total,fecha_facturacion fecha_Nota from facturacion where id_tipo_facturacion=1 AND id_empresa=5 and anulado='No') NotaC on f.idfacturacion=NotaC.idfactura
+                left join (select idfacturacion idNotaCred,n_comprobante_credito idfactura, numero_factura numero_NotaC, venta_total,fecha_facturacion fecha_Nota from facturacion where id_tipo_facturacion=1 AND id_empresa=".$idempresa." and anulado='No') NotaC on f.idfacturacion=NotaC.idfactura
                 WHERE f.anulado='No' AND f.id_empresa=".$idempresa." $idmc $idnf $RangoFechas
                 AND f.id_tipo_facturacion!=1                 
                 group by f.idfacturacion
