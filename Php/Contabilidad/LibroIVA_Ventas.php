@@ -102,6 +102,9 @@ switch($id){
 $orientacion="landscape";
 $idempresa=isset($_SESSION["idEmpresa"])? $_SESSION["idEmpresa"]:"-1";
 
+//-------- CLASIFICACION DE TIPO DE COMPROBANTE ---------//
+
+
 // ---------------INICIO DEL REPORTE-----------------
 $sql = "Select f.id_tipo_facturacion,f.fecha_facturacion,f.numero_factura, tpf.tipo,f.hawb,mc.nom_cliente,mc.nrc,mc.nit,
         sum(df.venta_nosujeta) nosujeta,sum(df.venta_exenta) exenta, sum(df.venta_gravada) gravada,
@@ -254,14 +257,14 @@ if($exp!="-1"){
 header("Content-Type: application/vnd.ms-excel");
 header("Expires: 0");
 header("Cache-Control: must-revalidate, post-check=0, pre-check=0");
-header("content-disposition: attachment;filename=LIBRO_IVA_$mes_inicio_$anio.xls");
+header("content-disposition: attachment;filename=LIBRO_IVA_". strtoupper(mes($mes_inicio)) . "_$anio.xls");
 echo $Reporte;
 
 }else{
 /////////////////////////////////////////////////////////////////////
 $pdf->writeHTML($Reporte, true, false, false, false, '');
 //Close and output PDF document
-$pdf->Output("Libro de IVA $mes_inicio $anio.pdf", 'I');
+$pdf->Output("Libro de IVA ". strtoupper(mes($mes_inicio)) . " $anio.pdf", 'I');
 }
 }
 

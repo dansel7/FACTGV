@@ -1,6 +1,6 @@
 Ext.define('MvcClientes.controller.Reportes.Reportes',{
 	extend		: 'Ext.app.Controller',
-        views		: ['Reportes.ShowReport1','Reportes.ShowReport2','Reportes.ShowReport3','Reportes.ShowReport4','Reportes.ShowPartidasDiario','Reportes.ShowLibroIVA','Reportes.ShowGraf1'],
+        views		: ['Reportes.ShowReport1','Reportes.ShowReport2','Reportes.ShowReport3','Reportes.ShowReport4','Reportes.ShowReport5','Reportes.ShowPartidasDiario','Reportes.ShowLibroIVA','Reportes.ShowGraf1'],
 	refs:[ //Esta linea se usa cuando se hace referencia a una Vista dentro de un grid en un Controller
 	 
 	  {
@@ -48,6 +48,16 @@ Ext.define('MvcClientes.controller.Reportes.Reportes',{
                     'ShowReport4 button[action=ShowReport4EXCEL]'://Usando Ext.Component.Query
 			   {
 				 click:this.ShowReport4EXCEL
+			   }
+                           ,
+                    'ShowReport5 button[action=ShowReport5PDF]'://Usando Ext.Component.Query
+			   {
+				 click:this.ShowReport5PDF
+			   }
+                           ,
+                    'ShowReport5 button[action=ShowReport5EXCEL]'://Usando Ext.Component.Query
+			   {
+				 click:this.ShowReport5EXCEL
 			   }
                            ,
                      'ShowPartidasDiario button[action=ShowPartidasDiarioPDF]'://Usando Ext.Component.Query
@@ -132,6 +142,19 @@ Ext.define('MvcClientes.controller.Reportes.Reportes',{
             form   = win.down('form'),
             values = form.getValues();
            window.open("/facturaciones/php/reportes/reporte_4.php?idmc="+values.idmaestroClientes+"&exp=1&fecha_ini="+values.fecha_inicio+"&fecha_fin="+values.fecha_fin, "nuevo", "location=no, menubar=no, scrollbars=yes, statusbar=no, tittlebar=no");
+	},
+        
+         ShowReport5PDF: function(button){
+            var win    = button.up('window'),
+            form   = win.down('form'),
+            values = form.getValues();
+           window.open("/facturaciones/php/reportes/reporte_5.php?idmc="+values.idmaestroClientes+"&fecha_ini="+values.fecha_inicio+"&fecha_fin="+values.fecha_fin+"&idnf="+values.numfact, "nuevo", "location=no, menubar=no, scrollbars=yes, statusbar=no, tittlebar=no");
+	},
+        ShowReport5EXCEL: function(button){
+            var win    = button.up('window'),
+            form   = win.down('form'),
+            values = form.getValues();
+           window.open("/facturaciones/php/reportes/reporte_5.php?idmc="+values.idmaestroClientes+"&exp=1&fecha_ini="+values.fecha_inicio+"&fecha_fin="+values.fecha_fin+"&idnf="+values.numfact, "nuevo", "location=no, menubar=no, scrollbars=yes, statusbar=no, tittlebar=no");
 	},
         
          ShowPartidasDiarioPDF: function(button){

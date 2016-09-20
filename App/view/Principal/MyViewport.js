@@ -206,6 +206,11 @@ Ext.define('MvcClientes.view.Principal.MyViewport',{
                                                addTabDashboard1();
                                       
                                            }
+                                        if (index==6)
+                                           {
+                                               ShowReport_5();
+                                      
+                                           }
                             }
                         } ,
                         root: {
@@ -241,6 +246,12 @@ Ext.define('MvcClientes.view.Principal.MyViewport',{
                                         {
                                         text: 'Dashboard',
                                         leaf: true
+                                        },
+                                        {
+                                        text: 'Estado de Factura y Abonos',
+                                        leaf: true,
+                                        iconCls:'reportes'
+                                        
                                         }
                                     ]
                         },
@@ -614,6 +625,9 @@ Ext.define('MvcClientes.view.Principal.MyViewport',{
        } 
        function ShowReport_4(){
           var FrmReporte4= Ext.widget('ShowReport4');
+       } 
+        function ShowReport_5(){
+          var FrmReporte5= Ext.widget('ShowReport5');
        } 
         /////////////////////////////////////////
        //---------------GRAFICAS-------------//
