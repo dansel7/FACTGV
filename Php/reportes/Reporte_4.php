@@ -18,7 +18,7 @@ $idempresa=isset($_SESSION["idEmpresa"])? $_SESSION["idEmpresa"]:"-1";
 // ---------------INICIO DEL REPORTE-----------------
 
         $sql="select f.fecha_facturacion,f.id_tipo_facturacion,f.numero_factura,mc.nom_cliente,f.hawb,
-        f.venta_total-f.iva+f.iva_retenido valor_neto,
+        f.venta_total-f.iva+f.iva_retenido valor_neto,df.concepto,
         f.iva,f.iva_retenido,f.venta_total,f.anulado,
         GROUP_CONCAT(df.id_servicio ORDER BY df.id_servicio) id_servicio,
         GROUP_CONCAT(df.venta_nosujeta + df.venta_exenta + df.venta_gravada ORDER BY df.id_servicio) ventas
@@ -52,6 +52,7 @@ $idempresa=isset($_SESSION["idEmpresa"])? $_SESSION["idEmpresa"]:"-1";
   $cuerpo_detalle.= '<table style="font-size: 11px" cellpadding="1">
                      <tr><td  style="text-align:center"><b>FECHA DE CCF</b></td>
                      <td  style="text-align:center"><b>NUMERO DE CCF</b></td> 
+                     <td style="text-align:center"><b>NUMERO DM</b></td> 
                      <td style="text-align:center" ><b>CLIENTE</b></td>
                      <td style="text-align:center;width:80px" ><b>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</b></td>';
     
@@ -110,11 +111,13 @@ $idempresa=isset($_SESSION["idEmpresa"])? $_SESSION["idEmpresa"]:"-1";
   $flag=0;
 
   while($rows_e = mysql_fetch_array($result)){
+      preg_match_all('/[1-9]-[0-9]+/', $rows_e["concepto"], $m );
       $flag++;
         if($rows_e["anulado"]=="Si"){
         $cuerpo_detalle.= "<tr style=\"background-color:yellow\">
                           <td  style=\"text-align:right\"> ".substr($rows_e["fecha_facturacion"],0,11) ."</td> 
                           <td  style=\"text-align:center\">".$rows_e["numero_factura"] ."</td>
+                          <td  style=\"text-align:center\">&nbsp;</td>       
                           <td  style=\"text-align:left\">".$rows_e["nom_cliente"] ."</td>
                           <td  style=\"text-align:center\" colspan=\"". ($num_row_ser+5) ."\">------------------------------      <b>FACTURA ANULADA</b>    ------------------------------</td></tr>";
         }
@@ -123,7 +126,8 @@ $idempresa=isset($_SESSION["idEmpresa"])? $_SESSION["idEmpresa"]:"-1";
 
         $cuerpo_detalle.= "<tr> 
                          <td  style=\"text-align:right\"> ".substr($rows_e["fecha_facturacion"],0,11) ."</td> 
-                         <td  style=\"text-align:center\">".$rows_e["numero_factura"] ."</td>
+                         <td  style=\"text-align:center;border:solid 1px\">".$rows_e["numero_factura"] ."</td>
+                         <td width=\"120px\" style=\"text-align:left;border:solid 1px\">". implode(", ", $m[0]) ."</td>                                
                          <td  style=\"text-align:left\">".$rows_e["nom_cliente"] ."</td>
                          <td  style=\"text-align:left\">".tipo_serv($rows_e["hawb"],$rows_e["venta_total"],$rows_e["id_tipo_facturacion"]) ."</td>";
 
@@ -190,8 +194,8 @@ $idempresa=isset($_SESSION["idEmpresa"])? $_SESSION["idEmpresa"]:"-1";
         }
        
         }
-        $cuerpo_detalle.='<tr><td colspan="7"></td></tr>';
-        $cuerpo_detalle.='<tr><td style="text-align:right" colspan="4"><b>TOTALES</b></td>';
+        $cuerpo_detalle.='<tr><td colspan="8"></td></tr>';
+        $cuerpo_detalle.='<tr><td style="text-align:right" colspan="5"><b>TOTALES</b></td>';
           
    foreach($total_venta as $s){
                 $cuerpo_detalle.= "<td  style=\"text-align:right\"><b>". number_format($s,2) ."</b></td>";
