@@ -23,15 +23,14 @@ Ext.define('MvcClientes.model.Facturacion.Facturacion', {
                                 { name: 'anulado', type: 'string'},
                                 { name: 'peso', type: 'number'},
                                 { name: 'nbultos', type: 'int'},
-                                { name: 'embarcador', type: 'string'},
                                 { name: 'wr', type: 'string'},
                                 { name: 'hawb', type: 'string'},
                                 { name: 'mawb', type: 'string'},
-                                { name: 'tipo_servicio_carga', type: 'string'}
+                                { name: 'tipo_servicio_carga', type: 'string'},
+                                { name: 'sal', type: 'string'},
+                                { name: 'hbol', type: 'string'},
+                                { name: 'id_orden_servicio', type: 'int'},
+                                { name: 'fecha_orden_servicio',  type: 'date',dateFormat:'d/m/Y'}
+                                
            ]
-});
-
-			
-			
-			
-	
+});	

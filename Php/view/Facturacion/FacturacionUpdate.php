@@ -28,10 +28,13 @@ mysql_select_db($db_name,$connection) or die("Error de conexion a la base de dat
 	$anulado=$data->anulado;
         $peso=$data->peso;
         $nbultos=$data->nbultos;
-        $embarcador=$data->embarcador;
         $wr=$data->wr;
         $hawb=$data->hawb;
         $mawb=$data->mawb;
+        $sal=$data->sal;
+        $hbol=$data->hbol;
+        $id_orden_servicio=$data->id_orden_servicio;
+        $fecha_orden_servicio=($data->fecha_orden_servicio=='')?'0000-00-00':$data->fecha_orden_servicio;
         $tipo_servicio_carga=$data->tipo_servicio_carga;
         $id = $data->idfacturacion;
 
@@ -57,11 +60,14 @@ mysql_select_db($db_name,$connection) or die("Error de conexion a la base de dat
                             `id_empresa`=$id_empresa,
                             `anulado`='$anulado',   
                             `peso`=$peso,
-                            `nbultos`=$nbultos,
-                            `embarcador`='$embarcador',    
+                            `nbultos`=$nbultos,  
                             `wr`='$wr',
                             `hawb`='$hawb',
-                            `mawb`='$mawb',        
+                            `mawb`='$mawb',
+                            `sal`='$sal',
+                            `hbol`='$hbol',
+                            `id_orden_servicio`='$id_orden_servicio',    
+                            `fecha_orden_servicio`='$fecha_orden_servicio',       
                             `tipo_servicio_carga`='$tipo_servicio_carga',
                             `id_tipo_facturacion`=$id_tipo_facturacion,
                             `auditoria_fecha_update`=NOW(),   

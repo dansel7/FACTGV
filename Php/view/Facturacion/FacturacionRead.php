@@ -43,10 +43,13 @@
                         tf.tipo tipo_facturacion,
                         f.peso,
                         f.nbultos,
-                        f.embarcador,
                         f.wr,
                         f.hawb,
                         f.mawb,
+                        f.sal,
+                        f.hbol,
+                        f.id_orden_servicio,
+                        f.fecha_orden_servicio,
                         f.anulado,
                         f.tipo_servicio_carga
                         FROM facturacion f 

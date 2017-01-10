@@ -63,7 +63,7 @@ $orientacion="vertical";
                
                 df.cantidad,concat(cs.servicio , '' , df.concepto) concepto,df.valor_concepto,venta_nosujeta,venta_exenta,venta_gravada,
                
-                f.venta_total,f.iva,f.iva_retenido,peso,nbultos,wr,hawb,mawb,sal,hbol,IF(id_orden_servicio>0,id_orden_servicio,'') id_orden_servicio,IF(fecha_orden_servicio='0000-00-00','',DATE_FORMAT(fecha_orden_servicio,'%d/%m/%Y')) fecha_orden_servicio,tipo_servicio_carga
+                f.venta_total,f.iva,f.iva_retenido,peso,nbultos,embarcador,wr,hawb,mawb,tipo_servicio_carga
                 FROM facturacion f 
                 LEFT JOIN detalleFacturacion df on f.idFacturacion=df.idFacturacion 
                 INNER JOIN maestroclientes mc on mc.idmaestroClientes=f.idmaestroClientes
@@ -105,7 +105,7 @@ $orientacion="vertical";
                 <td height="18px"  width="30px">&nbsp;</td>
                 <td style="text-align:left"  width="380px">'.strtoupper($rows_e["venta_acta_de"]) .'</td>
                 <td height="20px" style="text-align:left">'.strtoupper($rows_e["departamento"]).'</td>
-                <td style="text-align:left;font-size:10pt" width="200px">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;'. $rows_e["sal"] .'</td>
+                <td style="text-align:center;font-size:8pt" width="210px">'. $rows_e["embarcador"] .'</td>
                 
             </tr>
              <tr>
@@ -113,28 +113,19 @@ $orientacion="vertical";
                 <td style="text-align:left"  width="110px">'. $rows_e["nit"] .'</td>
                 <td style="text-align:center" width="100px">&nbsp;'. $rows_e["nrc"] .'</td>
                 <td style="text-align:right;font-size:9pt" width="225px" >'.strtoupper($rows_e["giro"]).'</td>
-                <td style="text-align:left;font-size:10pt" width="200px">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;'. strtoupper($rows_e["hbol"]) .'</td>
+                <td style="text-align:left;font-size:10pt" width="200px">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;'. strtoupper($rows_e["wr"]) .'</td>
             </tr>
             <tr>
                 <td>&nbsp;</td>
                 <td colspan="2" style="text-align:right" width="240px">'.strtoupper($rows_e["cond_operacion"]).'</td>
                 <td style="text-align:right" width="170px">'.strtoupper($rows_e["tipo_servicio_carga"]).'</td>
-                <td  height="18px" style="text-align:left;font-size:10pt" width="240px">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;'. strtoupper($rows_e["hawb"]) .'</td>    
+                <td  height="18px" style="text-align:left;font-size:10pt" width="240px">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;'. strtoupper($rows_e["hawb"]) .'</td>    
             </tr>
-                
+                <td colspan="4" width="515px"></td>
+                <td style="text-align:left;font-size:10pt" width="200px">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;'. strtoupper($rows_e["mawb"]) .'</td>    
             <tr>
-            <td colspan="2">&nbsp;</td>
-            <td style="text-align:left" colspan="2"  width="235px">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;'.strtoupper($rows_e["id_orden_servicio"]) .'</td>
-            <td style="text-align:right;font-size:8pt" width="170px">'.strtoupper($rows_e["fecha_orden_servicio"]).'</td>
-            <td style="text-align:left;font-size:10pt" width="200px">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;'. strtoupper($rows_e["mawb"]) .'</td>    
-            </tr>
-            <tr>
-            <td colspan="2">&nbsp;</td>
-            <td style="text-align:left" colspan="2"  width="235px">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
-            <td style="text-align:right;font-size:8pt" width="170px"></td>
-            <td style="text-align:left;font-size:10pt" width="200px">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;'. strtoupper($rows_e["wr"]) .'</td>    
-            </tr>
             
+            </tr>
             </table><br>
             <table style="table-layout:fixed;font-size:11.2pt">
                  <tr><td colspan="4" height="60px"></td></tr>

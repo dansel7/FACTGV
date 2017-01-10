@@ -189,7 +189,7 @@ if(typeof(records) != "undefined" && typeof(records) != "string"){
                                                  Ext.getCmp("n_comprobante_credito").disable();
                                                  Ext.getCmp("GastosR").show();
                                             }
-                                            //PARA QUE MUESTRE U OCULTE CUANDO SEA AIR WAY BILL
+                                            //PARA QUE MUESTRE U OCULTE CUANDO SEA AIRBOX
                                             if(this.value==="6" || this.value==="7"){
                                                 Ext.getCmp("tipo_servicio_carga").show();
                                                 Ext.getCmp("awbDatos").show();
@@ -238,7 +238,7 @@ if(typeof(records) != "undefined" && typeof(records) != "string"){
                                      }
                                    }
                                },
-/*Tipo Servicio Carga AWB*/ {xtype : "combobox", queryMode: 'remote',fieldLabel: "Tipo de Servicio (Exclusivo AWB)",
+/*Tipo Servicio Carga AWB*/ {xtype : "combobox", queryMode: 'remote',fieldLabel: "Tipo de Servicio (Exclusivo ABX)",
                              store: TpServCarga,displayField: 'tipo_serv',valueField: 'cod_serv',hidden:true,
                                  name:"tipo_servicio_carga", id:"tipo_servicio_carga", flex: 1, margin: '0 10 0 0',width:340
                              },
@@ -247,19 +247,22 @@ if(typeof(records) != "undefined" && typeof(records) != "string"){
                         
                         
                             //Campos para AWB
-                            {xtype: 'fieldset',title: 'Datos exclusivos para AWB', width:900,id:'awbDatos',
+                            {xtype: 'fieldset',title: 'Datos exclusivos para ABX', width:900,id:'awbDatos',
                             layout: {
-                                    columns: 6,
+                                    columns: 3,
                                     type: 'table'
                             },  hidden:true,
                             items:[
-                               
-                            {xtype : 'numberfield', name : "peso", fieldLabel : "Peso", flex:1,labelWidth:30,width:100,decimalPrecision: 3,  hideTrigger: true, decimalSeparator: "." , margin: '0 10 5 0'},
-                            {xtype : "numberfield", name : "nbultos", fieldLabel : "Num. Bultos", flex: 1 ,labelWidth:70,width:125 ,allowDecimals: false, hideTrigger: true, margin: '0 10 0 0'},
-                            {xtype : "textfield", name : "embarcador", fieldLabel : "Embarcador", flex: 1 ,labelWidth:80,width:250 , margin: '0 10 0 0'},
-                            {xtype : "textfield", name : "wr", fieldLabel : "WR", flex: 1,labelWidth:18,width:100 , margin: '0 10 0 0'},
-                            {xtype : "textfield", name : "hawb", fieldLabel : "HAWB", flex: 1,labelWidth:33,width:115 , margin: '0 10 0 0'},
-                            {xtype : "textfield", name : "mawb", fieldLabel : "MAWB", flex: 1,labelWidth:33,width:115 , margin: '0 10 0 0'}
+                            
+                            {xtype : "textfield", name : "id_orden_servicio", fieldLabel : "Numero de Orden", flex: 1, margin: '0 10 5 0'},
+                            {xtype : "datefield", format: 'd/m/Y', name : "fecha_orden_servicio", fieldLabel : "Fecha de Orden",  margin: '0 10 5 0'},
+                            {xtype : "textfield", name : "sal", fieldLabel : "SAL", flex: 1, margin: '0 10 5 0'},
+                            {xtype : 'numberfield', name : "peso", fieldLabel : "Peso", flex:1,decimalPrecision: 3,  hideTrigger: true, decimalSeparator: "." , margin: '0 10 5 0'},
+                            {xtype : "numberfield", name : "nbultos", fieldLabel : "N. de Bultos", flex: 1 , allowDecimals: false, hideTrigger: true, margin: '0 10 5 0'},
+                            {xtype : "textfield", name : "hbol", fieldLabel : "HBOL", flex: 1, margin: '0 10 5 0'},
+                            {xtype : "textfield", name : "wr", fieldLabel : "WR", flex: 1, margin: '0 10 5 0'},
+                            {xtype : "textfield", name : "hawb", fieldLabel : "HAWB", flex: 1, margin: '0 10 5 0'},
+                            {xtype : "textfield", name : "mawb", fieldLabel : "MAWB", flex: 1, margin: '0 10 5 0'},
                             ]},
                         
                         
