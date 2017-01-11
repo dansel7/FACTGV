@@ -8,7 +8,7 @@ mysql_select_db($db_name,$connection) or die("Error de conexion a la base de dat
 
 	$data = json_decode($info);
 
-	$Nombre = $data->nombre;
+	$Nombre = addslashes($data->nombre);
 
 	
                  $SqlInsert ="INSERT INTO empresa
