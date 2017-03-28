@@ -115,7 +115,7 @@ Ext.define('MvcClientes.controller.Facturacion.Facturacion',{
                      Ext.getCmp("GastosR").show();
                 }
                 //PARA QUE MUESTRE U OCULTE CUANDO SEA AIR WAY BILL
-                if(Ext.getCmp("id_tipo_factura").value==6 || Ext.getCmp("id_tipo_factura").value==7){
+                if(Ext.getCmp("id_tipo_factura").value==6 || Ext.getCmp("id_tipo_factura").value==7 || Ext.getCmp("id_tipo_factura").value==8){
                     Ext.getCmp("tipo_servicio_carga").show();
                     Ext.getCmp("awbDatos").show();
                 }else{

@@ -78,7 +78,7 @@ Ext.require([
 
      //STORE DE LA DATA
         var st_data = new Ext.data.Store({
-            fields: ['Fecha','Anio', 'Mes','Facturado','Abonado','Nota_Credito','Pendiente',
+            fields: ['Fecha','Anio', 'Mes','Facturado','Gastos','Abonado','Nota_Credito','Pendiente',
                     'Porcentaje_Abonado','Porcentaje_Nota_Credito','Porcentaje_Pendiente'],
             proxy: {
                 type: 'ajax',
@@ -187,6 +187,13 @@ Ext.require([
                 flex: 1,
                 sortable : true,
                 dataIndex: 'Facturado',
+                renderer : DolarAmericano
+            },
+            {
+                text   : 'Gastos',
+                flex: 1,
+                sortable : true,
+                dataIndex: 'Gastos',
                 renderer : DolarAmericano
             },
             {

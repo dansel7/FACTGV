@@ -5,9 +5,9 @@ error_reporting(0);
 session_start();
 
 if(!isset($_SESSION['benutzer']) || !isset($_SESSION["idEmpresa"]) ){
-		$direccion = "Location: ../../index.php";
-		header($direccion);
-	}else{
+    $direccion = "Location: ../../index.php";
+    header($direccion);
+  }else{
 
 require_once('../Database_conf.php');
 $fecha_inicio=$_GET["fecha_ini"];
@@ -17,11 +17,12 @@ $idmc=($_GET["idmc"]>0)? " AND mc.idmaestroclientes=".$_GET["idmc"]:"";
 $idempresa=isset($_SESSION["idEmpresa"])? $_SESSION["idEmpresa"]:"-1";
 // ---------------INICIO DEL REPORTE-----------------
 
-        $sql="select f.fecha_facturacion,f.id_tipo_facturacion,f.numero_factura,mc.nom_cliente,f.hawb,
+        $sql="select f.fecha_facturacion,f.id_tipo_facturacion,f.numero_factura,mc.nom_cliente,f.hawb,tipo_servicio_carga,
         f.venta_total-f.iva+f.iva_retenido valor_neto,df.concepto,
         f.iva,f.iva_retenido,f.venta_total,f.anulado,
         GROUP_CONCAT(df.id_servicio ORDER BY df.id_servicio) id_servicio,
-        GROUP_CONCAT(df.venta_nosujeta + df.venta_exenta + df.venta_gravada ORDER BY df.id_servicio) ventas
+        GROUP_CONCAT(df.venta_nosujeta + df.venta_exenta + df.venta_gravada ORDER BY df.id_servicio) ventas,
+        venta_acta_de
         from detalleFacturacion df 
         inner join facturacion f on df.idfacturacion=f.idfacturacion 
         inner join catalogo_servicios cs on cs.id_servicio=df.id_servicio
@@ -32,7 +33,7 @@ $idempresa=isset($_SESSION["idEmpresa"])? $_SESSION["idEmpresa"]:"-1";
         order by f.fecha_facturacion, numero_factura,id_tipo_facturacion,df.id_servicio";
 //echo $sql;
         
-    	$result = mysql_query($sql,$connection) or die('La consulta fall&oacute;: '.mysql_error());	
+      $result = mysql_query($sql,$connection) or die('La consulta fall&oacute;: '.mysql_error()); 
         
         $sql_serv = "select cs.servicio servicio,cs.id_servicio id_servicio,
         sum(IF(f.id_tipo_facturacion=1,(df.venta_nosujeta + df.venta_exenta + df.venta_gravada)*-1,(df.venta_nosujeta + df.venta_exenta + df.venta_gravada))) ventas
@@ -42,7 +43,7 @@ $idempresa=isset($_SESSION["idEmpresa"])? $_SESSION["idEmpresa"]:"-1";
         and f.anulado<>'Si' and f.fecha_facturacion between STR_TO_DATE('$fecha_inicio','%d/%m/%Y') and STR_TO_DATE('$fecha_fin','%d/%m/%Y')
         group by df.id_servicio";
 
-    	$serv_res = mysql_query($sql_serv,$connection) or die('La consulta fall&oacute;: '.mysql_error());	
+      $serv_res = mysql_query($sql_serv,$connection) or die('La consulta fall&oacute;: '.mysql_error());  
         
   $encabezado="<h2><img src=\"/facturaciones/resources/imagenes/gvlogo.png\" align=\"left\">
       &nbsp;Reporte Detalle de Facturacion - {$_SESSION["nombreEmpresa"]}<br><br><br><br></h2>";
@@ -84,13 +85,13 @@ $idempresa=isset($_SESSION["idEmpresa"])? $_SESSION["idEmpresa"]:"-1";
   $total_aereo=0;
   $total_maritimo=0;
   $total_tramite_ajeno=0;
- function tipo_serv($servicio,$total,$tipo_factura){
+function tipo_serv($servicio,$total,$tipo_factura,$tipo_carga=""){
      global  $total_aereo,$total_maritimo,$total_tramite_ajeno;
      if($_SESSION["idEmpresa"]==5 and $tipo_factura!=1){ //Comprobara si es Airbox
-        if(substr($servicio,0,4)=="HBOL") {
+        if(substr($servicio,0,4)=="HBOL" or $tipo_carga=="MAR") {
             $total_maritimo+=$total;
-             return "MARITIMO";
-        }else if( (strlen($servicio)>=5 and substr($servicio,0,2)=="10")  or substr($servicio,0,4)=="HAWB"){
+                return "MARITIMO";
+        }else if( (strlen($servicio)>=5 and substr($servicio,0,2)=="10")  or substr($servicio,0,4)=="HAWB" or $tipo_carga=="CAR"){
              $total_aereo+=$total;   
              return "AEREO";
         }else {
@@ -98,7 +99,7 @@ $idempresa=isset($_SESSION["idEmpresa"])? $_SESSION["idEmpresa"]:"-1";
              return "TR. AJENO";
         }
          
-     } else { return "";}
+ } else { return "";}
  
  }
   ///////FIN FUNCION PARA DEFINIR TIPO SERVICIO AIRBOX/////
@@ -128,8 +129,8 @@ $idempresa=isset($_SESSION["idEmpresa"])? $_SESSION["idEmpresa"]:"-1";
                          <td  style=\"text-align:right\"> ".substr($rows_e["fecha_facturacion"],0,11) ."</td> 
                          <td  style=\"text-align:center;border:solid 1px\">".$rows_e["numero_factura"] ."</td>
                          <td width=\"120px\" style=\"text-align:left;border:solid 1px\">". implode(", ", $m[0]) ."</td>                                
-                         <td  style=\"text-align:left\">".$rows_e["nom_cliente"] ."</td>
-                         <td  style=\"text-align:left\">".tipo_serv($rows_e["hawb"],$rows_e["venta_total"],$rows_e["id_tipo_facturacion"]) ."</td>";
+                         <td  style=\"text-align:left\">".$rows_e["nom_cliente"].(($rows_e["venta_acta_de"]!="")?(":<br>".$rows_e["venta_acta_de"]):"")  ."</td>
+                         <td  style=\"text-align:left\">".tipo_serv($rows_e["hawb"],$rows_e["venta_total"],$rows_e["id_tipo_facturacion"],$rows_e["tipo_servicio_carga"]) ."</td>";
 
           $serv=explode(',',$rows_e["id_servicio"]);
           $servTotal=  count(array_unique($serv));

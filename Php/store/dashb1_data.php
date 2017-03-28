@@ -48,14 +48,15 @@ if(isset($_GET["token"]) && $benutzer!="" ){
                         when 12 then 'Diciembre' END ) Fecha,
                         T1.Anio,T2.mes Mes,
                         ifnull(facturado,0) Facturado,
+                        ifnull(gastos,0) Gastos,
                         ifnull(abonado,0) Abonado,
                         ifnull(nota_credito,0) Nota_Credito,
-                        (ifnull(facturado,0)-ifnull(abonado,0)-ifnull(nota_credito,0)) Pendiente,
-                        round(ifnull(abonado,0)/ifnull(facturado,0),3)*100 Porcentaje_Abonado, 
-                        round(ifnull(nota_credito,0)/ifnull(facturado,0),3)*100 Porcentaje_Nota_Credito ,
-                        round((ifnull(facturado,0)-ifnull(abonado,0)-ifnull(nota_credito,0))/ifnull(facturado,0),3)*100 Porcentaje_Pendiente
+                        ((ifnull(facturado,0)+ifnull(gastos,0))-ifnull(abonado,0)-ifnull(nota_credito,0)) Pendiente,
+                        round(ifnull(abonado,0)/(ifnull(facturado,0)+ifnull(gastos,0)),3)*100 Porcentaje_Abonado, 
+                        round(ifnull(nota_credito,0)/(ifnull(facturado,0)+ifnull(gastos,0)),3)*100 Porcentaje_Nota_Credito ,
+                        round(((ifnull(facturado,0)+ifnull(gastos,0))-ifnull(abonado,0)-ifnull(nota_credito,0))/ifnull(facturado,0),3)*100 Porcentaje_Pendiente
                          FROM
-                        (select year(fecha_facturacion) anio,MONTH(fecha_facturacion) mes,sum(venta_total) facturado 
+                        (select year(fecha_facturacion) anio,MONTH(fecha_facturacion) mes,sum(venta_total) facturado, sum(gastos_reintegro) gastos 
                                     from facturacion
                                     WHERE id_tipo_facturacion!=1 and anulado='No' and id_empresa=".$idempresa ."
                                     ".$mes." ".$dmes ." ".$hmes ." ".$anio ."

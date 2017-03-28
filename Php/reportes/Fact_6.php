@@ -108,12 +108,12 @@ $orientacion="vertical";
                 <td style="text-align:left;font-size:10pt" width="200px">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;'. $rows_e["sal"] .'</td>
                 
             </tr>
-             <tr>
+            <tr>
                 <td height="18px"  width="30px">&nbsp;</td>
                 <td style="text-align:left"  width="110px">'. $rows_e["nit"] .'</td>
                 <td style="text-align:center" width="100px">&nbsp;'. $rows_e["nrc"] .'</td>
-                <td style="text-align:right;font-size:9pt" width="225px" >'.strtoupper($rows_e["giro"]).'</td>
-                <td style="text-align:left;font-size:10pt" width="200px">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;'. strtoupper($rows_e["hbol"]) .'</td>
+                <td style="text-align:right;font-size:9pt" width="250px" >'.strtoupper($rows_e["giro"]).'</td>
+                <td style="text-align:left;font-size:10pt" width="200px">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;'. strtoupper($rows_e["hbol"]) .'</td>
             </tr>
             <tr>
                 <td>&nbsp;</td>
@@ -174,10 +174,10 @@ $orientacion="vertical";
                           <td width="70px"style="text-align:right">'. sinZero(number_format($subTotal,2)) .'</td>
                       </tr>
                       <tr><td colspan="6" style="text-align:left">
-                        <table width="698px" cellspacing="4">
+                       <table cellspacing="4">
                         <tr>
-                           <td>'. strtoupper($Total_enLetras->ValorEnLetras($rows_e["venta_total"],"Dolares")) .'</td>
-                           <td height="18px" style="text-align:right">'.sinZero($rows_e["iva"]) .'</td>
+                           <td  width="487px">'. strtoupper($Total_enLetras->ValorEnLetras($rows_e["venta_total"],"Dolares")) .'</td>
+                           <td  width="200px" height="18px" style="text-align:right">'.sinZero($rows_e["iva"]) .'</td>
                          </tr>
                          <tr>
                            <td height="18px" style="text-align:right" colspan="2" >'. sinZero(number_format($subTotal+$rows_e["iva"],2)) .'</td>

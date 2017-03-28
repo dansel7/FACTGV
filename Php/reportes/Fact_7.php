@@ -1,5 +1,5 @@
 <?php
-////FACTURA CONSUMIDOR FINAL AWB
+////FACTURA CONSUMIDOR FINAL
 
 error_reporting(0);
 session_start();
@@ -36,7 +36,7 @@ $pdf->SetPrintFooter(false);
 
 //set margins
 //$pdf->SetMargins(PDF_MARGIN_LEFT, PDF_MARGIN_TOP, PDF_MARGIN_RIGHT);
-$pdf->SetMargins(1.3, 1.1, 0.635);
+$pdf->SetMargins(0.8, 1.1, 0.635);
 
 //$pdf->SetHeaderMargin(0);
 //$pdf->SetFooterMargin(15);
@@ -116,7 +116,7 @@ $orientacion="vertical";
 			 <tr>
                 <td  width="55px" colspan="2">&nbsp;</td>
                 <td  width="170px">'. $rows_e["nit"] .'</td>
-                <td style="text-align:center" width="250px">&nbsp;</td>
+                <td style="text-align:center" width="250px">'.strtoupper($rows_e["venta_acta_de"]).'</td>
                 <td style="text-align:left" width="200px" >'.strtoupper($rows_e["mawb"]).'</td>
             </tr>
             
@@ -132,16 +132,16 @@ $orientacion="vertical";
                         '. strtoupper($rows_e["concepto"])  .'
                         </td>
                         <td width="60px" style="text-align:right" >
-                        '. number_format($rows_e["valor_concepto"]*1.13,2) .'
+                        '. sinZero(number_format($rows_e["valor_concepto"]*1.13,2)) .'
                         </td>
                         <td width="60px" style="text-align:right">
-                        '. number_format($rows_e["venta_nosujeta"],2) .'
+                        '. sinZero(number_format($rows_e["venta_nosujeta"],2)) .'
                         </td>
                         <td width="60px" style="text-align:right">
-                        '. number_format($rows_e["venta_exenta"],2) .'
+                        '. sinZero(number_format($rows_e["venta_exenta"],2)) .'
                         </td>
                         <td width="60px" style="text-align:right">
-                        '. number_format($rows_e["venta_gravada"]*1.13,2) .'
+                        '. sinZero(number_format($rows_e["venta_gravada"]*1.13,2)) .'
                         </td>
                     </tr>';
         
@@ -149,12 +149,12 @@ $orientacion="vertical";
         $tot_venta_no_sujeta+=$rows_e["venta_nosujeta"];
         $tot_venta_exentas+=$rows_e["venta_exenta"];
         //ESTA ES LA PARTE QUE CONTIENE EL TOTAL EN LETRAS Y SUS DESGLOSES
-        $pie_factura='<tr><td colspan="6" height="15px"></td></tr>
+        $pie_factura='<tr><td colspan="6" height="135px"></td></tr>
                       <tr><td colspan="2" width="445px"></td>
                           <td width="60px"></td>
-                          <td width="60px" style="text-align:right">'. number_format($tot_venta_no_sujeta,2) .'</td>
-                          <td width="60px" style="text-align:right">'. number_format($tot_venta_exentas,2) .'</td>
-                          <td width="59px" style="text-align:right">'. number_format($subTotal*1.13,2) .'</td>
+                          <td width="60px" style="text-align:right">'. sinZero(number_format($tot_venta_no_sujeta,2)) .'</td>
+                          <td width="60px" style="text-align:right">'. sinZero(number_format($tot_venta_exentas,2)) .'</td>
+                          <td width="59px" style="text-align:right">'. sinZero(number_format($subTotal*1.13,2)) .'</td>
                       </tr>
                       <tr><td colspan="6" style="text-align:left">
                         <table width="680px" cellspacing="4">
@@ -163,16 +163,16 @@ $orientacion="vertical";
                            <td>'. strtoupper($Total_enLetras->ValorEnLetras($rows_e["venta_total"],"Dolares")) .'</td>
                          </tr>
                          <tr>
-                           <td style="text-align:right">'. number_format($rows_e["iva_retenido"],2) .'</td>
+                           <td style="text-align:right">'. sinZero(number_format($rows_e["iva_retenido"],2)) .'</td>
                          </tr>
                         <tr>
-                           <td style="text-align:right">'. number_format($subTotal+$rows_e["iva"]-$rows_e["iva_retenido"],2) .'</td>
+                           <td style="text-align:right">'. sinZero(number_format($subTotal+$rows_e["iva"]-$rows_e["iva_retenido"],2)) .'</td>
                          </tr>
                           <tr>
-                           <td style="text-align:right" >'. number_format($tot_venta_no_sujeta,2) .'</td>
+                           <td style="text-align:right" >'. sinZero(number_format($tot_venta_no_sujeta,2)) .'</td>
                          </tr>
                          <tr>
-                           <td style="text-align:right" >'. number_format($tot_venta_exentas,2) .'</td>
+                           <td style="text-align:right" >'. sinZero(number_format($tot_venta_exentas,2)) .'</td>
                          </tr>
                          </table>
                      </td>
@@ -200,6 +200,14 @@ $pdf->writeHTML($factura, true, false, false, false, '');
 
 //Close and output PDF document
 $pdf->Output('factura.pdf', 'I');
+}
+
+function sinZero($valor){
+ if($valor==0){
+     return "&nbsp;&nbsp;&nbsp;";
+ }else{
+     return $valor;
+ }   
 }
 
 ?>

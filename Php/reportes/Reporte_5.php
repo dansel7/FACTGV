@@ -77,7 +77,8 @@ $sql = "SELECT
                 f.gastos_reintegro gastos,
                 f.venta_total,
                 GROUP_CONCAT(DISTINCT ac.id_abono_clientes,';', ac.numero_cheque,';',iFNull((ac.monto_cheque),0),';',DATE_FORMAT(ac.fecha_pago, '%d/%m/%Y') order by ac.fecha_pago) abonos,
-                GROUP_CONCAT(DISTINCT idNotaCred,';', NotaC.numero_NotaC,';', iFNull((NotaC.venta_total),0),';',DATE_FORMAT(NotaC.fecha_Nota, '%d/%m/%Y')) NotasCredito
+                GROUP_CONCAT(DISTINCT idNotaCred,';', NotaC.numero_NotaC,';', iFNull((NotaC.venta_total),0),';',DATE_FORMAT(NotaC.fecha_Nota, '%d/%m/%Y')) NotasCredito,
+                venta_acta_de
                 from facturacion f
                 left join abono_clientes ac on f.idfacturacion=ac.idfacturacion
                 inner join maestroclientes mc on f.idmaestroClientes=mc.idmaestroClientes 
@@ -143,7 +144,7 @@ $sql = "SELECT
                        <tr>
                              <td  style=\"text-align:center;font-size:10pt\"><b>".$rows_e["numero_factura"] ."</b></td>
                              <td  style=\"text-align:left;\"><b>".$rows_e["tipo"] ."</b></td>
-                             <td colspan=\"2\" style=\"text-align:left;font-size:8pt\"><b>".$rows_e["nom_cliente"] ."</b></td>
+                             <td colspan=\"2\" style=\"text-align:left;font-size:8pt\"><b>".$rows_e["nom_cliente"].(($rows_e["venta_acta_de"]!="")?(": ".$rows_e["venta_acta_de"]):"")  ."</b></td>
                              <td  style=\"text-align:center\"><b>".substr($rows_e["fecha_facturacion"],0,11) ."</b></td> 
                              <td  style=\"text-align:right\"><b>$ ".number_format($rows_e["venta_total"],2) ."</b></td>
                              

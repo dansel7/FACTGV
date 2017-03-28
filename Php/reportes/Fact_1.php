@@ -37,7 +37,7 @@ $pdf->SetPrintFooter(false);
 
 //set margins
 //$pdf->SetMargins(PDF_MARGIN_LEFT, PDF_MARGIN_TOP, PDF_MARGIN_RIGHT);
-$pdf->SetMargins(-0.1, 0.9, 0.635);
+$pdf->SetMargins(0.5, 0.6, 0.635);
 
 //$pdf->SetHeaderMargin(0);
 //$pdf->SetFooterMargin(15);
@@ -95,19 +95,18 @@ $orientacion="vertical";
                 <td  style="text-align:left">'. $rows_e["fecha_facturacion"] .'</td>
             </tr>
             <tr>
-                <td style="text-align:center;font-size:8pt" colspan="3">'.strtoupper($rows_e["direccion"]).'</td>
+                <td style="text-align:right;font-size:8pt" colspan="3">'.strtoupper($rows_e["direccion"]).'</td>
                 <td colspan="2">&nbsp;</td>
             </tr>
              <tr>
-                <td  colspan="3" width="495px" height="18px">&nbsp;</td>
+                <td  colspan="3" width="450px" height="18px">&nbsp;</td>
                 <td colspan="2" style="text-align:left">'.strtoupper($rows_e["departamento"]).'</td>
             </tr>
              <tr>
                 <td  width="30px" height="18px">&nbsp;</td>
                 <td  width="170px">'. $rows_e["nit"] .'</td>
                 <td style="text-align:center" width="100px">'. $rows_e["nrc"] .'</td>
-                <td style="text-align:center" width="135px">&nbsp;</td>
-                <td style="text-align:left" width="200px" >'.strtoupper($rows_e["giro"]).'</td>
+                <td colspan="2" style="text-align:center;font-size:8pt" width="300px">'.strtoupper($rows_e["giro"]).'</td>
             </tr>
             <tr>
             <td >&nbsp;</td>
@@ -120,8 +119,7 @@ $orientacion="vertical";
             </tr>
             </table><br>
             <table cellspacing="3">
-                 <tr><td colspan="4" height="45px"></td></tr>
-                 <tr><td colspan="4" height="160px"><table>';
+                 <tr><td colspan="4" height="45px"></td></tr>';
         $detalle_factura.='
                     <tr>
                         <td style="text-align:left" width="55px">
@@ -131,16 +129,16 @@ $orientacion="vertical";
                         '. strtoupper($rows_e["concepto"])  .'
                         </td>
                         <td width="60px" style="text-align:right">
-                        '. $rows_e["valor_concepto"] .'
+                        '. sinZero(number_format($rows_e["valor_concepto"],2)) .'
                         </td>
                         <td width="60px" style="text-align:right">
-                        '. $rows_e["venta_nosujeta"] .'
+                        '. sinZero(number_format($rows_e["venta_nosujeta"],2)) .'
                         </td>
                         <td width="60px" style="text-align:right">
-                        '. $rows_e["venta_exenta"] .'
+                        '. sinZero(number_format($rows_e["venta_exenta"],2)) .'
                         </td>
                         <td width="60px" style="text-align:right">
-                        '. $rows_e["venta_gravada"] .'
+                        '. sinZero(number_format($rows_e["venta_gravada"],2)) .'
                         </td>
                     </tr>';
         
@@ -150,35 +148,34 @@ $orientacion="vertical";
         
         
         //ESTA ES LA PARTE QUE CONTIENE EL TOTAL EN LETRAS Y SUS DESGLOSES
-        $pie_factura='</table></td></tr>
-                  
+        $pie_factura='<tr><td colspan="6" height="110px"></td></tr>
                       <tr><td colspan="2" width="455px"></td>
                           <td width="60px"></td>
-                          <td width="60px" style="text-align:right">'. number_format($tot_venta_no_sujeta,2) .'</td>
-                          <td width="60px" style="text-align:right">'. number_format($tot_venta_exentas,2) .'</td>
-                          <td width="60px"></td>
+                          <td width="60px" style="text-align:right">'. sinZero(number_format($tot_venta_no_sujeta,2)) .'</td>
+                          <td width="60px" style="text-align:right">'. sinZero(number_format($tot_venta_exentas,2)) .'</td>
+                          <td width="60px"style="text-align:right">'. sinZero(number_format($subTotal,2)) .'</td>
                       </tr>
                       <tr><td colspan="6" style="text-align:left">
                         <table width="705px" cellspacing="3">
                          
                         <tr>
-                           <td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;'. strtoupper($Total_enLetras->ValorEnLetras($rows_e["venta_total"],"Dolares")) .'</td>
-                           <td style="text-align:right">'.$rows_e["iva"] .'</td>
+                           <td >&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;'. strtoupper($Total_enLetras->ValorEnLetras($rows_e["venta_total"],"Dolares")) .'</td>
+                           <td height="20px" style="text-align:right">'.sinZero($rows_e["iva"]) .'</td>
                          </tr>
                          <tr>
-                           <td style="text-align:right" colspan="2" >'. number_format($subTotal,2) .'</td>
+                           <td style="text-align:right" colspan="2" >'. sinZero(number_format($subTotal,2)) .'</td>
                          </tr>
                          <tr>
-                           <td style="text-align:right" colspan="2">'. number_format($rows_e["iva_retenido"],2) .'</td>
+                           <td style="text-align:right" colspan="2">'. sinZero(number_format($rows_e["iva_retenido"],2)) .'</td>
                          </tr>
                          <tr>
                            <td style="text-align:right" colspan="2"></td>
                          </tr>
                           <tr>
-                           <td style="text-align:right" colspan="2" >'. number_format($tot_venta_no_sujeta,2) .'</td>
+                           <td style="text-align:right" colspan="2" >'. sinZero(number_format($tot_venta_no_sujeta,2)) .'</td>
                          </tr>
                          <tr>
-                           <td style="text-align:right" colspan="2" >'. number_format($tot_venta_exentas,2) .'</td>
+                           <td style="text-align:right" colspan="2" >'. sinZero(number_format($tot_venta_exentas,2)) .'</td>
                          </tr>
                          </table>
                      </td>
@@ -206,6 +203,14 @@ $pdf->writeHTML($factura, true, false, false, false, '');
 
 //Close and output PDF document
 $pdf->Output('factura.pdf', 'I');
+}
+
+function sinZero($valor){
+ if($valor==0){
+     return "&nbsp;&nbsp;&nbsp;";
+ }else{
+     return $valor;
+ }   
 }
 
 ?>

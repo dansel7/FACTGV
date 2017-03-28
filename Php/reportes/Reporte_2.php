@@ -62,9 +62,9 @@ $orientacion="landscape";
 $idempresa=isset($_SESSION["idEmpresa"])? $_SESSION["idEmpresa"]:"-1";
 
 // ---------------INICIO DEL REPORTE-----------------
-$sql = "Select f.id_tipo_facturacion,f.fecha_facturacion,f.numero_factura, tpf.tipo,f.hawb,mc.nom_cliente,
+$sql = "Select f.id_tipo_facturacion,f.fecha_facturacion,f.numero_factura, tpf.tipo,f.hawb,mc.nom_cliente,tipo_servicio_carga,
         sum(df.venta_nosujeta) nosujeta,sum(df.venta_exenta) exenta, sum(df.venta_gravada) gravada,
-        f.venta_total-f.iva+f.iva_retenido valor_neto,f.iva,f.iva_retenido,f.venta_total,f.anulado
+        f.venta_total-f.iva+f.iva_retenido valor_neto,f.iva,f.iva_retenido,f.venta_total,f.anulado,venta_acta_de
         from facturacion f inner join maestroclientes mc on f.idmaestroClientes=mc.idmaestroClientes 
         left join detallefacturacion df on f.idfacturacion=df.idfacturacion
         inner join tipo_facturacion tpf on f.id_tipo_facturacion=tpf.id_tipo_facturacion
@@ -100,13 +100,13 @@ $sql = "Select f.id_tipo_facturacion,f.fecha_facturacion,f.numero_factura, tpf.t
   $total_aereo=0;
   $total_maritimo=0;
   $total_tramite_ajeno=0;
- function tipo_serv($servicio,$total,$tipo_factura){
+ function tipo_serv($servicio,$total,$tipo_factura,$tipo_carga=""){
      global  $total_aereo,$total_maritimo,$total_tramite_ajeno;
      if($_SESSION["idEmpresa"]==5 and $tipo_factura!=1){ //Comprobara si es Airbox
-        if(substr($servicio,0,4)=="HBOL") {
+        if(substr($servicio,0,4)=="HBOL" or $tipo_carga=="MAR") {
             $total_maritimo+=$total;
                 return "MARITIMO";
-        }else if( (strlen($servicio)>=5 and substr($servicio,0,2)=="10")  or substr($servicio,0,4)=="HAWB"){
+        }else if( (strlen($servicio)>=5 and substr($servicio,0,2)=="10")  or substr($servicio,0,4)=="HAWB" or $tipo_carga=="CAR"){
              $total_aereo+=$total;   
              return "AEREO";
         }else {
@@ -126,6 +126,7 @@ $sql = "Select f.id_tipo_facturacion,f.fecha_facturacion,f.numero_factura, tpf.t
   $subExenta=0;
   $subNoSujeta=0;
   $subGravada=0;
+  $subNotaC=0;
   $cliente="";
   while($rows_e = mysql_fetch_array($result)){
        if($idmc!=""){
@@ -139,7 +140,7 @@ $sql = "Select f.id_tipo_facturacion,f.fecha_facturacion,f.numero_factura, tpf.t
                           <td  style=\"text-align:left\">".$rows_e["tipo"] ."</td>
                           <td  style=\"text-align:center\"></td>       
                           <td  style=\"text-align:center\"></td>       
-                          <td  style=\"text-align:left\">".$rows_e["nom_cliente"] ."</td>
+                          <td  style=\"text-align:left\">".$rows_e["nom_cliente"]."</td>
        <td  style=\"text-align:center\" colspan=\"7\">------------      <b>FACTURA ANULADA</b>    ------------</td></tr>";
         }
         else{
@@ -148,8 +149,8 @@ $sql = "Select f.id_tipo_facturacion,f.fecha_facturacion,f.numero_factura, tpf.t
                              <td  style=\"text-align:center\">".$rows_e["numero_factura"] ."</td>
                              <td  style=\"text-align:left\">".$rows_e["tipo"] ."</td>    
                              <td  style=\"text-align:left\">".$rows_e["hawb"] ."</td>
-                             <td  style=\"text-align:left\">". tipo_serv($rows_e["hawb"],$rows_e["venta_total"],$rows_e["id_tipo_facturacion"]) ."</td>    
-                             <td  style=\"text-align:left\">".$rows_e["nom_cliente"] ."</td>
+                             <td  style=\"text-align:left\">". tipo_serv($rows_e["hawb"],$rows_e["venta_total"],$rows_e["id_tipo_facturacion"],$rows_e["tipo_servicio_carga"]) ."</td>    
+                             <td  style=\"text-align:left\">".$rows_e["nom_cliente"].(($rows_e["venta_acta_de"]!="")?(":<br>".$rows_e["venta_acta_de"]):"") ."</td>
                              <td  style=\"text-align:right\">".((number_format($rows_e["nosujeta"],2)==0)?'0.00':(($rows_e["id_tipo_facturacion"]==1) ?"<b>-</b> ":"").number_format($rows_e["nosujeta"],2)) ."</td>
                              <td  style=\"text-align:right\">".((number_format($rows_e["exenta"],2)==0)?'0.00':(($rows_e["id_tipo_facturacion"]==1) ?"<b>-</b> ":"").number_format($rows_e["exenta"],2)) ."</td>  
                              <td  style=\"text-align:right\">".((number_format($rows_e["gravada"],2)==0)?'0.00':(($rows_e["id_tipo_facturacion"]==1) ?"<b>-</b> ":"").number_format($rows_e["gravada"],2)) ."</td>  
@@ -170,6 +171,8 @@ $sql = "Select f.id_tipo_facturacion,f.fecha_facturacion,f.numero_factura, tpf.t
                 $subExenta-=$rows_e["exenta"];
                 $subNoSujeta-=$rows_e["nosujeta"];
                 $subGravada-=$rows_e["gravada"];
+                
+                $TotalNotaC+=$rows_e["venta_total"];
                 }else{
                 $subTValorNeto+=$rows_e["valor_neto"];
                 $subTVentaTotal+=$rows_e["venta_total"];
@@ -182,11 +185,20 @@ $sql = "Select f.id_tipo_facturacion,f.fecha_facturacion,f.numero_factura, tpf.t
             }
        
         }
-        $cuerpo_detalle.='<tr><td colspan="9"></td></tr>';
+        $cuerpo_detalle.='<tr><td colspan="11"></td></tr>';
         $cuerpo_detalle.='<tr><td style="text-align:right" colspan="6"><b>TOTALES</b></td><td style="text-align:right"><b>'. number_format($subNoSujeta,2) .'</b></td><td style="text-align:right"><b>'. number_format($subExenta,2) .'</b></td><td style="text-align:right"><b>'. number_format($subGravada,2) .'</b></td><td style="text-align:right"><b>'.number_format($subTValorNeto,2).'</b></td><td style="text-align:right"><b>'.number_format($subTIva,2).'</b></td><td style="text-align:right"><b>'.number_format($subTIvaRetenido,2).'</b></td><td style="text-align:right"><b>'.number_format($subTVentaTotal,2).'</b></td></tr>';
        IF($_SESSION["idEmpresa"]==5){
-           $cuerpo_detalle.='<tr><td colspan="9"></td></tr>';
-           $cuerpo_detalle.='<tr><td><b>Total Aereo:</b></td><td><b>'.number_format($total_aereo,2).'</b></td><td><b>Total Maritimo</b></td><td><b>'.number_format($total_maritimo,2).'</b></td><td colspan="2"><b>Total Tramites Ajenos</b></td><td><b>'.number_format($total_tramite_ajeno,2).'</b></td></tr><td colspan="2"></td>';
+           $cuerpo_detalle.='<tr><td colspan="11"></td></tr>';
+           $cuerpo_detalle.='<tr><td colspan="11"></td></tr>';
+           $cuerpo_detalle.='<tr><td colspan="2"><b>Total Aereo:</b>&nbsp;&nbsp;&nbsp;'
+                   . '<b>$'.number_format($total_aereo,2).'</b></td>'
+                   . '<td colspan="2"><b>Total Maritimo:</b>&nbsp;&nbsp;&nbsp;'
+                   . '<b>$'.number_format($total_maritimo,2).'</b></td>'
+                   . '<td colspan="2"><b>Total Tramites Ajenos: </b>&nbsp;&nbsp;&nbsp;'
+                   . '<b>$'.number_format($total_tramite_ajeno,2).'</b></td>'
+                   . '<td colspan="3"><b>Total Nota de Credito: </b>&nbsp;&nbsp;&nbsp;'
+                   . '<b>- $'.number_format($TotalNotaC,2).'</b></td>'
+                   . '</td></tr>';
        }$cuerpo_detalle.= "</table>";
         $Reporte=$encabezado.$cliente.$cuerpo_detalle.$pie_factura;
 

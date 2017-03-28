@@ -30,10 +30,13 @@ if(!isset($_SESSION['benutzer']) || !isset($_SESSION["idEmpresa"]) ){
              require_once 'Fact_5.php';//NOTA DE REMISION
          break;
          case 6:
-             require_once 'Fact_6.php';//CREDITO FISCAL AWB
+             require_once 'Fact_6.php';//CREDITO FISCAL AB
          break;
         case 7:
-             require_once 'Fact_7.php';//NOTA DE REMISION
+             require_once 'Fact_7.php';//FACTURA CONSUMIDOR FINAL AB
+         break;
+         case 8:
+             require_once 'Fact_8.php';//FACTURA EXPORTACION AB
          break;
         //ESTO SE REALIZA MANUALMENTE DEPENDIENDO DEL ID QUE TENGA EL TIPO DE FACTURA INGRESADO
         //SE GENERA UN MODELO Y SEGUN SU ID SE MANDA A LLAMAR.

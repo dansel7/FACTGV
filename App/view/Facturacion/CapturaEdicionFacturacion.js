@@ -122,7 +122,7 @@ if(typeof(records) != "undefined" && typeof(records) != "string"){
               });            
              //COMPRUEBA QUE SEA UNA FACTURA DE EXPORTACION
              //PARA NO CALCULAR EL IVA
-            if(Ext.getCmp("id_tipo_factura").getValue()==4){
+            if(Ext.getCmp("id_tipo_factura").getValue()==4 || Ext.getCmp("id_tipo_factura").getValue()==8){
               Ext.getCmp("iva").setValue(0);
               Ext.getCmp("iva_retenido").setValue(0); 
             }else{
@@ -190,7 +190,7 @@ if(typeof(records) != "undefined" && typeof(records) != "string"){
                                                  Ext.getCmp("GastosR").show();
                                             }
                                             //PARA QUE MUESTRE U OCULTE CUANDO SEA AIRBOX
-                                            if(this.value==="6" || this.value==="7"){
+                                            if(this.value==="6" || this.value==="7" || this.value==="8"){
                                                 Ext.getCmp("tipo_servicio_carga").show();
                                                 Ext.getCmp("awbDatos").show();
                                             }else{

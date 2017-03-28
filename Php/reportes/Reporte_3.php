@@ -71,7 +71,8 @@ $sql = "SELECT
                 f.venta_total total_facturado,
                 f.gastos_reintegro,
                 ((f.venta_total+f.gastos_reintegro)-iFNull(sum(ac.monto_cheque),0)-iFNull((NotaC.venta_total),0)) saldo_pendiente,
-                DATEDIFF(ADDDATE(NOW(), INTERVAL 1 DAY),f.fecha_facturacion) DiasMora
+                DATEDIFF(ADDDATE(NOW(), INTERVAL 1 DAY),f.fecha_facturacion) DiasMora,
+                venta_acta_de
                 from facturacion f
                 left join abono_clientes ac on f.idfacturacion=ac.idfacturacion
                 inner join maestroclientes mc on f.idmaestroClientes=mc.idmaestroClientes 
@@ -112,7 +113,7 @@ $sql = "SELECT
       $cuerpo_detalle.= "<tr>
                              <td  style=\"text-align:center\">".$rows_e["numero_factura"] ."</td>
                              <td  style=\"text-align:left\">".$rows_e["tipo"] ."</td>
-                             <td  style=\"text-align:left;font-size:8pt\">".$rows_e["nom_cliente"] ."</td>
+                             <td  style=\"text-align:left;font-size:8pt\">".$rows_e["nom_cliente"].(($rows_e["venta_acta_de"]!="")?(":<br>".$rows_e["venta_acta_de"]):"")  ."</td>
                              <td  style=\"text-align:center\"> ".substr($rows_e["fecha_facturacion"],0,11) ."</td> 
                              <td  style=\"text-align:center\"> ".substr($rows_e["fecha_quedan"],0,11) ."</td> 
                              <td  style=\"text-align:center\"> ".substr($rows_e["comprobante_quedan"],0,11) ."</td> 
