@@ -116,7 +116,7 @@ $orientacion="vertical";
 			 <tr>
                 <td  width="55px" colspan="2">&nbsp;</td>
                 <td  width="170px">'. $rows_e["nit"] .'</td>
-                <td style="text-align:center" width="250px">'.strtoupper($rows_e["venta_acta_de"]).'</td>
+                <td style="text-align:center;font-size:8pt" width="250px">'.strtoupper($rows_e["venta_acta_de"]).'</td>
                 <td style="text-align:left" width="200px" >'.strtoupper($rows_e["mawb"]).'</td>
             </tr>
             

@@ -36,7 +36,9 @@
                         f.venta_total total_factura,
                         f.gastos_reintegro,
                         ((f.venta_total+f.gastos_reintegro)-iFNull(sum(ac.monto_cheque),0)-iFNull((NotaC.venta_total),0)) saldo_pendiente,
-                        DATEDIFF(ADDDATE(NOW(), INTERVAL 1 DAY),f.fecha_facturacion) DiasMora
+                        IF(f.cond_operacion='Contado',DATEDIFF(ADDDATE(NOW(), INTERVAL 1 DAY),f.fecha_facturacion),
+				IF(DATEDIFF(ADDDATE(NOW(), INTERVAL 1 DAY),f.fecha_facturacion)>30,DATEDIFF(ADDDATE(NOW(), INTERVAL 1 DAY),ADDDATE(f.fecha_facturacion, INTERVAL 30 DAY)),0) 
+                         )  DiasMora
                         from facturacion f
                         left join abono_clientes ac on f.idfacturacion=ac.idfacturacion
                         inner join maestroclientes mc on f.idmaestroClientes=mc.idmaestroClientes 

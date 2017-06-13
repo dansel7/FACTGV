@@ -52,8 +52,8 @@ $pdf->setImageScale(PDF_IMAGE_SCALE_RATIO);
 $pdf->SetFont('courier', '', 6);
 
 
-$mes_inicio=$_GET["mes_inicio"];
-$mes_fin=$_GET["mes_fin"];
+$mes_inicio=str_pad($_GET["mes_inicio"], 2, '0', STR_PAD_LEFT);
+$mes_fin=str_pad($_GET["mes_fin"], 2, '0', STR_PAD_LEFT);
 $anio=$_GET["anio"];
 $idtpf=($_GET["tpf"]>0)? " AND f.id_tipo_facturacion=".$_GET["tpf"]:"";
 
@@ -112,11 +112,10 @@ $sql = "Select f.id_tipo_facturacion,f.fecha_facturacion,f.numero_factura, tpf.t
         from facturacion f inner join maestroclientes mc on f.idmaestroClientes=mc.idmaestroClientes 
         left join detallefacturacion df on f.idfacturacion=df.idfacturacion
         inner join tipo_facturacion tpf on f.id_tipo_facturacion=tpf.id_tipo_facturacion
-        where f.id_empresa=".$idempresa ." $idtpf and CONCAT(YEAR(f.fecha_facturacion),MONTH(f.fecha_facturacion)) BETWEEN $anio$mes_inicio and $anio$mes_fin 
+        where f.id_empresa=".$idempresa ." $idtpf and CONCAT(YEAR(f.fecha_facturacion),LPAD(MONTH(f.fecha_facturacion),2,'0')) BETWEEN $anio$mes_inicio and $anio$mes_fin 
         group by f.idfacturacion
-        order by f.fecha_facturacion,length(f.numero_factura),f.numero_factura asc";
-        
-     
+        order by f.fecha_facturacion,length(f.numero_factura),f.numero_factura asc";    
+
     	$result = mysql_query($sql,$connection) or die('La consulta fall&oacute;: '.mysql_error());	
         
   $pdf->addpage($orientacion,'letter');      
