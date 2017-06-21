@@ -3,7 +3,7 @@
 Ext.define('MvcClientes.view.CuentasBancos.CapturaEdicionCuentasBancos', {
     extend: 'Ext.window.Window',
 	alias:'widget.FormAddEdicionCuentasBancos',
-    height: 175,
+    height: 190,
     width: 400,
     layout: {
         type: 'fit'
@@ -48,7 +48,7 @@ Ext.applyIf(me, {
     items: [
             {
                 xtype: 'form',
-                height: 141,
+                height: 161,
                 name: 'form',
                 layout: {
                     type: 'auto'
@@ -66,6 +66,7 @@ Ext.applyIf(me, {
                                queryMode: 'local', store: list_empresa,displayField: 'nombre',valueField: 'id_empresa',
                                name:"id_empresa", id:"id_empresa", flex: 1, width:350 ,allowBlank : false
                            },
+                    {xtype : "textfield", name : "partida_contable", fieldLabel : "Partida Contable", width: 350,allowBlank : false},
                 ],
             dockedItems : [{
                             xtype: 'toolbar',

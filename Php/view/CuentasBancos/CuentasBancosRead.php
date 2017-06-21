@@ -5,7 +5,7 @@
 
 		$arr = array();
 		// Llamamos a la Tabla y sus datos 
-		$sql = "SELECT id_cuenta,numero_cuenta,nombre_banco banco,b.id_banco,e.id_empresa,e.nombre empresa 
+		$sql = "SELECT id_cuenta,numero_cuenta,nombre_banco banco,b.id_banco,e.id_empresa,e.nombre empresa,c.partida_contable partida_contable
                         FROM cuentas c 
                         INNER JOIN bancos b ON b.id_banco=c.id_banco
                         INNER JOIN empresa e ON e.id_empresa=c.id_empresa ";

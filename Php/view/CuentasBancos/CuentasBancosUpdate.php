@@ -12,13 +12,15 @@ mysql_select_db($db_name,$connection) or die("Error de conexion a la base de dat
                 $id_banco = $data->id_banco;
                 $id_empresa = $data->id_empresa;
                 $id= $data->id_cuenta;
+                $partida_contable = $data->partida_contable;    
 
 	
                  $SqlUpdate ="UPDATE cuentas
                              SET
                             `numero_cuenta`='$num_cuenta',
                             `id_banco`=$id_banco,
-                            `id_empresa`=$id_empresa
+                            `id_empresa`=$id_empresa,
+                            `partida_contable`='$partida_contable'
                              WHERE id_cuenta=$id";
                  
 	$rs = mysql_query($SqlUpdate);

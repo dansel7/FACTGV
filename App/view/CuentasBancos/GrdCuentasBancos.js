@@ -22,6 +22,7 @@ Ext.define('MvcClientes.view.CuentasBancos.GrdCuentasBancos',{
                                    {header:"idb", dataIndex:"id_banco",hidden:true},
                                    {header:"Empresa", dataIndex:"empresa",flex:1},
                                    {header:"ide", dataIndex:"id_empresa",hidden:true},
+                                   {header:"Partida Contable", dataIndex:"partida_contable",flex:1},                                   
                                    ],
 			dockedItems: [
 					{

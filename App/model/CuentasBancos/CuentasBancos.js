@@ -6,7 +6,8 @@ Ext.define('MvcClientes.model.CuentasBancos.CuentasBancos', {
                                 { name: 'banco',   type: 'string'},
                                 { name: 'id_banco',   type: 'int'},
                                 { name: 'empresa',   type: 'string'},
-                                { name: 'id_empresa',   type: 'int'}
+                                { name: 'id_empresa',   type: 'int'},
+                                { name: 'partida_contable',   type: 'string'}
 				
                                 
            ]
