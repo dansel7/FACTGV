@@ -5,9 +5,9 @@ error_reporting(0);
 session_start();
 
 if(!isset($_SESSION['benutzer']) || !isset($_SESSION["idEmpresa"]) ){
-		$direccion = "Location: ../../index.php";
-		header($direccion);
-	}else{
+        $direccion = "Location: ../../index.php";
+        header($direccion);
+    }else{
 require_once('tcpdf/config/lang/eng.php');
 require_once('tcpdf/tcpdf.php');
 
@@ -36,7 +36,7 @@ $pdf->SetPrintFooter(false);
 
 //set margins
 //$pdf->SetMargins(PDF_MARGIN_LEFT, PDF_MARGIN_TOP, PDF_MARGIN_RIGHT);
-$pdf->SetMargins(0.8, 1.1, 0.635);
+$pdf->SetMargins(0.6, 3.5, 0.635);
 
 //$pdf->SetHeaderMargin(0);
 //$pdf->SetFooterMargin(15);
@@ -55,7 +55,7 @@ $pdf->SetFont('helvetica', '', 10);
 
 $orientacion="vertical";
 // ---------------INICIO DEL REPORTE-----------------
-	$sql = "SELECT 
+    $sql = "SELECT 
                
                 f.numero_factura,mc.nom_cliente,mc.direccion,DATE_FORMAT(f.fecha_facturacion,'%d/%m/%Y') fecha_facturacion,f.cond_operacion,f.venta_acta_de,mc.nit,mc.nrc,d.departamento,mc.giro,
                
@@ -68,7 +68,7 @@ $orientacion="vertical";
                 INNER JOIN departamento d on d.id_departamento=mc.id_departamento 
                 INNER JOIN catalogo_servicios cs on cs.id_servicio=df.id_servicio
                 WHERE f.idFacturacion=".hideunlock($_GET["idf"]);
-    	$result = mysql_query($sql,$connection) or die('La consulta fall&oacute;: '.mysql_error());	
+        $result = mysql_query($sql,$connection) or die('La consulta fall&oacute;: '.mysql_error()); 
         
   $pdf->addpage($orientacion,'letter');      
   
@@ -81,7 +81,7 @@ $orientacion="vertical";
        //style="border:solid 1px"
         $datos_factura='<br>
             <table  width="690px">
-			<tr>
+            <tr>
                 <td></td>
                 <td></td>
                 <td></td>
@@ -113,7 +113,7 @@ $orientacion="vertical";
                 <td style="text-align:center" width="250px">&nbsp;</td>
                 <td style="text-align:left" width="200px" >'.strtoupper($rows_e["hawb"]).'</td>
             </tr>
-			 <tr>
+             <tr>
                 <td  width="55px" colspan="2">&nbsp;</td>
                 <td  width="170px">'. $rows_e["nit"] .'</td>
                 <td style="text-align:center;font-size:8pt" width="250px">'.strtoupper($rows_e["venta_acta_de"]).'</td>
@@ -122,7 +122,7 @@ $orientacion="vertical";
             
             </table><br>
             <table>
-                 <tr><td colspan="4" height="40px"></td></tr>';
+                 <tr><td colspan="4" height="50px"></td></tr>';
         $detalle_factura.='
                     <tr>
                         <td style="text-align:left" width="100px">
@@ -149,7 +149,7 @@ $orientacion="vertical";
         $tot_venta_no_sujeta+=$rows_e["venta_nosujeta"];
         $tot_venta_exentas+=$rows_e["venta_exenta"];
         //ESTA ES LA PARTE QUE CONTIENE EL TOTAL EN LETRAS Y SUS DESGLOSES
-        $pie_factura='<tr><td colspan="6" height="135px"></td></tr>
+        $pie_factura='<tr><td colspan="6" height="140px"></td></tr>
                       <tr><td colspan="2" width="445px"></td>
                           <td width="60px"></td>
                           <td width="60px" style="text-align:right">'. sinZero(number_format($tot_venta_no_sujeta,2)) .'</td>

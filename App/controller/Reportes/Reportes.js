@@ -1,6 +1,6 @@
 Ext.define('MvcClientes.controller.Reportes.Reportes',{
 	extend		: 'Ext.app.Controller',
-        views		: ['Reportes.ShowReport1','Reportes.ShowReport2','Reportes.ShowReport3','Reportes.ShowReport4','Reportes.ShowReport5','Reportes.ShowPartidasDiario','Reportes.ShowLibroIVA','Reportes.ShowGraf1'],
+        views		: ['Reportes.ShowReport1','Reportes.ShowReport2','Reportes.ShowReport3','Reportes.ShowReport4','Reportes.ShowReport5','Reportes.ShowPartidasDiarioVentas','Reportes.ShowPartidasDiarioBancos','Reportes.ShowLibroIVA','Reportes.ShowGraf1'],
 	refs:[ //Esta linea se usa cuando se hace referencia a una Vista dentro de un grid en un Controller
 	 
 	  {
@@ -60,14 +60,24 @@ Ext.define('MvcClientes.controller.Reportes.Reportes',{
 				 click:this.ShowReport5EXCEL
 			   }
                            ,
-                     'ShowPartidasDiario button[action=ShowPartidasDiarioPDF]'://Usando Ext.Component.Query
+                     'ShowPartidasDiarioVentas button[action=ShowPartidasDiarioVentasPDF]'://Usando Ext.Component.Query
 			   {
-				 click:this.ShowPartidasDiarioPDF
+				 click:this.ShowPartidasDiarioVentasPDF
 			   }
                            ,
-                    'ShowPartidasDiario button[action=ShowPartidasDiarioEXCEL]'://Usando Ext.Component.Query
+                    'ShowPartidasDiarioVentas button[action=ShowPartidasDiarioVentasEXCEL]'://Usando Ext.Component.Query
 			   {
-				 click:this.ShowPartidasDiarioEXCEL
+				 click:this.ShowPartidasDiarioVentasEXCEL
+			   }
+                           ,
+                     'ShowPartidasDiarioBancos button[action=ShowPartidasDiarioBancosPDF]'://Usando Ext.Component.Query
+			   {
+				 click:this.ShowPartidasDiarioBancosPDF
+			   }
+                           ,
+                    'ShowPartidasDiarioBancos button[action=ShowPartidasDiarioBancosEXCEL]'://Usando Ext.Component.Query
+			   {
+				 click:this.ShowPartidasDiarioBancosEXCEL
 			   }
                            ,
                            
@@ -157,17 +167,29 @@ Ext.define('MvcClientes.controller.Reportes.Reportes',{
            window.open("/facturaciones/php/reportes/reporte_5.php?idmc="+values.idmaestroClientes+"&exp=1&fecha_ini="+values.fecha_inicio+"&fecha_fin="+values.fecha_fin+"&idnf="+values.numfact, "nuevo", "location=no, menubar=no, scrollbars=yes, statusbar=no, tittlebar=no");
 	},
         
-         ShowPartidasDiarioPDF: function(button){
+         ShowPartidasDiarioVentasPDF: function(button){
             var win    = button.up('window'),
             form   = win.down('form'),
             values = form.getValues();
            window.open("/facturaciones/php/contabilidad/PartidaDiario_Ventas.php?fecha_ini="+values.fecha_inicio+"&fecha_fin="+values.fecha_fin, "nuevo", "location=no, menubar=no, scrollbars=yes, statusbar=no, tittlebar=no");
 	},
-        ShowPartidasDiarioEXCEL: function(button){
+        ShowPartidasDiarioVentasEXCEL: function(button){
             var win    = button.up('window'),
             form   = win.down('form'),
             values = form.getValues();
            window.open("/facturaciones/php/contabilidad/PartidaDiario_Ventas.php?exp=1&fecha_ini="+values.fecha_inicio+"&fecha_fin="+values.fecha_fin, "nuevo", "location=no, menubar=no, scrollbars=yes, statusbar=no, tittlebar=no");
+	},
+         ShowPartidasDiarioBancosPDF: function(button){
+            var win    = button.up('window'),
+            form   = win.down('form'),
+            values = form.getValues();
+           window.open("/facturaciones/php/contabilidad/PartidaDiario_Bancos.php?fecha_ini="+values.fecha_inicio+"&fecha_fin="+values.fecha_fin, "nuevo", "location=no, menubar=no, scrollbars=yes, statusbar=no, tittlebar=no");
+	},
+        ShowPartidasDiarioBancosEXCEL: function(button){
+            var win    = button.up('window'),
+            form   = win.down('form'),
+            values = form.getValues();
+           window.open("/facturaciones/php/contabilidad/PartidaDiario_Bancos.php?exp=1&fecha_ini="+values.fecha_inicio+"&fecha_fin="+values.fecha_fin, "nuevo", "location=no, menubar=no, scrollbars=yes, statusbar=no, tittlebar=no");
 	},
         ShowLibroIVAPDF: function(button){
             var win    = button.up('window'),

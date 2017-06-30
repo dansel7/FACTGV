@@ -37,7 +37,7 @@ $pdf->SetPrintFooter(false);
 
 //set margins
 //$pdf->SetMargins(PDF_MARGIN_LEFT, PDF_MARGIN_TOP, PDF_MARGIN_RIGHT);
-$pdf->SetMargins(0.5, 0.6, 0.635);
+$pdf->SetMargins(0, 3.5, 0.635);
 
 //$pdf->SetHeaderMargin(0);
 //$pdf->SetFooterMargin(15);
@@ -60,7 +60,7 @@ $orientacion="vertical";
                
                 f.numero_factura,mc.nom_cliente,mc.direccion,DATE_FORMAT(f.fecha_facturacion,'%d/%m/%Y') fecha_facturacion,f.cond_operacion,f.venta_acta_de,mc.nit,mc.nrc,d.departamento,mc.giro,
                
-                df.cantidad,concat(cs.servicio , '<br>  ' , df.concepto) concepto,df.valor_concepto,venta_nosujeta,venta_exenta,venta_gravada,
+                df.cantidad,concat(cs.servicio , '' , df.concepto) concepto,df.valor_concepto,venta_nosujeta,venta_exenta,venta_gravada,
                
                 f.venta_total,f.iva,f.iva_retenido
                 FROM facturacion f 
@@ -125,7 +125,7 @@ $orientacion="vertical";
                         <td style="text-align:left" width="55px">
                         '. $rows_e["cantidad"] .'
                         </td>  
-                        <td width="400px">
+                        <td width="380px">
                         '. strtoupper($rows_e["concepto"])  .'
                         </td>
                         <td width="60px" style="text-align:right">
@@ -148,15 +148,15 @@ $orientacion="vertical";
         
         
         //ESTA ES LA PARTE QUE CONTIENE EL TOTAL EN LETRAS Y SUS DESGLOSES
-        $pie_factura='<tr><td colspan="6" height="110px"></td></tr>
-                      <tr><td colspan="2" width="455px"></td>
+        $pie_factura='<tr><td colspan="6" height="30px"></td></tr>
+                      <tr><td colspan="2" width="436px"></td>
                           <td width="60px"></td>
                           <td width="60px" style="text-align:right">'. sinZero(number_format($tot_venta_no_sujeta,2)) .'</td>
                           <td width="60px" style="text-align:right">'. sinZero(number_format($tot_venta_exentas,2)) .'</td>
                           <td width="60px"style="text-align:right">'. sinZero(number_format($subTotal,2)) .'</td>
                       </tr>
                       <tr><td colspan="6" style="text-align:left">
-                        <table width="705px" cellspacing="3">
+                        <table width="685px" cellspacing="3">
                          
                         <tr>
                            <td >&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;'. strtoupper($Total_enLetras->ValorEnLetras($rows_e["venta_total"],"Dolares")) .'</td>
@@ -183,7 +183,7 @@ $orientacion="vertical";
                      <tr><td colspan="6" style="text-align:right">
                          <table>
                          <tr>    
-                            <td width="702px">
+                            <td width="685px">
                         '. $rows_e["venta_total"] .'
                             </td>
                          </tr>

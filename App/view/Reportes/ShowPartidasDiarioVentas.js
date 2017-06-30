@@ -1,6 +1,6 @@
-Ext.define('MvcClientes.view.Reportes.ShowPartidasDiario', {
+Ext.define('MvcClientes.view.Reportes.ShowPartidasDiarioVentas', {
     extend: 'Ext.window.Window',
-	alias:'widget.ShowPartidasDiario',
+	alias:'widget.ShowPartidasDiarioVentas',
       height: 140,
     width: 360,
     layout: {
@@ -8,7 +8,7 @@ Ext.define('MvcClientes.view.Reportes.ShowPartidasDiario', {
     },
     autoShow: true,
     closable: false,
-    title: 'Reporte Partida de Diario',
+    title: 'Partida de Diario Ventas',
     modal: true,
 	
     initComponent: function() {
@@ -38,11 +38,11 @@ Ext.applyIf(me, {
                             items: ['->', {
                                     itemId: 'BtnPartidasDiarioPDF',
                                     text: 'PDF',
-                                    action: 'ShowPartidasDiarioPDF'
+                                    action: 'ShowPartidasDiarioVentasPDF'
                             },{
                                     itemId: 'BtnPartidasDiarioEXCEL',
                                     text: 'EXCEL',
-                                    action: 'ShowPartidasDiarioEXCEL'
+                                    action: 'ShowPartidasDiarioVentasEXCEL'
                             },{
                                     itemId: 'BtnCancelarPartDiario',
                                     text: 'Cancelar',

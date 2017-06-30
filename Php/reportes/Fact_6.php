@@ -37,13 +37,13 @@ $pdf->SetPrintFooter(false);
 
 //set margins
 //$pdf->SetMargins(PDF_MARGIN_LEFT, PDF_MARGIN_TOP, PDF_MARGIN_RIGHT);
-$pdf->SetMargins(0.7, 0.4, 0.635);
+$pdf->SetMargins(0.7, 3.4, 0.635);
 
 //$pdf->SetHeaderMargin(0);
 //$pdf->SetFooterMargin(15);
 
 //set auto page breaks
-$pdf->SetAutoPageBreak(TRUE, 5);
+$pdf->SetAutoPageBreak(TRUE, 2);
 
 //set image scale factor
 $pdf->setImageScale(PDF_IMAGE_SCALE_RATIO); 
@@ -137,8 +137,8 @@ $orientacion="vertical";
             
             </table><br>
             <table style="table-layout:fixed;font-size:11.2pt">
-                 <tr><td colspan="4" height="60px"></td></tr>
-                 <tr><td colspan="4" height="390px"><table>';
+                 <tr><td colspan="4" height="40px"></td></tr>
+                 <tr><td colspan="4" height="380px"><table>';
         
         $detalle_factura.='
                     <tr>

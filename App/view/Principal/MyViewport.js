@@ -376,9 +376,13 @@ Ext.define('MvcClientes.view.Principal.MyViewport',{
                                            }
                                         if (index==2)
                                            {
-                                              ShowPartidasDiario();
+                                              ShowPartidasDiarioVentas();
                                            }
                                         if (index==3)
+                                           {
+                                              ShowPartidasDiarioBancos();
+                                           }
+                                        if (index==4)
                                            {
                                               ShowLibroIVA();
                                            }
@@ -410,7 +414,15 @@ Ext.define('MvcClientes.view.Principal.MyViewport',{
                                     
                                 },
                                 {
-                                    text: 'Reporte Partida de Diario',
+                                    text: 'Partida de Diario Ventas',
+                                  
+                                        leaf: true,
+                                    iconCls:'reportes'
+                                        
+                                    
+                                },
+                                {
+                                    text: 'Partida de Diario Bancos',
                                   
                                         leaf: true,
                                     iconCls:'reportes'
@@ -638,8 +650,12 @@ Ext.define('MvcClientes.view.Principal.MyViewport',{
        ////////////////////////////////////////////
        //---------------CONTABILIDAD-------------//
        
-       function ShowPartidasDiario(){
-          var FrmPartD= Ext.widget('ShowPartidasDiario');
+       function ShowPartidasDiarioVentas(){
+          var FrmPartD= Ext.widget('ShowPartidasDiarioVentas');
+       }
+       
+         function ShowPartidasDiarioBancos(){
+          var FrmPartD= Ext.widget('ShowPartidasDiarioBancos');
        }
        
        function ShowLibroIVA(){
