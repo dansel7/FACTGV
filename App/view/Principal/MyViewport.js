@@ -37,7 +37,7 @@ Ext.define('MvcClientes.view.Principal.MyViewport',{
                         title: 'Facturacion y Cobros',
                         id:'UserAdminPanelFact',
                         height: 212,
-			iconCls:'movimientos',
+			iconCls:'icon-facturacion',
                         forceLayout: true,
                         collapsed: true,
                         collapsible: false,
@@ -78,7 +78,7 @@ Ext.define('MvcClientes.view.Principal.MyViewport',{
                                 {
                                     text: 'Facturacion',
                                     leaf: true,
-                                    iconCls:'icon-facturacion'
+                                    iconCls:'icon-facturas'
                                     
                                 },
                                 {
@@ -225,32 +225,38 @@ Ext.define('MvcClientes.view.Principal.MyViewport',{
                             children: [
                                     {                                  
                                         text: 'Activos en Bancos',
-                                        leaf: true
+                                        leaf: true,
+                                        iconCls:'pdf'
                                         },
                                         {
                                         text: 'Facturas Realizadas',
-                                        leaf: true
+                                        leaf: true,
+                                        iconCls:'pdf'
                                         },
                                         {
                                         text: 'Facturas Pendientes de Pago',
-                                        leaf: true
+                                        leaf: true,
+                                        iconCls:'pdf'
                                         },
                                         {
                                         text: 'Detalle Servicios Facturados',
-                                        leaf: true
+                                        leaf: true,
+                                        iconCls:'pdf'
                                         },
                                         {
                                         text: 'Grafica de Ventas por Servicios',
-                                        leaf: true
+                                        leaf: true,
+                                        iconCls:'icon-grafica'
                                         },
                                         {
                                         text: 'Dashboard',
-                                        leaf: true
+                                        leaf: true,
+                                        iconCls:'icon-dashboard'
                                         },
                                         {
                                         text: 'Estado de Factura y Abonos',
                                         leaf: true,
-                                        iconCls:'reportes'
+                                        iconCls:'pdf'
                                         
                                         }
                                     ]
@@ -263,7 +269,7 @@ Ext.define('MvcClientes.view.Principal.MyViewport',{
                         title: 'Mantenimientos',
                         id: 'panelMantto',
                         height: 212,
-			iconCls:'catalogos',
+			iconCls:'config',
                         forceLayout: true,
                         collapsed: true,
                         collapsible: true,
@@ -352,7 +358,7 @@ Ext.define('MvcClientes.view.Principal.MyViewport',{
                         title: 'Contabilidad',
                         id:'PanelContabilidad',
                         height: 212,
-			iconCls:'movimientos',
+			iconCls:'icon-contabilidad',
                         forceLayout: true,
                         collapsed: true,
                         collapsible: true,
@@ -417,7 +423,7 @@ Ext.define('MvcClientes.view.Principal.MyViewport',{
                                     text: 'Partida de Diario Ventas',
                                   
                                         leaf: true,
-                                    iconCls:'reportes'
+                                    iconCls:'icon-ventas'
                                         
                                     
                                 },
@@ -425,7 +431,7 @@ Ext.define('MvcClientes.view.Principal.MyViewport',{
                                     text: 'Partida de Diario Bancos',
                                   
                                         leaf: true,
-                                    iconCls:'reportes'
+                                    iconCls:'icon-bancos'
                                         
                                     
                                 },
@@ -433,7 +439,7 @@ Ext.define('MvcClientes.view.Principal.MyViewport',{
                                     text: 'Libros de IVA',
                                   
                                         leaf: true,
-                                    iconCls:'reportes'
+                                    iconCls:'icon-iva'
                                         
                                     
                                 }

@@ -1,6 +1,6 @@
 <div style="font-size: 12px;font-family: helvetica;">
 <?php
-//REPORTE DETALLE SERVICIOS FACTURADOS
+//REPORTE PARTIDA INGRESO A BANCOS
 error_reporting(0);
 session_start();
 
@@ -53,7 +53,8 @@ ORDER BY DATE_FORMAT(ab.fecha_remesa, '%Y/%m/%d') ASC , numero_remesa , numero_f
                 . "<h3>Desde $fecha_inicio Hasta $fecha_fin</h3><br>";      
   
   $encabezado.= '<table border="1" style="font-size: 11px" cellpadding="5">
-                 <tr><td  style="text-align:center"><b>FECHA</b></td>
+                 <tr><td  style="text-align:center"><b>ID</b></td>
+                     <td  style="text-align:center"><b>FECHA</b></td>
                      <td  style="text-align:center"><b>CUENTA</b></td>
                      <td  style="text-align:center"><b>CONCEPTO</b></td> 
                      <td style="text-align:center" ><b>CARGO</b></td>
@@ -69,6 +70,7 @@ ORDER BY DATE_FORMAT(ab.fecha_remesa, '%Y/%m/%d') ASC , numero_remesa , numero_f
       $flag++;
       
             $cuerpo_detalle.= "<tr> 
+                         <td  style=\"text-align:right\">".$flag ."</td> 
                          <td  style=\"text-align:right\">".$rows_e["fecha_remesa"] ."</td>             
                          <td  style=\"text-align:right\">".$rows_e["num_partida_banco"] ."</td> 
                          <td  style=\"text-align:left\">Deposito #".$rows_e["numero_remesa"] ."</td>
@@ -87,6 +89,7 @@ ORDER BY DATE_FORMAT(ab.fecha_remesa, '%Y/%m/%d') ASC , numero_remesa , numero_f
         foreach($n_factura as $numero_factura){
             
                 $cuerpo_detalle.= "<tr> 
+                         <td  style=\"text-align:right\">".$flag ."</td> 
                          <td  style=\"text-align:right\">".$rows_e["fecha_remesa"] ."</td>  
                          <td  style=\"text-align:right\">".$n_partida_cliente[$i] ."</td> 
                          <td  style=\"text-align:left\">PAGO FACT ".$numero_factura ."</td>

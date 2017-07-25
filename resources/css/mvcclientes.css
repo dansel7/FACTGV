@@ -36,14 +36,27 @@
 		   background: url(../imagenes/form.png)  0px no-repeat !important;
 		   
 		   }				   
-	.reportes{
-		   background: url(../imagenes/reportes.png)  0px no-repeat !important;
+	.pdf{
+		   background: url(../imagenes/pdf.png)  0px no-repeat !important;
 		   
 		   }
 	.tabs{
 		   background: url(../imagenes/tabs.gif)  0px no-repeat !important;
 		   
-		   }				   
+		   }
+        .reportes{
+		   background: url(../imagenes/reportes.png)  0px no-repeat !important;
+		   
+		   }
+        .config{
+		   background: url(../imagenes/config.png)  0px no-repeat !important;
+		   
+		   }
+                   
+        .icon-facturacion {
+        background: url(../imagenes/facturacion.png)  0px no-repeat !important;
+        }
+
         .icon-empresa {
         background: url(../imagenes/empresa.png)  0px no-repeat !important;
         }
@@ -53,6 +66,31 @@
         .icon-users {
         background: url(../imagenes/users.png)  0px no-repeat !important;
         }
-        .icon-facturacion {
+        .icon-facturas {
         background: url(../imagenes/infoact.png)  0px no-repeat !important;
         }
+	.icon-iva {
+        background: url(../imagenes/iva.png)  0px no-repeat !important;
+        }
+        .icon-bancos {
+        background: url(../imagenes/bancos.png)  0px no-repeat !important;
+        }
+        .icon-contabilidad {
+        background: url(../imagenes/conta.png)  0px no-repeat !important;
+        }
+        .icon-ventas {
+        background: url(../imagenes/ventas.png)  0px no-repeat !important;
+        }.icon-modify {
+        background: url(../imagenes/modify.png)  0px no-repeat !important;
+        }
+        .icon-dashboard {
+        background: url(../imagenes/dashboard.png)  0px no-repeat !important;
+        }
+        .icon-grafica {
+        background: url(../imagenes/grafica.png)  0px no-repeat !important;
+        }
+        .icon-facturacion {
+        background: url(../imagenes/facturacion.png)  0px no-repeat !important;
+        }
+
+

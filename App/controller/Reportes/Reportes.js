@@ -183,13 +183,21 @@ Ext.define('MvcClientes.controller.Reportes.Reportes',{
             var win    = button.up('window'),
             form   = win.down('form'),
             values = form.getValues();
-           window.open("/facturaciones/php/contabilidad/PartidaDiario_Bancos.php?fecha_ini="+values.fecha_inicio+"&fecha_fin="+values.fecha_fin, "nuevo", "location=no, menubar=no, scrollbars=yes, statusbar=no, tittlebar=no");
+            if(values.tipoRep=='1'){
+            window.open("/facturaciones/php/contabilidad/PartidaDiario_Bancos.php?fecha_ini="+values.fecha_inicio+"&fecha_fin="+values.fecha_fin, "nuevo", "location=no, menubar=no, scrollbars=yes, statusbar=no, tittlebar=no");
+            }else{  
+            window.open("/facturaciones/php/contabilidad/PartidaIngreso_Bancos.php?fecha_ini="+values.fecha_inicio+"&fecha_fin="+values.fecha_fin, "nuevo", "location=no, menubar=no, scrollbars=yes, statusbar=no, tittlebar=no");                
+            }
 	},
         ShowPartidasDiarioBancosEXCEL: function(button){
             var win    = button.up('window'),
             form   = win.down('form'),
             values = form.getValues();
-           window.open("/facturaciones/php/contabilidad/PartidaDiario_Bancos.php?exp=1&fecha_ini="+values.fecha_inicio+"&fecha_fin="+values.fecha_fin, "nuevo", "location=no, menubar=no, scrollbars=yes, statusbar=no, tittlebar=no");
+            if(values.tipoRep=='1'){
+            window.open("/facturaciones/php/contabilidad/PartidaDiario_Bancos.php?exp=1&fecha_ini="+values.fecha_inicio+"&fecha_fin="+values.fecha_fin, "nuevo", "location=no, menubar=no, scrollbars=yes, statusbar=no, tittlebar=no");
+            }else{
+            window.open("/facturaciones/php/contabilidad/PartidaIngreso_Bancos.php?exp=1&fecha_ini="+values.fecha_inicio+"&fecha_fin="+values.fecha_fin, "nuevo", "location=no, menubar=no, scrollbars=yes, statusbar=no, tittlebar=no");
+            }
 	},
         ShowLibroIVAPDF: function(button){
             var win    = button.up('window'),
