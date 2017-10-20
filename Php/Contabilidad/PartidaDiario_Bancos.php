@@ -119,7 +119,7 @@ if($exp!="-1"){
 header("Content-Type: application/vnd.ms-excel");
 header("Expires: 0");
 header("Cache-Control: must-revalidate, post-check=0, pre-check=0");
-header("content-disposition: attachment;filename=Partida_Diario_$fecha_inicio-$fecha_fin.xls");
+header("content-disposition: attachment;filename=Bancos_Partida_Diario_$fecha_inicio-$fecha_fin.xls");
 echo $Reporte;
 
 }else{

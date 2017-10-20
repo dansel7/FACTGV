@@ -102,9 +102,6 @@ switch($id){
 $orientacion="landscape";
 $idempresa=isset($_SESSION["idEmpresa"])? $_SESSION["idEmpresa"]:"-1";
 
-//-------- CLASIFICACION DE TIPO DE COMPROBANTE ---------//
-
-
 // ---------------INICIO DEL REPORTE-----------------
 $sql = "Select f.id_tipo_facturacion,f.fecha_facturacion,f.numero_factura, tpf.tipo,f.hawb,mc.nom_cliente,mc.nrc,mc.nit,
         sum(df.venta_nosujeta) nosujeta,sum(df.venta_exenta) exenta, sum(df.venta_gravada) gravada,
@@ -114,8 +111,9 @@ $sql = "Select f.id_tipo_facturacion,f.fecha_facturacion,f.numero_factura, tpf.t
         inner join tipo_facturacion tpf on f.id_tipo_facturacion=tpf.id_tipo_facturacion
         where f.id_empresa=".$idempresa ." $idtpf and CONCAT(YEAR(f.fecha_facturacion),LPAD(MONTH(f.fecha_facturacion),2,'0')) BETWEEN $anio$mes_inicio and $anio$mes_fin 
         group by f.idfacturacion
-        order by f.fecha_facturacion,length(f.numero_factura),f.numero_factura asc";    
-
+        order by f.fecha_facturacion,length(f.numero_factura),f.numero_factura asc";
+        
+     
     	$result = mysql_query($sql,$connection) or die('La consulta fall&oacute;: '.mysql_error());	
         
   $pdf->addpage($orientacion,'letter');      
@@ -213,13 +211,24 @@ $sql = "Select f.id_tipo_facturacion,f.fecha_facturacion,f.numero_factura, tpf.t
                              <td  style=\"text-align:center\">".$rows_e["numero_factura"] ."</td> 
                              <td  style=\"text-align:left\">".$rows_e["nom_cliente"] ."</td>
                              <td  style=\"text-align:left\">".$rows_e["nrc"] ."</td>
-                             <td  style=\"text-align:left\">".$rows_e["nit"] ."</td>
-                             <td  style=\"text-align:right;mso-number-format: currency\">".((number_format($rows_e["exenta"]+$rows_e["nosujeta"],2)==0)?'0.00':(($rows_e["id_tipo_facturacion"]==1) ?"<b>-</b> ":"").number_format($rows_e["exenta"]+$rows_e["nosujeta"],2)) ."</td>  
+                             <td  style=\"text-align:left\">".$rows_e["nit"] ."</td>";
+
+              if($rows_e["id_tipo_facturacion"]==8){ // PARA FACTURA EXPORTACION, PRESENTA LOS DATOS GRAVADOS COMO EXENTOS.
+
+            $cuerpo_detalle.=  "<td  style=\"text-align:right;mso-number-format: currency\">".((number_format($rows_e["gravada"]+$rows_e["nosujeta"],2)==0)?'0.00':number_format($rows_e["gravada"]+$rows_e["nosujeta"],2)) ."</td>  
+                             <td  style=\"text-align:right;mso-number-format: currency\">0.00</td>  
+                             <td  style=\"text-align:right;mso-number-format: currency\">".((number_format($rows_e["iva"],2)==0)?'0.00':(($rows_e["id_tipo_facturacion"]==1) ?"<b>-</b> ":"").number_format($rows_e["iva"],2))."</td>
+                             <td  style=\"text-align:right;mso-number-format: currency\">".(($rows_e["id_tipo_facturacion"]==1) ?"<b>-</b> ":"").  number_format($rows_e["gravada"]+$rows_e["iva"],2)."</td>
+                             <td  style=\"text-align:right;mso-number-format: currency\">".((number_format($rows_e["iva_retenido"],2)==0)?'0.00':(($rows_e["id_tipo_facturacion"]==1) ?"<b>-</b> ":"").number_format($rows_e["iva_retenido"],2))."</td>
+                             <td  style=\"text-align:right;mso-number-format: currency\">".(($rows_e["id_tipo_facturacion"]==1) ?"<b>-</b> ":"").  number_format($rows_e["venta_total"],2) ."</td></tr>";
+                 }else{ 
+                    $cuerpo_detalle.=  "<td  style=\"text-align:right;mso-number-format: currency\">".((number_format($rows_e["exenta"]+$rows_e["nosujeta"],2)==0)?'0.00':(($rows_e["id_tipo_facturacion"]==1) ?"<b>-</b> ":"").number_format($rows_e["exenta"]+$rows_e["nosujeta"],2)) ."</td>  
                              <td  style=\"text-align:right;mso-number-format: currency\">".((number_format($rows_e["gravada"],2)==0)?'0.00':(($rows_e["id_tipo_facturacion"]==1) ?"<b>-</b> ":"").number_format($rows_e["gravada"],2)) ."</td>  
                              <td  style=\"text-align:right;mso-number-format: currency\">".((number_format($rows_e["iva"],2)==0)?'0.00':(($rows_e["id_tipo_facturacion"]==1) ?"<b>-</b> ":"").number_format($rows_e["iva"],2))."</td>
                              <td  style=\"text-align:right;mso-number-format: currency\">".(($rows_e["id_tipo_facturacion"]==1) ?"<b>-</b> ":"").  number_format($rows_e["gravada"]+$rows_e["iva"],2)."</td>
                              <td  style=\"text-align:right;mso-number-format: currency\">".((number_format($rows_e["iva_retenido"],2)==0)?'0.00':(($rows_e["id_tipo_facturacion"]==1) ?"<b>-</b> ":"").number_format($rows_e["iva_retenido"],2))."</td>
                              <td  style=\"text-align:right;mso-number-format: currency\">".(($rows_e["id_tipo_facturacion"]==1) ?"<b>-</b> ":"").  number_format($rows_e["venta_total"],2) ."</td></tr>";
+                 }
       
 
                 
@@ -233,6 +242,15 @@ $sql = "Select f.id_tipo_facturacion,f.fecha_facturacion,f.numero_factura, tpf.t
                 $subTVentaTotal-=($rows_e["gravada"]+$rows_e["iva"]); 
                 $subTIvaRetenido-=$rows_e["iva_retenido"];
                 $subTValorNeto-=$rows_e["venta_total"];
+                } else if($rows_e["id_tipo_facturacion"]==8){
+     //SI ES FACTURA DE EXPORTACION MUESTRA EL VALOR GRAVADO COMO EXENTO YA QUE NO GENERA IVA.
+                
+                $subExenta+=($rows_e["gravada"]+$rows_e["nosujeta"]);
+                $subTIva+=$rows_e["iva"];
+                $subTVentaTotal+=($rows_e["gravada"]+$rows_e["iva"]);
+                $subTIvaRetenido+=$rows_e["iva_retenido"];
+                $subTValorNeto+=$rows_e["venta_total"];
+
                 }else{
                 
                 $subExenta+=($rows_e["exenta"]+$rows_e["nosujeta"]);

@@ -38,7 +38,7 @@ WHERE
     f.id_empresa = '.$idempresa.'
 AND ab.fecha_remesa BETWEEN STR_TO_DATE(\''.$fecha_inicio.'\', \'%d/%m/%Y\') AND STR_TO_DATE(\''.$fecha_fin.'\',\'%d/%m/%Y\') 
 GROUP BY ab.numero_remesa
-ORDER BY DATE_FORMAT(ab.fecha_remesa, \'%Y/%m/%d\') ASC , numero_remesa';
+ORDER BY DATE_FORMAT(ab.fecha_remesa, \'%Y/%m/%d\') ASC , numero_remesa,numero_factura';
 
     	$result = mysql_query($sql,$connection) or die('La consulta fall&oacute;: '.mysql_error());	
 
@@ -85,7 +85,7 @@ if($exp!="-1"){
 header("Content-Type: application/vnd.ms-excel");
 header("Expires: 0");
 header("Cache-Control: must-revalidate, post-check=0, pre-check=0");
-header("content-disposition: attachment;filename=Partida_Diario_$fecha_inicio-$fecha_fin.xls");
+header("content-disposition: attachment;filename=Ingreso_Partida_Diario_$fecha_inicio-$fecha_fin.xls");
 echo $Reporte;
 
 }else{

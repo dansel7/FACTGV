@@ -135,7 +135,19 @@ function tipo_facturacion($tipo_fact){
           }
                 //SI POSEE IVA RETENIDO    
           if($rows_e["iva_retenido"]>0.0){
-               $cuerpo_detalle.= "<tr> 
+              if($rows_e["tipo_fact"]==1){
+                  $cuerpo_detalle.= "<tr> 
+                         <td  style=\"text-align:right\">".$rows_e["fecha_facturacion"] ."</td>  
+                         <td  style=\"text-align:right\">110604</td> 
+                         <td  style=\"text-align:left\">".tipo_facturacion($rows_e["tipo_fact"])." #".$rows_e["numero_factura"] ." ".$rows_e["nom_cliente"]." </td>
+                         <td  style=\"text-align:right\"></td>
+                         <td  style=\"text-align:right\">".$rows_e["iva_retenido"] ."</td>    
+                         </tr>";
+                   //SUMATORIA ABONOS
+                     $subTAbonos+=$rows_e["iva_retenido"] ;
+          }
+          else{
+                   $cuerpo_detalle.= "<tr> 
                          <td  style=\"text-align:right\">".$rows_e["fecha_facturacion"] ."</td>  
                          <td  style=\"text-align:right\">110604</td> 
                          <td  style=\"text-align:left\">".tipo_facturacion($rows_e["tipo_fact"])." #".$rows_e["numero_factura"] ." ".$rows_e["nom_cliente"]." </td>
@@ -144,8 +156,8 @@ function tipo_facturacion($tipo_fact){
                          </tr>";
                    //SUMATORIA CARGOS
                    $subTCargos+=$rows_e["iva_retenido"] ;
-          }
-          
+           }
+         }
           
            if($rows_e["tipo_fact"]==1){//MUESTRA EN CARGOS EL IVA EN NOTA DE CREDITO
                $cuerpo_detalle.= "<tr> 
@@ -183,7 +195,7 @@ if($exp!="-1"){
 header("Content-Type: application/vnd.ms-excel");
 header("Expires: 0");
 header("Cache-Control: must-revalidate, post-check=0, pre-check=0");
-header("content-disposition: attachment;filename=Partida_Diario_$fecha_inicio-$fecha_fin.xls");
+header("content-disposition: attachment;filename=Ventas_Partida_Diario_$fecha_inicio-$fecha_fin.xls");
 echo $Reporte;
 
 }else{

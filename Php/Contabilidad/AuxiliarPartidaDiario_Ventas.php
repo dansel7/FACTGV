@@ -23,6 +23,7 @@ $idempresa=isset($_SESSION["idEmpresa"])? $_SESSION["idEmpresa"]:"-1";
         f.iva,
         f.iva_retenido,
         f.venta_total,
+        f.id_tipo_facturacion tipo_fact,
         GROUP_CONCAT(IFNULL(ps.numero_partida,0) ORDER BY df.id_servicio) num_partida_serv, 
         GROUP_CONCAT(cs.servicio ORDER BY df.id_servicio) servicio, 
         GROUP_CONCAT(df.venta_nosujeta + df.venta_exenta + df.venta_gravada ORDER BY df.id_servicio ) ventas 
@@ -43,7 +44,17 @@ $idempresa=isset($_SESSION["idEmpresa"])? $_SESSION["idEmpresa"]:"-1";
         
        
 
-	
+function tipo_facturacion($tipo_fact){
+    switch($tipo_fact){
+    case '1': return 'FNC';break;
+    case '2': return 'FCF';break;
+    case '3': return 'CCF';break;
+    case '4': return 'FEX';break;
+    case '6': return 'CCF';break;
+    case '7': return 'FCF';break;
+    }
+}
+        
         
   /*$encabezado="<h2><img src=\"/facturaciones/resources/imagenes/gvlogo.png\" align=\"left\">
       &nbsp;Partidas de Diario - {$_SESSION["nombreEmpresa"]}<br><br><br><br></h2>"; */
@@ -69,7 +80,7 @@ $idempresa=isset($_SESSION["idEmpresa"])? $_SESSION["idEmpresa"]:"-1";
       
         $cuerpo_detalle.= "<tr> 
                          <td  style=\"text-align:right\">".$rows_e["num_partida_clien"] ."</td> 
-                         <td  style=\"text-align:left\">Venta segun CCF #".$rows_e["numero_factura"] ."</td>
+                         <td  style=\"text-align:left\">Venta segun ".tipo_facturacion($rows_e["tipo_fact"])." #".$rows_e["numero_factura"] ."</td>
                          <td  style=\"text-align:right\">".$rows_e["venta_total"] ."</td>
                          <td  style=\"text-align:right\"></td>    
                          </tr>";
@@ -96,7 +107,7 @@ $idempresa=isset($_SESSION["idEmpresa"])? $_SESSION["idEmpresa"]:"-1";
           if($rows_e["iva_retenido"]>0.0){
                $cuerpo_detalle.= "<tr> 
                          <td  style=\"text-align:right\">110604</td> 
-                         <td  style=\"text-align:left\">CCF #".$rows_e["numero_factura"] ." ".$rows_e["nom_cliente"]." </td>
+                         <td  style=\"text-align:left\">".tipo_facturacion($rows_e["tipo_fact"])." #".$rows_e["numero_factura"] ." ".$rows_e["nom_cliente"]." </td>
                          <td  style=\"text-align:right\">".$rows_e["iva_retenido"] ."</td>
                          <td  style=\"text-align:right\"></td>    
                          </tr>";
@@ -105,7 +116,7 @@ $idempresa=isset($_SESSION["idEmpresa"])? $_SESSION["idEmpresa"]:"-1";
           }
                    $cuerpo_detalle.= "<tr> 
                          <td  style=\"text-align:right\">210502</td> 
-                         <td  style=\"text-align:left\">CCF #".$rows_e["numero_factura"] ." ".$rows_e["nom_cliente"]." </td>
+                         <td  style=\"text-align:left\">".tipo_facturacion($rows_e["tipo_fact"])." #".$rows_e["numero_factura"] ." ".$rows_e["nom_cliente"]." </td>
                          <td  style=\"text-align:right\"></td>
                          <td  style=\"text-align:right\">".$rows_e["iva"] ."</td>    
                          </tr>";

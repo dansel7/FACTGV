@@ -484,7 +484,8 @@ Ext.require([
                         text: 'Filtrar',
                         listeners: {
                             click: function() {
-                                
+                        //        GraficaBarra.surface.removeAll();
+                      //  GraficaBarra.redraw(false);
                                var form = this.up('form'),
                                    year = form.down('#year').getValue(),
                                    hmes = form.down('#hmes').getValue(),

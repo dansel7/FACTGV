@@ -299,7 +299,7 @@ if(typeof(records) != "undefined" && typeof(records) != "string"){
                                     return value;   
                                 }},
                                 {header: 'Concepto',  dataIndex: 'concepto',flex:1, editor: {
-                                        xtype: 'textfield',name:'concepto',
+                                        xtype: 'textareafield',name:'concepto',height:'40px',
                                     allowBlank: false
                                 }},
                                 {header: 'Precio Unitario', dataIndex: 'valor_concepto',summaryType: 'sum',	
