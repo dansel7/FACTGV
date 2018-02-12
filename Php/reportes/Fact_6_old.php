@@ -37,7 +37,7 @@ $pdf->SetPrintFooter(false);
 
 //set margins
 //$pdf->SetMargins(PDF_MARGIN_LEFT, PDF_MARGIN_TOP, PDF_MARGIN_RIGHT);
-$pdf->SetMargins(0.4,4.2, 0);
+$pdf->SetMargins(0.7, 3.4, 0.635);
 
 //$pdf->SetHeaderMargin(0);
 //$pdf->SetFooterMargin(15);
@@ -98,8 +98,8 @@ $orientacion="vertical";
             <tr>
                 <td style="text-align:center;font-size:8pt" colspan="3" >'.strtoupper($rows_e["direccion"]).'</td>
                 
-                <td height="20px" style="text-align:right;font-size:10pt" width="160px">'. $rows_e["peso"] .'</td>
-                <td style="text-align:right;font-size:10pt" width="75px">'. $rows_e["nbultos"] .'</td>
+                <td height="20px" style="text-align:right;font-size:10pt" width="165px">'. $rows_e["peso"] .'</td>
+                <td style="text-align:right;font-size:10pt" width="80px">'. $rows_e["nbultos"] .'</td>
             </tr>
              <tr>
                 <td height="18px"  width="30px">&nbsp;</td>

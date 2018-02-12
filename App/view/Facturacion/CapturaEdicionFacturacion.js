@@ -388,7 +388,7 @@ if(typeof(records) != "undefined" && typeof(records) != "string"){
                               },
                               items:[  
                                   
-                                  {xtype : "textfield", id : "gastos_observaciones",name : "gastos_observaciones", fieldLabel : "Observaciones", allowDecimals: true,width:515,flex: 2, margin: '0 15 0 0',decimalSeparator: "."},
+                                  {xtype : "textfield", id : "gastos_observaciones",name : "gastos_observaciones", fieldLabel : "Detalle Gastos", allowDecimals: true,width:515,flex: 2, margin: '0 15 0 0',decimalSeparator: "."},
                                   {xtype : "numberfield", id : "gastos_reintegro", name : "gastos_reintegro",fieldLabel : "Gastos Totales", flex: 1,allowDecimals: true,hideTrigger: true,decimalPrecision: 2, margin: '0 15 0 0',decimalSeparator: "."},
                                   
                                ]
@@ -424,7 +424,7 @@ if(typeof(records) != "undefined" && typeof(records) != "string"){
                             maxHeight: 30,
                             id:'buttonFact',
                             ui: 'footer',
-                            items: ['->',{xtype : "checkbox",id:"anulado", name : "anulado", fieldLabel : "Anular Factura",  inputValue: 'Si',uncheckedValue :'No',   
+                            items: ['->',{xtype : "checkbox",id:"anulado", name : "anulado", fieldLabel : "Anular Factura",  inputValue: 'Si',uncheckedValue :'No',  style: {color: 'red',fontWeight:'bold'},    
                                     listeners: {
             change: function(field, newValue, oldValue, eOpts){
                 console.log('change:' + field.fieldLabel + ' ' + newValue);
@@ -442,7 +442,7 @@ if(typeof(records) != "undefined" && typeof(records) != "string"){
                                     Ext.getCmp("GastosR").show();
                                 }
                                     
-            }}}, {
+            }}},'&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;', {
                                     itemId: 'BtnClienteAceptar',
                                     text: 'Vista Previa',
                                     action: 'actGuardar',

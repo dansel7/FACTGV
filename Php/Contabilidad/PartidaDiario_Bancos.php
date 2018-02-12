@@ -18,6 +18,8 @@ $idempresa=isset($_SESSION["idEmpresa"])? $_SESSION["idEmpresa"]:"-1";
 // ---------------INICIO DEL REPORTE--d---------------
 
   $sql="SELECT 
+	\"BANCOS\" modulo,
+	\"DEPOSITO\" movimiento,
     DATE_FORMAT(ab.fecha_remesa, '%d/%m/%Y') fecha_remesa,
     ab.numero_remesa,
     sum(ac.monto_cheque) Deposito,
@@ -42,7 +44,7 @@ FROM
 WHERE
         f.id_empresa=".$idempresa ." and (pmc.id_empresa=".$idempresa ." or pmc.id_empresa is null )
         and  ab.fecha_remesa between STR_TO_DATE('$fecha_inicio','%d/%m/%Y') and STR_TO_DATE('$fecha_fin','%d/%m/%Y') 
-        GROUP BY ab.numero_remesa
+GROUP BY ab.numero_remesa,ab.id_cuenta,ab.fecha_remesa
 ORDER BY DATE_FORMAT(ab.fecha_remesa, '%Y/%m/%d') ASC , numero_remesa , numero_factura";
 
     	$result = mysql_query($sql,$connection) or die('La consulta fall&oacute;: '.mysql_error());	
@@ -53,7 +55,9 @@ ORDER BY DATE_FORMAT(ab.fecha_remesa, '%Y/%m/%d') ASC , numero_remesa , numero_f
                 . "<h3>Desde $fecha_inicio Hasta $fecha_fin</h3><br>";      
   
   $encabezado.= '<table border="1" style="font-size: 11px" cellpadding="5">
-                 <tr><td  style="text-align:center"><b>ID</b></td>
+                 <tr><td  style="text-align:center"><b>MODULO</b></td>
+					 <td  style="text-align:center"><b>MOVIMIENTO</b></td>
+					 <td  style="text-align:center"><b>ID</b></td>
                      <td  style="text-align:center"><b>FECHA</b></td>
                      <td  style="text-align:center"><b>CUENTA</b></td>
                      <td  style="text-align:center"><b>CONCEPTO</b></td> 
@@ -70,6 +74,8 @@ ORDER BY DATE_FORMAT(ab.fecha_remesa, '%Y/%m/%d') ASC , numero_remesa , numero_f
       $flag++;
       
             $cuerpo_detalle.= "<tr> 
+				         <td  style=\"text-align:right\">".$rows_e["modulo"] ."</td> 
+						 <td  style=\"text-align:right\">".$rows_e["movimiento"] ."</td> 
                          <td  style=\"text-align:right\">".$flag ."</td> 
                          <td  style=\"text-align:right\">".$rows_e["fecha_remesa"] ."</td>             
                          <td  style=\"text-align:right\">".$rows_e["num_partida_banco"] ."</td> 
@@ -89,6 +95,8 @@ ORDER BY DATE_FORMAT(ab.fecha_remesa, '%Y/%m/%d') ASC , numero_remesa , numero_f
         foreach($n_factura as $numero_factura){
             
                 $cuerpo_detalle.= "<tr> 
+				         <td  style=\"text-align:right\">".$rows_e["modulo"] ."</td> 
+						 <td  style=\"text-align:right\">".$rows_e["movimiento"] ."</td> 
                          <td  style=\"text-align:right\">".$flag ."</td> 
                          <td  style=\"text-align:right\">".$rows_e["fecha_remesa"] ."</td>  
                          <td  style=\"text-align:right\">".$n_partida_cliente[$i] ."</td> 

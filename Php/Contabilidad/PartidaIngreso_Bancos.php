@@ -37,8 +37,8 @@ FROM
 WHERE
     f.id_empresa = '.$idempresa.'
 AND ab.fecha_remesa BETWEEN STR_TO_DATE(\''.$fecha_inicio.'\', \'%d/%m/%Y\') AND STR_TO_DATE(\''.$fecha_fin.'\',\'%d/%m/%Y\') 
-GROUP BY ab.numero_remesa
-ORDER BY DATE_FORMAT(ab.fecha_remesa, \'%Y/%m/%d\') ASC , numero_remesa,numero_factura';
+GROUP BY ab.numero_remesa,ab.id_cuenta,ab.fecha_remesa
+ORDER BY DATE_FORMAT(ab.fecha_remesa, \'%Y/%m/%d\') ASC , numero_remesa, numero_factura';
 
     	$result = mysql_query($sql,$connection) or die('La consulta fall&oacute;: '.mysql_error());	
 

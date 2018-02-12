@@ -37,7 +37,7 @@ $pdf->SetPrintFooter(false);
 
 //set margins
 //$pdf->SetMargins(PDF_MARGIN_LEFT, PDF_MARGIN_TOP, PDF_MARGIN_RIGHT);
-$pdf->SetMargins(0.2, 3.6, 0.635);
+$pdf->SetMargins(0.1, 4, 0);
 
 //$pdf->SetHeaderMargin(0);
 //$pdf->SetFooterMargin(15);
@@ -61,7 +61,7 @@ $orientacion="vertical";
                
                 f.numero_factura,mc.nom_cliente,mc.direccion,DATE_FORMAT(f.fecha_facturacion,'%d/%m/%Y') fecha_facturacion,f.cond_operacion,f.venta_acta_de,mc.nit,mc.nrc,d.departamento,mc.giro,
                
-                df.cantidad,concat(cs.servicio , '<br>  ' , df.concepto) concepto,df.valor_concepto,venta_nosujeta,venta_exenta,venta_gravada,
+                df.cantidad,concat(cs.servicio , IF(STRCMP(df.concepto,''),'<br>  ','   ') , df.concepto) concepto,df.valor_concepto,venta_nosujeta,venta_exenta,venta_gravada,
                
                 f.venta_total,f.iva,f.iva_retenido
                 FROM facturacion f 
@@ -120,19 +120,19 @@ $orientacion="vertical";
             </td>
             </tr>
             </table><br>
-            <table style="table-layout:fixed;font-size:11.2pt">
-                 <tr><td colspan="4" height="60px"></td></tr>
+            <table style="table-layout:fixed;font-size:11pt">
+                 <tr><td colspan="4" height="50px"></td></tr>
                  <tr><td colspan="4" height="160px"><table>';
         
         $detalle_factura.='
                     <tr>
-                        <td style="text-align:left" width="80px">
+                        <td style="text-align:center" width="70px">
                         '. $rows_e["cantidad"] .'
                         </td>  
-                        <td width="370px">
+                        <td width="365px">
                         '. strtoupper($rows_e["concepto"])  .'
                         </td>
-                        <td width="70px" style="text-align:right">
+                        <td width="60px" style="text-align:right">
                         '. $rows_e["valor_concepto"] .'
                         </td>
                         <td width="60px" style="text-align:right">
@@ -141,7 +141,7 @@ $orientacion="vertical";
                         <td width="60px" style="text-align:right">
                         '. $rows_e["venta_exenta"] .'
                         </td>
-                        <td width="60px" style="text-align:right">
+                        <td width="80px" style="text-align:right">
                         '. $rows_e["venta_gravada"] .'
                         </td>
                     </tr>';
@@ -151,14 +151,14 @@ $orientacion="vertical";
         $tot_venta_exentas+=$rows_e["venta_exenta"];
         //ESTA ES LA PARTE QUE CONTIENE EL TOTAL EN LETRAS Y SUS DESGLOSES
         $pie_factura='</table></td></tr>
-                       <tr><td colspan="2" width="450px"></td>
+                       <tr><td colspan="2" width="445px"></td>
                           <td width="60px"></td>
                           <td width="62px" style="text-align:right">'. number_format($tot_venta_no_sujeta,2) .'</td>
                           <td width="60px" style="text-align:right">'. number_format($tot_venta_exentas,2) .'</td>
                           <td width="80px"style="text-align:right">'. number_format($subTotal,2) .'</td>
                       </tr>
-                      <tr><td colspan="6" style="text-align:left">
-                        <table width="698px" cellspacing="4">
+                      <tr><td colspan="6" style="text-align:center">
+                        <table width="693px" cellspacing="4">
                         <tr>
                            <td>'. strtoupper($Total_enLetras->ValorEnLetras($rows_e["venta_total"],"Dolares")) .'</td>
                            <td height="18px" style="text-align:right">'.$rows_e["iva"] .'</td>
@@ -181,7 +181,7 @@ $orientacion="vertical";
                      <tr><td colspan="6" style="text-align:right">
                          <table>
                          <tr>    
-                            <td width="694px">
+                            <td width="689px">
                         '. number_format($rows_e["venta_total"],2) .'
                             </td>
                          </tr>
